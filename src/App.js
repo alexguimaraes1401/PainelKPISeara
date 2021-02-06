@@ -130,12 +130,18 @@ function App() {
                     </button>
                 </div>
             </div>
-            <h3 className="mt-5">Bar Chart</h3>
-            <hr />
-            <Chart className="mt-3" type="bar" data={responseDataBarChart} options={lightOptions} />
-            <h3 className="mt-5">line Chart</h3>
-            <hr />
-            <Chart type="Line" data={responseDataLineChart} options={lightOptions} />
+            <div className="d-flex flex-wrap p-0">
+                <div className="col-xl-6 p-0 pr-xl-3">
+                    <h3 className="mt-5">Bar Chart</h3>
+                    <hr />
+                    <Chart className="mt-3" type="bar" data={responseDataBarChart} options={lightOptions} />
+                </div>
+                <div className="col-xl-6 p-0 pl-xl-3">
+                    <h3 className="mt-5">line Chart</h3>
+                    <hr />
+                    <Chart type="Line" data={responseDataLineChart} options={lightOptions} />
+                </div>
+            </div>
         </Container>
     )
 }
