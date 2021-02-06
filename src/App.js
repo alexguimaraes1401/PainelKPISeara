@@ -2,6 +2,10 @@
 import React from 'react';
 import { Chart } from 'primereact/chart';
 import api from './api/api'
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Card from 'react-bootstrap/Card';
 
 const lightOptions = {
     legend: {
@@ -29,8 +33,8 @@ function App() {
     let [responseDataLineChart, setResponseDataLineChart] = React.useState('')
 
     const fetchData = () => {
-        setResponseDataBarChart(null);
-        setResponseDataLineChart(null);
+        setResponseDataBarChart({});
+        setResponseDataLineChart({});
 
         api.getSearaBaseRacBar().then((response) => {
             setResponseDataBarChart(response.data)
@@ -44,12 +48,23 @@ function App() {
     };
 
     return (
-        <div className="card container">
-            <legend>Search Stock Market</legend>
-            <button onClick={fetchData} type='submit'>Submit</button>
-            <Chart type="bar" data={responseDataBarChart} options={lightOptions} />
-            <Chart type="Line" data={responseDataLineChart} options={lightOptions} />
-        </div>
+        <Container fluid className="p-3">
+            <Row>
+                <Col>
+                    <Card>
+                        <legend>Search Stock Market</legend>
+                        <button onClick={fetchData} type='submit'>Submit</button>
+                    </Card>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Chart type="bar" data={responseDataBarChart} options={lightOptions} />
+                    <Chart type="Line" data={responseDataLineChart} options={lightOptions} />
+                </Col>
+            </Row>
+
+        </Container>
     )
 }
 

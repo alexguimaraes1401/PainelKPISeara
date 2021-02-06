@@ -42,12 +42,16 @@ export default {
                 function (data) {
                     // Do whatever you want to transform the data
                     let json = JSON.parse(data)
+                    AddItensToJsonArray(json, 100000, "bar")
+                   
+                    console.time("ProcessResponseBarChart")
                     let datasets = [];
                     let { dateField, field, ano } = SetParamsToQuery();
                     SetDateInJsonArrayToQueryOverObjects(json, dateField);
                     let problemas = GetIndicators(json, field);
                     AddLineMockData(datasets);
                     AddDataByFilters(problemas, json, ano, field, datasets, "bar");
+                    console.timeEnd("ProcessResponseBarChart")
 
                     return {
                         labels: months,
@@ -68,20 +72,39 @@ export default {
                 function (data) {
                     // Do whatever you want to transform the data
                     let json = JSON.parse(data)
-                    let datasets = [];
-                    let { dateField, field, ano } = SetParamsToQuery();
-                    SetDateInJsonArrayToQueryOverObjects(json, dateField);
-                    let problemas = GetIndicators(json, field);
-                    AddLineMockData(datasets);
-                    AddDataByFilters(problemas, json, ano, field, datasets, "line");
 
+                    AddItensToJsonArray(json, 100000, "line")
+
+                    console.time("ProcessResponseLineChart")
+                    let datasets = []
+                    let { dateField, field, ano } = SetParamsToQuery()
+                    SetDateInJsonArrayToQueryOverObjects(json, dateField)
+                    let problemas = GetIndicators(json, field)
+                    AddLineMockData(datasets)
+                    AddDataByFilters(problemas, json, ano, field, datasets, "line")
+                    console.timeEnd("ProcessResponseLineChart")
                     return {
                         labels: months,
                         datasets: datasets
-                    };
+                    }
+
                 }
             ]
         })
+}
+
+function AddItensToJsonArray(json, size, typechart) {
+    console.time("AddItensToJsonArray" + typechart)
+    const start = (Math.random(0, json.length) - 1)
+    const limit = json.length
+    let batch = Object.assign([], json.slice(start, limit));
+    while (json.length < size) {
+        batch.forEach(element => {
+            json.push(element)
+        });
+    }
+    console.timeEnd("AddItensToJsonArray" + typechart)
+    console.log("json.length: " + json.length)
 }
 
 function GetIndicators(json, field) {
