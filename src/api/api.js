@@ -43,7 +43,7 @@ export default {
                     // Do whatever you want to transform the data
                     let json = JSON.parse(data)
                     AddItensToJsonArray(json, 100000, "bar")
-                   
+
                     console.time("ProcessResponseBarChart")
                     let datasets = [];
                     let { dateField, field, ano } = SetParamsToQuery();
@@ -119,14 +119,28 @@ function AddDataByFilters(problemas, json, ano, field, datasets, type) {
                 && r[field] !== undefined && r[field] === element)
             .length
         );
-        datasets.push({
-            type: type,
-            label: element,
-            backgroundColor: colorsBars[i],
-            data: data,
-            borderColor: "white",
-            borderWidth: 2
-        });
+        if (type === "line") {
+            datasets.push({
+                type: type,
+                label: element,
+                borderColor: colorsBars[i],
+                backgroundColor: "white",
+                data: data,
+                fill: false,
+                // borderColor: "white",
+                borderWidth: 2
+            });
+        } else {
+            datasets.push({
+                type: type,
+                label: element,
+                backgroundColor: colorsBars[i],
+                data: data,
+                fill: false,
+                borderColor: "white",
+                borderWidth: 2
+            });
+        }
     });
 }
 
@@ -134,10 +148,12 @@ function AddLineMockData(datasets) {
     datasets.push({
         type: "line",
         label: "Dataset 1",
-        borderColor: colorsMockLine[0],
+        borderColor: 'red',
+        backgroundColor: '#edc4c736',
         borderWidth: 2,
-        fill: false,
-        data: [50, 25, 12, 48, 46, 46, 32, 10, 30, 20, 5, 40, 35]
+        fill: true,
+        borderDash: [5, 5],
+        data: [150, 125, 112, 148, 146, 346, 232, 210, 330, 320, 25, 340, 135]
     });
 }
 
