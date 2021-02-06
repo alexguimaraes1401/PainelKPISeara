@@ -73,7 +73,8 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ## Libs
 
-https://primefaces.org
-https://react-bootstrap.github.io/
-https://azouaoui-med.github.io/react-pro-sidebar/
-https://getbootstrap.com/docs/4.0/getting-started/introduction/
+* https://primefaces.org
+* https://react-bootstrap.github.io/
+* https://azouaoui-med.github.io/react-pro-sidebar/
+* https://getbootstrap.com/docs/4.0/getting-started/introduction/
+* https://codesandbox.io/
