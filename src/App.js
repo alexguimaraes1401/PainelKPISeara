@@ -177,7 +177,6 @@ const months = [
 function App() {
 
     const userKpiDigitalTemp = { name: 'admin', pass: 'admin' }
-    const header = <img alt="Card" src={loginLogo} />;
     const footer = <span>
         <Button label="Entrar" onClick={(e) => handleLogin(e.target.value)} style={{ width: '100%', marginRight: '.25em' }} />
     </span>;
@@ -196,11 +195,11 @@ function App() {
     const AddIndicator2 = indicator2.map(Add => Add)
     const AddIndicator3 = indicator3.map(Add => Add)
     const [selectedIndicator3, setSelectedIndicator3] = React.useState([])
-    const Indicators3Ul = selectedIndicator3.map(item => <div key={item}>
-        <li>
-            {item}
-        </li>
-    </div>)
+    // const Indicators3Ul = selectedIndicator3.map(item => <div key={item}>
+    //     <li>
+    //         {item}
+    //     </li>
+    // </div>)
     const [selectedIndicator1, setSelectedIndicator1] = React.useState('')
     const [selectedIndicator2, setSelectedIndicator2] = React.useState('')
 
@@ -218,7 +217,7 @@ function App() {
         setSelectedIndicator2(indicator2[e.target.value])
         let json = crudeJsonResponseDataBarChart
 
-        var groupBy = function groupBy(list, keyGetter) {
+        let groupBy = function groupBy(list, keyGetter) {
             const map = new Map();
             list.forEach((item) => {
                 const key = keyGetter(item);
@@ -231,8 +230,7 @@ function App() {
             });
             return map;
         }
-        var xaxis = Array.from(groupBy(json, x => x[selectedIndicator1]), ([name, value]) => ({ name, value }));
-        var yaxis = Array.from(groupBy(json, x => x[indicator2[e.target.value]]), ([name, value]) => ({ name }));
+        let yaxis = Array.from(groupBy(json, x => x[indicator2[e.target.value]]), ([name, value]) => ({ name }));
 
         setIndicator3(yaxis.map(r => r.name))
     }
@@ -301,7 +299,7 @@ function App() {
             let series = []
             yaxis.forEach((y, index) => {
                 let dataset = xaxis.map(xx => {
-                    let yaxysvalue = xx.yaxis.filter(r => r.name == y.name);
+                    let yaxysvalue = xx.yaxis.filter(r => r.name === y.name);
                     if (yaxysvalue.length)
                         return yaxysvalue[0].quantidade
 
@@ -428,12 +426,12 @@ function App() {
                 <Navbar.Toggle />
                 <Navbar.Collapse className="justify-content-end">
                     <Navbar.Text>
-                        Bem vindo: <a>{capitalize(user.name)}</a>
+                        Bem vindo: <a href="#">{capitalize(user.name)}</a>
                     </Navbar.Text>
                     &nbsp;
                     &nbsp;
                     <Navbar.Text>
-                        <a onClick={(e) => handleLogout(e)}>
+                        <a  href="#" onClick={(e) => handleLogout(e)}>
                             <span style={{ cursor: 'pointer', color: 'rgb(255 255 255 / 50%)' }}>
                                 Logout &nbsp;
                                 <i style={{ cursor: 'pointer', color: '#fff' }} className="pi pi-sign-out"></i>
