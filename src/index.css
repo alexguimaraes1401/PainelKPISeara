@@ -1,0 +1,167 @@
+:root {
+    --surface-a: #ffffff;
+    --surface-b: #f8f9fa;
+    --surface-c: #e9ecef;
+    --surface-d: #dee2e6;
+    --surface-e: #ffffff;
+    --surface-f: #ffffff;
+    --surface-g: #f4f2f2;
+    --sidebar-left: hsl(0deg 0% 89% / 97%);;
+    --text-color: #495057;
+    --text-color-secondary: #6c757d;
+    --primary-color: #2196F3;
+    --primary-color-text: #ffffff;
+    --font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+}
+
+/* Change the  margin-left main-content element when the browser window is 540px wide or less: */
+@media only screen and (max-width: 765px) {
+    .main-content {
+        margin-left: 0%!important;
+    }
+    .navbar-brand {
+        font-size: 16px!important;
+    }
+    .navbar-text{
+        font-size: 13px!important;
+    }
+  }
+
+  html::before { 
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.2;
+    background-image: url('./assets/kpi-bg-image.jpg');
+    background-repeat: no-repeat;
+    background-position: 0% 0;
+    background-size: cover;
+    z-index: -1;
+    -webkit-mask-image:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+  }
+
+.container-fluid{
+    background-color: transparent;
+}
+
+.main-content{ 
+    margin-left: 16%;
+    padding: 2rem;
+    padding-top: 6rem;
+    background-color: transparent;
+}
+
+.sidebar {
+    height: 100%;
+    position: fixed !important;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+    background-color: var(--sidebar-left);
+    padding-top: 56px;
+}
+
+
+.p-input-icon-right > .p-inputtext {
+    width: 100%;
+}
+
+
+
+
+/** LOGIN **/
+
+html,body { 
+	height: 100%; 
+}
+
+.global-container:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.8;
+    background-image: url('./assets/kpi-bg-image.jpg');
+    background-repeat: no-repeat;
+    background-position: 0% 0;
+    background-size: cover;
+}
+
+.global-container{
+    min-height: 850px;
+	height:100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #f5f5f5;
+}
+
+.login-form{
+    background: #847fbd26!important;
+    overflow: hidden!important;
+    padding: 50px!important;
+    position: relative!important;
+    z-index: 2!important;
+    border: none!important;
+}
+
+form{
+	padding-top: 10px;
+	font-size: 14px;
+	margin-top: 30px;
+}
+
+.card-title{ font-weight:300; }
+
+.btn{
+	font-size: 14px;
+	margin-top:20px;
+}
+
+
+.sign-up{
+	text-align:center;
+	padding: 20px 0 0;
+}
+
+.alert{
+	margin-bottom:-30px;
+	font-size: 13px;
+	margin-top:20px;
+}
+
+
+/* CHARTS CONTAINERS */
+
+
+
+.layout-content .content-section {
+    padding: 2rem;
+    background-color: var(--surface-d);
+}
+
+.main-content .content-section.implementation {
+    background-color: var(--surface-b);
+    color: var(--text-color);
+}
+
+.main-content .card {
+    background: var(--surface-e);
+    padding: 2rem;
+    -webkit-box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1px 3px 0 rgb(0 0 0 / 12%);
+    box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1px 3px 0 rgb(0 0 0 / 12%);
+    border-radius: 4px;
+    margin-bottom: 2rem;
+}

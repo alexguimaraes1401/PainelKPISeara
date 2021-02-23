@@ -40,23 +40,29 @@ export default {
             },
             transformResponse: [
                 function (data) {
-                    // Do whatever you want to transform the data
-                    let json = JSON.parse(data)
-                    AddItensToJsonArray(json, 100000, "bar")
 
-                    console.time("ProcessResponseBarChart")
-                    let datasets = [];
-                    let { dateField, field, ano } = SetParamsToQuery();
-                    SetDateInJsonArrayToQueryOverObjects(json, dateField);
-                    let problemas = GetIndicators(json, field);
-                    AddLineMockData(datasets);
-                    AddDataByFilters(problemas, json, ano, field, datasets, "bar");
-                    console.timeEnd("ProcessResponseBarChart")
+                    return data;
+                    // // Do whatever you want to transform the data
+                    // let json = JSON.parse(data)
+                    // let indicators = Object.keys(json[0]).map(key => key);
 
-                    return {
-                        labels: months,
-                        datasets: datasets
-                    };
+                    // AddItensToJsonArray(json, 100000, "bar")
+
+                    // console.time("ProcessResponseBarChart")
+                    // let datasets = [];
+                    // let { dateField, field, ano } = SetParamsToQuery();
+                    
+                    // SetDateInJsonArrayToQueryOverObjects(json, dateField);
+                    // let problemas = GetIndicators(json, field);
+                    // AddLineMockData(datasets);
+                    // AddDataByFilters(problemas, json, ano, field, datasets, "bar");
+                    // console.timeEnd("ProcessResponseBarChart")
+
+                    // return {
+                    //     labels: months,
+                    //     datasets: datasets,
+                    //     indicators
+                    // };
                 }
             ]
         }),
@@ -72,7 +78,8 @@ export default {
                 function (data) {
                     // Do whatever you want to transform the data
                     let json = JSON.parse(data)
-
+                    console.log(json)
+                    let indicators = Object.keys(json[0]).map(key => key);
                     AddItensToJsonArray(json, 100000, "line")
 
                     console.time("ProcessResponseLineChart")
@@ -85,7 +92,8 @@ export default {
                     console.timeEnd("ProcessResponseLineChart")
                     return {
                         labels: months,
-                        datasets: datasets
+                        datasets: datasets,
+                        indicators
                     }
 
                 }
