@@ -16,6 +16,8 @@ import './index.css';
 import 'primereact/resources/themes/saga-blue/theme.css'
 import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
+import { ProgressBar } from 'primereact/progressbar';
+import { Toast } from 'primereact/toast';
 
 const itemsPanelMenu = [
     {
@@ -174,6 +176,7 @@ const months = [
 
 function App() {
 
+     
     const userKpiDigitalTemp = { name: 'admin', pass: 'admin' }
     const footer = <span>
         <Button label="Entrar" onClick={(e) => handleLogin(e.target.value)} style={{ width: '100%', marginRight: '.25em' }} />
@@ -200,7 +203,20 @@ function App() {
     // </div>)
     const [selectedIndicator1, setSelectedIndicator1] = React.useState('')
     const [selectedIndicator2, setSelectedIndicator2] = React.useState('')
+    const [isUpdatingData, setIsUpdatingData] = React.useState(false)
 
+    const toast = React.useRef(null);
+
+    React.useEffect(() => {
+        const loggedInUser = localStorage.getItem("user");
+        if (loggedInUser) {
+            const foundUser = JSON.parse(loggedInUser);
+            setUser(foundUser);
+            fetchData();
+        }
+    }, []);
+
+    
     const handleIndicator1TypeChange = (e) => {
         console.clear()
         console.log((indicator1[e.target.value]))
@@ -229,7 +245,7 @@ function App() {
             return map;
         }
         let yaxis = Array.from(groupBy(json, x => x[indicator2[e.target.value]]), ([name, value]) => ({ name }));
-
+        setSelectedIndicator3([])
         setIndicator3(yaxis.map(r => r.name))
     }
 
@@ -242,13 +258,6 @@ function App() {
         setSelectedIndicator3(indicators)
     }
 
-    React.useEffect(() => {
-        const loggedInUser = localStorage.getItem("user");
-        if (loggedInUser) {
-            const foundUser = JSON.parse(loggedInUser);
-            setUser(foundUser);
-        }
-    }, []);
 
     const handleLogin = (e) => {
         console.log('handleLogin')
@@ -270,6 +279,7 @@ function App() {
     const fetchDataTest = () => {
         console.log("fetchDataTest")
         if (selectedIndicator1 !== "" && selectedIndicator2 !== "" && selectedIndicator3 !== "") {
+            setIsUpdatingData(true)
             let json = crudeJsonResponseDataBarChart
             let indicators = Object.keys(json[0]).map(key => key);
 
@@ -330,6 +340,7 @@ function App() {
             };
 
             setResponseDataBarChart(dashboardData)
+            setIsUpdatingData(false)
             // setIndicator1(dashboardData.indicators)
             // setIndicator3(dashboardData.indicators)
             // setIndicator2(dashboardData.indicators)
@@ -337,6 +348,8 @@ function App() {
     }
 
     const fetchData = () => {
+
+        setIsUpdatingData(true)
 
         api.getSearaBaseRacBar().then((response) => {
 
@@ -373,6 +386,7 @@ function App() {
 
         api.getSearaBaseRacLine().then((response) => {
             setResponseDataLineChart(response.data)
+            setIsUpdatingData(false)
             console.log(response)
         });
     };
@@ -429,7 +443,7 @@ function App() {
                     &nbsp;
                     &nbsp;
                     <Navbar.Text>
-                        <a  href="#" onClick={(e) => handleLogout(e)}>
+                        <a href="#" onClick={(e) => handleLogout(e)}>
                             <span style={{ cursor: 'pointer', color: 'rgb(255 255 255 / 50%)' }}>
                                 Logout &nbsp;
                                 <i style={{ cursor: 'pointer', color: '#fff' }} className="pi pi-sign-out"></i>
@@ -441,24 +455,32 @@ function App() {
             <nav class="col-md-2 d-none d-md-block sidebar pl-0 pr-0">
                 <div class="sidebar-sticky">
                     <PanelMenu model={itemsPanelMenu} />
-                    <div style={{ position: 'absolute', bottom: '15px', right:'15px'}}>
-                        <i style={{ 'fontSize': '1.4em' , cursor: 'pointer', color: 'rgb(73 80 87)' }} className="pi pi-angle-double-left"></i>
+                    <div style={{ position: 'absolute', bottom: '15px', right: '15px' }}>
+                        <i style={{ 'fontSize': '1.4em', cursor: 'pointer', color: 'rgb(73 80 87)' }} className="pi pi-angle-double-left"></i>
                     </div>
                 </div>
             </nav>
 
             <div className="main-content">
-
                 <Row>
                     <Col>
-                        <h1 class="h2" style={{ color: 'rgb(61 171 193)' }}>
-                            Dashboard
-                            <br />
-                            <small>Bootstrap template, demonstrating a set of Primereact Charts</small>
-                        </h1>
+                        {isUpdatingData ? (
+                            <h1 className={'h2'}>
+                                Atualizando dados
+                                <br />
+                                <small>O sistema esta atualizando a base de dados, isto pode levar alguns segundos</small>
+                                <ProgressBar mode="indeterminate" style={{ height: '16px' }}></ProgressBar>
+                            </h1>
+                        ) : (
+                                <h1 className={'h2'}>
+                                    Dashboard
+                                    <br />
+                                    <small>Bootstrap template, demonstrating a set of Primereact Charts</small>
+                                </h1>
+                            )}
                         <div class="btn-toolbar mb-2 mb-md-0">
                             <div class="btn-group mr-2">
-                                <button class="btn btn-sm btn-outline-secondary" onClick={fetchData}>Get Data</button>
+                                <button class="btn btn-sm btn-outline-secondary" onClick={fetchData}>Recaregar dados</button>
                                 <button class="btn btn-sm btn-outline-secondary" disabled>Share</button>
                                 <button class="btn btn-sm btn-outline-secondary" disabled>Export</button>
                             </div>
@@ -470,6 +492,7 @@ function App() {
                     </Col>
                 </Row>
                 <hr></hr>
+
                 <Row>
                     <Col lg={4}>
                         <Card className="p-md-12">
@@ -521,7 +544,7 @@ function App() {
                     </Col>
                 </Row>
                 <Row style={{ 'padding-right': '15px', 'padding-left': '15px' }}>
-                    <button class="btn btn-sm btn-outline-secondary" style={{ width: '100%' }} onClick={fetchDataTest}>Aplicar</button>
+                    <button class="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={fetchDataTest}>Aplicar</button>
                 </Row>
                 <Row>
                     <Col>

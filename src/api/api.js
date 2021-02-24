@@ -37,29 +37,7 @@ export default {
             },
             transformResponse: [
                 function (data) {
-
                     return data;
-                    // // Do whatever you want to transform the data
-                    // let json = JSON.parse(data)
-                    // let indicators = Object.keys(json[0]).map(key => key);
-
-                    // AddItensToJsonArray(json, 100000, "bar")
-
-                    // console.time("ProcessResponseBarChart")
-                    // let datasets = [];
-                    // let { dateField, field, ano } = SetParamsToQuery();
-                    
-                    // SetDateInJsonArrayToQueryOverObjects(json, dateField);
-                    // let problemas = GetIndicators(json, field);
-                    // AddLineMockData(datasets);
-                    // AddDataByFilters(problemas, json, ano, field, datasets, "bar");
-                    // console.timeEnd("ProcessResponseBarChart")
-
-                    // return {
-                    //     labels: months,
-                    //     datasets: datasets,
-                    //     indicators
-                    // };
                 }
             ]
         }),
