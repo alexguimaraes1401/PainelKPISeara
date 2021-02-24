@@ -264,7 +264,7 @@ function App() {
 
     const handleLogin = (e) => {
         console.log('handleLogin')
-        if (username === userKpiDigitalTemp.name && password === userKpiDigitalTemp.pass) {
+        if (username.toLocaleLowerCase() === userKpiDigitalTemp.name.toLocaleLowerCase() && password === userKpiDigitalTemp.pass) {
             setUser({ name: username, pass: password });
             localStorage.setItem('user', JSON.stringify({ name: username }));
         }
