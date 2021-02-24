@@ -13,13 +13,13 @@ import Col from 'react-bootstrap/Col';
 import Navbar from 'react-bootstrap/Navbar';
 import 'react-pro-sidebar/dist/css/styles.css';
 import './index.css';
+import './sidebard.css';
 import 'primereact/resources/themes/saga-blue/theme.css'
 import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
 import { ProgressBar } from 'primereact/progressbar';
 import { Toast } from 'primereact/toast';
 import { Skeleton } from 'primereact/skeleton';
-
 
 const itemsPanelMenu = [
     {
@@ -190,7 +190,7 @@ function App() {
     const [password, setPassword] = React.useState("");
     const [user, setUser] = React.useState()
 
-    const [crudeJsonResponseDataBarChart, setCrudeJsonResponseDataBarChart] = React.useState({})
+    const [crudeJsonResponseDataBarChart, setCrudeJsonResponseDataBarChart] = React.useState()
     const [indicator1, setIndicator1] = React.useState(["Selecione..."])
     const [indicator2, setIndicator2] = React.useState(["Selecione..."])
     const [indicator3, setIndicator3] = React.useState(["Selecione..."])
@@ -210,11 +210,11 @@ function App() {
     const toast = React.useRef(null);
 
     React.useEffect(() => {
+        fetchData();
         const loggedInUser = localStorage.getItem("user");
         if (loggedInUser) {
             const foundUser = JSON.parse(loggedInUser);
             setUser(foundUser);
-            fetchData();
         }
     }, []);
 
@@ -354,7 +354,6 @@ function App() {
         setIsUpdatingData(true)
 
         api.getSearaBaseRacBar().then((response) => {
-
             // Do whatever you want to transform the data
             let json = JSON.parse(response.data)
 
@@ -438,9 +437,9 @@ function App() {
                             </div>
                         </div>
                         <Skeleton width="100%" height="150px"></Skeleton>
-                        <div className="d-flex jc-between mt-3">
-                            <Skeleton width="4rem" height="2rem"></Skeleton>
-                            <Skeleton width="4rem" height="2rem"></Skeleton>
+                        <div className="d-flex justify-content-between mt-3">
+                            <Skeleton width="4rem" height="2rem"  ></Skeleton>
+                            <Skeleton width="4rem" height="2rem" ></Skeleton>
                         </div>
                     </div>
                 </div>
@@ -451,7 +450,7 @@ function App() {
         return (
             <div className="global-container">
                 <div className="card login-form">
-                    <Card title="Bem vindo" subTitle="faça o login para acessar o sistema" className="card-body" style={{ width: '25em' }} footer={footer} >
+                    <Card title="Bem vindo" subTitle="faça o login para acessar o sistema" className="card-body" footer={footer} >
                         <div className="pt-4 p-field p-grid">
                             {/* <h5>Usuário</h5>
                             <InputText id="username" style={{ width: '100%' }} value={username} onChange={(e) => setUsername(e.target.value)} /> */}
@@ -476,7 +475,29 @@ function App() {
 
     return (
         <Container fluid>
-            <Navbar bg="dark" variant="dark" fixed="top" >
+            <div class="header-nav-bar-mobile">
+                <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu" />
+                <label for="openSidebarMenu" class="sidebarIconToggle">
+                    <div class="spinner diagonal part-1"></div>
+                    <div class="spinner horizontal"></div>
+                    <div class="spinner diagonal part-2"></div>
+                </label>
+                <div id="sidebarMenu">
+                    <ul class="sidebarMenuInner mt-5">
+                        <li>{user.name} <span>Web Developer</span></li>
+                        {/* <li><a href="https://vanila.io" target="_blank">Company</a></li>
+                        <li><a href="https://instagram.com/plavookac" target="_blank">Instagram</a></li> */}
+                        <div class="sidebar-sticky">
+                            <PanelMenu model={itemsPanelMenu} />
+                            <div style={{ position: 'absolute', bottom: '15px', right: '15px' }}>
+                                <i style={{ 'fontSize': '1.4em', cursor: 'pointer', color: 'rgb(73 80 87)' }} className="pi pi-angle-double-left"></i>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+
+            <Navbar bg="dark" variant="dark" fixed="top" className="navbar-desk" >
                 <Navbar.Brand href="#home">
                     <img
                         alt=""
@@ -504,14 +525,17 @@ function App() {
                     </Navbar.Text>
                 </Navbar.Collapse>
             </Navbar>
+            <div className="sidebar-desk">
+
             <nav class="col-md-2 d-none d-md-block sidebar pl-0 pr-0">
                 <div class="sidebar-sticky">
                     <PanelMenu model={itemsPanelMenu} />
-                    <div style={{ position: 'absolute', bottom: '15px', right: '15px' }}>
+                    {/* <div style={{ position: 'absolute', bottom: '15px', right: '15px' }}>
                         <i style={{ 'fontSize': '1.4em', cursor: 'pointer', color: 'rgb(73 80 87)' }} className="pi pi-angle-double-left"></i>
-                    </div>
+                    </div> */}
                 </div>
             </nav>
+                    </div>
 
             <div className="main-content">
                 <Row>
@@ -631,7 +655,6 @@ function App() {
                             )}
                     </Col>
                 </Row>
-
             </div>
         </Container >
     )

@@ -14,6 +14,7 @@
     --font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
 }
 
+
 .custom-skeleton {
     border: 1px solid var(--surface-d);
     border-borderRadius: 4px;
@@ -34,15 +35,22 @@
 
 
 /* Change the  margin-left main-content element when the browser window is 540px wide or less: */
-@media only screen and (max-width: 765px) {
+@media only screen and (max-width: 1024px) {
     .main-content {
         margin-left: 0%!important;
+        padding-top: 4rem!important;
     }
     .navbar-brand {
         font-size: 16px!important;
     }
     .navbar-text{
         font-size: 13px!important;
+    }
+    .navbar-desk{
+        display: none!important;
+    }
+    .sidebar-desk {
+        display: none!important;
     }
   }
 
@@ -98,7 +106,20 @@
 
 /** LOGIN **/
 
-html,body { 
+
+@media only screen and (max-width: 765px) {
+    .login-form{
+        background: #847fbd26!important;
+        overflow: hidden!important;
+        padding: 15px!important;
+        position: relative!important;
+        z-index: 2!important;
+        border: none!important;
+        width: 100%;
+    }
+  }
+  
+html,body,div#root { 
 	height: 100%; 
 }
 
@@ -114,12 +135,12 @@ html,body {
     opacity: 0.8;
     background-image: url('./assets/kpi-bg-image.jpg');
     background-repeat: no-repeat;
-    background-position: 0% 0;
+    background-position: 58% 0;
     background-size: cover;
 }
 
 .global-container{
-    min-height: 850px;
+    min-height: 568px;
 	height:100%;
 	display: flex;
 	align-items: center;
@@ -130,7 +151,7 @@ html,body {
 .login-form{
     background: #847fbd26!important;
     overflow: hidden!important;
-    padding: 50px!important;
+    padding: 50px;
     position: relative!important;
     z-index: 2!important;
     border: none!important;
