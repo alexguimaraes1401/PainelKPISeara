@@ -18,6 +18,8 @@ import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
 import { ProgressBar } from 'primereact/progressbar';
 import { Toast } from 'primereact/toast';
+import { Skeleton } from 'primereact/skeleton';
+
 
 const itemsPanelMenu = [
     {
@@ -176,7 +178,7 @@ const months = [
 
 function App() {
 
-     
+
     const userKpiDigitalTemp = { name: 'admin', pass: 'admin' }
     const footer = <span>
         <Button label="Entrar" onClick={(e) => handleLogin(e.target.value)} style={{ width: '100%', marginRight: '.25em' }} />
@@ -216,7 +218,7 @@ function App() {
         }
     }, []);
 
-    
+
     const handleIndicator1TypeChange = (e) => {
         console.clear()
         console.log((indicator1[e.target.value]))
@@ -395,6 +397,56 @@ function App() {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
+    const LoadingSkeletonSquare = () => {
+        return (
+            <div className="field col-12 md-6">
+                <div className="d-flex ai-end">
+                    <Skeleton size="2rem" className="mr-2"></Skeleton>
+                    <Skeleton size="3rem" className="mr-2"></Skeleton>
+                    <Skeleton size="4rem" className="mr-2"></Skeleton>
+                    <Skeleton size="5rem"></Skeleton>
+                </div>
+            </div>)
+    }
+
+    const LoadingSkeleton = () => {
+        return (
+            <div className="card mt-5">
+                <div className="grid formgrid">
+                    <div className="field col-12 md-6">
+                        <Skeleton className="mb-2"></Skeleton>
+                        <Skeleton width="10rem" className="mb-2"></Skeleton>
+                        <Skeleton width="5rem" className="mb-2"></Skeleton>
+                        <Skeleton height="2rem" className="mb-2"></Skeleton>
+                        <Skeleton width="10rem" height="4rem"></Skeleton>
+                    </div>
+                </div>
+            </div>)
+    }
+
+    const LoadingSkeletonCard = () => {
+        return (
+            <div className="grid formgrid mt-4 w-100">
+                <div className="field col-12 md-6 pr-md-6 pr-0">
+                    <div className="custom-skeleton p-4">
+                        <div className="d-flex mb-3">
+                            <Skeleton shape="circle" size="4rem" className="mr-2"></Skeleton>
+                            <div>
+                                <Skeleton width="10rem" className="mb-2"></Skeleton>
+                                <Skeleton width="5rem" className="mb-2"></Skeleton>
+                                <Skeleton height=".5rem"></Skeleton>
+                            </div>
+                        </div>
+                        <Skeleton width="100%" height="150px"></Skeleton>
+                        <div className="d-flex jc-between mt-3">
+                            <Skeleton width="4rem" height="2rem"></Skeleton>
+                            <Skeleton width="4rem" height="2rem"></Skeleton>
+                        </div>
+                    </div>
+                </div>
+            </div>)
+    }
+
     if (!user) {
         return (
             <div className="global-container">
@@ -465,100 +517,123 @@ function App() {
                 <Row>
                     <Col>
                         {isUpdatingData ? (
-                            <h1 className={'h2'}>
-                                Atualizando dados
-                                <br />
-                                <small>O sistema esta atualizando a base de dados, isto pode levar alguns segundos</small>
-                                <ProgressBar mode="indeterminate" style={{ height: '16px' }}></ProgressBar>
-                            </h1>
-                        ) : (
+                            <div>
                                 <h1 className={'h2'}>
-                                    Dashboard
+                                    Atualizando a base de dados
+                                <br />
+                                    <small>Isto pode levar alguns segundos</small>
                                     <br />
-                                    <small>Bootstrap template, demonstrating a set of Primereact Charts</small>
                                 </h1>
-                            )}
-                        <div class="btn-toolbar mb-2 mb-md-0">
-                            <div class="btn-group mr-2">
-                                <button class="btn btn-sm btn-outline-secondary" onClick={fetchData}>Recaregar dados</button>
-                                <button class="btn btn-sm btn-outline-secondary" disabled>Share</button>
-                                <button class="btn btn-sm btn-outline-secondary" disabled>Export</button>
+                                <ProgressBar mode="indeterminate" style={{ height: '16px' }}></ProgressBar>
                             </div>
-                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" disabled>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        ) : (
+                                <div>
+
+                                    <h1 className={'h2'}>
+                                        Dashboard
+                                    <br />
+                                        <small>Bootstrap template, demonstrating a set of Primereact Charts</small>
+                                    </h1>
+                                    <div class="btn-toolbar mb-2 mb-md-0">
+                                        <div class="btn-group mr-2">
+                                            <button class="btn btn-sm btn-outline-secondary" onClick={fetchData}>Recaregar dados</button>
+                                            <button class="btn btn-sm btn-outline-secondary" disabled>Share</button>
+                                            <button class="btn btn-sm btn-outline-secondary" disabled>Export</button>
+                                        </div>
+                                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" disabled>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                                 This week
                             </button>
-                        </div>
+                                    </div>
+                                </div>
+                            )}
                     </Col>
                 </Row>
                 <hr></hr>
 
-                <Row>
-                    <Col lg={4}>
-                        <Card className="p-md-12">
-                            <h1 class="h2">
-                                Lorem ipsum dolor
+                {isUpdatingData ? (
+                    <Row>
+                        <LoadingSkeletonSquare />
+                    </Row>
+                ) : (
+                        <Row>
+                            <Col lg={4}>
+                                <Card className="p-md-12">
+                                    <h1 class="h2">
+                                        Lorem ipsum dolor
                             <br />
-                                <small>Lorem ipsum dolor</small>
-                                <br />
-                                <select onChange={e => handleIndicator1TypeChange(e)} className="browser-default custom-select" >
-                                    {
-                                        AddIndicator1.map((address, key) =>
-                                            <option key={key} value={key}>{address}</option>)
-                                    }
-                                </select >
-                            </h1>
-                        </Card>
-                    </Col>
-                    <Col lg={4}>
-                        <Card className="p-md-12">
-                            <h1 class="h2">
-                                Lorem ipsum dolor
+                                        <small>Lorem ipsum dolor</small>
+                                        <br />
+                                        <select onChange={e => handleIndicator1TypeChange(e)} className="browser-default custom-select" >
+                                            {
+                                                AddIndicator1.map((address, key) =>
+                                                    <option key={key} value={key}>{address}</option>)
+                                            }
+                                        </select >
+                                    </h1>
+                                </Card>
+
+                            </Col>
+                            <Col lg={4}>
+                                <Card className="p-md-12">
+                                    <h1 class="h2">
+                                        Lorem ipsum dolor
                             <br />
-                                <small>Lorem ipsum dolor</small>
-                                <br />
-                                <select onChange={e => handleIndicator2TypeChange(e)} className="browser-default custom-select" >
-                                    {
-                                        AddIndicator2.map((address, key) =>
-                                            <option key={key} value={key}>{address}</option>)
-                                    }
-                                </select >
-                            </h1>
-                        </Card>
-                    </Col>
-                    <Col lg={4}>
-                        <Card>
-                            <h1 class="h2">
-                                Lorem ipsum dolor
+                                        <small>Lorem ipsum dolor</small>
+                                        <br />
+                                        <select onChange={e => handleIndicator2TypeChange(e)} className="browser-default custom-select" >
+                                            {
+                                                AddIndicator2.map((address, key) =>
+                                                    <option key={key} value={key}>{address}</option>)
+                                            }
+                                        </select >
+                                    </h1>
+                                </Card>
+                            </Col>
+                            <Col lg={4}>
+                                <Card>
+                                    <h1 class="h2">
+                                        Lorem ipsum dolor
                             <br />
-                                <small>Lorem ipsum dolor</small>
-                                <br />
-                                <select onChange={e => handleIndicator3TypeChange(e)} className="browser-default custom-select" >
-                                    {
-                                        AddIndicator3.map((address, key) =>
-                                            <option key={key} value={key}>{address}</option>)
-                                    }
-                                </select >
-                            </h1>
-                        </Card>
-                    </Col>
-                </Row>
-                <Row style={{ 'padding-right': '15px', 'padding-left': '15px' }}>
-                    <button class="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={fetchDataTest}>Aplicar</button>
-                </Row>
+                                        <small>Lorem ipsum dolor</small>
+                                        <br />
+                                        <select onChange={e => handleIndicator3TypeChange(e)} className="browser-default custom-select" >
+                                            {
+                                                AddIndicator3.map((address, key) =>
+                                                    <option key={key} value={key}>{address}</option>)
+                                            }
+                                        </select >
+                                    </h1>
+                                </Card>
+                            </Col>
+                        </Row>
+                    )}
+                {isUpdatingData ? (<div> </div>) : (
+                    <Row style={{ 'padding-right': '15px', 'padding-left': '15px' }}>
+                        <button class="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={fetchDataTest}>Aplicar</button>
+                    </Row>
+                )}
                 <Row>
                     <Col>
-                        <Card title="Bar Chart" subTitle="Lorem ipsum dolor" className="mt-5" >
-                            <Chart type="bar" data={responseDataBarChart} options={lightOptions} />
-                        </Card>
-                        <Card title="Line Chart" subTitle="Lorem ipsum dolor" className="mt-5" >
-                            <Chart type="Line" data={responseDataLineChart} options={lightOptions} />
-                        </Card>
+                        {isUpdatingData ? (
+                            <LoadingSkeletonCard />
+                        ) : (
+                                <Card title="Bar Chart" subTitle="Lorem ipsum dolor" className="mt-5" >
+                                    <Chart type="bar" data={responseDataBarChart} options={lightOptions} />
+                                </Card>
+                            )}
+                        {isUpdatingData ? (
+                            <LoadingSkeletonCard />
+                        ) : (
+                                <Card title="Line Chart" subTitle="Lorem ipsum dolor" className="mt-5" >
+                                    <Chart type="Line" data={responseDataLineChart} options={lightOptions} />
+                                </Card>
+                            )}
                     </Col>
                 </Row>
 
             </div>
-        </Container>
+        </Container >
     )
 }
 
