@@ -519,12 +519,12 @@ function App() {
                 <Navbar.Toggle />
                 <Navbar.Collapse className="justify-content-end">
                     <Navbar.Text>
-                        Bem vindo: <a href="#">{capitalize(user.name)}</a>
+                        Bem vindo: <a href="#" style={{'text-decoration': 'none'}}>{capitalize(user.name)}</a>
                     </Navbar.Text>
                     &nbsp;
                     &nbsp;
                     <Navbar.Text>
-                        <a href="#" onClick={(e) => handleLogout(e)}>
+                        <a href="#" style={{'text-decoration': 'none'}} onClick={(e) => handleLogout(e)}>
                             <span style={{ cursor: 'pointer', color: 'rgb(255 255 255 / 50%)' }}>
                                 Logout &nbsp;
                                 <i style={{ cursor: 'pointer', color: '#fff' }} className="pi pi-sign-out"></i>
