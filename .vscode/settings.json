@@ -3,5 +3,7 @@
         "node_modules{,/**}",
         ".vscode{,/**}"
     ],
-    "appService.showBuildDuringDeployPrompt": false
+    "appService.showBuildDuringDeployPrompt": false,
+    "appService.defaultWebAppToDeploy": "/subscriptions/07b5ebde-172d-42fb-a482-22a2779e4e46/resourceGroups/web-app-windows-server/providers/Microsoft.Web/sites/kpi-digital-windows-server",
+    "appService.deploySubpath": "build"
 }

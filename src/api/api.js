@@ -4,6 +4,7 @@ const instance = axios.create({
     baseURL: "http://179.184.236.89"
 })
 
+
 const colorsBars = [
     '#66BB6A',
     '#FFA726',
@@ -25,10 +26,9 @@ const months = [
     "December"
 ]
 
+export default {
 
-function Api() {
-
-    const getSearaBaseRacBar = () =>
+    getSearaBaseRacBar: () =>
         instance({
             method: "GET",
             url: "/Seara/Service/Api/BaseRac",
@@ -37,12 +37,34 @@ function Api() {
             },
             transformResponse: [
                 function (data) {
+
                     return data;
+                    // // Do whatever you want to transform the data
+                    // let json = JSON.parse(data)
+                    // let indicators = Object.keys(json[0]).map(key => key);
+
+                    // AddItensToJsonArray(json, 100000, "bar")
+
+                    // console.time("ProcessResponseBarChart")
+                    // let datasets = [];
+                    // let { dateField, field, ano } = SetParamsToQuery();
+                    
+                    // SetDateInJsonArrayToQueryOverObjects(json, dateField);
+                    // let problemas = GetIndicators(json, field);
+                    // AddLineMockData(datasets);
+                    // AddDataByFilters(problemas, json, ano, field, datasets, "bar");
+                    // console.timeEnd("ProcessResponseBarChart")
+
+                    // return {
+                    //     labels: months,
+                    //     datasets: datasets,
+                    //     indicators
+                    // };
                 }
             ]
-        })
+        }),
 
-    const  getSearaBaseRacLine = () =>
+    getSearaBaseRacLine: () =>
         instance({
             method: "GET",
             url: "/Seara/Service/Api/BaseRac",
@@ -75,7 +97,6 @@ function Api() {
             ]
         })
 }
-export default Api;
 
 function AddItensToJsonArray(json, size, typechart) {
     console.time("AddItensToJsonArray" + typechart)
