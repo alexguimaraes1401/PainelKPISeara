@@ -20,6 +20,7 @@ import 'primeicons/primeicons.css'
 import { ProgressBar } from 'primereact/progressbar';
 import { Toast } from 'primereact/toast';
 import { Skeleton } from 'primereact/skeleton';
+import { Avatar } from 'primereact/avatar';
 
 const itemsPanelMenu = [
     {
@@ -484,13 +485,20 @@ function App() {
                 </label>
                 <div id="sidebarMenu">
                     <ul class="sidebarMenuInner mt-5">
-                        <li>{user.name} <span>Web Developer</span></li>
+                        <li>
+                            <Avatar icon="pi pi-user" className="p-mr-2" style={{ height: 24, width: 24, backgroundColor: '#2196F3', color: '#ffffff' }} shape="circle" />
+                            &nbsp; {user.name}
+                            <span>Web Developer</span>
+                        </li>
                         {/* <li><a href="https://vanila.io" target="_blank">Company</a></li>
                         <li><a href="https://instagram.com/plavookac" target="_blank">Instagram</a></li> */}
                         <div class="sidebar-sticky">
                             <PanelMenu model={itemsPanelMenu} />
-                            <div style={{ position: 'absolute', bottom: '15px', right: '15px' }}>
-                                <i style={{ 'fontSize': '1.4em', cursor: 'pointer', color: 'rgb(73 80 87)' }} className="pi pi-angle-double-left"></i>
+                            <div style={{ cursor: 'pointer', position: 'absolute', bottom: '15px', left: '15px' }} onClick={(e) => handleLogout(e)}>
+                                <li>
+                                    <i style={{ cursor: 'pointer', color: 'rgb(33 37 41)' }} className="pi pi-sign-out"></i>
+                                    &nbsp; Logout
+                                </li>
                             </div>
                         </div>
                     </ul>
@@ -527,15 +535,15 @@ function App() {
             </Navbar>
             <div className="sidebar-desk">
 
-            <nav class="col-md-2 d-none d-md-block sidebar pl-0 pr-0">
-                <div class="sidebar-sticky">
-                    <PanelMenu model={itemsPanelMenu} />
-                    {/* <div style={{ position: 'absolute', bottom: '15px', right: '15px' }}>
+                <nav class="col-md-2 d-none d-md-block sidebar pl-0 pr-0">
+                    <div class="sidebar-sticky">
+                        <PanelMenu model={itemsPanelMenu} />
+                        {/* <div style={{ position: 'absolute', bottom: '15px', right: '15px' }}>
                         <i style={{ 'fontSize': '1.4em', cursor: 'pointer', color: 'rgb(73 80 87)' }} className="pi pi-angle-double-left"></i>
                     </div> */}
-                </div>
-            </nav>
                     </div>
+                </nav>
+            </div>
 
             <div className="main-content">
                 <Row>
