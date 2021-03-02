@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Chart } from 'primereact/chart';
 import { Button } from 'primereact/button';
@@ -13,175 +12,29 @@ import Col from 'react-bootstrap/Col';
 import Navbar from 'react-bootstrap/Navbar';
 import 'react-pro-sidebar/dist/css/styles.css';
 import './index.css';
-import './sidebard.css';
+import './css/sidebar-mobile.css';
+import './css/sidebar-desktop.css';
+import './css/login.css';
 import 'primereact/resources/themes/saga-blue/theme.css'
 import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
 import { ProgressBar } from 'primereact/progressbar';
-import { Toast } from 'primereact/toast';
-import { Skeleton } from 'primereact/skeleton';
 import { Avatar } from 'primereact/avatar';
-
-const itemsPanelMenu = [
-    {
-        label: 'File',
-        icon: 'pi pi-fw pi-file',
-        items: [
-            {
-                label: 'New',
-                icon: 'pi pi-fw pi-plus',
-                items: [
-                    {
-                        label: 'Bookmark',
-                        icon: 'pi pi-fw pi-bookmark'
-                    },
-                    {
-                        label: 'Video',
-                        icon: 'pi pi-fw pi-video'
-                    }
-                ]
-            },
-            {
-                label: 'Delete',
-                icon: 'pi pi-fw pi-trash'
-            },
-            {
-                label: 'Export',
-                icon: 'pi pi-fw pi-external-link'
-            }
-        ]
-    },
-    {
-        label: 'Edit',
-        icon: 'pi pi-fw pi-pencil',
-        items: [
-            {
-                label: 'Left',
-                icon: 'pi pi-fw pi-align-left'
-            },
-            {
-                label: 'Right',
-                icon: 'pi pi-fw pi-align-right'
-            },
-            {
-                label: 'Center',
-                icon: 'pi pi-fw pi-align-center'
-            },
-            {
-                label: 'Justify',
-                icon: 'pi pi-fw pi-align-justify'
-            },
-
-        ]
-    },
-    {
-        label: 'Users',
-        icon: 'pi pi-fw pi-user',
-        items: [
-            {
-                label: 'New',
-                icon: 'pi pi-fw pi-user-plus'
-            },
-            {
-                label: 'Delete',
-                icon: 'pi pi-fw pi-user-minus'
-            },
-            {
-                label: 'Search',
-                icon: 'pi pi-fw pi-users',
-                items: [
-                    {
-                        label: 'Filter',
-                        icon: 'pi pi-fw pi-filter',
-                        items: [
-                            {
-                                label: 'Print',
-                                icon: 'pi pi-fw pi-print'
-                            }
-                        ]
-                    },
-                    {
-                        icon: 'pi pi-fw pi-bars',
-                        label: 'List'
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        label: 'Events',
-        icon: 'pi pi-fw pi-calendar',
-        items: [
-            {
-                label: 'Edit',
-                icon: 'pi pi-fw pi-pencil',
-                items: [
-                    {
-                        label: 'Save',
-                        icon: 'pi pi-fw pi-calendar-plus'
-                    },
-                    {
-                        label: 'Delete',
-                        icon: 'pi pi-fw pi-calendar-minus'
-                    }
-                ]
-            },
-            {
-                label: 'Archieve',
-                icon: 'pi pi-fw pi-calendar-times',
-                items: [
-                    {
-                        label: 'Remove',
-                        icon: 'pi pi-fw pi-calendar-minus'
-                    }
-                ]
-            }
-        ]
-    }
-];
-
-const lightOptions = {
-    legend: {
-        labels: {
-            fontColor: '#495057'
-        }
-    },
-    scales: {
-        xAxes: [{
-            ticks: {
-                fontColor: '#495057'
-            }
-        }],
-        yAxes: [{
-            ticks: {
-                fontColor: '#495057'
-            }
-        }]
-    }
-};
-
-const colorsBars = ["#80F31F", "#A5DE0B", "#C7C101", "#E39E03", "#F6780F", "#FE5326", "#FB3244", "#ED1868", "#D5078E", "#B601B3", "#9106D3", "#6B16EC", "#472FFA", "#2850FE", "#1175F7", "#039BE5", "#01BECA", "#0ADCA8", "#1DF283", "#3AFD5D", "#5CFD3A", "#82F21E", "#A7DD0A", "#C9BF01", "#E49C03", "#F77610", "#FE5127", "#FB3046", "#EC166A", "#D40690", "#B401B5", "#8F06D5", "#6917ED", "#4531FB", "#2752FE", "#1077F6", "#039DE4", "#01C0C8", "#0BDEA6", "#1FF381", "#3BFD5B", "#5EFD39", "#84F11D", "#A9DB0A", "#CBBD01", "#E69A04", "#F77411", "#FE4F29", "#FA2E48", "#EB156D"]
-
-const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
-]
+import { months, colorsBars, lightOptions, itemsPanelMenu } from './domain/constants';
+import { LoadingSkeletonSquare, LoadingSkeleton, LoadingSkeletonCard } from './views/skeletons';
+import {
+    SetDateInJsonArrayToQueryOverObjects,
+    SetParamsToQuery,
+    AddLineMockData,
+    AddDataByFilters,
+    GetIndicators,
+    AddItensToJsonArray,
+} from './domain/kpiservice'
 
 function App() {
 
-
     const userKpiDigitalTemp = { name: 'admin', pass: 'admin' }
-    const footer = <span>
+    const loginfooter = <span>
         <Button label="Entrar" onClick={(e) => handleLogin(e.target.value)} style={{ width: '100%', marginRight: '.25em' }} />
     </span>;
 
@@ -199,17 +52,11 @@ function App() {
     const AddIndicator2 = indicator2.map(Add => Add)
     const AddIndicator3 = indicator3.map(Add => Add)
     const [selectedIndicator3, setSelectedIndicator3] = React.useState([])
-    // const Indicators3Ul = selectedIndicator3.map(item => <div key={item}>
-    //     <li>
-    //         {item}
-    //     </li>
-    // </div>)
     const [selectedIndicator1, setSelectedIndicator1] = React.useState('')
     const [selectedIndicator2, setSelectedIndicator2] = React.useState('')
     const [isUpdatingData, setIsUpdatingData] = React.useState(false)
 
-    const toast = React.useRef(null);
-
+    //Handlers
     React.useEffect(() => {
         fetchData();
         const loggedInUser = localStorage.getItem("user");
@@ -219,10 +66,8 @@ function App() {
         }
     }, []);
 
-
     const handleIndicator1TypeChange = (e) => {
         console.clear()
-        console.log((indicator1[e.target.value]))
         setSelectedIndicator1(indicator1[e.target.value])
         setSelectedIndicator3([])
         setIndicator3(["Selecione..."])
@@ -230,7 +75,6 @@ function App() {
 
     const handleIndicator2TypeChange = (e) => {
         console.clear()
-        console.log((indicator2[e.target.value]))
         setSelectedIndicator2(indicator2[e.target.value])
         let json = crudeJsonResponseDataBarChart
 
@@ -254,16 +98,12 @@ function App() {
 
     const handleIndicator3TypeChange = (e) => {
         console.clear()
-        console.log((indicator3[e.target.value]))
         let indicators = selectedIndicator3
         indicators.push(indicator3[e.target.value])
-        console.log(indicators)
         setSelectedIndicator3(indicators)
     }
 
-
     const handleLogin = (e) => {
-        console.log('handleLogin')
         if (username.toLocaleLowerCase() === userKpiDigitalTemp.name.toLocaleLowerCase() && password === userKpiDigitalTemp.pass) {
             setUser({ name: username, pass: password });
             localStorage.setItem('user', JSON.stringify({ name: username }));
@@ -271,7 +111,6 @@ function App() {
     }
 
     const handleLogout = (e) => {
-        console.log('handleLogout')
         setUser({});
         setUsername("");
         setPassword("");
@@ -279,8 +118,7 @@ function App() {
         window.location.reload(false);
     };
 
-    const fetchDataTest = () => {
-        console.log("fetchDataTest")
+    const fetchDataLocal = () => {
         if (selectedIndicator1 !== "" && selectedIndicator2 !== "" && selectedIndicator3 !== "") {
             setIsUpdatingData(true)
             let json = crudeJsonResponseDataBarChart
@@ -383,13 +221,11 @@ function App() {
             setIndicator1(dashboardData.indicators)
             setIndicator3(dashboardData.indicators)
             setIndicator2(dashboardData.indicators)
-            console.log(dashboardData)
         });
 
         api.getSearaBaseRacLine().then((response) => {
             setResponseDataLineChart(response.data)
             setIsUpdatingData(false)
-            console.log(response)
         });
     };
 
@@ -397,75 +233,22 @@ function App() {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
-    const LoadingSkeletonSquare = () => {
-        return (
-            <div className="field col-12 md-6">
-                <div className="d-flex ai-end">
-                    <Skeleton size="2rem" className="mr-2"></Skeleton>
-                    <Skeleton size="3rem" className="mr-2"></Skeleton>
-                    <Skeleton size="4rem" className="mr-2"></Skeleton>
-                    <Skeleton size="5rem"></Skeleton>
-                </div>
-            </div>)
-    }
-
-    const LoadingSkeleton = () => {
-        return (
-            <div className="card mt-5">
-                <div className="grid formgrid">
-                    <div className="field col-12 md-6">
-                        <Skeleton className="mb-2"></Skeleton>
-                        <Skeleton width="10rem" className="mb-2"></Skeleton>
-                        <Skeleton width="5rem" className="mb-2"></Skeleton>
-                        <Skeleton height="2rem" className="mb-2"></Skeleton>
-                        <Skeleton width="10rem" height="4rem"></Skeleton>
-                    </div>
-                </div>
-            </div>)
-    }
-
-    const LoadingSkeletonCard = () => {
-        return (
-            <div className="grid formgrid mt-4 w-100">
-                <div className="field col-12 md-6 pr-md-6 pr-0">
-                    <div className="custom-skeleton p-4">
-                        <div className="d-flex mb-3">
-                            <Skeleton shape="circle" size="4rem" className="mr-2"></Skeleton>
-                            <div>
-                                <Skeleton width="10rem" className="mb-2"></Skeleton>
-                                <Skeleton width="5rem" className="mb-2"></Skeleton>
-                                <Skeleton height=".5rem"></Skeleton>
-                            </div>
-                        </div>
-                        <Skeleton width="100%" height="150px"></Skeleton>
-                        <div className="d-flex justify-content-between mt-3">
-                            <Skeleton width="4rem" height="2rem"  ></Skeleton>
-                            <Skeleton width="4rem" height="2rem" ></Skeleton>
-                        </div>
-                    </div>
-                </div>
-            </div>)
-    }
-
-    if (!user) {
+    /* Componentes */
+    const Login = () => {
         return (
             <div className="global-container">
                 <div className="card login-form">
-                    <Card title="Bem vindo" subTitle="faça o login para acessar o sistema" className="card-body" footer={footer} >
+                    <Card title="Bem vindo" subTitle="faça o login para acessar o sistema" className="card-body" footer={loginfooter} >
                         <div className="pt-4 p-field p-grid">
-                            {/* <h5>Usuário</h5>
-                            <InputText id="username" style={{ width: '100%' }} value={username} onChange={(e) => setUsername(e.target.value)} /> */}
                             <span className="p-float-label">
                                 <InputText id="username" style={{ width: '100%' }} value={username} onChange={(e) => setUsername(e.target.value)} />
                                 <label htmlFor="username">Usuário</label>
                             </span>
                         </div>
                         <div className="pt-4 p-field p-grid">
-                            {/* <h5>Senha</h5>
-                            <Password value={password} style={{ width: '100%' }} onChange={(e) => setPassword(e.target.value)} feedback={false} toggleMask /> */}
                             <span className="p-float-label">
                                 <Password value={password} style={{ width: '100%' }} onChange={(e) => setPassword(e.target.value)} feedback={false} toggleMask />
-                                <label htmlhtmlFor="in">Senha</label>
+                                <label htmlFor="in">Senha</label>
                             </span>
                         </div>
                     </Card>
@@ -474,37 +257,39 @@ function App() {
         )
     }
 
-    return (
-        <Container fluid>
-            <div class="header-nav-bar-mobile">
-                <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu" />
-                <label for="openSidebarMenu" class="sidebarIconToggle">
-                    <div class="spinner diagonal part-1"></div>
-                    <div class="spinner horizontal"></div>
-                    <div class="spinner diagonal part-2"></div>
-                </label>
-                <div id="sidebarMenu">
-                    <ul class="sidebarMenuInner mt-5">
-                        <li>
-                            <Avatar icon="pi pi-user" className="p-mr-2" style={{ height: 24, width: 24, backgroundColor: '#2196F3', color: '#ffffff' }} shape="circle" />
-                            &nbsp; {user.name}
-                            <span>Web Developer</span>
-                        </li>
-                        {/* <li><a href="https://vanila.io" target="_blank">Company</a></li>
-                        <li><a href="https://instagram.com/plavookac" target="_blank">Instagram</a></li> */}
-                        <div class="sidebar-sticky">
-                            <PanelMenu model={itemsPanelMenu} />
-                            <div style={{ cursor: 'pointer', position: 'absolute', bottom: '15px', left: '15px' }} onClick={(e) => handleLogout(e)}>
-                                <li>
-                                    <i style={{ cursor: 'pointer', color: 'rgb(33 37 41)' }} className="pi pi-sign-out"></i>
-                                    &nbsp; Logout
-                                </li>
-                            </div>
+    const NavbarMobile = () => {
+        return (<div className="header-nav-bar-mobile">
+            <input type="checkbox" className="openSidebarMenu" id="openSidebarMenu" />
+            <label htmlFor="openSidebarMenu" className="sidebarIconToggle">
+                <div className="spinner diagonal part-1"></div>
+                <div className="spinner horizontal"></div>
+                <div className="spinner diagonal part-2"></div>
+            </label>
+            <div id="sidebarMenu">
+                <ul className="sidebarMenuInner mt-5">
+                    <li>
+                        <Avatar icon="pi pi-user" className="p-mr-2" style={{ height: 24, width: 24, backgroundColor: '#2196F3', color: '#ffffff' }} shape="circle" />
+                &nbsp; {user.name}
+                        <span>Web Developer</span>
+                    </li>
+                    {/* <li><a href="https://vanila.io" target="_blank">Company</a></li>
+            <li><a href="https://instagram.com/plavookac" target="_blank">Instagram</a></li> */}
+                    <div className="sidebar-sticky">
+                        <PanelMenu model={itemsPanelMenu} />
+                        <div style={{ cursor: 'pointer', position: 'absolute', bottom: '15px', left: '15px' }} onClick={(e) => handleLogout(e)}>
+                            <li>
+                                <i style={{ cursor: 'pointer', color: 'rgb(33 37 41)' }} className="pi pi-sign-out"></i>
+                        &nbsp; Logout
+                    </li>
                         </div>
-                    </ul>
-                </div>
+                    </div>
+                </ul>
             </div>
+        </div>)
+    }
 
+    const NavbarDesktop = () => {
+        return (
             <Navbar bg="dark" variant="dark" fixed="top" className="navbar-desk" >
                 <Navbar.Brand href="#home">
                     <img
@@ -514,17 +299,17 @@ function App() {
                         height="30"
                         className="d-inline-block align-top"
                     />{' '}
-                React Bootstrap
+                    React Bootstrap
                 </Navbar.Brand>
                 <Navbar.Toggle />
                 <Navbar.Collapse className="justify-content-end">
                     <Navbar.Text>
-                        Bem vindo: <a href="#" style={{'text-decoration': 'none'}}>{capitalize(user.name)}</a>
+                        Bem vindo: <a href="#" style={{ textDecoration: 'none' }}>{capitalize(user.name)}</a>
                     </Navbar.Text>
                     &nbsp;
                     &nbsp;
                     <Navbar.Text>
-                        <a href="#" style={{'text-decoration': 'none'}} onClick={(e) => handleLogout(e)}>
+                        <a href="#" style={{ textDecoration: 'none' }} onClick={(e) => handleLogout(e)}>
                             <span style={{ cursor: 'pointer', color: 'rgb(255 255 255 / 50%)' }}>
                                 Logout &nbsp;
                                 <i style={{ cursor: 'pointer', color: '#fff' }} className="pi pi-sign-out"></i>
@@ -533,219 +318,158 @@ function App() {
                     </Navbar.Text>
                 </Navbar.Collapse>
             </Navbar>
+        )
+    }
+
+    const SidebarDesktop = () => {
+        return (
             <div className="sidebar-desk">
 
-                <nav class="col-md-2 d-none d-md-block sidebar pl-0 pr-0">
-                    <div class="sidebar-sticky">
+                <nav className="col-md-2 d-none d-md-block sidebar pl-0 pr-0">
+                    <div className="sidebar-sticky">
                         <PanelMenu model={itemsPanelMenu} />
                         {/* <div style={{ position: 'absolute', bottom: '15px', right: '15px' }}>
                         <i style={{ 'fontSize': '1.4em', cursor: 'pointer', color: 'rgb(73 80 87)' }} className="pi pi-angle-double-left"></i>
                     </div> */}
                     </div>
                 </nav>
+            </div>)
+    }
+
+    const UpdatingDatabase = () => {
+        return (
+            <div>
+                <h1 className={'h2'}>
+                    Atualizando a base de dados
+                    <br />
+                    <small>Isto pode levar alguns segundos</small>
+                    <br />
+                </h1>
+                <ProgressBar mode="indeterminate" style={{ height: '16px' }}></ProgressBar>
             </div>
+        )
+    }
+
+    // Se nao esta logado exibe tela de login:
+    if (!user) {
+        return (<Login />)
+    }
+
+    // Se esta logado exibe tela do dashboard:
+    return (
+        <Container fluid>
+
+            <NavbarMobile />
+            <NavbarDesktop />
+            <SidebarDesktop />
 
             <div className="main-content">
                 <Row>
                     <Col>
-                        {isUpdatingData ? (
+                        {isUpdatingData ? (<UpdatingDatabase />) : (
                             <div>
                                 <h1 className={'h2'}>
-                                    Atualizando a base de dados
-                                <br />
-                                    <small>Isto pode levar alguns segundos</small>
+                                    Dashboard
                                     <br />
+                                    <small>Bootstrap template, demonstrating a set of Primereact Charts</small>
                                 </h1>
-                                <ProgressBar mode="indeterminate" style={{ height: '16px' }}></ProgressBar>
-                            </div>
-                        ) : (
-                                <div>
-
-                                    <h1 className={'h2'}>
-                                        Dashboard
-                                    <br />
-                                        <small>Bootstrap template, demonstrating a set of Primereact Charts</small>
-                                    </h1>
-                                    <div class="btn-toolbar mb-2 mb-md-0">
-                                        <div class="btn-group mr-2">
-                                            <button class="btn btn-sm btn-outline-secondary" onClick={fetchData}>Recaregar dados</button>
-                                            <button class="btn btn-sm btn-outline-secondary" disabled>Share</button>
-                                            <button class="btn btn-sm btn-outline-secondary" disabled>Export</button>
-                                        </div>
-                                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" disabled>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                                This week
-                            </button>
+                                <div className="btn-toolbar mb-2 mb-md-0">
+                                    <div className="btn-group mr-2">
+                                        <button className="btn btn-sm btn-outline-secondary" onClick={fetchData}>Recaregar dados</button>
+                                        <button className="btn btn-sm btn-outline-secondary" disabled>Share</button>
+                                        <button className="btn btn-sm btn-outline-secondary" disabled>Export</button>
                                     </div>
+                                    <button className="btn btn-sm btn-outline-secondary dropdown-toggle" disabled>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                            This week
+                                        </button>
                                 </div>
-                            )}
+                            </div>
+                        )}
                     </Col>
                 </Row>
                 <hr></hr>
 
-                {isUpdatingData ? (
+                {/* Drop down com indicadores */}
+                {isUpdatingData ? (<Row><LoadingSkeletonSquare /></Row>) : (
                     <Row>
-                        <LoadingSkeletonSquare />
-                    </Row>
-                ) : (
-                        <Row>
-                            <Col lg={4}>
-                                <Card className="p-md-12">
-                                    <h1 class="h2">
-                                        Lorem ipsum dolor
-                            <br />
-                                        <small>Lorem ipsum dolor</small>
+                        <Col lg={4}>
+                            <Card className="p-md-12">
+                                <h1 className="h2">
+                                    Lorem ipsum dolor
                                         <br />
-                                        <select onChange={e => handleIndicator1TypeChange(e)} className="browser-default custom-select" >
-                                            {
-                                                AddIndicator1.map((address, key) =>
-                                                    <option key={key} value={key}>{address}</option>)
-                                            }
-                                        </select >
-                                    </h1>
-                                </Card>
-
-                            </Col>
-                            <Col lg={4}>
-                                <Card className="p-md-12">
-                                    <h1 class="h2">
-                                        Lorem ipsum dolor
-                            <br />
-                                        <small>Lorem ipsum dolor</small>
+                                    <small>Lorem ipsum dolor</small>
+                                    <br />
+                                    <select onChange={e => handleIndicator1TypeChange(e)} className="browser-default custom-select" >
+                                        {
+                                            AddIndicator1.map((address, key) =>
+                                                <option key={key} value={key}>{address}</option>)
+                                        }
+                                    </select >
+                                </h1>
+                            </Card>
+                        </Col>
+                        <Col lg={4}>
+                            <Card className="p-md-12">
+                                <h1 className="h2">
+                                    Lorem ipsum dolor
                                         <br />
-                                        <select onChange={e => handleIndicator2TypeChange(e)} className="browser-default custom-select" >
-                                            {
-                                                AddIndicator2.map((address, key) =>
-                                                    <option key={key} value={key}>{address}</option>)
-                                            }
-                                        </select >
-                                    </h1>
-                                </Card>
-                            </Col>
-                            <Col lg={4}>
-                                <Card>
-                                    <h1 class="h2">
-                                        Lorem ipsum dolor
-                            <br />
-                                        <small>Lorem ipsum dolor</small>
+                                    <small>Lorem ipsum dolor</small>
+                                    <br />
+                                    <select onChange={e => handleIndicator2TypeChange(e)} className="browser-default custom-select" >
+                                        {
+                                            AddIndicator2.map((address, key) =>
+                                                <option key={key} value={key}>{address}</option>)
+                                        }
+                                    </select >
+                                </h1>
+                            </Card>
+                        </Col>
+                        <Col lg={4}>
+                            <Card>
+                                <h1 className="h2">
+                                    Lorem ipsum dolor
                                         <br />
-                                        <select onChange={e => handleIndicator3TypeChange(e)} className="browser-default custom-select" >
-                                            {
-                                                AddIndicator3.map((address, key) =>
-                                                    <option key={key} value={key}>{address}</option>)
-                                            }
-                                        </select >
-                                    </h1>
-                                </Card>
-                            </Col>
-                        </Row>
-                    )}
-                {isUpdatingData ? (<div> </div>) : (
-                    <Row style={{ 'padding-right': '15px', 'padding-left': '15px' }}>
-                        <button class="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={fetchDataTest}>Aplicar</button>
+                                    <small>Lorem ipsum dolor</small>
+                                    <br />
+                                    <select onChange={e => handleIndicator3TypeChange(e)} className="browser-default custom-select" >
+                                        {
+                                            AddIndicator3.map((address, key) =>
+                                                <option key={key} value={key}>{address}</option>)
+                                        }
+                                    </select >
+                                </h1>
+                            </Card>
+                        </Col>
                     </Row>
                 )}
+
+                {/* Botão aplicar */}
+                {isUpdatingData ? (<div> </div>) : (
+                    <Row style={{ paddingRight: '15px', paddingLeft: '15px' }}>
+                        <button className="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={fetchDataLocal}>Aplicar</button>
+                    </Row>
+                )}
+
+                {/* Graficos */}
                 <Row>
                     <Col>
-                        {isUpdatingData ? (
-                            <LoadingSkeletonCard />
-                        ) : (
-                                <Card title="Bar Chart" subTitle="Lorem ipsum dolor" className="mt-5" >
-                                    <Chart type="bar" data={responseDataBarChart} options={lightOptions} />
-                                </Card>
-                            )}
-                        {isUpdatingData ? (
-                            <LoadingSkeletonCard />
-                        ) : (
-                                <Card title="Line Chart" subTitle="Lorem ipsum dolor" className="mt-5" >
-                                    <Chart type="Line" data={responseDataLineChart} options={lightOptions} />
-                                </Card>
-                            )}
+                        {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                            <Card title="Bar Chart" subTitle="Lorem ipsum dolor" className="mt-5" >
+                                <Chart type="bar" data={responseDataBarChart} options={lightOptions} />
+                            </Card>
+                        )}
+                        {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                            <Card title="Line Chart" subTitle="Lorem ipsum dolor" className="mt-5" >
+                                <Chart type="Line" data={responseDataLineChart} options={lightOptions} />
+                            </Card>
+                        )}
                     </Col>
                 </Row>
+
             </div>
-        </Container >
+        </Container>
     )
 }
 
 export default App;
-
-function AddItensToJsonArray(json, size, typechart) {
-    console.time("AddItensToJsonArray" + typechart)
-    const start = (Math.random(0, json.length) - 1)
-    const limit = json.length
-    let batch = Object.assign([], json.slice(start, limit));
-    while (json.length < size) {
-        batch.forEach(element => {
-            json.push(element)
-        });
-    }
-    console.timeEnd("AddItensToJsonArray" + typechart)
-    console.log("json.length: " + json.length)
-}
-
-function GetIndicators(json, field) {
-    return [...new Set(json.map(item => item[field]))].slice(0, 3);
-}
-
-function AddDataByFilters(problemas, json, ano, field, datasets, type) {
-    problemas.forEach((element, i) => {
-        let data = months.map((mes, index) => json
-            .filter(r => r.year !== undefined && r.year === ano
-                && r.mes !== undefined && r.mes === mes
-                && r[field] !== undefined && r[field] === element)
-            .length
-        );
-        if (type === "line") {
-            datasets.push({
-                type: type,
-                label: element,
-                borderColor: colorsBars[i],
-                backgroundColor: "white",
-                data: data,
-                fill: false,
-                borderWidth: 2
-            });
-        } else {
-            datasets.push({
-                type: type,
-                label: element,
-                backgroundColor: colorsBars[i],
-                data: data,
-                fill: false,
-                borderColor: "white",
-                borderWidth: 2
-            });
-        }
-    });
-}
-
-function AddLineMockData(datasets) {
-    datasets.push({
-        type: "line",
-        label: "Dataset 1",
-        borderColor: 'red',
-        backgroundColor: '#edc4c736',
-        borderWidth: 2,
-        fill: true,
-        borderDash: [5, 5],
-        data: [150, 125, 112, 148, 146, 346, 232, 210, 330, 320, 25, 340, 135]
-    });
-}
-
-function SetParamsToQuery() {
-    const ano = "2020";
-    const dateField = "Data Fab.";
-    const field = "Problema";
-    return { dateField, field, ano };
-}
-
-function SetDateInJsonArrayToQueryOverObjects(json, dateField) {
-    json.forEach(r => {
-        let abc = r[dateField].replace(" 00:00:00", "").split("/");
-        r['day'] = abc[0];
-        r['month'] = abc[1];
-        r['mes'] = months[(Math.floor(abc[1] - 1))];
-        r['year'] = abc[2];
-    });
-}

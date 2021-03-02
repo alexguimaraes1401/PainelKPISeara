@@ -1,0 +1,15 @@
+.sidebar {
+    height: 100%;
+    position: fixed !important;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+    background-color: var(--sidebar-left);
+    padding-top: 56px;
+}
+
+.p-input-icon-right>.p-inputtext {
+    width: 100%;
+}
