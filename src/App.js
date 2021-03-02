@@ -232,15 +232,20 @@ function App() {
         api.getSearaBaseRacLine().then((response) => {
             setResponseDataLineChart(response.data)
             setIsUpdatingData(false)
+            // showSuccess('Database updated!')
         }).catch(err => {
             // what now?
             console.log(err);
-            showError('Network Error')
+            showError('Network Error', 'Could not fetch data')
         });
     };
 
-    const showError = (errorMessage) => {
-        toast.current.show({severity: 'error', summary: errorMessage, detail: 'Could not fetch data'});
+    const showSuccess = (errorMessage, detailMessage) => {
+        toast.current.show({severity: 'success', summary: errorMessage, detail: detailMessage});
+    }
+
+    const showError = (errorMessage, detailMessage) => {
+        toast.current.show({severity: 'error', summary: errorMessage, detail: detailMessage, life: 6000});
     }
 
     /* Local Componentes */
