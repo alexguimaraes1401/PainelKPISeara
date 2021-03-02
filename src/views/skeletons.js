@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Skeleton } from 'primereact/skeleton';
+import '../css/skeletons.css';
 
 function LoadingSkeletonSquare() {
     return (

@@ -15,6 +15,7 @@ import './index.css';
 import './css/sidebar-mobile.css';
 import './css/sidebar-desktop.css';
 import './css/login.css';
+import './css/charts.css';
 import 'primereact/resources/themes/saga-blue/theme.css'
 import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
