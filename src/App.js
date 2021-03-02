@@ -4,15 +4,12 @@ import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
-import { PanelMenu } from 'primereact/panelmenu';
 import api from './api/api'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Navbar from 'react-bootstrap/Navbar';
 import 'react-pro-sidebar/dist/css/styles.css';
 import './index.css';
-import './css/sidebar-mobile.css';
 import './css/sidebar-desktop.css';
 import './css/login.css';
 import './css/charts.css';
@@ -20,9 +17,7 @@ import 'primereact/resources/themes/saga-blue/theme.css'
 import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
 import { ProgressBar } from 'primereact/progressbar';
-import { Avatar } from 'primereact/avatar';
-import { months, colorsBars, lightOptions, itemsPanelMenu } from './domain/constants';
-import { LoadingSkeletonSquare, LoadingSkeleton, LoadingSkeletonCard } from './views/skeletons';
+import { months, colorsBars, lightOptions } from './domain/constants';
 import {
     SetDateInJsonArrayToQueryOverObjects,
     SetParamsToQuery,
@@ -30,7 +25,13 @@ import {
     AddDataByFilters,
     GetIndicators,
     AddItensToJsonArray,
-} from './domain/kpiservice'
+} from './domain/kpiservice';
+
+import { LoadingSkeletonSquare, LoadingSkeletonCard } from './components/skeletons';
+import NavbarMobile from './components/navbarMobile';
+import NavbarDesktop from './components/navbarDesktop';
+import SidebarDesktop from './components/sidebarDesktop';
+import { Toast } from 'primereact/toast';
 
 function App() {
 
@@ -46,9 +47,9 @@ function App() {
     const [user, setUser] = React.useState()
 
     const [crudeJsonResponseDataBarChart, setCrudeJsonResponseDataBarChart] = React.useState()
-    const [indicator1, setIndicator1] = React.useState(["Selecione..."])
-    const [indicator2, setIndicator2] = React.useState(["Selecione..."])
-    const [indicator3, setIndicator3] = React.useState(["Selecione..."])
+    const [indicator1, setIndicator1] = React.useState(["Select..."])
+    const [indicator2, setIndicator2] = React.useState(["Select..."])
+    const [indicator3, setIndicator3] = React.useState(["Select..."])
     const AddIndicator1 = indicator1.map(Add => Add)
     const AddIndicator2 = indicator2.map(Add => Add)
     const AddIndicator3 = indicator3.map(Add => Add)
@@ -56,6 +57,7 @@ function App() {
     const [selectedIndicator1, setSelectedIndicator1] = React.useState('')
     const [selectedIndicator2, setSelectedIndicator2] = React.useState('')
     const [isUpdatingData, setIsUpdatingData] = React.useState(false)
+    const toast = React.useRef(null);
 
     //Handlers
     React.useEffect(() => {
@@ -222,19 +224,26 @@ function App() {
             setIndicator1(dashboardData.indicators)
             setIndicator3(dashboardData.indicators)
             setIndicator2(dashboardData.indicators)
+        }).catch(err => {
+            // what now?
+            console.log(err);
         });
 
         api.getSearaBaseRacLine().then((response) => {
             setResponseDataLineChart(response.data)
             setIsUpdatingData(false)
+        }).catch(err => {
+            // what now?
+            console.log(err);
+            showError('Network Error')
         });
     };
 
-    const capitalize = (str) => {
-        return str.charAt(0).toUpperCase() + str.slice(1);
+    const showError = (errorMessage) => {
+        toast.current.show({severity: 'error', summary: errorMessage, detail: 'Could not fetch data'});
     }
 
-    /* Componentes */
+    /* Local Componentes */
     const Login = () => {
         return (
             <div className="global-container">
@@ -258,92 +267,13 @@ function App() {
         )
     }
 
-    const NavbarMobile = () => {
-        return (<div className="header-nav-bar-mobile">
-            <input type="checkbox" className="openSidebarMenu" id="openSidebarMenu" />
-            <label htmlFor="openSidebarMenu" className="sidebarIconToggle">
-                <div className="spinner diagonal part-1"></div>
-                <div className="spinner horizontal"></div>
-                <div className="spinner diagonal part-2"></div>
-            </label>
-            <div id="sidebarMenu">
-                <ul className="sidebarMenuInner mt-5">
-                    <li>
-                        <Avatar icon="pi pi-user" className="p-mr-2" style={{ height: 24, width: 24, backgroundColor: '#2196F3', color: '#ffffff' }} shape="circle" />
-                &nbsp; {user.name}
-                        <span>Web Developer</span>
-                    </li>
-                    {/* <li><a href="https://vanila.io" target="_blank">Company</a></li>
-            <li><a href="https://instagram.com/plavookac" target="_blank">Instagram</a></li> */}
-                    <div className="sidebar-sticky">
-                        <PanelMenu model={itemsPanelMenu} />
-                        <div style={{ cursor: 'pointer', position: 'absolute', bottom: '15px', left: '15px' }} onClick={(e) => handleLogout(e)}>
-                            <li>
-                                <i style={{ cursor: 'pointer', color: 'rgb(33 37 41)' }} className="pi pi-sign-out"></i>
-                        &nbsp; Logout
-                    </li>
-                        </div>
-                    </div>
-                </ul>
-            </div>
-        </div>)
-    }
-
-    const NavbarDesktop = () => {
-        return (
-            <Navbar bg="dark" variant="dark" fixed="top" className="navbar-desk" >
-                <Navbar.Brand href="#home">
-                    <img
-                        alt=""
-                        src="https://react-bootstrap.github.io/logo.svg"
-                        width="30"
-                        height="30"
-                        className="d-inline-block align-top"
-                    />{' '}
-                    React Bootstrap
-                </Navbar.Brand>
-                <Navbar.Toggle />
-                <Navbar.Collapse className="justify-content-end">
-                    <Navbar.Text>
-                        Bem vindo: <a href="#" style={{ textDecoration: 'none' }}>{capitalize(user.name)}</a>
-                    </Navbar.Text>
-                    &nbsp;
-                    &nbsp;
-                    <Navbar.Text>
-                        <a href="#" style={{ textDecoration: 'none' }} onClick={(e) => handleLogout(e)}>
-                            <span style={{ cursor: 'pointer', color: 'rgb(255 255 255 / 50%)' }}>
-                                Logout &nbsp;
-                                <i style={{ cursor: 'pointer', color: '#fff' }} className="pi pi-sign-out"></i>
-                            </span>
-                        </a>
-                    </Navbar.Text>
-                </Navbar.Collapse>
-            </Navbar>
-        )
-    }
-
-    const SidebarDesktop = () => {
-        return (
-            <div className="sidebar-desk">
-
-                <nav className="col-md-2 d-none d-md-block sidebar pl-0 pr-0">
-                    <div className="sidebar-sticky">
-                        <PanelMenu model={itemsPanelMenu} />
-                        {/* <div style={{ position: 'absolute', bottom: '15px', right: '15px' }}>
-                        <i style={{ 'fontSize': '1.4em', cursor: 'pointer', color: 'rgb(73 80 87)' }} className="pi pi-angle-double-left"></i>
-                    </div> */}
-                    </div>
-                </nav>
-            </div>)
-    }
-
     const UpdatingDatabase = () => {
         return (
             <div>
                 <h1 className={'h2'}>
-                    Atualizando a base de dados
+                    Updating database
                     <br />
-                    <small>Isto pode levar alguns segundos</small>
+                    <small>this may take a while</small>
                     <br />
                 </h1>
                 <ProgressBar mode="indeterminate" style={{ height: '16px' }}></ProgressBar>
@@ -360,9 +290,10 @@ function App() {
     return (
         <Container fluid>
 
-            <NavbarMobile />
-            <NavbarDesktop />
+            <NavbarMobile username={user.name} handleLogout={handleLogout} />
+            <NavbarDesktop username={user.name} handleLogout={handleLogout} />
             <SidebarDesktop />
+            <Toast ref={toast} position="bottom-right"></Toast>
 
             <div className="main-content">
                 <Row>
@@ -376,7 +307,7 @@ function App() {
                                 </h1>
                                 <div className="btn-toolbar mb-2 mb-md-0">
                                     <div className="btn-group mr-2">
-                                        <button className="btn btn-sm btn-outline-secondary" onClick={fetchData}>Recaregar dados</button>
+                                        <button className="btn btn-sm btn-outline-secondary" onClick={fetchData}>Reload data</button>
                                         <button className="btn btn-sm btn-outline-secondary" disabled>Share</button>
                                         <button className="btn btn-sm btn-outline-secondary" disabled>Export</button>
                                     </div>
@@ -448,7 +379,7 @@ function App() {
                 {/* Botão aplicar */}
                 {isUpdatingData ? (<div> </div>) : (
                     <Row style={{ paddingRight: '15px', paddingLeft: '15px' }}>
-                        <button className="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={fetchDataLocal}>Aplicar</button>
+                        <button className="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={fetchDataLocal}>Apply</button>
                     </Row>
                 )}
 
