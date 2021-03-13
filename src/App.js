@@ -8,6 +8,13 @@ import api from './api/api'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+
+
+import {DataTable} from 'primereact/datatable';
+import {Column} from 'primereact/column';
+import {ColumnGroup} from 'primereact/columngroup';
+
+
 import 'react-pro-sidebar/dist/css/styles.css';
 import './index.css';
 import './css/sidebar-desktop.css';
@@ -16,6 +23,9 @@ import './css/charts.css';
 import 'primereact/resources/themes/saga-blue/theme.css'
 import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
+
+import { Dialog } from 'primereact/dialog';
+import { Accordion,AccordionTab } from 'primereact/accordion';
 import { ProgressBar } from 'primereact/progressbar';
 import { months, colorsBars, lightOptions } from './domain/constants';
 import {
@@ -50,12 +60,27 @@ function App() {
     const [indicator1, setIndicator1] = React.useState(["Select..."])
     const [indicator2, setIndicator2] = React.useState(["Select..."])
     const [indicator3, setIndicator3] = React.useState(["Select..."])
+
+    const [indicator4, setIndicator4] = React.useState(["Select..."])
+    const [indicator5, setIndicator5] = React.useState(["Select..."])
+    const [indicator6, setIndicator6] = React.useState(["Select..."])
+
     const AddIndicator1 = indicator1.map(Add => Add)
     const AddIndicator2 = indicator2.map(Add => Add)
     const AddIndicator3 = indicator3.map(Add => Add)
+
+    const AddIndicator4 = indicator4.map(Add => Add)
+    const AddIndicator5 = indicator5.map(Add => Add)
+    const AddIndicator6 = indicator6.map(Add => Add)
+
     const [selectedIndicator3, setSelectedIndicator3] = React.useState([])
     const [selectedIndicator1, setSelectedIndicator1] = React.useState('')
     const [selectedIndicator2, setSelectedIndicator2] = React.useState('')
+
+    const [selectedIndicator4, setSelectedIndicator4] = React.useState([])
+    const [selectedIndicator5, setSelectedIndicator5] = React.useState('')
+    const [selectedIndicator6, setSelectedIndicator6] = React.useState('')
+
     const [isUpdatingData, setIsUpdatingData] = React.useState(false)
     const toast = React.useRef(null);
 
@@ -106,6 +131,44 @@ function App() {
         setSelectedIndicator3(indicators)
     }
 
+
+    const handleIndicator4TypeChange = (e) => {
+        console.clear()
+        setSelectedIndicator4(indicator1[e.target.value])
+        setSelectedIndicator6([])
+        setIndicator6(["Selecione..."])
+    }
+
+    const handleIndicator5TypeChange = (e) => {
+        console.clear()
+        setSelectedIndicator5(indicator2[e.target.value])
+        let json = crudeJsonResponseDataBarChart
+
+        let groupBy = function groupBy(list, keyGetter) {
+            const map = new Map();
+            list.forEach((item) => {
+                const key = keyGetter(item);
+                const collection = map.get(key);
+                if (!collection) {
+                    map.set(key, [item]);
+                } else {
+                    collection.push(item);
+                }
+            });
+            return map;
+        }
+        let yaxis = Array.from(groupBy(json, x => x[indicator5[e.target.value]]), ([name, value]) => ({ name }));
+        setSelectedIndicator6([])
+        setIndicator6(yaxis.map(r => r.name))
+    }
+
+    const handleIndicator6TypeChange = (e) => {
+        console.clear()
+        let indicators = selectedIndicator6
+        indicators.push(indicator6[e.target.value])
+        setSelectedIndicator6(indicators)
+    }
+
     const handleLogin = (e) => {
         if (username.toLocaleLowerCase() === userKpiDigitalTemp.name.toLocaleLowerCase() && password === userKpiDigitalTemp.pass) {
             setUser({ name: username, pass: password });
@@ -121,7 +184,20 @@ function App() {
         window.location.reload(false);
     };
 
+
+   
+    const somaX = function (vetor, name, campoName, valor){
+        let soma = 0
+                vetor.value.forEach((element, i) => {
+                    if(element.[campoName] == name)
+                        soma += parseInt(element.[valor])
+                });
+        return soma
+
+    }
+
     const fetchDataLocal = () => {
+        debugger
         if (selectedIndicator1 !== "" && selectedIndicator2 !== "" && selectedIndicator3 !== "") {
             setIsUpdatingData(true)
             let json = crudeJsonResponseDataBarChart
@@ -144,8 +220,100 @@ function App() {
             let xaxis = Array.from(groupBy(json, x => x[selectedIndicator1]), ([name, value]) => ({ name, value }));
             let yaxis = Array.from(groupBy(json, x => x[selectedIndicator2]), ([name, value]) => ({ name }));
 
+            xaxis.sort(function(a, b) {
+                return parseFloat(a.name) - parseFloat(b.name);
+            });
+
             xaxis.forEach(x => {
-                x['yaxis'] = Array.from(groupBy(x.value, x => x[selectedIndicator2]), ([name, value]) => ({ name, quantidade: value.length }));
+
+            
+                x['yaxis'] = Array.from(groupBy(x.value, x => x[selectedIndicator2]), ([name, value]) => ({ name, quantidade: somaX(x, name, selectedIndicator2, "Quant") }));
+            })
+
+            let series = []
+            yaxis.forEach((y, index) => {
+                let dataset = xaxis.map(xx => {
+                    let yaxysvalue = xx.yaxis.filter(r => r.name === y.name);
+                    if (yaxysvalue.length)
+                        return yaxysvalue[0].quantidade
+
+                    return 0
+                })
+
+                let cor = colorsBars[Math.floor(Math.random() * colorsBars.length)]
+
+                let serie = {
+                    type: "line",
+                    label: y.name,
+                    backgroundColor: cor,
+                    fill: false,
+                    borderColor: cor,
+                    borderWidth: 2,
+                    data: dataset,
+                }
+                series.push(serie)
+            })
+
+            let seriesAdd = []
+            if(selectedIndicator3.length == 0){
+                series.filter(s => s.label != null).forEach(element => {
+                    seriesAdd.push(element)
+                });
+            }else{
+                selectedIndicator3.forEach(indicator => {
+                    series.filter(s => s.label === indicator).forEach(element => {
+                        seriesAdd.push(element)
+                    });
+                });
+            }
+
+            const dashboardData = {
+                labels: xaxis.map(r => r.name),
+                datasets: seriesAdd,
+                indicators
+            };
+
+            setResponseDataBarChart(dashboardData)
+            setIsUpdatingData(false)
+            // setIndicator1(dashboardData.indicators)
+            // setIndicator3(dashboardData.indicators)
+            // setIndicator2(dashboardData.indicators)
+        }
+    }
+
+    
+
+    const fetchDataLocalII = () => {
+    
+        if (selectedIndicator4 !== "" && selectedIndicator5 !== "" && selectedIndicator6 !== "") {
+            setIsUpdatingData(true)
+            let json = crudeJsonResponseDataBarChart
+            let indicators = Object.keys(json[0]).map(key => key);
+
+            let groupBy = function groupBy(list, keyGetter) {
+                const map = new Map();
+                list.forEach((item) => {
+                    const key = keyGetter(item);
+                    const collection = map.get(key);
+                    if (!collection) {
+                        map.set(key, [item]);
+                    } else {
+                        collection.push(item);
+                    }
+                });
+                return map;
+            }
+
+            let xaxis = Array.from(groupBy(json, x => x[selectedIndicator4]), ([name, value]) => ({ name, value }));
+            let yaxis = Array.from(groupBy(json, x => x[selectedIndicator5]), ([name, value]) => ({ name }));
+
+            xaxis.sort(function(a, b) {
+                return parseFloat(a.name) - parseFloat(b.name);
+            });
+
+            xaxis.forEach(x => {
+                
+                x['yaxis'] = Array.from(groupBy(x.value, x => x[selectedIndicator5]), ([name, value]) => ({ name, quantidade: somaX(x, name, selectedIndicator5, "Quant") }));
             })
 
             let series = []
@@ -171,11 +339,17 @@ function App() {
             })
 
             let seriesAdd = []
-            selectedIndicator3.forEach(indicator => {
-                series.filter(s => s.label === indicator).forEach(element => {
+            if(selectedIndicator6.length == 0){
+                series.filter(s => s.label != null).forEach(element => {
                     seriesAdd.push(element)
                 });
-            });
+            }else{
+                selectedIndicator6.forEach(indicator => {
+                    series.filter(s => s.label === indicator).forEach(element => {
+                        seriesAdd.push(element)
+                    });
+                });
+            }
 
             const dashboardData = {
                 labels: xaxis.map(r => r.name),
@@ -183,7 +357,7 @@ function App() {
                 indicators
             };
 
-            setResponseDataBarChart(dashboardData)
+            setResponseDataLineChart(dashboardData)
             setIsUpdatingData(false)
             // setIndicator1(dashboardData.indicators)
             // setIndicator3(dashboardData.indicators)
@@ -191,18 +365,115 @@ function App() {
         }
     }
 
+    const DataTableColGroupDemo = () => {
+
+        const sales = [
+            {product: 'Bamboo Watch', lastYearSale: 51, thisYearSale: 40, lastYearProfit: 54406, thisYearProfit: 43342},
+            {product: 'Black Watch', lastYearSale: 83, thisYearSale: 9, lastYearProfit: 423132, thisYearProfit: 312122},
+            {product: 'Blue Band', lastYearSale: 38, thisYearSale: 5, lastYearProfit: 12321, thisYearProfit: 8500},
+            {product: 'Blue T-Shirt', lastYearSale: 49, thisYearSale: 22, lastYearProfit: 745232, thisYearProfit: 65323},
+            {product: 'Brown Purse', lastYearSale: 17, thisYearSale: 79, lastYearProfit: 643242, thisYearProfit: 500332},
+            {product: 'Chakra Bracelet', lastYearSale: 52, thisYearSale:  65, lastYearProfit: 421132, thisYearProfit: 150005},
+            {product: 'Galaxy Earrings', lastYearSale: 82, thisYearSale: 12, lastYearProfit: 131211, thisYearProfit: 100214},
+            {product: 'Game Controller', lastYearSale: 44, thisYearSale: 45, lastYearProfit: 66442, thisYearProfit: 53322},
+            {product: 'Gaming Set', lastYearSale: 90, thisYearSale: 56, lastYearProfit: 765442, thisYearProfit: 296232},
+            {product: 'Gold Phone Case', lastYearSale: 75, thisYearSale: 54, lastYearProfit: 21212, thisYearProfit: 12533}
+        ];
+    
+        const lastYearSaleBodyTemplate = (rowData) => {
+            return `${rowData.lastYearSale}%`;
+        }
+    
+        const thisYearSaleBodyTemplate = (rowData) => {
+            return `${rowData.thisYearSale}%`;
+        }
+    
+        const lastYearProfitBodyTemplate = (rowData) => {
+            return `${formatCurrency(rowData.lastYearProfit)}`;
+        }
+    
+        const thisYearProfitBodyTemplate = (rowData) => {
+            return `${formatCurrency(rowData.thisYearProfit)}`;
+        }
+    
+        const formatCurrency = (value) =>  {
+            return value.toLocaleString('en-US', {style: 'currency', currency: 'USD'});
+        }
+    
+        const lastYearTotal = () => {
+            let total = 0;
+            for(let sale of sales) {
+                total += sale.lastYearProfit;
+            }
+    
+            return formatCurrency(total);
+        }
+    
+        const thisYearTotal = () => {
+            let total = 0;
+            for(let sale of sales) {
+                total += sale.thisYearProfit;
+            }
+    
+            return formatCurrency(total);
+        }
+    
+        let headerGroup = <ColumnGroup>
+                            <Row>
+                                <Column header="Product" rowSpan={3} />
+                                <Column header="Sale Rate" colSpan={4} />
+                            </Row>
+                            <Row>
+                                <Column header="Sales" colSpan={2} />
+                                <Column header="Profits" colSpan={2} />
+                            </Row>
+                            <Row>
+                                <Column header="Last Year" sortable field="lastYearSale"/>
+                                <Column header="This Year" sortable field="thisYearSale"/>
+                                <Column header="Last Year" sortable field="lastYearProfit"/>
+                                <Column header="This Year" sortable field="thisYearProfit"/>
+                            </Row>
+                        </ColumnGroup>;
+    
+        let footerGroup = <ColumnGroup>
+                            <Row>
+                                <Column footer="Totals:" colSpan={3} footerStyle={{textAlign: 'right'}}/>
+                                <Column footer={lastYearTotal} />
+                                <Column footer={thisYearTotal} />
+                            </Row>
+                            </ColumnGroup>;
+        return (
+            <DataTable value={sales} headerColumnGroup={headerGroup} footerColumnGroup={footerGroup}>
+                <Column field="product" />
+                <Column field="lastYearSale" body={lastYearSaleBodyTemplate} />
+                <Column field="thisYearSale" body={thisYearSaleBodyTemplate} />
+                <Column field="lastYearProfit" body={lastYearProfitBodyTemplate} />
+                <Column field="thisYearProfit" body={thisYearProfitBodyTemplate} />
+            </DataTable>
+        );
+    }
+
+    function aplicar(){
+        fetchDataLocalII()
+        fetchDataLocal()
+    }
+
     const fetchData = () => {
 
         setIsUpdatingData(true)
 
-        api.getSearaBaseRacBar().then((response) => {
+        //teste Gabriel
+        let parametros = ['20210101','gabriel']
+
+        api.getSearaBaseRacBar(parametros).then((response) => {
             // Do whatever you want to transform the data
+        
             let json = JSON.parse(response.data)
 
             let datasets = [];
             let indicators = Object.keys(json[0]).map(key => key);
 
-            AddItensToJsonArray(json, 100000, "bar")
+            //AddItensToJsonArray(json, 100000, "bar")
             setCrudeJsonResponseDataBarChart(json)
 
             console.time("ProcessResponseBarChart")
@@ -224,6 +495,9 @@ function App() {
             setIndicator1(dashboardData.indicators)
             setIndicator3(dashboardData.indicators)
             setIndicator2(dashboardData.indicators)
+            setIndicator4(dashboardData.indicators)
+            setIndicator5(dashboardData.indicators)
+            setIndicator6(dashboardData.indicators)
         }).catch(err => {
             // what now?
             console.log(err);
@@ -301,41 +575,50 @@ function App() {
             <Toast ref={toast} position="bottom-right"></Toast>
 
             <div className="main-content">
+                
                 <Row>
-                    <Col>
+                    <Col lg={3}>
                         {isUpdatingData ? (<UpdatingDatabase />) : (
                             <div>
                                 <h1 className={'h2'}>
-                                    Dashboard
+                                    KPI - RCA
                                     <br />
-                                    <small>Bootstrap template, demonstrating a set of Primereact Charts</small>
+                                    <small>Descrição do KPI</small>
                                 </h1>
                                 <div className="btn-toolbar mb-2 mb-md-0">
                                     <div className="btn-group mr-2">
-                                        <button className="btn btn-sm btn-outline-secondary" onClick={fetchData}>Reload data</button>
-                                        <button className="btn btn-sm btn-outline-secondary" disabled>Share</button>
-                                        <button className="btn btn-sm btn-outline-secondary" disabled>Export</button>
+                                        <button className="btn btn-sm btn-outline-secondary" onClick={fetchData}>Atualizar</button>   
                                     </div>
-                                    <button className="btn btn-sm btn-outline-secondary dropdown-toggle" disabled>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                                            This week
-                                        </button>
+                                    
                                 </div>
                             </div>
                         )}
                     </Col>
+                    
                 </Row>
+                
+
+
                 <hr></hr>
+
+                
+
+                {/* Botão aplicar */}
+                {isUpdatingData ? (<div> </div>) : (
+                    <Row style={{ paddingRight: '15px', paddingLeft: '15px' }}>
+                        <button className="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={aplicar}>Aplicar</button>
+                    </Row>
+                )}
 
                 {/* Drop down com indicadores */}
                 {isUpdatingData ? (<Row><LoadingSkeletonSquare /></Row>) : (
-                    <Row>
-                        <Col lg={4}>
+                <Row>
+                <Col lg={2}>
                             <Card className="p-md-12">
-                                <h1 className="h2">
-                                    Lorem ipsum dolor
+                                <h1 className="h6">
+                                    Categoria
                                         <br />
-                                    <small>Lorem ipsum dolor</small>
+                                    <small>Eixo X</small>
                                     <br />
                                     <select onChange={e => handleIndicator1TypeChange(e)} className="browser-default custom-select" >
                                         {
@@ -346,12 +629,12 @@ function App() {
                                 </h1>
                             </Card>
                         </Col>
-                        <Col lg={4}>
+                        <Col lg={2}>
                             <Card className="p-md-12">
-                                <h1 className="h2">
-                                    Lorem ipsum dolor
+                                <h1 className="h6">
+                                    Séries
                                         <br />
-                                    <small>Lorem ipsum dolor</small>
+                                    <small>Séries</small>
                                     <br />
                                     <select onChange={e => handleIndicator2TypeChange(e)} className="browser-default custom-select" >
                                         {
@@ -362,12 +645,12 @@ function App() {
                                 </h1>
                             </Card>
                         </Col>
-                        <Col lg={4}>
+                        <Col lg={2}>
                             <Card>
-                                <h1 className="h2">
-                                    Lorem ipsum dolor
+                                <h1 className="h6">
+                                    Agrupamento
                                         <br />
-                                    <small>Lorem ipsum dolor</small>
+                                    <small>Série</small>
                                     <br />
                                     <select onChange={e => handleIndicator3TypeChange(e)} className="browser-default custom-select" >
                                         {
@@ -378,31 +661,83 @@ function App() {
                                 </h1>
                             </Card>
                         </Col>
-                    </Row>
-                )}
 
-                {/* Botão aplicar */}
-                {isUpdatingData ? (<div> </div>) : (
-                    <Row style={{ paddingRight: '15px', paddingLeft: '15px' }}>
-                        <button className="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={fetchDataLocal}>Apply</button>
-                    </Row>
+
+
+                        <Col lg={2}>
+                            <Card className="p-md-12">
+                                <h1 className="h6">
+                                    Categoria
+                                        <br />
+                                    <small>Eixo X</small>
+                                    <br />
+                                    <select onChange={e => handleIndicator4TypeChange(e)} className="browser-default custom-select" >
+                                        {
+                                            AddIndicator4.map((address, key) =>
+                                                <option key={key} value={key}>{address}</option>)
+                                        }
+                                    </select >
+                                </h1>
+                            </Card>
+                        </Col>
+                        <Col lg={2}>
+                            <Card className="p-md-12">
+                                <h1 className="h6">
+                                    Séries
+                                        <br />
+                                    <small>Séries</small>
+                                    <br />
+                                    <select onChange={e => handleIndicator5TypeChange(e)} className="browser-default custom-select" >
+                                        {
+                                            AddIndicator5.map((address, key) =>
+                                                <option key={key} value={key}>{address}</option>)
+                                        }
+                                    </select >
+                                </h1>
+                            </Card>
+                        </Col>
+                        <Col lg={2}>
+                            <Card>
+                                <h1 className="h6">
+                                    Agrupamento
+                                        <br />
+                                    <small>Série</small>
+                                    <br />
+                                    <select onChange={e => handleIndicator6TypeChange(e)} className="browser-default custom-select" >
+                                        {
+                                            AddIndicator6.map((address, key) =>
+                                                <option key={key} value={key}>{address}</option>)
+                                        }
+                                    </select >
+                                </h1>
+                            </Card>
+                        </Col>
+
+
+                </Row>
                 )}
 
                 {/* Graficos */}
                 <Row>
                     <Col>
                         {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                            <Card title="Bar Chart" subTitle="Lorem ipsum dolor" className="mt-5" >
+                            <Card title="RAC" subTitle="Indicador de Reclamações" className="mt-5">
                                 <Chart type="bar" data={responseDataBarChart} options={lightOptions} />
                             </Card>
                         )}
+                    </Col>
+                    <Col>
                         {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                            <Card title="Line Chart" subTitle="Lorem ipsum dolor" className="mt-5" >
+                            <Card title="RAC" subTitle="Indicador de Reclamações II" className="mt-5" >
                                 <Chart type="Line" data={responseDataLineChart} options={lightOptions} />
                             </Card>
                         )}
                     </Col>
                 </Row>
+                {/* Tabelas */}
+                
+                    {DataTableColGroupDemo()}
+                 
 
             </div>
         </Container>

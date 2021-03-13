@@ -60,7 +60,7 @@ function AddLineMockData(datasets) {
         borderWidth: 2,
         fill: true,
         borderDash: [5, 5],
-        data: [150, 125, 112, 148, 146, 346, 232, 210, 330, 320, 25, 340, 135]
+        data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 135]
     });
 }
 
@@ -72,13 +72,13 @@ function SetParamsToQuery() {
 }
 
 function SetDateInJsonArrayToQueryOverObjects(json, dateField) {
-    json.forEach(r => {
-        let abc = r[dateField].replace(" 00:00:00", "").split("/");
-        r['day'] = abc[0];
-        r['month'] = abc[1];
-        r['mes'] = months[(Math.floor(abc[1] - 1))];
-        r['year'] = abc[2];
-    });
+    // json.forEach(r => {
+    //     let abc = r[dateField].replace(" 00:00:00", "").split("/");
+    //     r['day'] = abc[0];
+    //     r['month'] = abc[1];
+    //     r['mes'] = months[(Math.floor(abc[1] - 1))];
+    //     r['year'] = abc[2];
+    // });
 }
 
 export {

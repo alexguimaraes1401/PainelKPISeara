@@ -1,9 +1,9 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Paineis KPI SEARA",
+  "name": "Paineis KPI SEARA",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "https://logodownload.org/wp-content/uploads/2014/12/seara-logo-1-1.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
