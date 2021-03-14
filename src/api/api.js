@@ -10,15 +10,17 @@ import {
 import { months } from '../domain/constants'
 
 const instance = axios.create({
-    baseURL: "http://179.184.236.89" //"http://179.184.236.89"
+    baseURL: "http://localhost" //"http://179.184.236.89/Seara"
 })
+
+
 
 export default {
 
     getSearaBaseRacBar: (params) =>
         instance({
             method: "GET",
-            url: `/Seara/Service/Api/BaseRac?data=${params[0]}&nome=${params[1]}`,
+            url: `/SearaDashboard/Api/BaseRac?data=${params[0]}&nome=${params[1]}`,
             params: {
                 datatype: "json"
             },

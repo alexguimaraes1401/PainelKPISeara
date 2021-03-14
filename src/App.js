@@ -1,18 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Chart } from 'primereact/chart';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
 import api from './api/api'
+import axios from 'axios';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-
 import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
 import {ColumnGroup} from 'primereact/columngroup';
+
+import { Ripple } from 'primereact/ripple';
+import { Dropdown } from 'primereact/dropdown';
+
+import classNames from 'classnames';
 
 
 import 'react-pro-sidebar/dist/css/styles.css';
@@ -34,14 +39,19 @@ import {
     AddLineMockData,
     AddDataByFilters,
     GetIndicators,
-    AddItensToJsonArray,
+    AddItensToJsonArray
 } from './domain/kpiservice';
+
 
 import { LoadingSkeletonSquare, LoadingSkeletonCard } from './components/skeletons';
 import NavbarMobile from './components/navbarMobile';
 import NavbarDesktop from './components/navbarDesktop';
 import SidebarDesktop from './components/sidebarDesktop';
 import { Toast } from 'primereact/toast';
+
+var cors = require('cors'); // Already done “npm i cors --save-dev”
+
+
 
 function App() {
 
@@ -197,7 +207,7 @@ function App() {
     }
 
     const fetchDataLocal = () => {
-        debugger
+        //debugger
         if (selectedIndicator1 !== "" && selectedIndicator2 !== "" && selectedIndicator3 !== "") {
             setIsUpdatingData(true)
             let json = crudeJsonResponseDataBarChart
@@ -365,92 +375,36 @@ function App() {
         }
     }
 
+    
+
     const DataTableColGroupDemo = () => {
 
-        const sales = [
-            {product: 'Bamboo Watch', lastYearSale: 51, thisYearSale: 40, lastYearProfit: 54406, thisYearProfit: 43342},
-            {product: 'Black Watch', lastYearSale: 83, thisYearSale: 9, lastYearProfit: 423132, thisYearProfit: 312122},
-            {product: 'Blue Band', lastYearSale: 38, thisYearSale: 5, lastYearProfit: 12321, thisYearProfit: 8500},
-            {product: 'Blue T-Shirt', lastYearSale: 49, thisYearSale: 22, lastYearProfit: 745232, thisYearProfit: 65323},
-            {product: 'Brown Purse', lastYearSale: 17, thisYearSale: 79, lastYearProfit: 643242, thisYearProfit: 500332},
-            {product: 'Chakra Bracelet', lastYearSale: 52, thisYearSale:  65, lastYearProfit: 421132, thisYearProfit: 150005},
-            {product: 'Galaxy Earrings', lastYearSale: 82, thisYearSale: 12, lastYearProfit: 131211, thisYearProfit: 100214},
-            {product: 'Game Controller', lastYearSale: 44, thisYearSale: 45, lastYearProfit: 66442, thisYearProfit: 53322},
-            {product: 'Gaming Set', lastYearSale: 90, thisYearSale: 56, lastYearProfit: 765442, thisYearProfit: 296232},
-            {product: 'Gold Phone Case', lastYearSale: 75, thisYearSale: 54, lastYearProfit: 21212, thisYearProfit: 12533}
-        ];
-    
-        const lastYearSaleBodyTemplate = (rowData) => {
-            return `${rowData.lastYearSale}%`;
+        debugger
+
+        let json = []
+        
+        for(let i=0;i<100;i++){
+            json.push(crudeJsonResponseDataBarChart[i])
         }
-    
-        const thisYearSaleBodyTemplate = (rowData) => {
-            return `${rowData.thisYearSale}%`;
-        }
-    
-        const lastYearProfitBodyTemplate = (rowData) => {
-            return `${formatCurrency(rowData.lastYearProfit)}`;
-        }
-    
-        const thisYearProfitBodyTemplate = (rowData) => {
-            return `${formatCurrency(rowData.thisYearProfit)}`;
-        }
-    
-        const formatCurrency = (value) =>  {
-            return value.toLocaleString('en-US', {style: 'currency', currency: 'USD'});
-        }
-    
-        const lastYearTotal = () => {
-            let total = 0;
-            for(let sale of sales) {
-                total += sale.lastYearProfit;
-            }
-    
-            return formatCurrency(total);
-        }
-    
-        const thisYearTotal = () => {
-            let total = 0;
-            for(let sale of sales) {
-                total += sale.thisYearProfit;
-            }
-    
-            return formatCurrency(total);
-        }
-    
-        let headerGroup = <ColumnGroup>
-                            <Row>
-                                <Column header="Product" rowSpan={3} />
-                                <Column header="Sale Rate" colSpan={4} />
-                            </Row>
-                            <Row>
-                                <Column header="Sales" colSpan={2} />
-                                <Column header="Profits" colSpan={2} />
-                            </Row>
-                            <Row>
-                                <Column header="Last Year" sortable field="lastYearSale"/>
-                                <Column header="This Year" sortable field="thisYearSale"/>
-                                <Column header="Last Year" sortable field="lastYearProfit"/>
-                                <Column header="This Year" sortable field="thisYearProfit"/>
-                            </Row>
-                        </ColumnGroup>;
-    
-        let footerGroup = <ColumnGroup>
-                            <Row>
-                                <Column footer="Totals:" colSpan={3} footerStyle={{textAlign: 'right'}}/>
-                                <Column footer={lastYearTotal} />
-                                <Column footer={thisYearTotal} />
-                            </Row>
-                            </ColumnGroup>;
-        return (
-            <DataTable value={sales} headerColumnGroup={headerGroup} footerColumnGroup={footerGroup}>
-                <Column field="product" />
-                <Column field="lastYearSale" body={lastYearSaleBodyTemplate} />
-                <Column field="thisYearSale" body={thisYearSaleBodyTemplate} />
-                <Column field="lastYearProfit" body={lastYearProfitBodyTemplate} />
-                <Column field="thisYearProfit" body={thisYearProfitBodyTemplate} />
-            </DataTable>
-        );
+
+        const sales = json
+
+    return (
+        <div>
+            <div className="card">
+            <DataTable value={sales} sortMode="multiple">
+                    <Column field="ANO" header="ANO" sortable filter filterPlaceholder="Filtro ANO"></Column>
+                    <Column field="MES" header="MES" sortable filter filterPlaceholder="Filtro MES"></Column>
+                    <Column field="ANO-MES" header="ANO-MES" sortable filter filterPlaceholder="Filtro ANO-MES"></Column>
+                    <Column field="Filial" header="Filial" sortable filter filterPlaceholder="Filtro Filial"></Column>
+                    <Column field="Negócio Planilha" header="Negócio" sortable filter filterPlaceholder="Filtro Negócio"></Column>
+                    <Column field="Quant" header="Quantidade de Reclamações" sortable filter filterPlaceholder="Filtro Quantidade"></Column>
+                </DataTable>
+            </div>
+        </div>
+    );
+
+    //////////////////////////////////////////
     }
 
     function aplicar(){
@@ -467,7 +421,10 @@ function App() {
 
         api.getSearaBaseRacBar(parametros).then((response) => {
             // Do whatever you want to transform the data
-        
+            //debugger
+
+            
+
             let json = JSON.parse(response.data)
 
             let datasets = [];
@@ -491,6 +448,8 @@ function App() {
                 indicators
             };
 
+            
+
             setResponseDataBarChart(dashboardData)
             setIndicator1(dashboardData.indicators)
             setIndicator3(dashboardData.indicators)
@@ -498,9 +457,13 @@ function App() {
             setIndicator4(dashboardData.indicators)
             setIndicator5(dashboardData.indicators)
             setIndicator6(dashboardData.indicators)
+
+            setIsUpdatingData(false)
+
         }).catch(err => {
             // what now?
             console.log(err);
+        
         });
 
         api.getSearaBaseRacLine().then((response) => {
@@ -735,8 +698,10 @@ function App() {
                     </Col>
                 </Row>
                 {/* Tabelas */}
-                
-                    {DataTableColGroupDemo()}
+                {/* {DataTableColGroupDemo()} */}
+                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                    DataTableColGroupDemo()
+                )}
                  
 
             </div>
