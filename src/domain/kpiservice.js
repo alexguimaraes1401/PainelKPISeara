@@ -1,6 +1,8 @@
 
 import { colorsBars, months } from './constants'
 
+
+
 function AddItensToJsonArray(json, size, typechart) {
     console.time("AddItensToJsonArray" + typechart)
     const start = (Math.random(0, json.length) - 1)
