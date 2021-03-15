@@ -206,6 +206,36 @@ function App() {
 
     }
 
+    const countX = function (vetor, name, campoName, valor){
+        let soma = 0
+                vetor.value.forEach((element, i) => {
+                    if(element.[campoName] == name)
+                        soma++
+                });
+        return soma
+
+    }
+
+    const percX = function (vetor, name, campoName1, valor1, campoName2, valor2,){
+        let soma = 0
+                vetor.value.forEach((element, i) => {
+                    if(element.[campoName1] == name)
+                        soma++
+                });
+        return soma
+
+    }
+
+    const avgX = function (vetor, name, campoName, valor){
+        let soma = 0
+                vetor.value.forEach((element, i) => {
+                    if(element.[campoName] == name)
+                        soma += parseInt(element.[valor])
+                });
+        return soma
+
+    }
+
     const fetchDataLocal = () => {
         //debugger
         if (selectedIndicator1 !== "" && selectedIndicator2 !== "" && selectedIndicator3 !== "") {
@@ -237,7 +267,7 @@ function App() {
             xaxis.forEach(x => {
 
             
-                x['yaxis'] = Array.from(groupBy(x.value, x => x[selectedIndicator2]), ([name, value]) => ({ name, quantidade: somaX(x, name, selectedIndicator2, "Quant") }));
+                x['yaxis'] = Array.from(groupBy(x.value, x => x[selectedIndicator2]), ([name, value]) => ({ name, quantidade: countX(x, name, selectedIndicator2, "Quant") }));
             })
 
             let series = []
@@ -383,8 +413,12 @@ function App() {
 
         let json = []
         
-        for(let i=0;i<100;i++){
-            json.push(crudeJsonResponseDataBarChart[i])
+        if(crudeJsonResponseDataBarChart.length > 0){
+
+            for(let i=0;i<100;i++){
+                json.push(crudeJsonResponseDataBarChart[i])
+            }
+
         }
 
         const sales = json
@@ -393,12 +427,12 @@ function App() {
         <div>
             <div className="card">
             <DataTable value={sales} sortMode="multiple">
-                    <Column field="ANO" header="ANO" sortable filter filterPlaceholder="Filtro ANO"></Column>
-                    <Column field="MES" header="MES" sortable filter filterPlaceholder="Filtro MES"></Column>
+                    <Column field="ANO" header="ANO" sortable filter filterPlaceholder="ANO"></Column>
+                    <Column field="MES" header="MES" sortable filter filterPlaceholder="MES"></Column>
                     <Column field="ANO-MES" header="ANO-MES" sortable filter filterPlaceholder="Filtro ANO-MES"></Column>
                     <Column field="Filial" header="Filial" sortable filter filterPlaceholder="Filtro Filial"></Column>
                     <Column field="Negócio Planilha" header="Negócio" sortable filter filterPlaceholder="Filtro Negócio"></Column>
-                    <Column field="Quant" header="Quantidade de Reclamações" sortable filter filterPlaceholder="Filtro Quantidade"></Column>
+                    <Column field="Quant" header="Quantidade de Reclamações" sortable filter filterPlaceholder="Quantidade"></Column>
                 </DataTable>
             </div>
         </div>
