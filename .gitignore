@@ -9,7 +9,7 @@
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
-*.eslintcache
+eslintcache
 
 # Build results
 [Dd]ebug/
