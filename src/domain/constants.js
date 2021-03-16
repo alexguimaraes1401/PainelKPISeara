@@ -1,11 +1,22 @@
+function navigateToPage(path) {
+    if (typeof window !== 'undefined') {
+        window.location.href = path;
+    }
+}
+
 const itemsPanelMenu = [
     {
         label: 'KPIs',
         icon: 'pi pi-fw pi-file',
         items: [
-
+            {
+                label: 'Início',
+                command: () => { navigateToPage('/') },
+                icon: 'pi pi-fw pi-external-link'
+            },
             {
                 label: 'Absorção',
+                command: () => { navigateToPage('/absorcao') },
                 icon: 'pi pi-fw pi-external-link'
             },
             {
@@ -82,7 +93,7 @@ const itemsPanelMenu = [
             }
         ]
     }
-    
+
 ];
 
 const lightOptions = {
