@@ -34,7 +34,7 @@ export default {
     getSearaBaseRacLine: () =>
         instance({
             method: "GET",
-            url: "/Seara/Service/Api/BaseRac",
+            url: `/SearaDashboard/Api/BaseRac`,
             params: {
                 datatype: "json"
             },
