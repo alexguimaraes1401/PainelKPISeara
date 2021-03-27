@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
 import { Chart } from 'primereact/chart';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
@@ -42,6 +43,35 @@ import {
 
 import { LoadingSkeletonSquare, LoadingSkeletonCard } from '../components/skeletons';
 
+const Canvas = props => {
+  
+    const { draw, ...rest } = props
+    const canvasRef = useRef(null)
+    
+    useEffect(() => {
+      
+      const canvas = canvasRef.current
+      const context = canvas.getContext('2d')
+      let frameCount = 0
+      let animationFrameId
+      
+      const render = () => {
+        frameCount++
+        draw(context, frameCount)
+        animationFrameId = window.requestAnimationFrame(render)
+      }
+      render()
+      
+      return () => {
+        window.cancelAnimationFrame(animationFrameId)
+      }
+    }, [draw])
+    
+    return <canvas ref={canvasRef} {...rest}/>
+  }
+  
+ 
+
 var cors = require('cors'); // Already done “npm i cors --save-dev”
 
 function Home() {
@@ -76,6 +106,8 @@ function Home() {
 
     const [isUpdatingData, setIsUpdatingData] = React.useState(false)
     const toast = React.useRef(null);
+
+    
 
     //Handlers
     React.useEffect(() => {
@@ -201,8 +233,8 @@ function Home() {
     }
 
     const fetchDataLocal = () => {
-        //debugger
-        if (selectedIndicator1 !== "" && selectedIndicator2 !== "" && selectedIndicator3 !== "") {
+        debugger
+        //if (selectedIndicator1 !== "" && selectedIndicator2 !== "" && selectedIndicator3 !== "") {
             setIsUpdatingData(true)
             let json = crudeJsonResponseDataBarChart
             let indicators = Object.keys(json[0]).map(key => key);
@@ -221,17 +253,33 @@ function Home() {
                 return map;
             }
 
-            let xaxis = Array.from(groupBy(json, x => x[selectedIndicator1]), ([name, value]) => ({ name, value }));
-            let yaxis = Array.from(groupBy(json, x => x[selectedIndicator2]), ([name, value]) => ({ name }));
+            // let xaxis = Array.from(groupBy(json, x => x[selectedIndicator1]), ([name, value]) => ({ name, value }));
+            // let yaxis = Array.from(groupBy(json, x => x[selectedIndicator2]), ([name, value]) => ({ name }));
 
-            xaxis.sort(function (a, b) {
-                return parseFloat(a.name) - parseFloat(b.name);
-            });
+            let xaxis = Array.from(groupBy(json, x => x["Periodo"]), ([name, value]) => ({ name, value }));
+            let yaxis = [{name:'Evolutivo 2020'},{name:'Evolutivo 2021'},{name:'Evolutivo Meta'},{name:'Meta'},{name:'2019'},{name:'2020'},{name: '2021'}];
+
+            // xaxis.sort(function (a, b) {
+            //     return parseFloat(a.name) - parseFloat(b.name);
+            // });
 
             xaxis.forEach(x => {
-
-
-                x['yaxis'] = Array.from(groupBy(x.value, x => x[selectedIndicator2]), ([name, value]) => ({ name, quantidade: somaX(x, name, selectedIndicator2, "Quant") }));
+                // x['yaxis'] = Array.from(groupBy(x.value, x => x[selectedIndicator2]), ([name, value]) => ({ name, quantidade: somaX(x, name, selectedIndicator2, "Quant") }));
+                if (x.name == "2019"){
+                    x['yaxis'] = [{name: "2019", value: x.value[0].Valor}]
+                }else if (x.name == "2020"){
+                    x['yaxis'] = [{name: "2020", value: x.value[0].Valor}]
+                }else if(x.name == "Meta"){
+                    x['yaxis'] = [{name: "Meta", value: x.value[0].Valor}]
+                }else if(x.name == "2021"){
+                    x['yaxis'] = [{name: "2021", value: x.value[0].Valor}]
+                }else{
+                    x['yaxis'] = [
+                                    {name: "Evolutivo 2020", value: x.value[0].a2020},
+                                    {name: "Evolutivo Meta", value: x.value[0].aMeta},
+                                    {name: "Evolutivo 2021", value: x.value[0].a2021}
+                                ]
+                }
             })
 
             let series = []
@@ -239,15 +287,64 @@ function Home() {
                 let dataset = xaxis.map(xx => {
                     let yaxysvalue = xx.yaxis.filter(r => r.name === y.name);
                     if (yaxysvalue.length)
-                        return yaxysvalue[0].quantidade
+                        return yaxysvalue[0].value
 
-                    return 0
+                    return null
                 })
 
-                let cor = colorsBars[Math.floor(Math.random() * colorsBars.length)]
+                //let cor = colorsBars[Math.floor(Math.random() * colorsBars.length)]
+
+                let tipo = 'line'
+                let cor = '#bfbfbf'
+                let yAx = "B"
+
+                switch (y.name){
+
+                    case "2019": 
+                                    tipo = "bar"
+                                    cor = "#bfbfbf"
+                                    yAx = "A"
+                                    break
+                    case "2020": 
+                                    tipo = "bar"
+                                    cor = "#bfbfbf"
+                                    yAx = "A"
+                                    break
+                    case "Meta": 
+                                    tipo = "bar"
+                                    cor = "rgb(245,156,0)"
+                                    yAx = "A"
+                                    break
+                    case "2021": 
+                                    tipo = "bar"
+                                    cor = "#cccccc"
+                                    yAx = "A"
+                                    break
+                    case "Evolutivo 2020": 
+                                    tipo = "line"
+                                    cor = "rgb(166, 166, 166)"
+                                    yAx = "B"
+                                    break
+                    case "Evolutivo Meta": 
+                                    tipo = "line"
+                                    cor = "rgb(245,156,0)"
+                                    yAx = "B"
+                                    break
+                    case "Evolutivo 2021": 
+                                    tipo = "line"
+                                    cor = "rgb(89,89,89)"
+                                    yAx = "B"
+                                    break
+                                 
+                    default:
+                                    break
+
+
+                }
 
                 let serie = {
-                    type: "line",
+                    type: tipo,
+                    yAxisID: yAx,
                     label: y.name,
                     backgroundColor: cor,
                     fill: false,
@@ -275,97 +372,19 @@ function Home() {
                 labels: xaxis.map(r => r.name),
                 datasets: seriesAdd,
                 indicators
+                
             };
 
             setResponseDataBarChart(dashboardData)
             setIsUpdatingData(false)
-        }
-    }
-
-    const fetchDataLocalII = () => {
-
-        if (selectedIndicator4 !== "" && selectedIndicator5 !== "" && selectedIndicator6 !== "") {
-            setIsUpdatingData(true)
-            let json = crudeJsonResponseDataBarChart
-            let indicators = Object.keys(json[0]).map(key => key);
-
-            let groupBy = function groupBy(list, keyGetter) {
-                const map = new Map();
-                list.forEach((item) => {
-                    const key = keyGetter(item);
-                    const collection = map.get(key);
-                    if (!collection) {
-                        map.set(key, [item]);
-                    } else {
-                        collection.push(item);
-                    }
-                });
-                return map;
-            }
-
-            let xaxis = Array.from(groupBy(json, x => x[selectedIndicator4]), ([name, value]) => ({ name, value }));
-            let yaxis = Array.from(groupBy(json, x => x[selectedIndicator5]), ([name, value]) => ({ name }));
-
-            xaxis.sort(function (a, b) {
-                return parseFloat(a.name) - parseFloat(b.name);
-            });
-
-            xaxis.forEach(x => {
-
-                x['yaxis'] = Array.from(groupBy(x.value, x => x[selectedIndicator5]), ([name, value]) => ({ name, quantidade: somaX(x, name, selectedIndicator5, "Quant") }));
-            })
-
-            let series = []
-            yaxis.forEach((y, index) => {
-                let dataset = xaxis.map(xx => {
-                    let yaxysvalue = xx.yaxis.filter(r => r.name === y.name);
-                    if (yaxysvalue.length)
-                        return yaxysvalue[0].quantidade
-
-                    return 0
-                })
-
-                let serie = {
-                    type: "bar",
-                    label: y.name,
-                    backgroundColor: colorsBars[Math.floor(Math.random() * colorsBars.length)],
-                    fill: false,
-                    borderColor: "white",
-                    borderWidth: 0,
-                    data: dataset,
-                }
-                series.push(serie)
-            })
-
-            let seriesAdd = []
-            if (selectedIndicator6.length == 0) {
-                series.filter(s => s.label != null).forEach(element => {
-                    seriesAdd.push(element)
-                });
-            } else {
-                selectedIndicator6.forEach(indicator => {
-                    series.filter(s => s.label === indicator).forEach(element => {
-                        seriesAdd.push(element)
-                    });
-                });
-            }
-
-            const dashboardData = {
-                labels: xaxis.map(r => r.name),
-                datasets: seriesAdd,
-                indicators
-            };
-
-            setResponseDataLineChart(dashboardData)
-            setIsUpdatingData(false)
-        }
+        //}
     }
 
     const DataTableColGroupDemo = () => {
 
         if (!crudeJsonResponseDataBarChart) return;
 
-        debugger
+        //debugger
 
         let json = []
 
@@ -394,7 +413,6 @@ function Home() {
     }
 
     function aplicar() {
-        fetchDataLocalII()
         fetchDataLocal()
     }
 
@@ -485,6 +503,16 @@ function Home() {
         )
     }
 
+    // const draw = (ctx, frameCount) => {
+    //     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+    //     ctx.fillStyle = '#000000'
+    //     ctx.beginPath()
+    //     ctx.arc(50, 100, 20*Math.sin(frameCount*0.05)**2, 0, 2*Math.PI)
+    //     ctx.fill()
+    //   }
+      
+    //   return <Canvas draw={draw} />
+
     // Se esta logado exibe tela do dashboard:
     return (
         <div>
@@ -517,7 +545,7 @@ function Home() {
                 </Row>
             )}
 
-            {/* Drop down com indicadores */}
+            {/* Drop down com indicadores
             {isUpdatingData ? (<Row><LoadingSkeletonSquare /></Row>) : (
                 <Row>
                     <Col lg={2}>
@@ -642,7 +670,7 @@ function Home() {
 
 
                 </Row>
-            )}
+            )} */}
 
             {/* Graficos */}
             <Row>
@@ -650,13 +678,6 @@ function Home() {
                     {isUpdatingData ? (<LoadingSkeletonCard />) : (
                         <Card title="RAC" subTitle="Indicador de Reclamações" className="mt-5">
                             <Chart type="bar" data={responseDataBarChart} options={lightOptions} />
-                        </Card>
-                    )}
-                </Col>
-                <Col>
-                    {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                        <Card title="RAC" subTitle="Indicador de Reclamações II" className="mt-5" >
-                            <Chart type="Line" data={responseDataLineChart} options={lightOptions} />
                         </Card>
                     )}
                 </Col>

@@ -104,15 +104,25 @@ const lightOptions = {
     },
     scales: {
         xAxes: [{
-            ticks: {
-                fontColor: '#495057'
-            }
+            stacked: true
         }],
-        yAxes: [{
-            ticks: {
-                fontColor: '#495057'
+        yAxes: [
+            {
+                id: "A",
+                position: "left",
+                stacked: true,
+                ticks: {
+                    fontColor: '#495057'
+                }
+            }, 
+            {
+                id: "B",
+                position: "right",
+                ticks: {
+                    fontColor: '#495057'
+                }
             }
-        }]
+        ]
     }
 };
 
