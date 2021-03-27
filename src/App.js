@@ -27,6 +27,7 @@ const ContactUs = lazy(() => import("./views/contactUs"));
 const NotFoundPage = lazy(() => import("./views/notFoundPage"));
 const DashViewAbsorcao = lazy(() => import("./views/dashViewAbsorcao"));
 const Home = lazy(() => import("./views/home"));
+const CreateUser = lazy(()=> import("./views/createUser"));
 
 function App() {
     const userKpiDigitalTemp = { name: 'admin', pass: 'admin' }
@@ -127,6 +128,7 @@ function App() {
                         <Route exact path='/' component={Home} />
                         <Route path='/contact' component={ContactUs} />
                         <Route path='/absorcao' component={DashViewAbsorcao} />
+                        <Route path='/cadastro' component={CreateUser} />
                         <Route path='*' component={NotFoundPage} />
                     </Switch>
                 </Layout>

@@ -9,6 +9,7 @@ import axios from 'axios';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Pdf from "react-to-pdf";
 
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
@@ -41,6 +42,7 @@ import {
 
 
 import { LoadingSkeletonSquare, LoadingSkeletonCard } from '../components/skeletons';
+const ref = React.createRef();
 
 var cors = require('cors'); // Already done “npm i cors --save-dev”
 
@@ -459,7 +461,7 @@ function Home() {
         }).catch(err => {
             // what now?
             console.log(err);
-            showError('Network Error', 'Could not fetch data')
+            // showError('Network Error', 'Could not fetch data')
         });
     };
 
@@ -488,186 +490,193 @@ function Home() {
     // Se esta logado exibe tela do dashboard:
     return (
         <div>
-            <Row>
-                <Col lg={3}>
-                    {isUpdatingData ? (<UpdatingDatabase />) : (
-                        <div>
-                            <h1 className={'h2'}>
-                                KPI - RCA
-                                    <br />
-                                <small>Descrição do KPI</small>
-                            </h1>
-                            <div className="btn-toolbar mb-2 mb-md-0">
-                                <div className="btn-group mr-2">
-                                    <button className="btn btn-sm btn-outline-secondary" onClick={fetchData}>Atualizar</button>
-                                </div>
+            <Pdf targetRef={ref} filename="code-example.pdf">
+                {({ toPdf }) => <button onClick={toPdf}>Generate Pdf</button>}
+            </Pdf>
+            <div ref={ref}>
 
-                            </div>
-                        </div>
-                    )}
-                </Col>
-            </Row>
 
-            <hr></hr>
-
-            {/* Botão aplicar */}
-            {isUpdatingData ? (<div> </div>) : (
-                <Row style={{ paddingRight: '15px', paddingLeft: '15px' }}>
-                    <button className="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={aplicar}>Aplicar</button>
-                </Row>
-            )}
-
-            {/* Drop down com indicadores */}
-            {isUpdatingData ? (<Row><LoadingSkeletonSquare /></Row>) : (
                 <Row>
-                    <Col lg={2}>
-                        <Card className="p-md-12">
-                            <h1 className="h6">
-                                Categoria
-                                        <br />
-                                <small>Eixo X</small>
-                                <br />
-                                <select onChange={e => handleIndicator1TypeChange(e)} className="browser-default custom-select" >
-                                    {
-                                        AddIndicator1.map((address, key) =>
-                                            <option key={key} value={key}>{address}</option>)
-                                    }
-                                </select >
-                            </h1>
-                        </Card>
-                    </Col>
-                    <Col lg={2}>
-                        <Card className="p-md-12">
-                            <h1 className="h6">
-                                Séries
-                                        <br />
-                                <small>Séries</small>
-                                <br />
-                                <select onChange={e => handleIndicator2TypeChange(e)} className="browser-default custom-select" >
-                                    {
-                                        AddIndicator2.map((address, key) =>
-                                            <option key={key} value={key}>{address}</option>)
-                                    }
-                                </select >
-                            </h1>
-                        </Card>
-                    </Col>
-                    <Col lg={2}>
-                        <Card className="h6" style={{ "overflow-y": "auto", "max-height": "230px" }}>
-                            {
-                                AddIndicator3.map(item => (
-                                    <div className="custom-control custom-checkbox " >
-                                        <input type="checkbox" className="custom-control-input" id={item} value={item} onChange={e => handleCheckboxChangeIndicator3(e)} />
-                                        <label className="custom-control-label" htmlFor={item}>{item}</label>
+                    <Col lg={3}>
+                        {isUpdatingData ? (<UpdatingDatabase />) : (
+                            <div>
+                                <h1 className={'h2'}>
+                                    KPI - RCA
+                                    <br />
+                                    <small>Descrição do KPI</small>
+                                </h1>
+                                <div className="btn-toolbar mb-2 mb-md-0">
+                                    <div className="btn-group mr-2">
+                                        <button className="btn btn-sm btn-outline-secondary" onClick={fetchData}>Atualizar</button>
                                     </div>
-                                ))
-                            }
-                        </Card>
-                        <Card>
-                            <h1 className="h6">
-                                Agrupamento
-                                        <br />
-                                <small>Série</small>
-                                <br />
-                                <select onChange={e => handleIndicator3TypeChange(e)} className="browser-default custom-select" >
-                                    {
-                                        AddIndicator3.map((address, key) =>
-                                            <option key={key} value={key}>{address}</option>)
-                                    }
-                                </select >
-                            </h1>
-                        </Card>
+
+                                </div>
+                            </div>
+                        )}
                     </Col>
-
-
-
-                    <Col lg={2}>
-                        <Card className="p-md-12">
-                            <h1 className="h6">
-                                Categoria
-                                        <br />
-                                <small>Eixo X</small>
-                                <br />
-                                <select onChange={e => handleIndicator4TypeChange(e)} className="browser-default custom-select" >
-                                    {
-                                        AddIndicator4.map((address, key) =>
-                                            <option key={key} value={key}>{address}</option>)
-                                    }
-                                </select >
-                            </h1>
-                        </Card>
-                    </Col>
-                    <Col lg={2}>
-                        <Card className="p-md-12">
-                            <h1 className="h6">
-                                Séries
-                                        <br />
-                                <small>Séries</small>
-                                <br />
-                                <select onChange={e => handleIndicator5TypeChange(e)} className="browser-default custom-select" >
-                                    {
-                                        AddIndicator5.map((address, key) =>
-                                            <option key={key} value={key}>{address}</option>)
-                                    }
-                                </select >
-                            </h1>
-                        </Card>
-                    </Col>
-                    <Col lg={2}>
-                        <Card className="h6" style={{ "overflow-y": "auto", "max-height": "230px" }}>
-                            {
-                                AddIndicator6.map(item => (
-                                    <div className="custom-control custom-checkbox " >
-                                        <input type="checkbox" className="custom-control-input" id={item} value={item} onChange={e => handleCheckboxChangeIndicator6(e)} />
-                                        <label className="custom-control-label" htmlFor={item}>{item}</label>
-                                    </div>
-                                ))
-                            }
-                        </Card>
-                        <Card>
-                            <h1 className="h6">
-                                Agrupamento
-                                        <br />
-                                <small>Série</small>
-                                <br />
-                                <select onChange={e => handleIndicator6TypeChange(e)} className="browser-default custom-select" >
-                                    {
-                                        AddIndicator6.map((address, key) =>
-                                            <option key={key} value={key}>{address}</option>)
-                                    }
-                                </select >
-                            </h1>
-                        </Card>
-                    </Col>
-
-
                 </Row>
-            )}
 
-            {/* Graficos */}
-            <Row>
-                <Col>
-                    {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                        <Card title="RAC" subTitle="Indicador de Reclamações" className="mt-5">
-                            <Chart type="bar" data={responseDataBarChart} options={lightOptions} />
-                        </Card>
-                    )}
-                </Col>
-                <Col>
-                    {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                        <Card title="RAC" subTitle="Indicador de Reclamações II" className="mt-5" >
-                            <Chart type="Line" data={responseDataLineChart} options={lightOptions} />
-                        </Card>
-                    )}
-                </Col>
-            </Row>
-            {/* Tabelas */}
-            {/* {DataTableColGroupDemo()} */}
-            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                DataTableColGroupDemo()
-            )}
+                <hr></hr>
+
+                {/* Botão aplicar */}
+                {isUpdatingData ? (<div> </div>) : (
+                    <Row style={{ paddingRight: '15px', paddingLeft: '15px' }}>
+                        <button className="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={aplicar}>Aplicar</button>
+                    </Row>
+                )}
+
+                {/* Drop down com indicadores */}
+                {isUpdatingData ? (<Row><LoadingSkeletonSquare /></Row>) : (
+                    <Row>
+                        <Col lg={2}>
+                            <Card className="p-md-12">
+                                <h1 className="h6">
+                                    Categoria
+                                        <br />
+                                    <small>Eixo X</small>
+                                    <br />
+                                    <select onChange={e => handleIndicator1TypeChange(e)} className="browser-default custom-select" >
+                                        {
+                                            AddIndicator1.map((address, key) =>
+                                                <option key={key} value={key}>{address}</option>)
+                                        }
+                                    </select >
+                                </h1>
+                            </Card>
+                        </Col>
+                        <Col lg={2}>
+                            <Card className="p-md-12">
+                                <h1 className="h6">
+                                    Séries
+                                        <br />
+                                    <small>Séries</small>
+                                    <br />
+                                    <select onChange={e => handleIndicator2TypeChange(e)} className="browser-default custom-select" >
+                                        {
+                                            AddIndicator2.map((address, key) =>
+                                                <option key={key} value={key}>{address}</option>)
+                                        }
+                                    </select >
+                                </h1>
+                            </Card>
+                        </Col>
+                        <Col lg={2}>
+                            <Card className="h6" style={{ "overflow-y": "auto", "max-height": "230px" }}>
+                                {
+                                    AddIndicator3.map(item => (
+                                        <div className="custom-control custom-checkbox " >
+                                            <input type="checkbox" className="custom-control-input" id={item} value={item} onChange={e => handleCheckboxChangeIndicator3(e)} />
+                                            <label className="custom-control-label" htmlFor={item}>{item}</label>
+                                        </div>
+                                    ))
+                                }
+                            </Card>
+                            <Card>
+                                <h1 className="h6">
+                                    Agrupamento
+                                        <br />
+                                    <small>Série</small>
+                                    <br />
+                                    <select onChange={e => handleIndicator3TypeChange(e)} className="browser-default custom-select" >
+                                        {
+                                            AddIndicator3.map((address, key) =>
+                                                <option key={key} value={key}>{address}</option>)
+                                        }
+                                    </select >
+                                </h1>
+                            </Card>
+                        </Col>
 
 
+
+                        <Col lg={2}>
+                            <Card className="p-md-12">
+                                <h1 className="h6">
+                                    Categoria
+                                        <br />
+                                    <small>Eixo X</small>
+                                    <br />
+                                    <select onChange={e => handleIndicator4TypeChange(e)} className="browser-default custom-select" >
+                                        {
+                                            AddIndicator4.map((address, key) =>
+                                                <option key={key} value={key}>{address}</option>)
+                                        }
+                                    </select >
+                                </h1>
+                            </Card>
+                        </Col>
+                        <Col lg={2}>
+                            <Card className="p-md-12">
+                                <h1 className="h6">
+                                    Séries
+                                        <br />
+                                    <small>Séries</small>
+                                    <br />
+                                    <select onChange={e => handleIndicator5TypeChange(e)} className="browser-default custom-select" >
+                                        {
+                                            AddIndicator5.map((address, key) =>
+                                                <option key={key} value={key}>{address}</option>)
+                                        }
+                                    </select >
+                                </h1>
+                            </Card>
+                        </Col>
+                        <Col lg={2}>
+                            <Card className="h6" style={{ "overflow-y": "auto", "max-height": "230px" }}>
+                                {
+                                    AddIndicator6.map(item => (
+                                        <div className="custom-control custom-checkbox " >
+                                            <input type="checkbox" className="custom-control-input" id={item} value={item} onChange={e => handleCheckboxChangeIndicator6(e)} />
+                                            <label className="custom-control-label" htmlFor={item}>{item}</label>
+                                        </div>
+                                    ))
+                                }
+                            </Card>
+                            <Card>
+                                <h1 className="h6">
+                                    Agrupamento
+                                        <br />
+                                    <small>Série</small>
+                                    <br />
+                                    <select onChange={e => handleIndicator6TypeChange(e)} className="browser-default custom-select" >
+                                        {
+                                            AddIndicator6.map((address, key) =>
+                                                <option key={key} value={key}>{address}</option>)
+                                        }
+                                    </select >
+                                </h1>
+                            </Card>
+                        </Col>
+
+
+                    </Row>
+                )}
+
+                {/* Graficos */}
+                <Row>
+                    <Col>
+                        {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                            <Card title="RAC" subTitle="Indicador de Reclamações" className="mt-5">
+                                <Chart type="bar" data={responseDataBarChart} options={lightOptions} />
+                            </Card>
+                        )}
+                    </Col>
+                    <Col>
+                        {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                            <Card title="RAC" subTitle="Indicador de Reclamações II" className="mt-5" >
+                                <Chart type="Line" data={responseDataLineChart} options={lightOptions} />
+                            </Card>
+                        )}
+                    </Col>
+                </Row>
+                {/* Tabelas */}
+                {/* {DataTableColGroupDemo()} */}
+                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                    DataTableColGroupDemo()
+                )}
+
+
+            </div>
         </div>
     )
 }
