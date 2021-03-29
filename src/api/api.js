@@ -23,7 +23,7 @@ export default {
             method: "GET",
             //url: `/Service/RAC?data=${params[0]}&nome=${params[1]}`, //`/SearaDashboard/RAC?data=${params[0]}&nome=${params[1]}`,
             //url: `/RACTotal?data=${params[0]}&nome=${params[1]}`, 
-            url: `/Api/BaseRac?data=${params[0]}&nome=${params[1]}`, 
+            url: `/Rac?where=${params[0]}`, 
             params: {
                 datatype: "json"
             },
@@ -34,35 +34,35 @@ export default {
             ]
         }),
 
-    getSearaBaseRacLine: () =>
+    getSearaBaseRacBar2: (params) =>
         instance({
             method: "GET",
-            url: `/Api/BaseRac`,
+            //url: `/Service/RAC?data=${params[0]}&nome=${params[1]}`, //`/SearaDashboard/RAC?data=${params[0]}&nome=${params[1]}`,
+            //url: `/RACTotal?data=${params[0]}&nome=${params[1]}`, 
+            url: `/RacTotal?where=${params[0]}`, 
             params: {
                 datatype: "json"
             },
             transformResponse: [
                 function (data) {
-                    // Do whatever you want to transform the data
-                    let json = JSON.parse(data)
-                    let indicators = Object.keys(json[0]).map(key => key);
-                    //AddItensToJsonArray(json, 100000, "line")
-
-                    console.time("ProcessResponseLineChart")
-                    let datasets = []
-                    let { dateField, field, ano } = SetParamsToQuery()
-                    SetDateInJsonArrayToQueryOverObjects(json, dateField)
-                    let problemas = GetIndicators(json, field)
-                    AddLineMockData(datasets)
-                    AddDataByFilters(problemas, json, ano, field, datasets, "line")
-                    console.timeEnd("ProcessResponseLineChart")
-                    return {
-                        labels: months,
-                        datasets: datasets,
-                        indicators
-                    }
-
+                    return data;
                 }
             ]
-        })
+        }),
+    
+    getSearaBaseRacME: (params) =>
+        instance({
+            method: "GET",
+            url: `/RacME?where=${params[0]}`, 
+            params: {
+                datatype: "json"
+            },
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
+        }),
+
+    
 }

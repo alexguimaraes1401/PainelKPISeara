@@ -93,7 +93,7 @@ function App() {
 
     const Layout = ({ children }) => {
         return (
-            <Container fluid>
+            <div className="pdfsize">
                 <NavbarMobile username={user.name} handleLogout={handleLogout} />
                 <NavbarDesktop username={user.name} handleLogout={handleLogout} />
                 <SidebarDesktop />
@@ -101,7 +101,7 @@ function App() {
                 <div className="main-content">
                     {children}
                 </div>
-            </Container>
+            </div>
         );
     };
 
