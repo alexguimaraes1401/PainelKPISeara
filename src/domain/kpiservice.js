@@ -56,13 +56,13 @@ function AddDataByFilters(problemas, json, ano, field, datasets, type) {
 function AddLineMockData(datasets) {
     datasets.push({
         type: "line",
-        label: "Dataset 1",
+        label: "",
         borderColor: 'red',
         backgroundColor: '#edc4c736',
         borderWidth: 2,
         fill: true,
         borderDash: [5, 5],
-        data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 135]
+        data: []
     });
 }
 

@@ -26,6 +26,9 @@ import { Toast } from 'primereact/toast';
 const ContactUs = lazy(() => import("./views/contactUs"));
 const NotFoundPage = lazy(() => import("./views/notFoundPage"));
 const DashViewAbsorcao = lazy(() => import("./views/dashViewAbsorcao"));
+const DashViewNNCLog = lazy(() => import("./views/dashViewNNCLog"));
+const DashViewNNCMP = lazy(() => import("./views/dashViewNNCMP"));
+const DashViewRac = lazy(() => import("./views/rac"));
 const Home = lazy(() => import("./views/home"));
 
 function App() {
@@ -127,6 +130,9 @@ function App() {
                         <Route exact path='/' component={Home} />
                         <Route path='/contact' component={ContactUs} />
                         <Route path='/absorcao' component={DashViewAbsorcao} />
+                        <Route path='/nnclog' component={DashViewNNCLog} />
+                        <Route path='/nncmp' component={DashViewNNCMP} />
+                        <Route path='/rac' component={DashViewRac} />
                         <Route path='*' component={NotFoundPage} />
                     </Switch>
                 </Layout>
