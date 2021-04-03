@@ -68,12 +68,16 @@ function Home() {
     const [GraficoRAC_Suinos, setGraficoRAC_Suinos] = React.useState() 
     const [GraficoRAC_Preparados, setGraficoRAC_Preparados] = React.useState() 
     const [GraficoRAC_Outros, setGraficoRAC_Outros] = React.useState() 
+    const [GraficoNNCMP_Total, setGraficoNNCMP_Total] = React.useState() 
+    const [GraficoNNCLog_Total, setGraficoNNCLog_Total] = React.useState() 
     
     let [responseGraficoRAC_Total, setresponseGraficoRAC_Total] = React.useState({})
     let [responseGraficoRAC_Aves, setresponseGraficoRAC_Aves] = React.useState({})
     let [responseGraficoRAC_Suinos, setresponseGraficoRAC_Suinos] = React.useState({})
     let [responseGraficoRAC_Preparados, setresponseGraficoRAC_Preparados] = React.useState({})
     let [responseGraficoRAC_Outros, setresponseGraficoRAC_Outros] = React.useState({})
+    let [responseGraficoNNCMP_Total, setresponseGraficoNNCMP_Total] = React.useState({})
+    let [responseGraficoNNCLog_Total, setresponseGraficoNNCLog_Total] = React.useState({})
 
     //Handlers
     React.useEffect(() => {
@@ -83,6 +87,8 @@ function Home() {
         fetchData(GraficoRAC_Suinos, "GraficoRAC_Suinos");
         fetchData(GraficoRAC_Preparados, "GraficoRAC_Preparados");
         fetchData(GraficoRAC_Outros, "GraficoRAC_Outros");
+        fetchData(GraficoNNCMP_Total, "GraficoNNCMP_Total");
+        fetchData(GraficoNNCLog_Total, "GraficoNNCLog_Total");
     }, []);
 
     const GerarGrafico = (objeto, numGrafico) => {
@@ -267,6 +273,12 @@ function Home() {
                 case "GraficoRAC_Outros":
                     setresponseGraficoRAC_Outros(dashboardData)
                     break
+                case "GraficoNNCMP_Total":
+                    setresponseGraficoNNCMP_Total(dashboardData)
+                    break
+                case "GraficoNNCLog_Total":
+                    setresponseGraficoNNCLog_Total(dashboardData)
+                    break
                 default:
                     break
 
@@ -343,6 +355,8 @@ function Home() {
         GerarGrafico(GraficoRAC_Suinos, "GraficoRAC_Suinos")
         GerarGrafico(GraficoRAC_Preparados, "GraficoRAC_Preparados")
         GerarGrafico(GraficoRAC_Outros, "GraficoRAC_Outros")
+        GerarGrafico(GraficoNNCMP_Total, "GraficoNNCMP_Total")
+        GerarGrafico(GraficoNNCLog_Total, "GraficoNNCLog_Total")
     }
 
     const fetchData = (objeto, numGrafico) => {
@@ -566,6 +580,90 @@ function Home() {
 
             });
 
+        }else if (numGrafico == "GraficoNNCMP_Total"){
+            //debugger
+            let parametros = ['WHERE 1=1 ']
+            api.getSearaBaseNCCMPBar2(parametros).then((response) => {
+                // Do whatever you want to transform the data
+                //debugger
+
+                let json = JSON.parse(response.data)
+                let datasets = [];
+                let indicators = Object.keys(json[0]).map(key => key);
+
+                //AddItensToJsonArray(json, 100000, "bar")
+                //debugger
+                setGraficoNNCMP_Total(json)
+              
+                console.time("ProcessResponseBarChart")
+                let { dateField, field, ano } = SetParamsToQuery();
+
+                SetDateInJsonArrayToQueryOverObjects(json, dateField);
+                let problemas = GetIndicators(json, field);
+                AddLineMockData(datasets);
+                AddDataByFilters(problemas, json, ano, field, datasets, "bar");
+                console.timeEnd("ProcessResponseBarChart")
+
+                const dashboardData = {
+                    labels: months,
+                    datasets: datasets,
+                    indicators
+                };
+
+                setresponseGraficoNNCMP_Total(dashboardData)
+
+                setIsUpdatingData(false)
+
+                //GerarGrafico(GraficoRAC_Aves, "GraficoRAC_Aves")
+
+            }).catch(err => {
+                // what now?
+                console.log(err);
+
+            });
+
+        }else if (numGrafico == "GraficoNNCLog_Total"){
+            //debugger
+            let parametros = ['WHERE 1=1 ']
+            api.getSearaBaseNCCLogBar2(parametros).then((response) => {
+                // Do whatever you want to transform the data
+                //debugger
+
+                let json = JSON.parse(response.data)
+                let datasets = [];
+                let indicators = Object.keys(json[0]).map(key => key);
+
+                //AddItensToJsonArray(json, 100000, "bar")
+                //debugger
+                setGraficoNNCLog_Total(json)
+              
+                console.time("ProcessResponseBarChart")
+                let { dateField, field, ano } = SetParamsToQuery();
+
+                SetDateInJsonArrayToQueryOverObjects(json, dateField);
+                let problemas = GetIndicators(json, field);
+                AddLineMockData(datasets);
+                AddDataByFilters(problemas, json, ano, field, datasets, "bar");
+                console.timeEnd("ProcessResponseBarChart")
+
+                const dashboardData = {
+                    labels: months,
+                    datasets: datasets,
+                    indicators
+                };
+
+                setresponseGraficoNNCLog_Total(dashboardData)
+
+                setIsUpdatingData(false)
+
+                //GerarGrafico(GraficoRAC_Aves, "GraficoRAC_Aves")
+
+            }).catch(err => {
+                // what now?
+                console.log(err);
+
+            });
+
         }
 
         
@@ -730,8 +828,8 @@ function Home() {
                 <Row>
                     <Col>
                         {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                            <Card title="Mercado Interno" subTitle="RAC" className="mt-5">
-                                <Chart type="bar" data={responseGraficoRAC_Outros} options={lightOptions} />
+                            <Card title="NNC Matérial Prima" subTitle="Total" className="mt-5">
+                                <Chart type="bar" data={responseGraficoNNCMP_Total} options={lightOptions} />
                             </Card>
                         )}
                     </Col>
@@ -745,81 +843,19 @@ function Home() {
                 <Row>
                     <Col>
                         {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                            <Card title="Atendimento Comercial " subTitle="RAC" className="mt-5">
-                                <Chart type="bar" data={responseGraficoRAC_Outros} options={lightOptions} />
+                            <Card title="NNC Log" subTitle="Total" className="mt-5">
+                                <Chart type="bar" data={responseGraficoNNCLog_Total} options={lightOptions} />
                             </Card>
                         )}
                     </Col>
                     <Col>
-                        {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                            <Card title="Logistica Comercial " subTitle="RAC" className="mt-5">
-                                <Chart type="bar" data={responseGraficoRAC_Outros} options={lightOptions} />
-                            </Card>
-                        )}
+                        
                         
                     </Col>
 
                 </Row>  
 
-                {/* atendimento comercial */}
-                <Row>
-                    <Col>
-                        {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                            <Card title="Atendimento Comercial " subTitle="RAC" className="mt-5">
-                                <Chart type="bar" data={responseGraficoRAC_Outros} options={lightOptions} />
-                            </Card>
-                        )}
-                    </Col>
-                    <Col>
-                        {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                            <Card title="Logistica Comercial " subTitle="RAC" className="mt-5">
-                                <Chart type="bar" data={responseGraficoRAC_Outros} options={lightOptions} />
-                            </Card>
-                        )}
                         
-                    </Col>
-
-                </Row>
-
-                {/* atendimento comercial */}
-                <Row>
-                    <Col>
-                        {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                            <Card title="Atendimento Comercial " subTitle="RAC" className="mt-5">
-                                <Chart type="bar" data={responseGraficoRAC_Outros} options={lightOptions} />
-                            </Card>
-                        )}
-                    </Col>
-                    <Col>
-                        {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                            <Card title="Logistica Comercial " subTitle="RAC" className="mt-5">
-                                <Chart type="bar" data={responseGraficoRAC_Outros} options={lightOptions} />
-                            </Card>
-                        )}
-                        
-                    </Col>
-
-                </Row>
-
-                {/* atendimento comercial */}
-                <Row>
-                    <Col>
-                        {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                            <Card title="Atendimento Comercial " subTitle="RAC" className="mt-5">
-                                <Chart type="bar" data={responseGraficoRAC_Outros} options={lightOptions} />
-                            </Card>
-                        )}
-                    </Col>
-                    <Col>
-                        {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                            <Card title="Logistica Comercial " subTitle="RAC" className="mt-5">
-                                <Chart type="bar" data={responseGraficoRAC_Outros} options={lightOptions} />
-                            </Card>
-                        )}
-                        
-                    </Col>
-
-                </Row>         
             </div>
 
         </div>
