@@ -96,5 +96,21 @@ export default {
             ]
         }),
 
+    getSearaBaseCEBar2: (params) =>
+        instance({
+            method: "GET",
+            //url: `/Service/RAC?data=${params[0]}&nome=${params[1]}`, //`/SearaDashboard/RAC?data=${params[0]}&nome=${params[1]}`,
+            //url: `/RACTotal?data=${params[0]}&nome=${params[1]}`, 
+            url: `/CETotal?where=${params[0]}`, 
+            params: {
+                datatype: "json"
+            },
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
+        }),
+
     
 }
