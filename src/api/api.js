@@ -18,23 +18,7 @@ const instance = axios.create({
 
 export default {
 
-    getSearaBaseRacBar: (params) =>
-        instance({
-            method: "GET",
-            //url: `/Service/RAC?data=${params[0]}&nome=${params[1]}`, //`/SearaDashboard/RAC?data=${params[0]}&nome=${params[1]}`,
-            //url: `/RACTotal?data=${params[0]}&nome=${params[1]}`, 
-            url: `/Rac?where=${params[0]}`, 
-            params: {
-                datatype: "json"
-            },
-            transformResponse: [
-                function (data) {
-                    return data;
-                }
-            ]
-        }),
-
-    getSearaBaseRacBar2: (params) =>
+    getSearaBaseRac: (params) =>
         instance({
             method: "GET",
             //url: `/Service/RAC?data=${params[0]}&nome=${params[1]}`, //`/SearaDashboard/RAC?data=${params[0]}&nome=${params[1]}`,
@@ -49,7 +33,7 @@ export default {
                 }
             ]
         }),
-    getSearaBaseRacCEBar2: (params) =>
+    getSearaBaseRacCE: (params) =>
         instance({
             method: "GET",
             //url: `/Service/RAC?data=${params[0]}&nome=${params[1]}`, //`/SearaDashboard/RAC?data=${params[0]}&nome=${params[1]}`,
@@ -79,7 +63,7 @@ export default {
             ]
         }),
 
-    getSearaBaseNCCMPBar2: (params) =>
+    getSearaBaseNCCMP: (params) =>
         instance({
             method: "GET",
             //url: `/Service/RAC?data=${params[0]}&nome=${params[1]}`, //`/SearaDashboard/RAC?data=${params[0]}&nome=${params[1]}`,
@@ -95,7 +79,7 @@ export default {
             ]
         }),
 
-    getSearaBaseNCCMPCEBar2: (params) =>
+    getSearaBaseNCCMPCE: (params) =>
         instance({
             method: "GET",
             //url: `/Service/RAC?data=${params[0]}&nome=${params[1]}`, //`/SearaDashboard/RAC?data=${params[0]}&nome=${params[1]}`,
@@ -111,7 +95,7 @@ export default {
             ]
         }),
 
-    getSearaBaseNCCLogBar2: (params) =>
+    getSearaBaseNCCLOG: (params) =>
         instance({
             method: "GET",
             //url: `/Service/RAC?data=${params[0]}&nome=${params[1]}`, //`/SearaDashboard/RAC?data=${params[0]}&nome=${params[1]}`,
@@ -127,7 +111,7 @@ export default {
             ]
         }),
 
-    getSearaBaseCEBar2: (params) =>
+    getSearaBaseCE: (params) =>
         instance({
             method: "GET",
             //url: `/Service/RAC?data=${params[0]}&nome=${params[1]}`, //`/SearaDashboard/RAC?data=${params[0]}&nome=${params[1]}`,
