@@ -49,6 +49,21 @@ export default {
                 }
             ]
         }),
+    getSearaBaseRacCEBar2: (params) =>
+        instance({
+            method: "GET",
+            //url: `/Service/RAC?data=${params[0]}&nome=${params[1]}`, //`/SearaDashboard/RAC?data=${params[0]}&nome=${params[1]}`,
+            //url: `/RACTotal?data=${params[0]}&nome=${params[1]}`, 
+            url: `/RacTotalCE?where=${params[0]}`, 
+            params: {
+                datatype: "json"
+            },
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
+        }),
     
     getSearaBaseRacME: (params) =>
         instance({
@@ -70,6 +85,22 @@ export default {
             //url: `/Service/RAC?data=${params[0]}&nome=${params[1]}`, //`/SearaDashboard/RAC?data=${params[0]}&nome=${params[1]}`,
             //url: `/RACTotal?data=${params[0]}&nome=${params[1]}`, 
             url: `/NNCMPTotal?where=${params[0]}`, 
+            params: {
+                datatype: "json"
+            },
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
+        }),
+
+    getSearaBaseNCCMPCEBar2: (params) =>
+        instance({
+            method: "GET",
+            //url: `/Service/RAC?data=${params[0]}&nome=${params[1]}`, //`/SearaDashboard/RAC?data=${params[0]}&nome=${params[1]}`,
+            //url: `/RACTotal?data=${params[0]}&nome=${params[1]}`, 
+            url: `/NNCMPTotalCE?where=${params[0]}`, 
             params: {
                 datatype: "json"
             },

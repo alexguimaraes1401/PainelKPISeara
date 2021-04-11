@@ -380,8 +380,8 @@ function Home() {
 
         if(numGrafico == "GraficoRAC_Total"){
             //debugger
-            let parametros = ['WHERE 1=1 ']
-            api.getSearaBaseRacBar2(parametros).then((response) => {
+            let parametros = ['where 1=1']
+            api.getSearaBaseRacCEBar2(parametros).then((response) => {
                 // Do whatever you want to transform the data
                 //debugger
 
@@ -590,7 +590,7 @@ function Home() {
         }else if (numGrafico == "GraficoNNCMP_Total"){
             //debugger
             let parametros = ['WHERE 1=1 ']
-            api.getSearaBaseNCCMPBar2(parametros).then((response) => {
+            api.getSearaBaseNCCMPCEBar2(parametros).then((response) => {
                 // Do whatever you want to transform the data
                 //debugger
 
@@ -792,34 +792,35 @@ function Home() {
                 <Row>
                     <Col>
                         {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                            <Card title="Total" subTitle="RAC" className="mt-5 col-6 ">
-                                <Chart type="bar" data={responseGraficoRAC_Total} options={lightOptions}/>
+                            <Card title="Total Habilitador" subTitle="" className="mt-5">
+                                <Chart type="bar" data={responseGraficoCE_Total} options={lightOptions} />
                             </Card>
                         )}
                     </Col>
                     <Col>
-                        <Row>
-                            <Col>
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="Total" subTitle="RAC" className="mt-5 col-6 ">
-                                        <Chart type="bar" data={responseGraficoRAC_Total} options={lightOptions}/>
-                                    </Card>
-                                )}
-                            </Col>
-                        </Row>
-
-                        <Row>
-                            <Col>
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="Total" subTitle="RAC" className="mt-5 col-6 ">
-                                        <Chart type="bar" data={responseGraficoRAC_Total} options={lightOptions}/>
-                                    </Card>
-                                )}
-                            </Col>
-                        </Row>
+                        
+                        {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                            <Card title="Total RAC" subTitle="RA" className="mt-5">
+                                <Chart type="bar" data={responseGraficoRAC_Total} options={lightOptions}/>
+                            </Card>
+                        )}
+  
                     </Col>
                     
                 </Row>
+                <Row>
+                    <Col>
+                                
+                    </Col>
+                    <Col>
+                        {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                            <Card title="Total NNC Matéria-Prima" subTitle="" className="mt-5">
+                                <Chart type="bar" data={responseGraficoNNCMP_Total} options={lightOptions} />
+                            </Card>
+                        )}
+                    </Col>
+                </Row>
+                
                 <Row>
                     <Col>
                         {isUpdatingData ? (<LoadingSkeletonCard />) : (
