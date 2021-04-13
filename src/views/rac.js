@@ -336,12 +336,12 @@ function Home() {
             json.push(TableRacME[i])
         }
 
-        const sales = json
+        
 
         return (
             <div>
                 <div className="card">
-                    <DataTable value={sales} sortMode="multiple">
+                    <DataTable value={json} sortMode="multiple">
                         <Column field="Unidade" header="Unidade"></Column>
                         <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
                         <Column field="Manifestante" header="Manifestante"></Column>
@@ -381,7 +381,7 @@ function Home() {
         if(numGrafico == "GraficoRAC_Total"){
             //debugger
             let parametros = ['where 1=1']
-            api.getSearaBaseRacCEBar2(parametros).then((response) => {
+            api.getSearaBaseRacCE(parametros).then((response) => {
                 // Do whatever you want to transform the data
                 //debugger
 
@@ -422,7 +422,7 @@ function Home() {
         }else if (numGrafico == "GraficoRAC_Aves"){
             //debugger
             let parametros = ['WHERE Negócio=\'AVES\'']
-            api.getSearaBaseRacBar2(parametros).then((response) => {
+            api.getSearaBaseRac(parametros).then((response) => {
                 // Do whatever you want to transform the data
                 //debugger
 
@@ -464,7 +464,7 @@ function Home() {
         }else if (numGrafico == "GraficoRAC_Suinos"){
             //debugger
             let parametros = ['WHERE Negócio=\'SUÍ\'']
-            api.getSearaBaseRacBar2(parametros).then((response) => {
+            api.getSearaBaseRac(parametros).then((response) => {
                 // Do whatever you want to transform the data
                 //debugger
 
@@ -506,7 +506,7 @@ function Home() {
         }else if (numGrafico == "GraficoRAC_Preparados"){
             //debugger
             let parametros = ['WHERE Negócio=\'Preparados\'']
-            api.getSearaBaseRacBar2(parametros).then((response) => {
+            api.getSearaBaseRac(parametros).then((response) => {
                 // Do whatever you want to transform the data
                 //debugger
 
@@ -548,7 +548,7 @@ function Home() {
         }else if (numGrafico == "GraficoRAC_Outros"){
             //debugger
             let parametros = ['WHERE Negócio=\'OUTROS\'']
-            api.getSearaBaseRacBar2(parametros).then((response) => {
+            api.getSearaBaseRac(parametros).then((response) => {
                 // Do whatever you want to transform the data
                 //debugger
 
@@ -590,7 +590,7 @@ function Home() {
         }else if (numGrafico == "GraficoNNCMP_Total"){
             //debugger
             let parametros = ['WHERE 1=1 ']
-            api.getSearaBaseNCCMPCEBar2(parametros).then((response) => {
+            api.getSearaBaseNCCMPCE(parametros).then((response) => {
                 // Do whatever you want to transform the data
                 //debugger
 
@@ -630,9 +630,9 @@ function Home() {
             });
 
         }else if (numGrafico == "GraficoNNCLog_Total"){
-            //debugger
+            
             let parametros = ['WHERE 1=1 ']
-            api.getSearaBaseNCCLogBar2(parametros).then((response) => {
+            api.getSearaBaseNCCMPCE(parametros).then((response) => {
                 // Do whatever you want to transform the data
                 //debugger
 
@@ -674,7 +674,7 @@ function Home() {
         }else if (numGrafico == "GraficoCE_Total"){
             //debugger
             let parametros = ['WHERE    Negócio =\'AVES LEVELS\' ']
-            api.getSearaBaseCEBar2(parametros).then((response) => {
+            api.getSearaBaseCE(parametros).then((response) => {
                 // Do whatever you want to transform the data
                 //debugger
 

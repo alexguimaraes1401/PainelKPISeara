@@ -58,7 +58,7 @@ html::before {
     height: 100%;
     z-index: 1;
     opacity: 0.2;
-    background-image: url('./assets/kpi-bg-image.jpg');
+    /* background-image: url('./assets/kpi-bg-image.jpg'); */
     background-repeat: no-repeat;
     background-position: 25% 0;
     background-size: cover;
@@ -123,3 +123,37 @@ tr{
 .p-datatable-tbody{
     font-size: 16px!important;
 }
+
+.sidebar-desk {
+    display: none!important;
+}
+
+.cssSeara2021_titulo{
+    color: rgb(245,156,0)!important;
+    font-size: 30px;
+    font-weight: bold!important;
+}
+
+.cssSeara2021_subTitulo{
+    color: rgb(245,156,0)!important;
+    font-size: 24px;
+    font-weight: bold!important;
+}
+
+.cssSeara2021_tituloGrafico{
+    color: rgb(245,156,0)!important;
+    font-size: 20px;
+    font-weight: normal!important;
+    background-color: transparent!important;
+    border:0px solid transparent!important;
+}
+
+.divMenor{
+    height: 250px!important;
+}
+
+.divMaior{
+    /* padding: 50px; */
+}
+
+

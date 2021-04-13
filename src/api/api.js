@@ -33,6 +33,38 @@ export default {
                 }
             ]
         }),
+    getSearaBaseNNCMPTotalCE: (params) =>
+        instance({
+            method: "GET",
+            //url: `/Service/RAC?data=${params[0]}&nome=${params[1]}`, //`/SearaDashboard/RAC?data=${params[0]}&nome=${params[1]}`,
+            //url: `/RACTotal?data=${params[0]}&nome=${params[1]}`, 
+            url: `/NNCMPTotalCE?where=${params[0]}`, 
+            params: {
+                datatype: "json"
+            },
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
+        }),
+    getSearaBaseRACTotalCE: (params) =>
+        instance({
+            method: "GET",
+            //url: `/Service/RAC?data=${params[0]}&nome=${params[1]}`, //`/SearaDashboard/RAC?data=${params[0]}&nome=${params[1]}`,
+            //url: `/RACTotal?data=${params[0]}&nome=${params[1]}`, 
+            url: `/RACTotalCE?where=${params[0]}`, 
+            params: {
+                datatype: "json"
+            },
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
+        }),
+
+        
     getSearaBaseRacCE: (params) =>
         instance({
             method: "GET",
@@ -58,6 +90,7 @@ export default {
             },
             transformResponse: [
                 function (data) {
+                    
                     return data;
                 }
             ]
@@ -126,6 +159,26 @@ export default {
                 }
             ]
         }),
+
+    getSearaBaseRACUnico: (params) =>
+        instance({
+            method: "GET",
+            //url: `/Service/RAC?data=${params[0]}&nome=${params[1]}`, //`/SearaDashboard/RAC?data=${params[0]}&nome=${params[1]}`,
+            //url: `/RACTotal?data=${params[0]}&nome=${params[1]}`, 
+            url: `/RACUnico?where=${params[0]}`, 
+            params: {
+                datatype: "json"
+            },
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
+        }),
+
+
+
+        
 
     
 }
