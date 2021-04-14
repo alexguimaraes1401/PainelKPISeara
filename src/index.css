@@ -58,7 +58,7 @@ html::before {
     height: 100%;
     z-index: 1;
     opacity: 0.2;
-    background-image: url('./assets/kpi-bg-image.jpg');
+    /* background-image: url('./assets/kpi-bg-image.jpg'); */
     background-repeat: no-repeat;
     background-position: 25% 0;
     background-size: cover;
@@ -83,3 +83,77 @@ html::before {
     padding-top: 6rem;
     background-color: transparent;
 }
+
+.pdfsize {
+    width: 2000px!important;
+}
+
+.pad10{
+    padding: 0px 30px; 
+    background-color: #f5f5f5;
+}
+
+.p-datatable-thead{
+    font-size: 16px!important;
+}
+
+th{
+    background-color: rgb(245,156,0)!important;
+    color: #ffffff!important;
+    font-weight: bold!important;
+    font-size: 16px!important;
+    padding: 2px!important;
+}
+
+td{
+    padding: 2px!important;
+    border:0px!important;
+    font-size: 16px!important;
+}
+
+tr{
+    border:0px!important;
+    font-size: 16px!important;
+}
+
+.p-filter-column .p-inputtext .p-component .p-column-filter{
+    font-size: 16px!important;
+}
+
+.p-datatable-tbody{
+    font-size: 16px!important;
+}
+
+.sidebar-desk {
+    display: none!important;
+}
+
+.cssSeara2021_titulo{
+    color: rgb(245,156,0)!important;
+    font-size: 30px;
+    font-weight: bold!important;
+}
+
+.cssSeara2021_subTitulo{
+    color: rgb(245,156,0)!important;
+    font-size: 24px;
+    font-weight: bold!important;
+}
+
+.cssSeara2021_tituloGrafico{
+    color: rgb(245,156,0)!important;
+    font-size: 20px;
+    font-weight: normal!important;
+    background-color: transparent!important;
+    border:0px solid transparent!important;
+}
+
+.divMenor{
+    height: 250px!important;
+}
+
+.divMaior{
+    /* padding: 50px; */
+}
+
+

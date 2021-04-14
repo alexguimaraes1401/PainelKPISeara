@@ -26,6 +26,9 @@ import { Toast } from 'primereact/toast';
 const ContactUs = lazy(() => import("./views/contactUs"));
 const NotFoundPage = lazy(() => import("./views/notFoundPage"));
 const DashViewAbsorcao = lazy(() => import("./views/dashViewAbsorcao"));
+const DashViewNNCLog = lazy(() => import("./views/dashViewNNCLog"));
+const DashViewNNCMP = lazy(() => import("./views/dashViewNNCMP"));
+const DashViewRac = lazy(() => import("./views/rac"));
 const Home = lazy(() => import("./views/home"));
 const CreateUser = lazy(()=> import("./views/createUser"));
 
@@ -94,7 +97,7 @@ function App() {
 
     const Layout = ({ children }) => {
         return (
-            <Container fluid>
+            <div className="pdfsize">
                 <NavbarMobile username={user.name} handleLogout={handleLogout} />
                 <NavbarDesktop username={user.name} handleLogout={handleLogout} />
                 <SidebarDesktop />
@@ -102,7 +105,7 @@ function App() {
                 <div className="main-content">
                     {children}
                 </div>
-            </Container>
+            </div>
         );
     };
 
@@ -129,6 +132,9 @@ function App() {
                         <Route path='/contact' component={ContactUs} />
                         <Route path='/absorcao' component={DashViewAbsorcao} />
                         <Route path='/cadastro' component={CreateUser} />
+                        <Route path='/nnclog' component={DashViewNNCLog} />
+                        <Route path='/nncmp' component={DashViewNNCMP} />
+                        <Route path='/rac' component={DashViewRac} />
                         <Route path='*' component={NotFoundPage} />
                     </Switch>
                 </Layout>
