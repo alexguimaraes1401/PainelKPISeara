@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+//#region Imports
+import React, { useState, useEffect, useRef } from 'react';
 import { Chart } from 'primereact/chart';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
@@ -9,7 +11,6 @@ import axios from 'axios';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Pdf from "react-to-pdf";
 
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
@@ -31,7 +32,7 @@ import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
 
 import { ProgressBar } from 'primereact/progressbar';
-import { months, colorsBars, lightOptions } from '../domain/constants';
+import { months, colorsBars, lightOptions, lightOptionsMenor } from '../domain/constants';
 import {
     SetDateInJsonArrayToQueryOverObjects,
     SetParamsToQuery,
@@ -42,171 +43,263 @@ import {
 
 
 import { LoadingSkeletonSquare, LoadingSkeletonCard } from '../components/skeletons';
+
+import Pdf from "react-to-pdf";
 const ref = React.createRef();
+const options = {
+    orientation: 'retrait',
+    unit: 'px',
+    format: [970,16000]
+};
 
 var cors = require('cors'); // Already done “npm i cors --save-dev”
 
+//#endregion
+
 function Home() {
-
-    let [responseDataLineChart, setResponseDataLineChart] = React.useState({})
-    let [responseDataBarChart, setResponseDataBarChart] = React.useState({})
-
-    const [crudeJsonResponseDataBarChart, setCrudeJsonResponseDataBarChart] = React.useState()
-    const [indicator1, setIndicator1] = React.useState(["Select..."])
-    const [indicator2, setIndicator2] = React.useState(["Select..."])
-    const [indicator3, setIndicator3] = React.useState(["Select..."])
-
-    const [indicator4, setIndicator4] = React.useState(["Select..."])
-    const [indicator5, setIndicator5] = React.useState(["Select..."])
-    const [indicator6, setIndicator6] = React.useState(["Select..."])
-
-    const AddIndicator1 = indicator1.map(Add => Add)
-    const AddIndicator2 = indicator2.map(Add => Add)
-    const AddIndicator3 = indicator3.map(Add => Add)
-
-    const AddIndicator4 = indicator4.map(Add => Add)
-    const AddIndicator5 = indicator5.map(Add => Add)
-    const AddIndicator6 = indicator6.map(Add => Add)
-
-    const [selectedIndicator3, setSelectedIndicator3] = React.useState([])
-    const [selectedIndicator1, setSelectedIndicator1] = React.useState('')
-    const [selectedIndicator2, setSelectedIndicator2] = React.useState('')
-
-    const [selectedIndicator4, setSelectedIndicator4] = React.useState([])
-    const [selectedIndicator5, setSelectedIndicator5] = React.useState('')
-    const [selectedIndicator6, setSelectedIndicator6] = React.useState('')
-
+ 
     const [isUpdatingData, setIsUpdatingData] = React.useState(false)
     const toast = React.useRef(null);
 
+    var numeroChamados = [  false,
+                            false,
+                            false,
+                            false,
+                            false,
+                            false,
+                            false,
+                            false,
+                            false,
+                            false,
+                            false]
+
+    function percorreNumeroChamados(){
+        //debugger
+        for(var i=0; i < numeroChamados.length; i++){
+            if(numeroChamados[i] == false){
+                return false
+            }
+        }
+        return true
+    }
+
+    //chamadas
+    let [responseGraficoCETotal, setresponseGraficoCETotal] = React.useState({})
+    let [GraficoCETotal, setGraficoCETotal] = React.useState()
+
+    let [responseGraficoNNCMPTotalCE, setresponseGraficoNNCMPTotalCE] = React.useState({})
+    let [GraficoNNCMPTotalCE, setGraficoNNCMPTotalCE] = React.useState()
+
+    let [responseGraficoRACTotalCE, setresponseGraficoRACTotalCE] = React.useState({})
+    let [GraficoRACTotalCE, setGraficoRACTotalCE] = React.useState()
+
+    let [responseGraficoRAC, setresponseGraficoRAC] = React.useState({})
+    let [GraficoRAC, setGraficoRAC] = React.useState()
+
+    let [responseGraficoNCCMP, setresponseGraficoNCCMP] = React.useState({})
+    let [GraficoNCCMP, setGraficoNCCMP] = React.useState()
+
+    //Aves pesadas RAC
+    let [responseGraficoCETotalAvesPesadas, setresponseGraficoCETotalAvesPesadas] = React.useState({})
+    let [GraficoCETotalAvesPesadas, setGraficoCETotalAvesPesadas] = React.useState()
+
+    let [responseGraficoNNCMPTotalCEAvesPesadas, setresponseGraficoNNCMPTotalCEAvesPesadas] = React.useState({})
+    let [GraficoNNCMPTotalCEAvesPesadas, setGraficoNNCMPTotalCEAvesPesadas] = React.useState()
+
+    let [responseGraficoRACTotalCEAvesPesadas, setresponseGraficoRACTotalCEAvesPesadas] = React.useState({})
+    let [GraficoRACTotalCEAvesPesadas, setGraficoRACTotalCEAvesPesadas] = React.useState()
+
+    let [responseGraficoRACAvesPesadas, setresponseGraficoRACAvesPesadas] = React.useState({})
+    let [GraficoRACAvesPesadas, setGraficoRACAvesPesadas] = React.useState()
+
+    let [responseGraficoNCCMPAvesPesadas, setresponseGraficoNCCMPAvesPesadas] = React.useState({})
+    let [GraficoNCCMPAvesPesadas, setGraficoNCCMPAvesPesadas] = React.useState()
+
+    //Testes
+    let [responseGrafico5, setresponseGrafico5] = React.useState({})
+    let [Grafico_5, setGrafico_5] = React.useState()
+
+    let [responseTable, setresponseTable] = React.useState({})
+    let [TableRacME, setTableRacME] = React.useState()
+
     //Handlers
     React.useEffect(() => {
-        fetchData();
+               
+        chamarAPI("CETotal",GraficoCETotal, "GraficoCETotal", [' where 1=1 '], setGraficoCETotal, setresponseGraficoCETotal, 0)     // 1
+        chamarAPI("NNCMPTotalCE",GraficoNNCMPTotalCE, "GraficoNNCMPTotalCE", [' where 1=1 '], setGraficoNNCMPTotalCE, setresponseGraficoNNCMPTotalCE, 1)       // 2
+        chamarAPI("RACTotalCE",GraficoRACTotalCE, "GraficoRACTotalCE", [' where 1=1 '], setGraficoRACTotalCE, setresponseGraficoRACTotalCE, 2)     // 3
+        chamarAPI("RAC",GraficoRAC, "GraficoRAC", [' where 1=1 '], setGraficoRAC, setresponseGraficoRAC, 3)    // 4
+        chamarAPI("NCCMP",GraficoNCCMP, "GraficoNCCMP", [' where 1=1 '], setGraficoNCCMP, setresponseGraficoNCCMP, 4)    // 5 
+        
+        chamarAPI("CETotal",GraficoCETotalAvesPesadas, "GraficoCETotalAvesPesadas", [' where 1=1 '], setGraficoCETotalAvesPesadas, setresponseGraficoCETotalAvesPesadas, 5)     // 6
+        chamarAPI("NNCMPTotalCE",GraficoNNCMPTotalCEAvesPesadas, "GraficoNNCMPTotalCEAvesPesadas", [' where 1=1 '], setGraficoNNCMPTotalCEAvesPesadas, setresponseGraficoNNCMPTotalCEAvesPesadas, 6)       // 7
+        chamarAPI("RACTotalCE",GraficoRACTotalCEAvesPesadas, "GraficoRACTotalCEAvesPesadas", ['  WHERE [Negócio (Qualidade)] = \'Aves Pesadas\'   '], setGraficoRACTotalCEAvesPesadas, setresponseGraficoRACTotalCEAvesPesadas, 7)     // 8
+        chamarAPI("RAC",GraficoRACAvesPesadas, "GraficoRACAvesPesadas", [' WHERE [Negócio (Qualidade)] = \'Aves Pesadas\'  '], setGraficoRACAvesPesadas, setresponseGraficoRACAvesPesadas, 8)    // 9
+        chamarAPI("NCCMP",GraficoNCCMPAvesPesadas, "GraficoNCCMPAvesPesadas", [' where 1=1 '], setGraficoNCCMPAvesPesadas, setresponseGraficoNCCMPAvesPesadas, 9)    // 10
+
+
+        chamarAPI("RACUnico",Grafico_5, "Grafico_5", [' where 1=1 '], setGrafico_5, setresponseGrafico5,10)  // 11                                                                    // 6
+
     }, []);
 
-    const handleIndicator1TypeChange = (e) => {
-        console.clear()
-        setSelectedIndicator1(indicator1[e.target.value])
-        setSelectedIndicator3([])
-        setIndicator3(["Selecione..."])
-    }
+    function chamarAPI(apiNome, objeto, numGrafico, parametros, funcao, funcaoRetorno, numeroChamado){
 
-    const handleIndicator2TypeChange = (e) => {
-        console.clear()
-        setSelectedIndicator2(indicator2[e.target.value])
-        let json = crudeJsonResponseDataBarChart
+        switch(apiNome){
+            case 'CETotal':
+                
+                api.getSearaBaseCE(parametros).then((response) => {
+                    buscarDados(response, funcao, objeto, funcaoRetorno)
+                    numeroChamados[numeroChamado] = true;
+                    console.log("Rodou "+apiNome)
+                    if(percorreNumeroChamados()){
+                        console.log("0 Rodou "+apiNome)
+                        document.getElementById("btnAplicar").click()
+                        //aplicar()
+                    }
+                    return response
+                }).catch(err => {
+                    // what now?
+                    console.log(err);       
+                });
+                break
+            case 'NNCMPTotalCE':
+                
+                api.getSearaBaseNNCMPTotalCE(parametros).then((response) => {
+                    buscarDados(response, funcao, objeto, funcaoRetorno)
+                    numeroChamados[numeroChamado] = true;
+                    console.log("Rodou "+apiNome)
+                    if(percorreNumeroChamados()){
+                        console.log("0 Rodou "+apiNome)
+                        document.getElementById("btnAplicar").click()
+                        //aplicar()
+                    }
+                    return response
+                }).catch(err => {
+                    // what now?
+                    console.log(err);       
+                });
+                break
+            case 'RACTotalCE':
+                
+                api.getSearaBaseRACTotalCE(parametros).then((response) => {
+                    buscarDados(response, funcao, objeto, funcaoRetorno)
+                    numeroChamados[numeroChamado] = true;
+                    console.log("Rodou "+apiNome)
+                    if(percorreNumeroChamados()){
+                        console.log("0 Rodou "+apiNome)
+                        document.getElementById("btnAplicar").click()
+                        //aplicar()
+                    }
+                    return response
+                }).catch(err => {
+                    // what now?
+                    console.log(err);       
+                });
+                break
 
-        let groupBy = function groupBy(list, keyGetter) {
-            const map = new Map();
-            list.forEach((item) => {
-                const key = keyGetter(item);
-                const collection = map.get(key);
-                if (!collection) {
-                    map.set(key, [item]);
-                } else {
-                    collection.push(item);
-                }
-            });
-            return map;
+                    
+            case 'RAC':
+                
+                api.getSearaBaseRac(parametros).then((response) => {
+                    buscarDados(response, funcao, objeto, funcaoRetorno)
+                    numeroChamados[numeroChamado] = true;
+                    console.log("Rodou "+apiNome)
+                    if(percorreNumeroChamados()){
+                        console.log("0Rodou "+apiNome)
+                        document.getElementById("btnAplicar").click()
+                        //aplicar()
+                    }
+                    return response
+                }).catch(err => {
+                    // what now?
+                    console.log(err);       
+                });
+                break
+            case 'NCCMP':
+                
+                api.getSearaBaseNCCMP(parametros).then((response) => {
+                    buscarDados(response, funcao, objeto, funcaoRetorno)
+                    numeroChamados[numeroChamado] = true;
+                    console.log("Rodou "+apiNome)
+                    if(percorreNumeroChamados()){
+                        console.log("0Rodou "+apiNome)
+                        document.getElementById("btnAplicar").click()
+                        //aplicar()
+                    }
+                    return response
+                }).catch(err => {
+                    // what now?
+                    console.log(err);      
+                });
+                break
+
+            case 'NCCLOG':
+                
+                    api.getSearaBaseNCCLOG(parametros).then((response) => {
+                        buscarDados(response, funcao, objeto, funcaoRetorno)
+                        numeroChamados[numeroChamado] = true;
+                        console.log("Rodou "+apiNome)
+                        if(percorreNumeroChamados()){
+                            console.log("0Rodou "+apiNome)
+                            document.getElementById("btnAplicar").click()
+                            //aplicar()
+                        }
+                        return response
+                    }).catch(err => {
+                        // what now?
+                        console.log(err);       
+                    });
+                    break  
+            case 'RACUnico':
+                
+                    api.getSearaBaseRACUnico(parametros).then((response) => {
+                            
+                            buscarDados(response, funcao, objeto, funcaoRetorno)
+                            numeroChamados[numeroChamado] = true;
+                            console.log("Rodou "+apiNome)
+                            if(percorreNumeroChamados()){
+                                console.log("0Rodou "+apiNome)
+                                document.getElementById("btnAplicar").click()
+                                //aplicar()
+                            }
+                            return response
+                        }).catch(err => {
+                            // what now?
+                            console.log(err);       
+                        });
+                        break  
+
+            default:
+                break    
+            
         }
-        let yaxis = Array.from(groupBy(json, x => x[indicator2[e.target.value]]), ([name, value]) => ({ name }));
-        setSelectedIndicator3([])
-        setIndicator3(yaxis.filter(r => r.name !== "").map(r => r.name))
+
+        return
     }
 
-    const handleIndicator3TypeChange = (e) => {
-        console.clear()
-        let indicators = selectedIndicator3
-        indicators.push(indicator3[e.target.value])
-        setSelectedIndicator3(indicators)
+    function aplicar() {
+        setTimeout(function(){
+            GerarGraficoHistorico(GraficoCETotal, setresponseGraficoCETotal)
+            GerarGraficoHistorico(GraficoNNCMPTotalCE, setresponseGraficoNNCMPTotalCE)
+            GerarGraficoHistorico(GraficoRACTotalCE, setresponseGraficoRACTotalCE)
+            GerarGraficoHistorico(GraficoRAC, setresponseGraficoRAC)
+            GerarGraficoHistorico(GraficoNCCMP, setresponseGraficoNCCMP)
+
+            GerarGraficoHistorico(GraficoCETotalAvesPesadas, setresponseGraficoCETotalAvesPesadas)
+            GerarGraficoHistorico(GraficoNNCMPTotalCEAvesPesadas, setresponseGraficoNNCMPTotalCEAvesPesadas)
+            GerarGraficoHistorico(GraficoRACTotalCEAvesPesadas, setresponseGraficoRACTotalCEAvesPesadas)
+            GerarGraficoHistorico(GraficoRACAvesPesadas, setresponseGraficoRACAvesPesadas)
+            GerarGraficoHistorico(GraficoNCCMPAvesPesadas, setresponseGraficoNCCMPAvesPesadas)
+
+            GerarGraficoBarras(Grafico_5, setresponseGrafico5)
+        }, 0)
+        
     }
 
-    const handleCheckboxChangeIndicator3 = event => {
-        console.clear()
-        let indicators = selectedIndicator3
-        if (event.target.checked) {
-            indicators.push(event.target.value)
-        }
-        else {
-            const index = indicators.indexOf(event.target.value)
-            if (index > -1) {
-                indicators.splice(index, 1)
-            }
-        }
-        setSelectedIndicator3(indicators)
-        aplicar();
-    };
-
-
-    const handleIndicator4TypeChange = (e) => {
-        console.clear()
-        setSelectedIndicator4(indicator1[e.target.value])
-        setSelectedIndicator6([])
-        setIndicator6(["Selecione..."])
-    }
-
-    const handleIndicator5TypeChange = (e) => {
-        console.clear()
-        setSelectedIndicator5(indicator2[e.target.value])
-        let json = crudeJsonResponseDataBarChart
-
-        let groupBy = function groupBy(list, keyGetter) {
-            const map = new Map();
-            list.forEach((item) => {
-                const key = keyGetter(item);
-                const collection = map.get(key);
-                if (!collection) {
-                    map.set(key, [item]);
-                } else {
-                    collection.push(item);
-                }
-            });
-            return map;
-        }
-        let yaxis = Array.from(groupBy(json, x => x[indicator5[e.target.value]]), ([name, value]) => ({ name }));
-        setSelectedIndicator6([])
-        setIndicator6(yaxis.filter(r => r.name !== "").map(r => r.name))
-    }
-
-    const handleIndicator6TypeChange = (e) => {
-        console.clear()
-        let indicators = selectedIndicator6
-        indicators.push(indicator6[e.target.value])
-        setSelectedIndicator6(indicators)
-    }
-
-    const handleCheckboxChangeIndicator6 = event => {
-        console.clear()
-        let indicators = selectedIndicator6
-        if (event.target.checked) {
-            indicators.push(event.target.value)
-        }
-        else {
-            const index = indicators.indexOf(event.target.value)
-            if (index > -1) {
-                indicators.splice(index, 1)
-            }
-        }
-        setSelectedIndicator6(indicators)
-        aplicar();
-    };
-
-
-    const somaX = function (vetor, name, campoName, valor) {
-        let soma = 0
-        vetor.value.forEach((element, i) => {
-            if (element.[campoName] == name)
-                soma += parseInt(element.[valor])
-        });
-        return soma
-
-    }
-
-    const fetchDataLocal = () => {
-        //debugger
-        if (selectedIndicator1 !== "" && selectedIndicator2 !== "" && selectedIndicator3 !== "") {
+    const GerarGraficoHistorico = (objeto, funcao) => {
+            
             setIsUpdatingData(true)
-            let json = crudeJsonResponseDataBarChart
+            let json = objeto; 
             let indicators = Object.keys(json[0]).map(key => key);
 
             let groupBy = function groupBy(list, keyGetter) {
@@ -223,17 +316,25 @@ function Home() {
                 return map;
             }
 
-            let xaxis = Array.from(groupBy(json, x => x[selectedIndicator1]), ([name, value]) => ({ name, value }));
-            let yaxis = Array.from(groupBy(json, x => x[selectedIndicator2]), ([name, value]) => ({ name }));
-
-            xaxis.sort(function (a, b) {
-                return parseFloat(a.name) - parseFloat(b.name);
-            });
+            let xaxis = Array.from(groupBy(json, x => x["Periodo"]), ([name, value]) => ({ name, value }));
+            let yaxis = [{name:'Evolutivo 2020'},{name:'Evolutivo 2021'},{name:'Evolutivo Meta'},{name:'Meta'},{name:'2019'},{name:'2020'},{name: '2021'}];
 
             xaxis.forEach(x => {
-
-
-                x['yaxis'] = Array.from(groupBy(x.value, x => x[selectedIndicator2]), ([name, value]) => ({ name, quantidade: somaX(x, name, selectedIndicator2, "Quant") }));
+                if (x.name == "2019"){
+                    x['yaxis'] = [{name: "2019", value: x.value[0].Valor}]
+                }else if (x.name == "2020"){
+                    x['yaxis'] = [{name: "2020", value: x.value[0].Valor}]
+                }else if(x.name == "Meta"){
+                    x['yaxis'] = [{name: "Meta", value: x.value[0].Valor}]
+                }else if(x.name == "2021"){
+                    x['yaxis'] = [{name: "2021", value: x.value[0].Valor}]
+                }else{
+                    x['yaxis'] = [
+                                    {name: "Evolutivo 2020", value: x.value[0].a2020},
+                                    {name: "Evolutivo Meta", value: x.value[0].aMeta},
+                                    {name: "Evolutivo 2021", value: x.value[0].a2021}
+                                ]
+                }
             })
 
             let series = []
@@ -241,152 +342,238 @@ function Home() {
                 let dataset = xaxis.map(xx => {
                     let yaxysvalue = xx.yaxis.filter(r => r.name === y.name);
                     if (yaxysvalue.length)
-                        return yaxysvalue[0].quantidade
+                        return yaxysvalue[0].value
 
-                    return 0
+                    return null
                 })
 
-                let cor = colorsBars[Math.floor(Math.random() * colorsBars.length)]
+                let tipo = 'line'
+                let cor = '#bfbfbf'
+                let corLabel = '#bfbfbf'
+                let yAx = "B"
+                let varborderDash = [0,0]
+
+                switch (y.name){
+
+                    case "2019": 
+                                    tipo = "bar"
+                                    cor = "#bfbfbf"
+                                    corLabel = "#bfbfbf"
+                                    yAx = "A"
+                                    break
+                    case "2020": 
+                                    tipo = "bar"
+                                    cor = "#bfbfbf"
+                                    corLabel = "#bfbfbf"
+                                    yAx = "A"
+                                    break
+                    case "Meta": 
+                                    tipo = "bar"
+                                    cor = "rgb(245,156,0)"
+                                    corLabel = "rgb(245,156,0)"
+                                    yAx = "A"
+                                    break
+                    case "2021": 
+                                    tipo = "bar"
+                                    cor = "#cccccc"
+                                    corLabel = "#cccccc"
+                                    yAx = "A"
+                                    break
+                    case "Evolutivo 2020": 
+                                    tipo = "line"
+                                    cor = "rgb(166, 166, 166)"
+                                    corLabel = "rgb(166, 166, 166)"
+                                    varborderDash = [10,5]
+                                    yAx = "B"
+                                    break
+                    case "Evolutivo Meta": 
+                                    tipo = "line"
+                                    cor = "rgb(245,156,0)"
+                                    corLabel = "rgb(245,156,0)"
+                                    yAx = "B"
+                                    break
+                    case "Evolutivo 2021": 
+                                    tipo = "line"
+                                    cor = "rgb(89,89,89)"
+                                    corLabel = "rgb(89,89,89)"
+                                    yAx = "B"
+                                    break
+                                 
+                    default:
+                                    break
+
+
+                }
 
                 let serie = {
-                    type: "line",
+                    type: tipo,
+                    yAxisID: yAx,
                     label: y.name,
                     backgroundColor: cor,
                     fill: false,
                     borderColor: cor,
                     borderWidth: 2,
+                    pointRadius: 5,
+                    pointBackgroundColor: "transparent",
+                    pointBorderColor: "transparent",
+                    borderDash: varborderDash, 
                     data: dataset,
-                }
-                series.push(serie)
-            })
-
-            let seriesAdd = []
-            if (selectedIndicator3.length == 0) {
-                series.filter(s => s.label != null).forEach(element => {
-                    seriesAdd.push(element)
-                });
-            } else {
-                selectedIndicator3.forEach(indicator => {
-                    series.filter(s => s.label === indicator).forEach(element => {
-                        seriesAdd.push(element)
-                    });
-                });
-            }
-
-            const dashboardData = {
-                labels: xaxis.map(r => r.name),
-                datasets: seriesAdd,
-                indicators
-            };
-
-            setResponseDataBarChart(dashboardData)
-            setIsUpdatingData(false)
-        }
-    }
-
-    const fetchDataLocalII = () => {
-
-        if (selectedIndicator4 !== "" && selectedIndicator5 !== "" && selectedIndicator6 !== "") {
-            setIsUpdatingData(true)
-            let json = crudeJsonResponseDataBarChart
-            let indicators = Object.keys(json[0]).map(key => key);
-
-            let groupBy = function groupBy(list, keyGetter) {
-                const map = new Map();
-                list.forEach((item) => {
-                    const key = keyGetter(item);
-                    const collection = map.get(key);
-                    if (!collection) {
-                        map.set(key, [item]);
-                    } else {
-                        collection.push(item);
+                    datalabels: {
+                    
+                        align: "top",
+                        anchor: "end",
+                        offset: 10,
+                        padding: -2,
+                        color: corLabel,
+                        //clip: true,
+                        font: {
+                            size: "10",
+                        },
+                        
                     }
-                });
-                return map;
-            }
-
-            let xaxis = Array.from(groupBy(json, x => x[selectedIndicator4]), ([name, value]) => ({ name, value }));
-            let yaxis = Array.from(groupBy(json, x => x[selectedIndicator5]), ([name, value]) => ({ name }));
-
-            xaxis.sort(function (a, b) {
-                return parseFloat(a.name) - parseFloat(b.name);
-            });
-
-            xaxis.forEach(x => {
-
-                x['yaxis'] = Array.from(groupBy(x.value, x => x[selectedIndicator5]), ([name, value]) => ({ name, quantidade: somaX(x, name, selectedIndicator5, "Quant") }));
-            })
-
-            let series = []
-            yaxis.forEach((y, index) => {
-                let dataset = xaxis.map(xx => {
-                    let yaxysvalue = xx.yaxis.filter(r => r.name === y.name);
-                    if (yaxysvalue.length)
-                        return yaxysvalue[0].quantidade
-
-                    return 0
-                })
-
-                let serie = {
-                    type: "bar",
-                    label: y.name,
-                    backgroundColor: colorsBars[Math.floor(Math.random() * colorsBars.length)],
-                    fill: false,
-                    borderColor: "white",
-                    borderWidth: 0,
-                    data: dataset,
+                     
                 }
                 series.push(serie)
             })
 
             let seriesAdd = []
-            if (selectedIndicator6.length == 0) {
+            
                 series.filter(s => s.label != null).forEach(element => {
                     seriesAdd.push(element)
                 });
-            } else {
-                selectedIndicator6.forEach(indicator => {
-                    series.filter(s => s.label === indicator).forEach(element => {
-                        seriesAdd.push(element)
-                    });
-                });
-            }
+           
 
             const dashboardData = {
                 labels: xaxis.map(r => r.name),
                 datasets: seriesAdd,
                 indicators
+                
             };
 
-            setResponseDataLineChart(dashboardData)
+            if(typeof(funcao)=="function"){
+                funcao(dashboardData);
+            }
+
             setIsUpdatingData(false)
-        }
     }
 
-    const DataTableColGroupDemo = () => {
+    const GerarGraficoBarras = (objeto, funcao) => {
+            
+        setIsUpdatingData(true)
+        let json = objeto; 
+        let indicators = Object.keys(json[0]).map(key => key);
 
-        if (!crudeJsonResponseDataBarChart) return;
+        let groupBy = function groupBy(list, keyGetter) {
+            const map = new Map();
+            list.forEach((item) => {
+                const key = keyGetter(item);
+                const collection = map.get(key);
+                if (!collection) {
+                    map.set(key, [item]);
+                } else {
+                    collection.push(item);
+                }
+            });
+            return map;
+        }
 
-        debugger
+        let xaxis = Array.from(json);//groupBy(json, x => x["Periodo"]), ([name, value]) => ({ name, value }));
+        let yaxis = [{name: 'Valor'}];
+
+        xaxis.forEach(x => {          
+            x['yaxis'] = [{name: "Valor", value: x.value}]            
+        })
+
+        let series = []
+        yaxis.forEach((y, index) => {
+            let dataset = xaxis.map(xx => {
+                let yaxysvalue = xx.yaxis.filter(r => 1===1);
+                if (yaxysvalue.length)
+                    return yaxysvalue[0].value
+
+                return null
+            })
+
+            let tipo = 'bar'
+            let cor = '#bfbfbf'
+            let corLabel = '#bfbfbf'
+            let yAx = "B"
+            let varborderDash = [0,0]
+
+            let serie = {
+                type: tipo,
+                yAxisID: yAx,
+                label: y.name,
+                backgroundColor: cor,
+                fill: false,
+                borderColor: cor,
+                borderWidth: 2,
+                pointRadius: 5,
+                pointBackgroundColor: "transparent",
+                pointBorderColor: "transparent",
+                borderDash: varborderDash, 
+                data: dataset,
+                datalabels: {
+                
+                    align: "top",
+                    anchor: "end",
+                    offset: 10,
+                    padding: -2,
+                    color: corLabel,
+                    //clip: true,
+                    font: {
+                        size: "10",
+                    },
+                    
+                }
+                 
+            }
+            series.push(serie)
+        })
+
+        let seriesAdd = []
+        
+            series.filter(s => s.label != null).forEach(element => {
+                seriesAdd.push(element)
+            });
+       
+
+        const dashboardData = {
+            labels: xaxis.map(r => r.name),
+            datasets: seriesAdd,
+            indicators
+            
+        };
+
+        if(typeof(funcao)=="function"){
+            funcao(dashboardData);
+        }
+
+        setIsUpdatingData(false)
+    }
+
+    const DataTableRACME = () => {
+
+        if (!TableRacME) return;
+
+        ////debugger
 
         let json = []
 
-        for (let i = 0; i < 100; i++) {
-            json.push(crudeJsonResponseDataBarChart[i])
+        for (let i = 0; i < TableRacME.length; i++) {
+            json.push(TableRacME[i])
         }
 
-        const sales = json
+        
 
         return (
             <div>
                 <div className="card">
-                    <DataTable value={sales} sortMode="multiple">
-                        <Column field="ANO" header="ANO" sortable filter filterPlaceholder="Filtro ANO"></Column>
-                        <Column field="MES" header="MES" sortable filter filterPlaceholder="Filtro MES"></Column>
-                        <Column field="ANO-MES" header="ANO-MES" sortable filter filterPlaceholder="Filtro ANO-MES"></Column>
-                        <Column field="Filial" header="Filial" sortable filter filterPlaceholder="Filtro Filial"></Column>
-                        <Column field="Negócio Planilha" header="Negócio" sortable filter filterPlaceholder="Filtro Negócio"></Column>
-                        <Column field="Quant" header="Quantidade de Reclamações" sortable filter filterPlaceholder="Filtro Quantidade"></Column>
+                    <DataTable value={json} sortMode="multiple">
+                        <Column field="Unidade" header="Unidade"></Column>
+                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
+                        <Column field="Manifestante" header="Manifestante"></Column>
+                        <Column field="Nº RAC" header="Nº RAC"></Column>
                     </DataTable>
                 </div>
             </div>
@@ -395,74 +582,52 @@ function Home() {
         //////////////////////////////////////////
     }
 
-    function aplicar() {
-        fetchDataLocalII()
-        fetchDataLocal()
-    }
-
-    const fetchData = () => {
-
-        setIsUpdatingData(true)
-
-        //teste Gabriel
-        let parametros = ['20210101', 'gabriel']
-
-        api.getSearaBaseRacBar(parametros).then((response) => {
-            // Do whatever you want to transform the data
-            //debugger
-
-
-
+    const buscarTabelaRACUnico = () => {
+        let parm = " ";
+        
+        api.getSearaBaseRacME(parm).then((response) => {
             let json = JSON.parse(response.data)
 
-            let datasets = [];
-            let indicators = Object.keys(json[0]).map(key => key);
+            return  (
+                <div>
+                    <div className="card">
+                        <DataTable value={json} sortMode="multiple">
+                            <Column field="Unidade" header="Unidade"></Column>
+                            <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
+                            <Column field="Manifestante" header="Manifestante"></Column>
+                            <Column field="Nº RAC" header="Nº RAC"></Column>
+                        </DataTable>
+                    </div>
+                </div>
+            );
 
-            //AddItensToJsonArray(json, 100000, "bar")
-            setCrudeJsonResponseDataBarChart(json)
+        })
+    }
 
-            console.time("ProcessResponseBarChart")
-            let { dateField, field, ano } = SetParamsToQuery();
+    const buscarDados = (response, funcao, graficoRetorno, funcaoRetorno ) => {
+  
+        setIsUpdatingData(true)
 
-            SetDateInJsonArrayToQueryOverObjects(json, dateField);
-            let problemas = GetIndicators(json, field);
-            AddLineMockData(datasets);
-            AddDataByFilters(problemas, json, ano, field, datasets, "bar");
-            console.timeEnd("ProcessResponseBarChart")
+        let parm = " ";
 
-            const dashboardData = {
-                labels: months,
-                datasets: datasets,
-                indicators
-            };
+        api.getSearaBaseRacME(parm).then((response) => {
 
+            let json = JSON.parse(response.data)
+            setTableRacME(json)
+        })        
 
+        let json = JSON.parse(response.data)
+        let datasets = [];
+        let indicators = Object.keys(json[0]).map(key => key);
 
-            setResponseDataBarChart(dashboardData)
-            setIndicator1(dashboardData.indicators)
-            setIndicator3(dashboardData.indicators)
-            setIndicator2(dashboardData.indicators)
-            setIndicator4(dashboardData.indicators)
-            setIndicator5(dashboardData.indicators)
-            setIndicator6(dashboardData.indicators)
+        if(typeof(funcao)=="function"){
+            funcao(json);
+        }
 
-            setIsUpdatingData(false)
+        setIsUpdatingData(false)
 
-        }).catch(err => {
-            // what now?
-            console.log(err);
-
-        });
-
-        api.getSearaBaseRacLine().then((response) => {
-            setResponseDataLineChart(response.data)
-            setIsUpdatingData(false)
-            // showSuccess('Database updated!')
-        }).catch(err => {
-            // what now?
-            console.log(err);
-            // showError('Network Error', 'Could not fetch data')
-        });
+        //GerarGraficoHistorico(graficoRetorno, funcaoRetorno)
+  
     };
 
     const showSuccess = (errorMessage, detailMessage) => {
@@ -477,9 +642,9 @@ function Home() {
         return (
             <div>
                 <h1 className={'h2'}>
-                    Updating database
+                    Atualizando a base
                     <br />
-                    <small>this may take a while</small>
+                    <small>Puxando dados da RAC</small>
                     <br />
                 </h1>
                 <ProgressBar mode="indeterminate" style={{ height: '16px' }}></ProgressBar>
@@ -489,194 +654,608 @@ function Home() {
 
     // Se esta logado exibe tela do dashboard:
     return (
-        <div>
-            <Pdf targetRef={ref} filename="code-example.pdf">
-                {({ toPdf }) => <button onClick={toPdf}>Generate Pdf</button>}
-            </Pdf>
-            <div ref={ref}>
-
-
-                <Row>
-                    <Col lg={3}>
-                        {isUpdatingData ? (<UpdatingDatabase />) : (
-                            <div>
-                                <h1 className={'h2'}>
-                                    KPI - RCA
+        // <div style="width: 1220px !important;">
+        <div> 
+            <Row>
+                <Col lg={12} className="cssSeara2021">
+                    {isUpdatingData ? (<UpdatingDatabase />) : (
+                        <div>
+                            <h1 className={'h2'}>
+                                Relatório KPI Seara
                                     <br />
-                                    <small>Descrição do KPI</small>
-                                </h1>
-                                <div className="btn-toolbar mb-2 mb-md-0">
-                                    <div className="btn-group mr-2">
-                                        <button className="btn btn-sm btn-outline-secondary" onClick={fetchData}>Atualizar</button>
-                                    </div>
+                                <small>por GRX Soluções</small>
+                            </h1>
+                            <div className="btn-toolbar mb-2 mb-md-0">
+                                {/* <div className="btn-group mr-2">
+                                    <button className="btn btn-sm btn-outline-secondary" onClick={buscarDados}>Atualizar</button>
+                                </div>   */}
 
-                                </div>
+                                <Pdf targetRef={ref} filename="KPI.pdf" options={options} x={1} scale={0.8}>
+                                    {({toPdf}) => (
+                                        <button className="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={toPdf} id="btnPDF">Gerar PDF</button>
+                                    )}
+                                </Pdf>
+
                             </div>
-                        )}
+                        </div>
+                    )}
+                </Col>
+            </Row>
+
+            <hr></hr>
+
+            {/* Botão aplicar */}
+            {isUpdatingData ? (<div> </div>) : (
+                <Row style={{ paddingRight: '15px', paddingLeft: '15px', display: 'none' }}>
+                    <button className="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={aplicar} id="btnAplicar">Aplicar</button>
+                </Row>
+            )}
+
+            
+
+            {/* Graficos */}
+            <div className="pad10" ref={ref}  >
+                <Row>
+                    <Col className="mt-5 col-12 cssSeara2021">
+                        <h1>Relatório de Atendimento ao Consumidor (RAC)</h1>
                     </Col>
+                    
                 </Row>
 
-                <hr></hr>
+                <reg id="region RAC - Totais">
 
-                {/* Botão aplicar */}
-                {isUpdatingData ? (<div> </div>) : (
-                    <Row style={{ paddingRight: '15px', paddingLeft: '15px' }}>
-                        <button className="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={aplicar}>Aplicar</button>
-                    </Row>
-                )}
-
-                {/* Drop down com indicadores */}
-                {isUpdatingData ? (<Row><LoadingSkeletonSquare /></Row>) : (
-                    <Row>
-                        <Col lg={2}>
-                            <Card className="p-md-12">
-                                <h1 className="h6">
-                                    Categoria
-                                        <br />
-                                    <small>Eixo X</small>
-                                    <br />
-                                    <select onChange={e => handleIndicator1TypeChange(e)} className="browser-default custom-select" >
-                                        {
-                                            AddIndicator1.map((address, key) =>
-                                                <option key={key} value={key}>{address}</option>)
-                                        }
-                                    </select >
-                                </h1>
+                <Row>
+                    <Col className="mt-1 col-12 cssSeara2021_titulo">
+                        Totais
+                        <hr></hr>
+                    </Col>    
+                </Row>
+                <Row>
+                    <Col className=" align-self-center">
+                        {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                            <Card title="Habilitador" subTitle="" className="mt-1 cssSeara2021_tituloGrafico divMaior">
+                                <Chart type="bar" data={responseGraficoCETotal} options={lightOptions} className="divMaior"/>
                             </Card>
+                        )}
+                    </Col>
+                    <Col>
+                        <Col className="col-lg-12 col-md-12 col-sm-12">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico divMenor">
+                                    <Chart type="bar" data={responseGraficoRACTotalCE} options={lightOptionsMenor} />
+                                </Card>
+                            )}
                         </Col>
-                        <Col lg={2}>
-                            <Card className="p-md-12">
-                                <h1 className="h6">
-                                    Séries
-                                        <br />
-                                    <small>Séries</small>
-                                    <br />
-                                    <select onChange={e => handleIndicator2TypeChange(e)} className="browser-default custom-select" >
-                                        {
-                                            AddIndicator2.map((address, key) =>
-                                                <option key={key} value={key}>{address}</option>)
-                                        }
-                                    </select >
-                                </h1>
-                            </Card>
+                        <Col className="col-lg-12 col-md-12 col-sm-12">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico divMenor">
+                                    <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptionsMenor} />
+                                </Card>
+                            )}
                         </Col>
-                        <Col lg={2}>
-                            <Card className="h6" style={{ "overflow-y": "auto", "max-height": "230px" }}>
-                                {
-                                    AddIndicator3.map(item => (
-                                        <div className="custom-control custom-checkbox " >
-                                            <input type="checkbox" className="custom-control-input" id={item} value={item} onChange={e => handleCheckboxChangeIndicator3(e)} />
-                                            <label className="custom-control-label" htmlFor={item}>{item}</label>
-                                        </div>
-                                    ))
-                                }
-                            </Card>
-                            <Card>
-                                <h1 className="h6">
-                                    Agrupamento
-                                        <br />
-                                    <small>Série</small>
-                                    <br />
-                                    <select onChange={e => handleIndicator3TypeChange(e)} className="browser-default custom-select" >
-                                        {
-                                            AddIndicator3.map((address, key) =>
-                                                <option key={key} value={key}>{address}</option>)
-                                        }
-                                    </select >
-                                </h1>
-                            </Card>
-                        </Col>
-
-
-
-                        <Col lg={2}>
-                            <Card className="p-md-12">
-                                <h1 className="h6">
-                                    Categoria
-                                        <br />
-                                    <small>Eixo X</small>
-                                    <br />
-                                    <select onChange={e => handleIndicator4TypeChange(e)} className="browser-default custom-select" >
-                                        {
-                                            AddIndicator4.map((address, key) =>
-                                                <option key={key} value={key}>{address}</option>)
-                                        }
-                                    </select >
-                                </h1>
-                            </Card>
-                        </Col>
-                        <Col lg={2}>
-                            <Card className="p-md-12">
-                                <h1 className="h6">
-                                    Séries
-                                        <br />
-                                    <small>Séries</small>
-                                    <br />
-                                    <select onChange={e => handleIndicator5TypeChange(e)} className="browser-default custom-select" >
-                                        {
-                                            AddIndicator5.map((address, key) =>
-                                                <option key={key} value={key}>{address}</option>)
-                                        }
-                                    </select >
-                                </h1>
-                            </Card>
-                        </Col>
-                        <Col lg={2}>
-                            <Card className="h6" style={{ "overflow-y": "auto", "max-height": "230px" }}>
-                                {
-                                    AddIndicator6.map(item => (
-                                        <div className="custom-control custom-checkbox " >
-                                            <input type="checkbox" className="custom-control-input" id={item} value={item} onChange={e => handleCheckboxChangeIndicator6(e)} />
-                                            <label className="custom-control-label" htmlFor={item}>{item}</label>
-                                        </div>
-                                    ))
-                                }
-                            </Card>
-                            <Card>
-                                <h1 className="h6">
-                                    Agrupamento
-                                        <br />
-                                    <small>Série</small>
-                                    <br />
-                                    <select onChange={e => handleIndicator6TypeChange(e)} className="browser-default custom-select" >
-                                        {
-                                            AddIndicator6.map((address, key) =>
-                                                <option key={key} value={key}>{address}</option>)
-                                        }
-                                    </select >
-                                </h1>
-                            </Card>
-                        </Col>
-
-
-                    </Row>
-                )}
-
-                {/* Graficos */}
+                    </Col>
+                    
+                </Row>
+                <Row>
+                    <Col className="mt-1 col-12 cssSeara2021_subTitulo">
+                        Reclamações
+                        <hr></hr>
+                    </Col>    
+                </Row>
                 <Row>
                     <Col>
                         {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                            <Card title="RAC" subTitle="Indicador de Reclamações" className="mt-5">
-                                <Chart type="bar" data={responseDataBarChart} options={lightOptions} />
+                            <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                <Chart type="bar" data={responseGraficoRAC} options={lightOptions}/>
                             </Card>
                         )}
                     </Col>
                     <Col>
                         {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                            <Card title="RAC" subTitle="Indicador de Reclamações II" className="mt-5" >
-                                <Chart type="Line" data={responseDataLineChart} options={lightOptions} />
+                            <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                <Chart type="bar" data={responseGraficoNCCMP} options={lightOptions} />
                             </Card>
                         )}
                     </Col>
+                    
                 </Row>
-                {/* Tabelas */}
-                {/* {DataTableColGroupDemo()} */}
-                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                    DataTableColGroupDemo()
-                )}
+
+                </reg>
+                
+                <reg id="region RAC - Aves Pesadas">
+
+                <Row>
+                    <Col className="mt-1 col-12 cssSeara2021_titulo">
+                        Aves Pesadas
+                        <hr></hr>
+                    </Col>    
+                </Row>
+                <Row>
+                    <Col>
+                        {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                            <Card title="Habilitador" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                <Chart type="bar" data={responseGraficoCETotalAvesPesadas} options={lightOptions}/>
+                            </Card>
+                        )}
+                    </Col>
+                    <Col>
+                        <Col>
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico divMenor">
+                                    <Chart type="bar" data={responseGraficoRACTotalCEAvesPesadas} options={lightOptionsMenor}/>
+                                </Card>
+                            )}
+                        </Col>
+                        <Col>
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico divMenor">
+                                    <Chart type="bar" data={responseGraficoNNCMPTotalCEAvesPesadas} options={lightOptionsMenor}/>
+                                </Card>
+                            )}
+                        </Col>
+                    </Col>
+                    
+                </Row>
+                <Row>
+                    <Col className="mt-1 col-12 cssSeara2021_subTitulo">
+                        Reclamações
+                        <hr></hr>
+                    </Col>    
+                </Row>
+                <Row>
+                    <Col>
+                        {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                            <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                <Chart type="bar" data={responseGraficoRACAvesPesadas} options={lightOptions}/>
+                            </Card>
+                        )}
+                    </Col>
+                    <Col>
+                        {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                            <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                <Chart type="bar" data={responseGraficoNCCMPAvesPesadas} options={lightOptions}/>
+                            </Card>
+                        )}
+                    </Col>
+                    
+                </Row>
+
+                </reg>
+                
+                <reg id="region RAC - Aves Pesadas PR">
+
+                <Row>
+                    <Col className="mt-1 col-12 cssSeara2021_titulo">
+                        Aves Pesadas PR
+                        <hr></hr>
+                    </Col>    
+                </Row>
+                <Row>
+                    <Col>
+                        {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                            <Card title="Habilitador" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                <Chart type="bar" data={responseGraficoCETotal} options={lightOptions}/>
+                            </Card>
+                        )}
+                    </Col>
+                    <Col>
+                        <Col>
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                    <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions}/>
+                                </Card>
+                            )}
+                        </Col>
+                        <Col>
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                    <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions}/>
+                                </Card>
+                            )}
+                        </Col>
+                    </Col>
+                    
+                </Row>
+                <Row>
+                    <Col className="mt-1 col-12 cssSeara2021_subTitulo">
+                        Reclamações
+                        <hr></hr>
+                    </Col>    
+                </Row>
+                <Row>
+                    <Col>
+                        {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                            <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                <Chart type="bar" data={responseGraficoRACTotalCE} options={lightOptions}/>
+                            </Card>
+                        )}
+                    </Col>
+                    <Col>
+                        {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                            <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                <Chart type="bar" data={responseGraficoRAC} options={lightOptions}/>
+                            </Card>
+                        )}
+                    </Col>
+                    
+                </Row>
+
+                </reg>
+
+                <reg id="region RAC - Aves Leves">
+
+                    <Row>
+                        <Col className="mt-1 col-12 cssSeara2021_titulo">
+                            Aves Leves
+                            <hr></hr>
+                        </Col>    
+                    </Row>
+                    <Row>
+                        <Col>
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="Habilitador" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions}/>
+                                </Card>
+                            )}
+                        </Col>
+                        <Col>
+                            <Col>
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions}/>
+                                    </Card>
+                                )}
+                            </Col>
+                            <Col>
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions}/>
+                                    </Card>
+                                )}
+                            </Col>
+                        </Col>
+                        
+                    </Row>
+                    <Row>
+                        <Col className="mt-1 col-12 cssSeara2021_subTitulo">
+                            Reclamações
+                            <hr></hr>
+                        </Col>    
+                    </Row>
+                    <Row>
+                        <Col>
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                    <Chart type="bar" data={responseGraficoRACTotalCE} options={lightOptions}/>
+                                </Card>
+                            )}
+                        </Col>
+                        <Col>
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                    <Chart type="bar" data={responseGraficoRAC} options={lightOptions}/>
+                                </Card>
+                            )}
+                        </Col>
+                        
+                    </Row>
+
+                </reg>
+
+                <reg id="region RAC - Suínos">
+
+                    <Row>
+                        <Col className="mt-1 col-12 cssSeara2021_titulo">
+                            Suínos
+                            <hr></hr>
+                        </Col>    
+                    </Row>
+                    <Row>
+                        <Col>
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="Habilitador" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions}/>
+                                </Card>
+                            )}
+                        </Col>
+                        <Col>
+                            <Col>
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions}/>
+                                    </Card>
+                                )}
+                            </Col>
+                            <Col>
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions}/>
+                                    </Card>
+                                )}
+                            </Col>
+                        </Col>
+                        
+                    </Row>
+                    <Row>
+                        <Col className="mt-1 col-12 cssSeara2021_subTitulo">
+                            Reclamações
+                            <hr></hr>
+                        </Col>    
+                    </Row>
+                    <Row>
+                        <Col>
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                    <Chart type="bar" data={responseGraficoRACTotalCE} options={lightOptions}/>
+                                </Card>
+                            )}
+                        </Col>
+                        <Col>
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                    <Chart type="bar" data={responseGraficoRAC} options={lightOptions}/>
+                                </Card>
+                            )}
+                        </Col>
+                        
+                    </Row>
+
+                </reg>
+
+                <reg id="region RAC - Preparados">
+
+                    <Row>
+                        <Col className="mt-1 col-12 cssSeara2021_titulo">
+                            Preparados
+                            <hr></hr>
+                        </Col>    
+                    </Row>
+                    <Row>
+                        <Col>
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="Habilitador" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions}/>
+                                </Card>
+                            )}
+                        </Col>
+                        <Col>
+                            <Col>
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions}/>
+                                    </Card>
+                                )}
+                            </Col>
+                            <Col>
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions}/>
+                                    </Card>
+                                )}
+                            </Col>
+                        </Col>
+                        
+                    </Row>
+                    <Row>
+                        <Col className="mt-1 col-12 cssSeara2021_subTitulo">
+                            Reclamações
+                            <hr></hr>
+                        </Col>    
+                    </Row>
+                    <Row>
+                        <Col>
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                    <Chart type="bar" data={responseGraficoRACTotalCE} options={lightOptions}/>
+                                </Card>
+                            )}
+                        </Col>
+                        <Col>
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                    <Chart type="bar" data={responseGraficoRAC} options={lightOptions}/>
+                                </Card>
+                            )}
+                        </Col>
+                        
+                    </Row>
+
+                </reg>
+
+                <reg id="region RAC - Reclamações - Aves Pesadas">
+
+                    <Row>
+                        <Col className="mt-1 col-12 cssSeara2021_titulo">
+                            Reclamações - Aves Pesadas
+                            <hr></hr>
+                        </Col>    
+                    </Row>
+                    <Row>
+                        <Col>
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="Habilitador" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions}/>
+                                </Card>
+                            )}
+                        </Col>
+                        <Col>
+                            <Col>
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                        <Chart type="bar" data={responseGrafico5} options={lightOptions}/>
+                                    </Card>
+                                )}
+                            </Col>
+                            <Col>
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                        <Chart type="bar" data={responseGrafico5} options={lightOptions}/>
+                                    </Card>
+                                )}
+                            </Col>
+                        </Col>
+                        
+                    </Row>
+                
+                </reg>
+
+                <reg id="region RAC - Reclamações - Aves Pesadas PR">
+
+                    <Row>
+                        <Col className="mt-1 col-12 cssSeara2021_titulo">
+                            Reclamações - Aves Pesadas PR
+                            <hr></hr>
+                        </Col>    
+                    </Row>
+                    <Row>
+                        <Col>
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="Habilitador" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions}/>
+                                </Card>
+                            )}
+                        </Col>
+                        <Col>
+                            <Col>
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                        <Chart type="bar" data={responseGrafico5} options={lightOptions}/>
+                                    </Card>
+                                )}
+                            </Col>
+                            <Col>
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                        <Chart type="bar" data={responseGrafico5} options={lightOptions}/>
+                                    </Card>
+                                )}
+                            </Col>
+                        </Col>
+                        
+                    </Row>
+
+                </reg>
+
+                <reg id="region RAC - Reclamações - Suínos">
+
+                    <Row>
+                        <Col className="mt-1 col-12 cssSeara2021_titulo">
+                            Reclamações - Suínos
+                            <hr></hr>
+                        </Col>    
+                    </Row>
+                    <Row>
+                        <Col>
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="Habilitador" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions}/>
+                                </Card>
+                            )}
+                        </Col>
+                        <Col>
+                            <Col>
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                        <Chart type="bar" data={responseGrafico5} options={lightOptions}/>
+                                    </Card>
+                                )}
+                            </Col>
+                            <Col>
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                        <Chart type="bar" data={responseGrafico5} options={lightOptions}/>
+                                    </Card>
+                                )}
+                            </Col>
+                        </Col>
+                        
+                    </Row>
 
 
+                </reg>
+
+                <reg id="region RAC - Reclamações - Preparados">
+
+                    <Row>
+                        <Col className="mt-1 col-12 cssSeara2021_titulo">
+                            Reclamações - Preparados
+                            <hr></hr>
+                        </Col>    
+                    </Row>
+                    <Row>
+                        <Col>
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="Habilitador" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions}/>
+                                </Card>
+                            )}
+                        </Col>
+                        <Col>
+                            <Col>
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                        <Chart type="bar" data={responseGrafico5} options={lightOptions}/>
+                                    </Card>
+                                )}
+                            </Col>
+                            <Col>
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                        <Chart type="bar" data={responseGrafico5} options={lightOptions}/>
+                                    </Card>
+                                )}
+                            </Col>
+                        </Col>
+                        
+                    </Row>
+
+
+                </reg>
+
+
+                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                {/* Testes finais */}
+
+                                <Row>
+                                    <Col>
+                                        {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                            <Card title="Total RAC" subTitle="RA" className="mt-5">
+                                                <Chart type="bar" data={responseGrafico5} options={lightOptions}/>
+                                            </Card>
+                                        )}
+                                    </Col>
+
+                                    <Col className="mt-5">                     
+
+                                        {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                            
+                                            DataTableRACME() 
+                                        
+                                        )}
+
+                                    </Col>  
+                                </Row>
+                                        
             </div>
+
         </div>
     )
 }
