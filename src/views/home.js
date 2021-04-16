@@ -32,7 +32,7 @@ import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
 
 import { ProgressBar } from 'primereact/progressbar';
-import { months, colorsBars, lightOptions, lightOptionsMenor } from '../domain/constants';
+import { months, colorsBars, lightOptions, optionsComparativo } from '../domain/constants';
 import {
     SetDateInJsonArrayToQueryOverObjects,
     SetParamsToQuery,
@@ -49,7 +49,7 @@ const ref = React.createRef();
 const options = {
     orientation: 'retrait',
     unit: 'px',
-    format: [970,16000]
+    format: [1200,16000]
 };
 
 var cors = require('cors'); // Already done “npm i cors --save-dev”
@@ -321,13 +321,13 @@ function Home() {
 
             xaxis.forEach(x => {
                 if (x.name == "2019"){
-                    x['yaxis'] = [{name: "2019", value: x.value[0].Valor}]
+                    x['yaxis'] = [{name: "2019", value: x.value[0].Valor == "" ? null : x.value[0].Valor}]
                 }else if (x.name == "2020"){
-                    x['yaxis'] = [{name: "2020", value: x.value[0].Valor}]
+                    x['yaxis'] = [{name: "2020", value: x.value[0].Valor == "" ? null : x.value[0].Valor}]
                 }else if(x.name == "Meta"){
-                    x['yaxis'] = [{name: "Meta", value: x.value[0].Valor}]
+                    x['yaxis'] = [{name: "Meta", value: x.value[0].Valor == "" ? null : x.value[0].Valor}]
                 }else if(x.name == "2021"){
-                    x['yaxis'] = [{name: "2021", value: x.value[0].Valor}]
+                    x['yaxis'] = [{name: "2021", value: x.value[0].Valor == "" ? null : x.value[0].Valor}]
                 }else{
                     x['yaxis'] = [
                                     {name: "Evolutivo 2020", value: x.value[0].a2020},
@@ -369,7 +369,7 @@ function Home() {
                                     break
                     case "Meta": 
                                     tipo = "bar"
-                                    cor = "rgb(245,156,0)"
+                                    cor = "rgb(204,0,0)" //"rgb(245,156,0)"
                                     corLabel = "rgb(245,156,0)"
                                     yAx = "A"
                                     break
@@ -405,6 +405,10 @@ function Home() {
 
                 }
 
+                for(var i = 0; i < dataset.length; i++){
+                    if(dataset[i] == "") dataset[i] = null
+                }
+
                 let serie = {
                     type: tipo,
                     yAxisID: yAx,
@@ -412,7 +416,7 @@ function Home() {
                     backgroundColor: cor,
                     fill: false,
                     borderColor: cor,
-                    borderWidth: 2,
+                    borderWidth: 1,
                     pointRadius: 5,
                     pointBackgroundColor: "transparent",
                     pointBorderColor: "transparent",
@@ -427,7 +431,7 @@ function Home() {
                         color: corLabel,
                         //clip: true,
                         font: {
-                            size: "10",
+                            size: "12",
                         },
                         
                     }
@@ -496,7 +500,7 @@ function Home() {
 
             let tipo = 'bar'
             let cor = '#bfbfbf'
-            let corLabel = '#bfbfbf'
+            let corLabel = '#000000'
             let yAx = "B"
             let varborderDash = [0,0]
 
@@ -522,7 +526,7 @@ function Home() {
                     color: corLabel,
                     //clip: true,
                     font: {
-                        size: "10",
+                        size: "11",
                     },
                     
                 }
@@ -617,6 +621,7 @@ function Home() {
         })        
 
         let json = JSON.parse(response.data)
+
         let datasets = [];
         let indicators = Object.keys(json[0]).map(key => key);
 
@@ -696,7 +701,7 @@ function Home() {
             {/* Graficos */}
             <div className="pad10" ref={ref}  >
                 <Row>
-                    <Col className="mt-5 col-12 cssSeara2021">
+                    <Col className="mt-1 col-12 cssSeara2021">
                         <h1>Relatório de Atendimento ao Consumidor (RAC)</h1>
                     </Col>
                     
@@ -705,31 +710,31 @@ function Home() {
                 <reg id="region RAC - Totais">
 
                 <Row>
-                    <Col className="mt-1 col-12 cssSeara2021_titulo">
+                    <Col className=" col-12 cssSeara2021_titulo">
                         Totais
                         <hr></hr>
                     </Col>    
                 </Row>
                 <Row>
-                    <Col className=" align-self-center">
+                    <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
                         {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                            <Card title="Habilitador" subTitle="" className="mt-1 cssSeara2021_tituloGrafico divMaior">
+                            <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
                                 <Chart type="bar" data={responseGraficoCETotal} options={lightOptions} className="divMaior"/>
                             </Card>
                         )}
                     </Col>
-                    <Col>
+                    <Col className="col-lg-6 col-md-6 col-sm-12">
                         <Col className="col-lg-12 col-md-12 col-sm-12">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico divMenor">
-                                    <Chart type="bar" data={responseGraficoRACTotalCE} options={lightOptionsMenor} />
+                                <Card title="RAC" subTitle="" className="cssSeara2021_tituloGrafico ">
+                                    <Chart type="bar" data={responseGraficoRACTotalCE} options={lightOptions} className="divMenor"/>
                                 </Card>
                             )}
                         </Col>
                         <Col className="col-lg-12 col-md-12 col-sm-12">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico divMenor">
-                                    <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptionsMenor} />
+                                <Card title="NNC MP" subTitle="" className="cssSeara2021_tituloGrafico ">
+                                    <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions} className="divMenor"/>
                                 </Card>
                             )}
                         </Col>
@@ -746,14 +751,14 @@ function Home() {
                     <Col>
                         {isUpdatingData ? (<LoadingSkeletonCard />) : (
                             <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                <Chart type="bar" data={responseGraficoRAC} options={lightOptions}/>
+                                <Chart type="bar" data={responseGraficoRAC} options={lightOptions} className="divMedia"/>
                             </Card>
                         )}
                     </Col>
                     <Col>
                         {isUpdatingData ? (<LoadingSkeletonCard />) : (
                             <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                <Chart type="bar" data={responseGraficoNCCMP} options={lightOptions} />
+                                <Chart type="bar" data={responseGraficoNCCMP} options={lightOptions} className="divMedia" />
                             </Card>
                         )}
                     </Col>
@@ -771,25 +776,25 @@ function Home() {
                     </Col>    
                 </Row>
                 <Row>
-                    <Col>
+                <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
                         {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                            <Card title="Habilitador" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                <Chart type="bar" data={responseGraficoCETotalAvesPesadas} options={lightOptions}/>
+                            <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                <Chart type="bar" data={responseGraficoCETotalAvesPesadas} options={lightOptions} className="divMaior"/>
                             </Card>
                         )}
                     </Col>
-                    <Col>
-                        <Col>
+                    <Col className="col-lg-6 col-md-6 col-sm-12">
+                        <Col className="col-lg-12 col-md-12 col-sm-12">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico divMenor">
-                                    <Chart type="bar" data={responseGraficoRACTotalCEAvesPesadas} options={lightOptionsMenor}/>
+                                <Card title="RAC" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoRACTotalCEAvesPesadas} options={lightOptions} className="divMenor"/>
                                 </Card>
                             )}
                         </Col>
-                        <Col>
+                        <Col className="col-lg-12 col-md-12 col-sm-12">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico divMenor">
-                                    <Chart type="bar" data={responseGraficoNNCMPTotalCEAvesPesadas} options={lightOptionsMenor}/>
+                                    <Chart type="bar" data={responseGraficoNNCMPTotalCEAvesPesadas} options={lightOptions} className="divMenor"/>
                                 </Card>
                             )}
                         </Col>
@@ -806,14 +811,14 @@ function Home() {
                     <Col>
                         {isUpdatingData ? (<LoadingSkeletonCard />) : (
                             <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                <Chart type="bar" data={responseGraficoRACAvesPesadas} options={lightOptions}/>
+                                <Chart type="bar" data={responseGraficoRACAvesPesadas} options={lightOptions} className="divMedia"/>
                             </Card>
                         )}
                     </Col>
                     <Col>
                         {isUpdatingData ? (<LoadingSkeletonCard />) : (
                             <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                <Chart type="bar" data={responseGraficoNCCMPAvesPesadas} options={lightOptions}/>
+                                <Chart type="bar" data={responseGraficoNCCMPAvesPesadas} options={lightOptions} className="divMedia"/>
                             </Card>
                         )}
                     </Col>
@@ -831,25 +836,25 @@ function Home() {
                     </Col>    
                 </Row>
                 <Row>
-                    <Col>
+                    <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
                         {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                            <Card title="Habilitador" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                <Chart type="bar" data={responseGraficoCETotal} options={lightOptions}/>
+                            <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                <Chart type="bar" data={responseGraficoCETotal} options={lightOptions} className="divMaior"/>
                             </Card>
                         )}
                     </Col>
-                    <Col>
-                        <Col>
+                    <Col className="col-lg-6 col-md-6 col-sm-12">
+                        <Col className="col-lg-12 col-md-12 col-sm-12">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions}/>
+                                    <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions} className="divMenor"/>
                                 </Card>
                             )}
                         </Col>
-                        <Col>
+                        <Col className="col-lg-12 col-md-12 col-sm-12">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions}/>
+                                    <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions} className="divMenor"/>
                                 </Card>
                             )}
                         </Col>
@@ -866,14 +871,14 @@ function Home() {
                     <Col>
                         {isUpdatingData ? (<LoadingSkeletonCard />) : (
                             <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                <Chart type="bar" data={responseGraficoRACTotalCE} options={lightOptions}/>
+                                <Chart type="bar" data={responseGraficoRACTotalCE} options={lightOptions} className="divMedia"/>
                             </Card>
                         )}
                     </Col>
                     <Col>
                         {isUpdatingData ? (<LoadingSkeletonCard />) : (
                             <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                <Chart type="bar" data={responseGraficoRAC} options={lightOptions}/>
+                                <Chart type="bar" data={responseGraficoRAC} options={lightOptions} className="divMedia"/>
                             </Card>
                         )}
                     </Col>
@@ -891,25 +896,25 @@ function Home() {
                         </Col>    
                     </Row>
                     <Row>
-                        <Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="Habilitador" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions}/>
+                                <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions} className="divMaior"/>
                                 </Card>
                             )}
                         </Col>
-                        <Col>
-                            <Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12">
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions}/>
+                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions} className="divMenor"/>
                                     </Card>
                                 )}
                             </Col>
-                            <Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions}/>
+                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions} className="divMenor"/>
                                     </Card>
                                 )}
                             </Col>
@@ -926,14 +931,14 @@ function Home() {
                         <Col>
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoRACTotalCE} options={lightOptions}/>
+                                    <Chart type="bar" data={responseGraficoRACTotalCE} options={lightOptions} className="divMedia"/>
                                 </Card>
                             )}
                         </Col>
                         <Col>
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoRAC} options={lightOptions}/>
+                                    <Chart type="bar" data={responseGraficoRAC} options={lightOptions} className="divMedia"/>
                                 </Card>
                             )}
                         </Col>
@@ -951,25 +956,25 @@ function Home() {
                         </Col>    
                     </Row>
                     <Row>
-                        <Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="Habilitador" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions}/>
+                                <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions} className="divMaior"/>
                                 </Card>
                             )}
                         </Col>
-                        <Col>
-                            <Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12">
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions}/>
+                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions} className="divMenor"/>
                                     </Card>
                                 )}
                             </Col>
-                            <Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions}/>
+                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions} className="divMenor"/>
                                     </Card>
                                 )}
                             </Col>
@@ -986,14 +991,14 @@ function Home() {
                         <Col>
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoRACTotalCE} options={lightOptions}/>
+                                    <Chart type="bar" data={responseGraficoRACTotalCE} options={lightOptions} className="divMedia"/>
                                 </Card>
                             )}
                         </Col>
                         <Col>
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoRAC} options={lightOptions}/>
+                                    <Chart type="bar" data={responseGraficoRAC} options={lightOptions} className="divMedia"/>
                                 </Card>
                             )}
                         </Col>
@@ -1011,25 +1016,25 @@ function Home() {
                         </Col>    
                     </Row>
                     <Row>
-                        <Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="Habilitador" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions}/>
+                                <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions} className="divMaior"/>
                                 </Card>
                             )}
                         </Col>
-                        <Col>
-                            <Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12">
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions}/>
+                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions} className="divMenor"/>
                                     </Card>
                                 )}
                             </Col>
-                            <Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions}/>
+                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions} className="divMenor"/>
                                     </Card>
                                 )}
                             </Col>
@@ -1046,14 +1051,14 @@ function Home() {
                         <Col>
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoRACTotalCE} options={lightOptions}/>
+                                    <Chart type="bar" data={responseGraficoRACTotalCE} options={lightOptions} className="divMedia"/>
                                 </Card>
                             )}
                         </Col>
                         <Col>
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoRAC} options={lightOptions}/>
+                                    <Chart type="bar" data={responseGraficoRAC} options={lightOptions} className="divMedia"/>
                                 </Card>
                             )}
                         </Col>
@@ -1071,25 +1076,25 @@ function Home() {
                         </Col>    
                     </Row>
                     <Row>
-                        <Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="Habilitador" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions}/>
+                                <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions} className="divMaior2"/>
                                 </Card>
                             )}
                         </Col>
-                        <Col>
-                            <Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12">
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGrafico5} options={lightOptions}/>
+                                        <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
-                            <Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGrafico5} options={lightOptions}/>
+                                        <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
@@ -1108,25 +1113,25 @@ function Home() {
                         </Col>    
                     </Row>
                     <Row>
-                        <Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="Habilitador" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions}/>
+                                <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions} className="divMaior2"/>
                                 </Card>
                             )}
                         </Col>
-                        <Col>
-                            <Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12">
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGrafico5} options={lightOptions}/>
+                                        <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
-                            <Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGrafico5} options={lightOptions}/>
+                                        <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
@@ -1145,25 +1150,25 @@ function Home() {
                         </Col>    
                     </Row>
                     <Row>
-                        <Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="Habilitador" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions}/>
+                                <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions} className="divMaior2"/>
                                 </Card>
                             )}
                         </Col>
-                        <Col>
-                            <Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12">
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGrafico5} options={lightOptions}/>
+                                        <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
-                            <Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGrafico5} options={lightOptions}/>
+                                        <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
@@ -1183,25 +1188,25 @@ function Home() {
                         </Col>    
                     </Row>
                     <Row>
-                        <Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="Habilitador" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions}/>
+                                <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions} className="divMaior2"/>
                                 </Card>
                             )}
                         </Col>
-                        <Col>
-                            <Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12">
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGrafico5} options={lightOptions}/>
+                                        <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
-                            <Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGrafico5} options={lightOptions}/>
+                                        <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
@@ -1210,7 +1215,7 @@ function Home() {
                     </Row>
 
 
-                </reg>
+                </reg> 
 
 
                 
@@ -1234,7 +1239,7 @@ function Home() {
                                 
                                 {/* Testes finais */}
 
-                                <Row>
+                                {/* <Row>
                                     <Col>
                                         {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                             <Card title="Total RAC" subTitle="RA" className="mt-5">
@@ -1252,7 +1257,7 @@ function Home() {
                                         )}
 
                                     </Col>  
-                                </Row>
+                                </Row> */}
                                         
             </div>
 
