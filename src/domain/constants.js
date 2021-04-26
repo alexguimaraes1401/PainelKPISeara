@@ -133,12 +133,14 @@ const lightOptions = {
                 position: "left",
                 stacked: true,
                 ticks: {
-                    fontColor: '#495057',
-                    display: true
+                    fontColor: '#ffffff',
+                    display: true,
+                    suggestedMin: 0,
                 },
-                display: false,
+                display: true,
                 gridLines: {
-                    display:false
+                    color:'#ccc',
+                    display:false,
                 },
             }, 
             {
@@ -146,10 +148,13 @@ const lightOptions = {
                 position: "right",
                 ticks: {
                     fontColor: '#495057',
-                    display: true
+                    display: true,
+                    suggestedMin: 0,
+
                 },
                 display: false,
                 gridLines: {
+                    
                     display:false
                 },
             }
@@ -181,7 +186,7 @@ const optionsComparativo = {
         xAxes: [{
             stacked: true,
             gridLines: {
-                display:false
+                display:true
             },
         }],
         yAxes: [
@@ -193,9 +198,9 @@ const optionsComparativo = {
                     fontColor: '#495057',
                     display: true
                 },
-                display: false,
+                display: true,
                 gridLines: {
-                    display:false
+                    display:true
                 },
             }, 
             {
@@ -205,9 +210,9 @@ const optionsComparativo = {
                     fontColor: '#495057',
                     display: true
                 },
-                display: false,
+                display: true,
                 gridLines: {
-                    display:false
+                    display:true
                 },
             }
         ]

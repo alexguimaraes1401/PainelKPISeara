@@ -66,15 +66,41 @@ function Home() {
                             false,
                             false,
                             false,
+
+                            false,
+                            false,
+                            false,
+                            false,
+                            false,                           
+
                             false,
                             false,
                             false,
                             false,
                             false,
-                            false]
+
+                            false,
+                            false,
+                            false,
+                            false,
+                            false,   
+                            
+                            false,
+                            false,
+                            false,
+                            false,
+                            false,
+
+                            false,
+                            false,
+                            false,
+                            false,
+                            false
+                        ]
+
 
     function percorreNumeroChamados(){
-        //debugger
+        // debugger
         for(var i=0; i < numeroChamados.length; i++){
             if(numeroChamados[i] == false){
                 return false
@@ -86,7 +112,7 @@ function Home() {
     //chamadas
     let [responseGraficoCETotal, setresponseGraficoCETotal] = React.useState({})
     let [GraficoCETotal, setGraficoCETotal] = React.useState()
-
+    
     let [responseGraficoNNCMPTotalCE, setresponseGraficoNNCMPTotalCE] = React.useState({})
     let [GraficoNNCMPTotalCE, setGraficoNNCMPTotalCE] = React.useState()
 
@@ -115,6 +141,70 @@ function Home() {
     let [responseGraficoNCCMPAvesPesadas, setresponseGraficoNCCMPAvesPesadas] = React.useState({})
     let [GraficoNCCMPAvesPesadas, setGraficoNCCMPAvesPesadas] = React.useState()
 
+    //Aves pesadas PR RAC
+    let [responseGraficoCETotalAvesPesadasPR, setresponseGraficoCETotalAvesPesadasPR] = React.useState({})
+    let [GraficoCETotalAvesPesadasPR, setGraficoCETotalAvesPesadasPR] = React.useState()
+
+    let [responseGraficoNNCMPTotalCEAvesPesadasPR, setresponseGraficoNNCMPTotalCEAvesPesadasPR] = React.useState({})
+    let [GraficoNNCMPTotalCEAvesPesadasPR, setGraficoNNCMPTotalCEAvesPesadasPR] = React.useState()
+
+    let [responseGraficoRACTotalCEAvesPesadasPR, setresponseGraficoRACTotalCEAvesPesadasPR] = React.useState({})
+    let [GraficoRACTotalCEAvesPesadasPR, setGraficoRACTotalCEAvesPesadasPR] = React.useState()
+
+    let [responseGraficoRACAvesPesadasPR, setresponseGraficoRACAvesPesadasPR] = React.useState({})
+    let [GraficoRACAvesPesadasPR, setGraficoRACAvesPesadasPR] = React.useState()
+
+    let [responseGraficoNCCMPAvesPesadasPR, setresponseGraficoNCCMPAvesPesadasPR] = React.useState({})
+    let [GraficoNCCMPAvesPesadasPR, setGraficoNCCMPAvesPesadasPR] = React.useState()
+
+    //Aves Leves RAC
+    let [responseGraficoCETotalAvesLeves, setresponseGraficoCETotalAvesLeves] = React.useState({})
+    let [GraficoCETotalAvesLeves, setGraficoCETotalAvesLeves] = React.useState()
+
+    let [responseGraficoNNCMPTotalCEAvesLeves, setresponseGraficoNNCMPTotalCEAvesLeves] = React.useState({})
+    let [GraficoNNCMPTotalCEAvesLeves, setGraficoNNCMPTotalCEAvesLeves] = React.useState()
+
+    let [responseGraficoRACTotalCEAvesLeves, setresponseGraficoRACTotalCEAvesLeves] = React.useState({})
+    let [GraficoRACTotalCEAvesLeves, setGraficoRACTotalCEAvesLeves] = React.useState()
+
+    let [responseGraficoRACAvesLeves, setresponseGraficoRACAvesLeves] = React.useState({})
+    let [GraficoRACAvesLeves, setGraficoRACAvesLeves] = React.useState()
+
+    let [responseGraficoNCCMPAvesLeves, setresponseGraficoNCCMPAvesLeves] = React.useState({})
+    let [GraficoNCCMPAvesLeves, setGraficoNCCMPAvesLeves] = React.useState()
+
+    //Suínos RAC
+    let [responseGraficoCETotalSuinos, setresponseGraficoCETotalSuinos] = React.useState({})
+    let [GraficoCETotalSuinos, setGraficoCETotalSuinos] = React.useState()
+
+    let [responseGraficoNNCMPTotalCESuinos, setresponseGraficoNNCMPTotalCESuinos] = React.useState({})
+    let [GraficoNNCMPTotalCESuinos, setGraficoNNCMPTotalCESuinos] = React.useState()
+
+    let [responseGraficoRACTotalCESuinos, setresponseGraficoRACTotalCESuinos] = React.useState({})
+    let [GraficoRACTotalCESuinos, setGraficoRACTotalCESuinos] = React.useState()
+
+    let [responseGraficoRACSuinos, setresponseGraficoRACSuinos] = React.useState({})
+    let [GraficoRACSuinos, setGraficoRACSuinos] = React.useState()
+
+    let [responseGraficoNCCMPSuinos, setresponseGraficoNCCMPSuinos] = React.useState({})
+    let [GraficoNCCMPSuinos, setGraficoNCCMPSuinos] = React.useState()
+
+    //Preparados RAC
+    let [responseGraficoCETotalPreparados, setresponseGraficoCETotalPreparados] = React.useState({})
+    let [GraficoCETotalPreparados, setGraficoCETotalPreparados] = React.useState()
+
+    let [responseGraficoNNCMPTotalCEPreparados, setresponseGraficoNNCMPTotalCEPreparados] = React.useState({})
+    let [GraficoNNCMPTotalCEPreparados, setGraficoNNCMPTotalCEPreparados] = React.useState()
+
+    let [responseGraficoRACTotalCEPreparados, setresponseGraficoRACTotalCEPreparados] = React.useState({})
+    let [GraficoRACTotalCEPreparados, setGraficoRACTotalCEPreparados] = React.useState()
+
+    let [responseGraficoRACPreparados, setresponseGraficoRACPreparados] = React.useState({})
+    let [GraficoRACPreparados, setGraficoRACPreparados] = React.useState()
+
+    let [responseGraficoNCCMPPreparados, setresponseGraficoNCCMPPreparados] = React.useState({})
+    let [GraficoNCCMPPreparados, setGraficoNCCMPPreparados] = React.useState()
+
     //Testes
     let [responseGrafico5, setresponseGrafico5] = React.useState({})
     let [Grafico_5, setGrafico_5] = React.useState()
@@ -122,23 +212,100 @@ function Home() {
     let [responseTable, setresponseTable] = React.useState({})
     let [TableRacME, setTableRacME] = React.useState()
 
+
+    let whereRACPreparados = "WHERE ([Regional (Qualidade)] like 'Preparados%' or [Regional (Qualidade)] in ('Outros', 'Itajaí')) "
+    whereRACPreparados += " AND ([Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','FABRICAÇÃO')"
+    whereRACPreparados += "                                 OR [Origem da RAC] IS NULL) "
+    whereRACPreparados += " and unidade in ( "
+    whereRACPreparados += " 'Brasília',  "
+    whereRACPreparados += " 'Dourados',  "
+    whereRACPreparados += " 'Duque de Caxias',  "
+    whereRACPreparados += " 'Jaguariúna',  "
+    whereRACPreparados += " 'Lages',  "
+    whereRACPreparados += " 'Montenegro',  "
+    whereRACPreparados += " 'Rio Grande da Serra',  "
+    whereRACPreparados += " 'Roca Sales',  "
+    whereRACPreparados += " 'Salto Veloso',  "
+    whereRACPreparados += "  'São Gonçalo',  "
+    whereRACPreparados += " 'São Miguel do Oeste',  "
+    whereRACPreparados += " 'Três Passos',  "
+    whereRACPreparados += " 'Bom Retiro', " 
+    whereRACPreparados += " 'Carambeí',  "
+    whereRACPreparados += " 'Osasco',  "
+    whereRACPreparados += " 'Jundiaí', " 
+    whereRACPreparados += " 'Caxias do Sul - Ana Rech',  "
+    whereRACPreparados += " 'Itapiranga',  "
+    whereRACPreparados += " 'Seara',  "
+    whereRACPreparados += " 'Jaragua do Sul',  "
+    whereRACPreparados += " 'ITAJAI INDUSTRIALIZADOS',  "
+    whereRACPreparados += " 'ITAJAI SUINOS')"
+
+    let whereRACCE = " WHERE Tipo = 'REAL'  "
+    whereRACCE += " AND Grupo = 'CORPO ESTRANHO' "
+    whereRACCE += " AND [Regional (Qualidade)] NOT IN ('Excelsior') "
+    whereRACCE += " AND [Tipo CE] = 'Não Inerente'  "
+    whereRACCE += " AND  [Tipo_Atendimento_rac] IN ( "
+    whereRACCE += " 'CONTATO EXCELSIOR_RAC',  "
+    whereRACCE += " 'CONTATO JBS CARNES',  "
+    whereRACCE += " 'CONTATO MERCADO DA CARNE',  "
+    whereRACCE += " 'NOTIFICAÇÃO',  "
+    whereRACCE += " 'RECLAMAÇÃO',  "
+    whereRACCE += " 'RECLAMAÇÃO ABUSO DE PRODUTO',  "
+    whereRACCE += " 'RECLAMAÇÃO ABUSO PROD.',  "
+    whereRACCE += " 'Reclamação Contas Globais',  "
+    whereRACCE += " 'RECLAMAÇÃO FAB. NÃO IDENTIF.',  "
+    whereRACCE += " 'RECLAMAÇÃO HANS',  "
+    whereRACCE += " 'RECLAMAÇÃO VOSSKO')  "
+    whereRACCE += " AND [Origem da RAC] IN ( "
+    whereRACCE += " 'Documentação Unidade',  "
+    whereRACCE += " 'EXPEDIÇÃO FÁBRICA',  "
+    whereRACCE += " 'FABRICAÇÃO',  "
+    whereRACCE += " 'P-D') "
+
+    let whereNNCMP = " WHERE ([Reg. Qual] NOT IN ('Itajaí', 'Outros')) "
+    whereNNCMP += " AND ([Grupo Problema] NOT IN ('Distr / Log', 'Embalagem Secundária') or [Grupo Problema] is null) "
+    whereNNCMP += " AND ([Entra para a Meta] <> 'Não' or [Entra para a Meta] is null) "
+
     //Handlers
     React.useEffect(() => {
                
         chamarAPI("CETotal",GraficoCETotal, "GraficoCETotal", [' where 1=1 '], setGraficoCETotal, setresponseGraficoCETotal, 0)     // 1
         chamarAPI("NNCMPTotalCE",GraficoNNCMPTotalCE, "GraficoNNCMPTotalCE", [' where 1=1 '], setGraficoNNCMPTotalCE, setresponseGraficoNNCMPTotalCE, 1)       // 2
-        chamarAPI("RACTotalCE",GraficoRACTotalCE, "GraficoRACTotalCE", [' where 1=1 '], setGraficoRACTotalCE, setresponseGraficoRACTotalCE, 2)     // 3
+        chamarAPI("RAC",GraficoRACTotalCE, "GraficoRACTotalCE", [whereRACCE], setGraficoRACTotalCE, setresponseGraficoRACTotalCE, 2)     // 3
         chamarAPI("RAC",GraficoRAC, "GraficoRAC", [' where 1=1 '], setGraficoRAC, setresponseGraficoRAC, 3)    // 4
-        chamarAPI("NCCMP",GraficoNCCMP, "GraficoNCCMP", [' where 1=1 '], setGraficoNCCMP, setresponseGraficoNCCMP, 4)    // 5 
+        chamarAPI("NCCMP",GraficoNCCMP, "GraficoNCCMP", [whereNNCMP], setGraficoNCCMP, setresponseGraficoNCCMP, 4)    // 5 
         
-        chamarAPI("CETotal",GraficoCETotalAvesPesadas, "GraficoCETotalAvesPesadas", [' where 1=1 '], setGraficoCETotalAvesPesadas, setresponseGraficoCETotalAvesPesadas, 5)     // 6
-        chamarAPI("NNCMPTotalCE",GraficoNNCMPTotalCEAvesPesadas, "GraficoNNCMPTotalCEAvesPesadas", [' where 1=1 '], setGraficoNNCMPTotalCEAvesPesadas, setresponseGraficoNNCMPTotalCEAvesPesadas, 6)       // 7
-        chamarAPI("RACTotalCE",GraficoRACTotalCEAvesPesadas, "GraficoRACTotalCEAvesPesadas", ['  WHERE [Negócio (Qualidade)] = \'Aves Pesadas\'   '], setGraficoRACTotalCEAvesPesadas, setresponseGraficoRACTotalCEAvesPesadas, 7)     // 8
-        chamarAPI("RAC",GraficoRACAvesPesadas, "GraficoRACAvesPesadas", [' WHERE [Negócio (Qualidade)] = \'Aves Pesadas\'  '], setGraficoRACAvesPesadas, setresponseGraficoRACAvesPesadas, 8)    // 9
-        chamarAPI("NCCMP",GraficoNCCMPAvesPesadas, "GraficoNCCMPAvesPesadas", [' where 1=1 '], setGraficoNCCMPAvesPesadas, setresponseGraficoNCCMPAvesPesadas, 9)    // 10
+        chamarAPI("CETotal",GraficoCETotalAvesPesadas, "GraficoCETotalAvesPesadas", [' where NEGOCIO = \'Aves Pesadas\'  '], setGraficoCETotalAvesPesadas, setresponseGraficoCETotalAvesPesadas, 5)     // 6
+        chamarAPI("NNCMPTotalCE",GraficoNNCMPTotalCEAvesPesadas, "GraficoNNCMPTotalCEAvesPesadas", [' where [Regional (Qualidade)] in (\'Aves Pesadas 1\',\'Aves Pesadas 2\',\'Aves Pesadas 3\', \'Aves Pesadas PR\') '], setGraficoNNCMPTotalCEAvesPesadas, setresponseGraficoNNCMPTotalCEAvesPesadas, 6)       // 7
+        chamarAPI("RACTotalCE",GraficoRACTotalCEAvesPesadas, "GraficoRACTotalCEAvesPesadas", [' WHERE [Regional (Qualidade)] in (\'Aves Pesadas 1\',\'Aves Pesadas 2\',\'Aves Pesadas 3\', \'Aves Pesadas PR\')  '], setGraficoRACTotalCEAvesPesadas, setresponseGraficoRACTotalCEAvesPesadas, 7)     // 8
+        chamarAPI("RACIndicadores",GraficoRACAvesPesadas, "GraficoRACAvesPesadas", [' WHERE [Regional (Qualidade)] in (\'Aves Pesadas 1\',\'Aves Pesadas 2\',\'Aves Pesadas 3\', \'Aves Pesadas PR\')  '], setGraficoRACAvesPesadas, setresponseGraficoRACAvesPesadas, 8)    // 9
+        chamarAPI("NCCMP",GraficoNCCMPAvesPesadas, "GraficoNCCMPAvesPesadas", [whereNNCMP + ' and [Reg. Qual] in (\'Aves Pesadas 1\',\'Aves Pesadas 2\',\'Aves Pesadas 3\', \'Aves Pesadas PR\')  '], setGraficoNCCMPAvesPesadas, setresponseGraficoNCCMPAvesPesadas, 9)    // 10
 
+        chamarAPI("CETotal",GraficoCETotalAvesPesadasPR, "GraficoCETotalAvesPesadasPR", [' where [NEGOCIO] = \'Aves Pesadas PR\' '], setGraficoCETotalAvesPesadasPR, setresponseGraficoCETotalAvesPesadasPR, 10)     // 11
+        chamarAPI("NNCMPTotalCE",GraficoNNCMPTotalCEAvesPesadasPR, "GraficoNNCMPTotalCEAvesPesadasPR", ['  where [Regional (Qualidade)] = \'Aves Pesadas PR\'  '], setGraficoNNCMPTotalCEAvesPesadasPR, setresponseGraficoNNCMPTotalCEAvesPesadasPR, 11)       // 12
+        chamarAPI("RACTotalCE",GraficoRACTotalCEAvesPesadasPR, "GraficoRACTotalCEAvesPesadasPR", ['  WHERE [Negócio (Qualidade)] in (\'Aves Pesadas PR\')   '], setGraficoRACTotalCEAvesPesadasPR, setresponseGraficoRACTotalCEAvesPesadasPR, 12)     // 13
+        chamarAPI("RACIndicadores",GraficoRACAvesPesadasPR, "GraficoRACAvesPesadasPR", [' WHERE [Regional (Qualidade)] in (\'Aves Pesadas PR\')  '], setGraficoRACAvesPesadasPR, setresponseGraficoRACAvesPesadasPR, 13)    // 14
+        chamarAPI("NCCMP",GraficoNCCMPAvesPesadasPR, "GraficoNCCMPAvesPesadasPR", [whereNNCMP + ' and [Reg. Qual] = \'Aves Pesadas PR\'  '], setGraficoNCCMPAvesPesadasPR, setresponseGraficoNCCMPAvesPesadasPR, 14)    // 15
 
-        chamarAPI("RACUnico",Grafico_5, "Grafico_5", [' where 1=1 '], setGrafico_5, setresponseGrafico5,10)  // 11                                                                    // 6
+        chamarAPI("CETotal",GraficoCETotalAvesLeves, "GraficoCETotalAvesLeves", [' where [NEGOCIO]  = \'Aves Leves\' '], setGraficoCETotalAvesLeves, setresponseGraficoCETotalAvesLeves, 15)     // 11
+        chamarAPI("NNCMPTotalCE",GraficoNNCMPTotalCEAvesLeves, "GraficoNNCMPTotalCEAvesLeves", [' where [Regional (Qualidade)] = \'Aves Leves\' '], setGraficoNNCMPTotalCEAvesLeves, setresponseGraficoNNCMPTotalCEAvesLeves, 16)       // 12
+        chamarAPI("RACTotalCE",GraficoRACTotalCEAvesLeves, "GraficoRACTotalCEAvesLeves", ['  WHERE [Negócio (Qualidade)] = \'Aves Leves\'   '], setGraficoRACTotalCEAvesLeves, setresponseGraficoRACTotalCEAvesLeves, 17)     // 13
+        chamarAPI("RACIndicadores",GraficoRACAvesLeves, "GraficoRACAvesLeves", [' WHERE [Negócio (Qualidade)] = \'Aves Leves\'  '], setGraficoRACAvesLeves, setresponseGraficoRACAvesLeves, 18)    // 14
+        chamarAPI("NCCMP",GraficoNCCMPAvesLeves, "GraficoNCCMPAvesLeves", [whereNNCMP + ' and [Reg. Qual] = \'Aves Leves\'  '], setGraficoNCCMPAvesLeves, setresponseGraficoNCCMPAvesLeves, 19)    // 15
+
+        chamarAPI("CETotal",GraficoCETotalSuinos, "GraficoCETotalSuinos", [' where [NEGOCIO]  = \'Suínos\' '], setGraficoCETotalSuinos, setresponseGraficoCETotalSuinos, 20)     // 11
+        chamarAPI("NNCMPTotalCE",GraficoNNCMPTotalCESuinos, "GraficoNNCMPTotalCESuinos", [' where [Regional (Qualidade)] = \'Suínos\' '], setGraficoNNCMPTotalCESuinos, setresponseGraficoNNCMPTotalCESuinos, 21)       // 12
+        chamarAPI("RACTotalCE",GraficoRACTotalCESuinos, "GraficoRACTotalCESuinos", ['  WHERE [Negócio (Qualidade)] = \'Suínos\'   '], setGraficoRACTotalCESuinos, setresponseGraficoRACTotalCESuinos, 22)     // 13
+        chamarAPI("RACIndicadores",GraficoRACSuinos, "GraficoRACSuinos", [' WHERE [Negócio (Qualidade)] = \'Suínos\'  '], setGraficoRACSuinos, setresponseGraficoRACSuinos, 23)    // 14
+        chamarAPI("NCCMP",GraficoNCCMPSuinos, "GraficoNCCMPSuinos", [whereNNCMP + ' and [Reg. Qual] = \'Suínos\'  '], setGraficoNCCMPSuinos, setresponseGraficoNCCMPSuinos, 24)    // 15
+
+        chamarAPI("CETotal",GraficoCETotalPreparados, "GraficoCETotalPreparados", [' where [NEGOCIO]  = \'Preparados\' '], setGraficoCETotalPreparados, setresponseGraficoCETotalPreparados, 25)     // 11
+        chamarAPI("NNCMPTotalCE",GraficoNNCMPTotalCEPreparados, "GraficoNNCMPTotalCEPreparados", [' where [Regional (Qualidade)] in (\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\') '], setGraficoNNCMPTotalCEPreparados, setresponseGraficoNNCMPTotalCEPreparados, 26)       // 12
+        chamarAPI("RACTotalCE",GraficoRACTotalCEPreparados, "GraficoRACTotalCEPreparados", ['  WHERE [Negócio (Qualidade)] = \'Preparados\'   '], setGraficoRACTotalCEPreparados, setresponseGraficoRACTotalCEPreparados, 27)     // 13
+        chamarAPI("RACIndicadores",GraficoRACPreparados, "GraficoRACPreparados", [whereRACPreparados], setGraficoRACPreparados, setresponseGraficoRACPreparados, 28)    // 14
+        chamarAPI("NCCMP",GraficoNCCMPPreparados, "GraficoNCCMPPreparados", [whereNNCMP + ' and [Reg. Qual] in (\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\')  '], setGraficoNCCMPPreparados, setresponseGraficoNCCMPPreparados, 29)    // 15
+
+        chamarAPI("RACUnico",Grafico_5, "Grafico_5", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Pesadas\' '], setGrafico_5, setresponseGrafico5,30)  // 11                                                                    // 6
 
     }, []);
 
@@ -156,6 +323,7 @@ function Home() {
                         document.getElementById("btnAplicar").click()
                         //aplicar()
                     }
+                    // setoptionRelativaresponseGraficoCETotal = f_optionRelativa (2000, 500);
                     return response
                 }).catch(err => {
                     // what now?
@@ -215,6 +383,23 @@ function Home() {
                     console.log(err);       
                 });
                 break
+            case 'RACIndicadores':
+                
+                    api.getSearaBaseRacIndicadores(parametros).then((response) => {
+                        buscarDados(response, funcao, objeto, funcaoRetorno)
+                        numeroChamados[numeroChamado] = true;
+                        console.log("Rodou "+apiNome)
+                        if(percorreNumeroChamados()){
+                            console.log("0Rodou "+apiNome)
+                            document.getElementById("btnAplicar").click()
+                            //aplicar()
+                        }
+                        return response
+                    }).catch(err => {
+                        // what now?
+                        console.log(err);       
+                    });
+                    break
             case 'NCCMP':
                 
                 api.getSearaBaseNCCMP(parametros).then((response) => {
@@ -291,11 +476,36 @@ function Home() {
             GerarGraficoHistorico(GraficoRACAvesPesadas, setresponseGraficoRACAvesPesadas)
             GerarGraficoHistorico(GraficoNCCMPAvesPesadas, setresponseGraficoNCCMPAvesPesadas)
 
+            GerarGraficoHistorico(GraficoCETotalAvesPesadasPR, setresponseGraficoCETotalAvesPesadasPR)
+            GerarGraficoHistorico(GraficoNNCMPTotalCEAvesPesadasPR, setresponseGraficoNNCMPTotalCEAvesPesadasPR)
+            GerarGraficoHistorico(GraficoRACTotalCEAvesPesadasPR, setresponseGraficoRACTotalCEAvesPesadasPR)
+            GerarGraficoHistorico(GraficoRACAvesPesadasPR, setresponseGraficoRACAvesPesadasPR)
+            GerarGraficoHistorico(GraficoNCCMPAvesPesadasPR, setresponseGraficoNCCMPAvesPesadasPR)
+
+            GerarGraficoHistorico(GraficoCETotalAvesLeves, setresponseGraficoCETotalAvesLeves)
+            GerarGraficoHistorico(GraficoNNCMPTotalCEAvesLeves, setresponseGraficoNNCMPTotalCEAvesLeves)
+            GerarGraficoHistorico(GraficoRACTotalCEAvesLeves, setresponseGraficoRACTotalCEAvesLeves)
+            GerarGraficoHistorico(GraficoRACAvesLeves, setresponseGraficoRACAvesLeves)
+            GerarGraficoHistorico(GraficoNCCMPAvesLeves, setresponseGraficoNCCMPAvesLeves)
+
+            GerarGraficoHistorico(GraficoCETotalSuinos, setresponseGraficoCETotalSuinos)
+            GerarGraficoHistorico(GraficoNNCMPTotalCESuinos, setresponseGraficoNNCMPTotalCESuinos)
+            GerarGraficoHistorico(GraficoRACTotalCESuinos, setresponseGraficoRACTotalCESuinos)
+            GerarGraficoHistorico(GraficoRACSuinos, setresponseGraficoRACSuinos)
+            GerarGraficoHistorico(GraficoNCCMPSuinos, setresponseGraficoNCCMPSuinos)
+
+            GerarGraficoHistorico(GraficoCETotalPreparados, setresponseGraficoCETotalPreparados)
+            GerarGraficoHistorico(GraficoNNCMPTotalCEPreparados, setresponseGraficoNNCMPTotalCEPreparados)
+            GerarGraficoHistorico(GraficoRACTotalCEPreparados, setresponseGraficoRACTotalCEPreparados)
+            GerarGraficoHistorico(GraficoRACPreparados, setresponseGraficoRACPreparados)
+            GerarGraficoHistorico(GraficoNCCMPPreparados, setresponseGraficoNCCMPPreparados)
+
             GerarGraficoBarras(Grafico_5, setresponseGrafico5)
         }, 0)
         
     }
 
+ 
     const GerarGraficoHistorico = (objeto, funcao) => {
             
             setIsUpdatingData(true)
@@ -338,6 +548,9 @@ function Home() {
             })
 
             let series = []
+            let maiorValorSerie = 0
+            let menorValorSerie = 100000
+
             yaxis.forEach((y, index) => {
                 let dataset = xaxis.map(xx => {
                     let yaxysvalue = xx.yaxis.filter(r => r.name === y.name);
@@ -407,7 +620,10 @@ function Home() {
 
                 for(var i = 0; i < dataset.length; i++){
                     if(dataset[i] == "") dataset[i] = null
+                    if(parseFloat(dataset[i]) > maiorValorSerie && yAx == "B") maiorValorSerie = parseFloat(dataset[i])
+                    if(parseFloat(dataset[i]) < menorValorSerie && yAx == "B") menorValorSerie = parseFloat(dataset[i])
                 }
+
 
                 let serie = {
                     type: tipo,
@@ -440,19 +656,66 @@ function Home() {
                 series.push(serie)
             })
 
+            //debugger
+            maiorValorSerie = parseFloat(maiorValorSerie)
+            menorValorSerie = parseFloat(menorValorSerie)
+            let maxYB = maiorValorSerie*(menorValorSerie/maiorValorSerie + 1.2)
+
+            let tipo = 'line'
+            let cor = 'transparent'
+            let corLabel = 'transparent'
+            let yAx = "B"
+            let varborderDash = [0,0]
+
+            let serieEixo = {
+                type: tipo,
+                yAxisID: yAx,
+                label: '',
+                backgroundColor: cor,
+                fill: false,
+                borderColor: cor,
+                borderWidth: 1,
+                pointRadius: 5,
+                pointBackgroundColor: "transparent",
+                pointBorderColor: "transparent",
+                borderDash: varborderDash, 
+                data: [null,null,null,null,null,null,null,null,null,null,null,null,null,null,maxYB ],
+                datalabels: {
+                
+                    align: "top",
+                    anchor: "end",
+                    offset: 10,
+                    padding: -2,
+                    color: corLabel,
+                    //clip: true,
+                    font: {
+                        size: "12",
+                    },
+                    
+                }
+                 
+            }
+
+            series.push(serieEixo)
+
             let seriesAdd = []
             
                 series.filter(s => s.label != null).forEach(element => {
                     seriesAdd.push(element)
                 });
-           
 
+            
+            //setoptionRelativaresponseGraficoCETotal = f_optionRelativa (2000, 500);
+    
             const dashboardData = {
                 labels: xaxis.map(r => r.name),
                 datasets: seriesAdd,
                 indicators
                 
             };
+
+  
+            
 
             if(typeof(funcao)=="function"){
                 funcao(dashboardData);
@@ -461,7 +724,7 @@ function Home() {
             setIsUpdatingData(false)
     }
 
-    const GerarGraficoBarras = (objeto, funcao) => {
+    const GerarGraficoBarras = (objeto, funcao, optionLet) => {
             
         setIsUpdatingData(true)
         let json = objeto; 
@@ -532,6 +795,8 @@ function Home() {
                 }
                  
             }
+
+            
             series.push(serie)
         })
 
@@ -541,7 +806,6 @@ function Home() {
                 seriesAdd.push(element)
             });
        
-
         const dashboardData = {
             labels: xaxis.map(r => r.name),
             datasets: seriesAdd,
@@ -839,7 +1103,7 @@ function Home() {
                     <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
                         {isUpdatingData ? (<LoadingSkeletonCard />) : (
                             <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                <Chart type="bar" data={responseGraficoCETotal} options={lightOptions} className="divMaior"/>
+                                <Chart type="bar" data={responseGraficoCETotalAvesPesadasPR} options={lightOptions} className="divMaior"/>
                             </Card>
                         )}
                     </Col>
@@ -847,14 +1111,14 @@ function Home() {
                         <Col className="col-lg-12 col-md-12 col-sm-12">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions} className="divMenor"/>
+                                    <Chart type="bar" data={responseGraficoNNCMPTotalCEAvesPesadasPR} options={lightOptions} className="divMenor"/>
                                 </Card>
                             )}
                         </Col>
                         <Col className="col-lg-12 col-md-12 col-sm-12">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions} className="divMenor"/>
+                                    <Chart type="bar" data={responseGraficoNNCMPTotalCEAvesPesadasPR} options={lightOptions} className="divMenor"/>
                                 </Card>
                             )}
                         </Col>
@@ -871,14 +1135,14 @@ function Home() {
                     <Col>
                         {isUpdatingData ? (<LoadingSkeletonCard />) : (
                             <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                <Chart type="bar" data={responseGraficoRACTotalCE} options={lightOptions} className="divMedia"/>
+                                <Chart type="bar" data={responseGraficoRACAvesPesadasPR} options={lightOptions} className="divMedia"/>
                             </Card>
                         )}
                     </Col>
                     <Col>
                         {isUpdatingData ? (<LoadingSkeletonCard />) : (
                             <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                <Chart type="bar" data={responseGraficoRAC} options={lightOptions} className="divMedia"/>
+                                <Chart type="bar" data={responseGraficoNCCMPAvesPesadasPR} options={lightOptions} className="divMedia"/>
                             </Card>
                         )}
                     </Col>
@@ -899,7 +1163,7 @@ function Home() {
                         <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions} className="divMaior"/>
+                                    <Chart type="bar" data={responseGraficoCETotalAvesLeves} options={lightOptions} className="divMaior"/>
                                 </Card>
                             )}
                         </Col>
@@ -907,14 +1171,14 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions} className="divMenor"/>
+                                        <Chart type="bar" data={responseGraficoNNCMPTotalCEAvesLeves} options={lightOptions} className="divMenor"/>
                                     </Card>
                                 )}
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions} className="divMenor"/>
+                                        <Chart type="bar" data={responseGraficoNNCMPTotalCEAvesLeves} options={lightOptions} className="divMenor"/>
                                     </Card>
                                 )}
                             </Col>
@@ -931,14 +1195,14 @@ function Home() {
                         <Col>
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoRACTotalCE} options={lightOptions} className="divMedia"/>
+                                    <Chart type="bar" data={responseGraficoRACAvesLeves} options={lightOptions} className="divMedia"/>
                                 </Card>
                             )}
                         </Col>
                         <Col>
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoRAC} options={lightOptions} className="divMedia"/>
+                                    <Chart type="bar" data={responseGraficoNCCMPAvesLeves} options={lightOptions} className="divMedia"/>
                                 </Card>
                             )}
                         </Col>
@@ -959,7 +1223,7 @@ function Home() {
                         <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions} className="divMaior"/>
+                                    <Chart type="bar" data={responseGraficoCETotalSuinos} options={lightOptions} className="divMaior"/>
                                 </Card>
                             )}
                         </Col>
@@ -967,14 +1231,14 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions} className="divMenor"/>
+                                        <Chart type="bar" data={responseGraficoNNCMPTotalCESuinos} options={lightOptions} className="divMenor"/>
                                     </Card>
                                 )}
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions} className="divMenor"/>
+                                        <Chart type="bar" data={responseGraficoNNCMPTotalCESuinos} options={lightOptions} className="divMenor"/>
                                     </Card>
                                 )}
                             </Col>
@@ -991,14 +1255,14 @@ function Home() {
                         <Col>
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoRACTotalCE} options={lightOptions} className="divMedia"/>
+                                    <Chart type="bar" data={responseGraficoRACSuinos} options={lightOptions} className="divMedia"/>
                                 </Card>
                             )}
                         </Col>
                         <Col>
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoRAC} options={lightOptions} className="divMedia"/>
+                                    <Chart type="bar" data={responseGraficoNCCMPSuinos} options={lightOptions} className="divMedia"/>
                                 </Card>
                             )}
                         </Col>
@@ -1019,7 +1283,7 @@ function Home() {
                         <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions} className="divMaior"/>
+                                    <Chart type="bar" data={responseGraficoCETotalPreparados} options={lightOptions} className="divMaior"/>
                                 </Card>
                             )}
                         </Col>
@@ -1027,14 +1291,14 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions} className="divMenor"/>
+                                        <Chart type="bar" data={responseGraficoNNCMPTotalCEPreparados} options={lightOptions} className="divMenor"/>
                                     </Card>
                                 )}
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions} className="divMenor"/>
+                                        <Chart type="bar" data={responseGraficoNNCMPTotalCEPreparados} options={lightOptions} className="divMenor"/>
                                     </Card>
                                 )}
                             </Col>
@@ -1051,14 +1315,14 @@ function Home() {
                         <Col>
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoRACTotalCE} options={lightOptions} className="divMedia"/>
+                                    <Chart type="bar" data={responseGraficoRACPreparados} options={lightOptions} className="divMedia"/>
                                 </Card>
                             )}
                         </Col>
                         <Col>
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoRAC} options={lightOptions} className="divMedia"/>
+                                    <Chart type="bar" data={responseGraficoNCCMPPreparados} options={lightOptions} className="divMedia"/>
                                 </Card>
                             )}
                         </Col>
@@ -1078,22 +1342,22 @@ function Home() {
                     <Row>
                         <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions} className="divMaior2"/>
+                                <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoRACAvesPesadas} options={lightOptions} className="divMaior2"/>
                                 </Card>
                             )}
                         </Col>
                         <Col className="col-lg-6 col-md-6 col-sm-12">
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
                                         <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
                                         <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
@@ -1115,22 +1379,22 @@ function Home() {
                     <Row>
                         <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions} className="divMaior2"/>
+                                <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoRACAvesPesadasPR} options={lightOptions} className="divMaior2"/>
                                 </Card>
                             )}
                         </Col>
                         <Col className="col-lg-6 col-md-6 col-sm-12">
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
                                         <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
                                         <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
@@ -1140,6 +1404,43 @@ function Home() {
                     </Row>
 
                 </reg>
+
+                <reg id="region RAC - Reclamações - Aves Leves">
+
+                    <Row>
+                        <Col className="mt-1 col-12 cssSeara2021_titulo">
+                            Reclamações - Aves Leves
+                            <hr></hr>
+                        </Col>    
+                    </Row>
+                    <Row>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoRACAvesLeves} options={lightOptions} className="divMaior2"/>
+                                </Card>
+                            )}
+                        </Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12">
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                        <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
+                                    </Card>
+                                )}
+                            </Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                        <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
+                                    </Card>
+                                )}
+                            </Col>
+                        </Col>
+                        
+                    </Row>
+
+                    </reg>
 
                 <reg id="region RAC - Reclamações - Suínos">
 
@@ -1152,22 +1453,22 @@ function Home() {
                     <Row>
                         <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions} className="divMaior2"/>
+                                <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoRACSuinos} options={lightOptions} className="divMaior2"/>
                                 </Card>
                             )}
                         </Col>
                         <Col className="col-lg-6 col-md-6 col-sm-12">
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
                                         <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
                                         <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
@@ -1190,22 +1491,22 @@ function Home() {
                     <Row>
                         <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions} className="divMaior2"/>
+                                <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoCETotalPreparados} options={lightOptions} className="divMaior2"/>
                                 </Card>
                             )}
                         </Col>
                         <Col className="col-lg-6 col-md-6 col-sm-12">
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
                                         <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
+                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
                                         <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
@@ -1218,25 +1519,7 @@ function Home() {
                 </reg> 
 
 
-                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
+
                                 {/* Testes finais */}
 
                                 {/* <Row>

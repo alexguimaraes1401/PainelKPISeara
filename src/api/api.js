@@ -33,12 +33,26 @@ export default {
                 }
             ]
         }),
-    getSearaBaseNNCMPTotalCE: (params) =>
+    getSearaBaseRacIndicadores: (p) =>
         instance({
-            method: "GET",
+            method: "POST",
             //url: `/Service/RAC?data=${params[0]}&nome=${params[1]}`, //`/SearaDashboard/RAC?data=${params[0]}&nome=${params[1]}`,
             //url: `/RACTotal?data=${params[0]}&nome=${params[1]}`, 
-            url: `/NNCMPTotalCE?where=${params[0]}`, 
+            url: `/RacTotalIndicadores`, 
+            data: {'where': p[0]},
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
+        }),
+    getSearaBaseNNCMPTotalCE: (p) =>
+        instance({
+            method: "POST",
+            //url: `/Service/RAC?data=${params[0]}&nome=${params[1]}`, //`/SearaDashboard/RAC?data=${params[0]}&nome=${params[1]}`,
+            //url: `/RACTotal?data=${params[0]}&nome=${params[1]}`, 
+            url: `/NNCMPTotalCE`, 
+            data: {'where': p[0]},
             params: {
                 datatype: "json"
             },
@@ -96,12 +110,13 @@ export default {
             ]
         }),
 
-    getSearaBaseNCCMP: (params) =>
+    getSearaBaseNCCMP: (p) =>
         instance({
-            method: "GET",
+            method: "POST",
             //url: `/Service/RAC?data=${params[0]}&nome=${params[1]}`, //`/SearaDashboard/RAC?data=${params[0]}&nome=${params[1]}`,
             //url: `/RACTotal?data=${params[0]}&nome=${params[1]}`, 
-            url: `/NNCMPTotal?where=${params[0]}`, 
+            url: `/NNCMPTotal`, 
+            data: {'where': p[0]},
             params: {
                 datatype: "json"
             },
@@ -112,12 +127,13 @@ export default {
             ]
         }),
 
-    getSearaBaseNCCMPCE: (params) =>
+    getSearaBaseNCCMPCE: (p) =>
         instance({
-            method: "GET",
+            method: "POST",
             //url: `/Service/RAC?data=${params[0]}&nome=${params[1]}`, //`/SearaDashboard/RAC?data=${params[0]}&nome=${params[1]}`,
             //url: `/RACTotal?data=${params[0]}&nome=${params[1]}`, 
-            url: `/NNCMPTotalCE?where=${params[0]}`, 
+            url: `/NNCMPTotalCE`, 
+            data: {'where': p[0]},
             params: {
                 datatype: "json"
             },
