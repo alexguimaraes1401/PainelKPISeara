@@ -303,7 +303,7 @@ function Home() {
         chamarAPI("NNCMPTotalCE",GraficoNNCMPTotalCEPreparados, "GraficoNNCMPTotalCEPreparados", [' where [Regional (Qualidade)] in (\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\') '], setGraficoNNCMPTotalCEPreparados, setresponseGraficoNNCMPTotalCEPreparados, 26)       // 12
         chamarAPI("RACTotalCE",GraficoRACTotalCEPreparados, "GraficoRACTotalCEPreparados", ['  WHERE [Negócio (Qualidade)] = \'Preparados\'   '], setGraficoRACTotalCEPreparados, setresponseGraficoRACTotalCEPreparados, 27)     // 13
         chamarAPI("RACIndicadores",GraficoRACPreparados, "GraficoRACPreparados", [whereRACPreparados], setGraficoRACPreparados, setresponseGraficoRACPreparados, 28)    // 14
-        chamarAPI("NCCMP",GraficoNCCMPPreparados, "GraficoNCCMPPreparados", [whereNNCMP + ' and [Reg. Qual] in (\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\')  '], setGraficoNCCMPPreparados, setresponseGraficoNCCMPPreparados, 29)    // 15
+        chamarAPI("NCCMP",GraficoNCCMPPreparados, "GraficoNCCMPPreparados", [whereNNCMP + ' and [Reg. Qual] in (\'Preparados 5\',\'Preparados 2\',\'Preparados 3\', \'Outros\')  '], setGraficoNCCMPPreparados, setresponseGraficoNCCMPPreparados, 29)    // 15
 
         chamarAPI("RACUnico",Grafico_5, "Grafico_5", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Pesadas\' '], setGrafico_5, setresponseGrafico5,30)  // 11                                                                    // 6
 
