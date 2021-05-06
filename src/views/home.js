@@ -95,7 +95,9 @@ function Home() {
                             false,
                             false,
                             false,
-                            false
+                            false,
+
+                            false,
                         ]
 
 
@@ -209,8 +211,19 @@ function Home() {
     let [responseGrafico5, setresponseGrafico5] = React.useState({})
     let [Grafico_5, setGrafico_5] = React.useState()
 
+    let [responseGrafico6, setresponseGrafico6] = React.useState({})
+    let [Grafico_6, setGrafico_6] = React.useState()
+
     let [responseTable, setresponseTable] = React.useState({})
     let [TableRacME, setTableRacME] = React.useState()
+
+    let [TableRacFinalME, setTableRacFinalME] = React.useState() //ME
+    let [TableRacFinalMI, setTableRacFinalMI] = React.useState() //MI
+    let [TableRacFinalRECL, setTableRacFinalRECL] = React.useState() //RECLAMAÇÕES ESPECIAIS
+    let [TableRacFinalPDV, setTableRacFinalPDV] = React.useState() //PDV ABERTURA
+    let [TableRacFinalTE, setTableRacFinalTE] = React.useState() //ABERTURA TERCEIROS
+    let [TableRacFinalCRIT, setTableRacFinalCRIT] = React.useState() //CRITICOS
+
 
 
     let whereRACPreparados = "WHERE ([Regional (Qualidade)] like 'Preparados%' or [Regional (Qualidade)] in ('Outros', 'Itajaí')) "
@@ -305,8 +318,12 @@ function Home() {
         chamarAPI("RACIndicadores",GraficoRACPreparados, "GraficoRACPreparados", [whereRACPreparados], setGraficoRACPreparados, setresponseGraficoRACPreparados, 28)    // 14
         chamarAPI("NCCMP",GraficoNCCMPPreparados, "GraficoNCCMPPreparados", [whereNNCMP + ' and [Reg. Qual] in (\'Preparados 5\',\'Preparados 2\',\'Preparados 3\', \'Outros\')  '], setGraficoNCCMPPreparados, setresponseGraficoNCCMPPreparados, 29)    // 15
 
-        chamarAPI("RACUnico",Grafico_5, "Grafico_5", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Pesadas\' '], setGrafico_5, setresponseGrafico5,30)  // 11                                                                    // 6
+        chamarAPI("RACUnicoUnidade",Grafico_5, "Grafico_5", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Pesadas\' '], setGrafico_5, setresponseGrafico5,30)  // 11                                                                    // 6
 
+
+        chamarAPI("RACUnicoProblema",Grafico_6, "Grafico_6", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Pesadas\' '], setGrafico_6, setresponseGrafico6,30)
+
+        
     }, []);
 
     function chamarAPI(apiNome, objeto, numGrafico, parametros, funcao, funcaoRetorno, numeroChamado){
@@ -435,9 +452,9 @@ function Home() {
                         console.log(err);       
                     });
                     break  
-            case 'RACUnico':
+            case 'RACUnicoUnidade':
                 
-                    api.getSearaBaseRACUnico(parametros).then((response) => {
+                    api.getSearaBaseRACUnicoUnidade(parametros).then((response) => {
                             
                             buscarDados(response, funcao, objeto, funcaoRetorno)
                             numeroChamados[numeroChamado] = true;
@@ -453,6 +470,25 @@ function Home() {
                             console.log(err);       
                         });
                         break  
+
+            case 'RACUnicoProblema':
+                
+                    api.getSearaBaseRACUnicoProblema(parametros).then((response) => {
+                            
+                            buscarDados(response, funcao, objeto, funcaoRetorno)
+                            numeroChamados[numeroChamado] = true;
+                            console.log("Rodou "+apiNome)
+                            if(percorreNumeroChamados()){
+                                console.log("0Rodou "+apiNome)
+                                document.getElementById("btnAplicar").click()
+                                //aplicar()
+                            }
+                            return response
+                        }).catch(err => {
+                            // what now?
+                            console.log(err);       
+                        });
+                        break 
 
             default:
                 break    
@@ -501,6 +537,7 @@ function Home() {
             GerarGraficoHistorico(GraficoNCCMPPreparados, setresponseGraficoNCCMPPreparados)
 
             GerarGraficoBarras(Grafico_5, setresponseGrafico5)
+            GerarGraficoBarras(Grafico_6, setresponseGrafico6)
         }, 0)
         
     }
@@ -527,7 +564,7 @@ function Home() {
             }
 
             let xaxis = Array.from(groupBy(json, x => x["Periodo"]), ([name, value]) => ({ name, value }));
-            let yaxis = [{name:'Evolutivo 2020'},{name:'Evolutivo 2021'},{name:'Evolutivo Meta'},{name:'Meta'},{name:'2019'},{name:'2020'},{name: '2021'}];
+            let yaxis = [{name:'Evolutivo 2020'},{name:'Evolutivo 2021'},{name:'Evolutivo Meta'},{name:'Meta'},{name:'2019'},{name:'2020'},{name: '2021'},{name: 'forcast'},{name: 'Média Diária'}];
 
             xaxis.forEach(x => {
                 if (x.name == "2019"){
@@ -542,10 +579,14 @@ function Home() {
                     x['yaxis'] = [
                                     {name: "Evolutivo 2020", value: x.value[0].a2020},
                                     {name: "Evolutivo Meta", value: x.value[0].aMeta},
-                                    {name: "Evolutivo 2021", value: x.value[0].a2021}
+                                    {name: "Evolutivo 2021", value: x.value[0].a2021},
+                                    {name: "forcast", value: x.value[0].forcast.replace(",",".")},
+                                    {name: "Média Diária", value: x.value[0].mediaDiaria.replace(",",".")},
                                 ]
                 }
             })
+
+            console.log(xaxis)
 
             let series = []
             let maiorValorSerie = 0
@@ -610,6 +651,20 @@ function Home() {
                                     cor = "rgb(89,89,89)"
                                     corLabel = "rgb(89,89,89)"
                                     yAx = "B"
+                                    break
+                    case "forcast": 
+                                    tipo = "line"
+                                    cor = "#000000" //"rgb(245,156,0)"
+                                    corLabel = "#000000"
+                                    yAx = "B"
+                                    //console.log(xaxis)
+                                    break
+                    case "Média Diária": 
+                                    tipo = "bar"
+                                    cor = "#000000" //"rgb(204,0,0)"
+                                    corLabel = "#000000"
+                                    yAx = "B"
+                                    //console.log(xaxis)
                                     break
                                  
                     default:
@@ -725,7 +780,8 @@ function Home() {
     }
 
     const GerarGraficoBarras = (objeto, funcao, optionLet) => {
-            
+        
+        if(!objeto) return
         setIsUpdatingData(true)
         let json = objeto; 
         let indicators = Object.keys(json[0]).map(key => key);
@@ -850,7 +906,217 @@ function Home() {
         //////////////////////////////////////////
     }
 
-    const buscarTabelaRACUnico = () => {
+    const DataTableRACFinalME = () => {
+
+        if (!TableRacFinalME) return;
+
+        ////debugger
+
+        let json = []
+
+        for (let i = 0; i < TableRacFinalME.length; i++) {
+            json.push(TableRacFinalME[i])
+        }
+
+        
+
+        return (
+            <div>
+                <div >
+                    <DataTable value={json} sortMode="multiple">
+                        <Column field="Unidade" header="Unidade"></Column>
+                        <Column field="Mercado" header="Mercado"></Column>
+                        <Column field="Rac" header="Rac"></Column>
+                        <Column field="Cd Item" header="Cd Item"></Column>
+                        <Column field="Item" header="Item"></Column>
+                        <Column field="Marca" header="Marca"></Column>
+                        <Column field="Data de Fabricação" header="Data de Fabricação"></Column>
+                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
+                        <Column field="Manifestação" header="Manifestação"></Column>
+                    </DataTable>
+                </div>
+            </div>
+        );
+
+        //////////////////////////////////////////
+    }
+
+    const DataTableRACFinalMI = () => {
+
+        if (!TableRacFinalMI) return;
+
+        ////debugger
+
+        let json = []
+
+        for (let i = 0; i < TableRacFinalMI.length; i++) {
+            json.push(TableRacFinalMI[i])
+        }
+
+        
+
+        return (
+            <div>
+                <div >
+                    <DataTable value={json} sortMode="multiple">
+                        <Column field="Unidade" header="Unidade"></Column>
+                        <Column field="Mercado" header="Mercado"></Column>
+                        <Column field="Rac" header="Rac"></Column>
+                        <Column field="Cd Item" header="Cd Item"></Column>
+                        <Column field="Item" header="Item"></Column>
+                        <Column field="Marca" header="Marca"></Column>
+                        <Column field="Data de Fabricação" header="Data de Fabricação"></Column>
+                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
+                        <Column field="Manifestação" header="Manifestação"></Column>
+                    </DataTable>
+                </div>
+            </div>
+        );
+
+        //////////////////////////////////////////
+    }
+
+    const DataTableRACFinalRECL = () => {
+
+        if (!TableRacFinalRECL) return;
+
+        ////debugger
+
+        let json = []
+
+        for (let i = 0; i < TableRacFinalRECL.length; i++) {
+            json.push(TableRacFinalRECL[i])
+        }
+
+        
+
+        return (
+            <div>
+                <div >
+                    <DataTable value={json} sortMode="multiple">
+                        <Column field="Unidade" header="Unidade"></Column>
+                        <Column field="Mercado" header="Mercado"></Column>
+                        <Column field="Rac" header="Rac"></Column>
+                        <Column field="Cd Item" header="Cd Item"></Column>
+                        <Column field="Item" header="Item"></Column>
+                        <Column field="Marca" header="Marca"></Column>
+                        <Column field="Data de Fabricação" header="Data de Fabricação"></Column>
+                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
+                        <Column field="Manifestação" header="Manifestação"></Column>
+                    </DataTable>
+                </div>
+            </div>
+        );
+
+        //////////////////////////////////////////
+    }
+
+    const DataTableRACFinalPDV = () => {
+
+        if (!TableRacFinalPDV) return;
+
+        ////debugger
+
+        let json = []
+
+        for (let i = 0; i < TableRacFinalPDV.length; i++) {
+            json.push(TableRacFinalPDV[i])
+        }
+
+        
+
+        return (
+            <div>
+                <div >
+                    <DataTable value={json} sortMode="multiple">
+                        <Column field="Unidade" header="Unidade"></Column>
+                        <Column field="Mercado" header="Mercado"></Column>
+                        <Column field="Rac" header="Rac"></Column>
+                        <Column field="Cd Item" header="Cd Item"></Column>
+                        <Column field="Item" header="Item"></Column>
+                        <Column field="Marca" header="Marca"></Column>
+                        <Column field="Data de Fabricação" header="Data de Fabricação"></Column>
+                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
+                        <Column field="Manifestação" header="Manifestação"></Column>
+                    </DataTable>
+                </div>
+            </div>
+        );
+
+        //////////////////////////////////////////
+    }
+
+    const DataTableRACFinalTE = () => {
+
+        if (!TableRacFinalTE) return;
+
+        //debugger
+
+        let json = []
+
+        for (let i = 0; i < TableRacFinalTE.length; i++) {
+            json.push(TableRacFinalTE[i])
+        }
+
+        
+
+        return (
+            <div>
+                <div >
+                    <DataTable value={json} sortMode="multiple">
+                        <Column field="Unidade" header="Unidade"></Column>
+                        <Column field="Mercado" header="Mercado"></Column>
+                        <Column field="Rac" header="Rac"></Column>
+                        <Column field="Cd Item" header="Cd Item"></Column>
+                        <Column field="Item" header="Item"></Column>
+                        <Column field="Marca" header="Marca"></Column>
+                        <Column field="Data de Fabricação" header="Data de Fabricação"></Column>
+                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
+                        <Column field="Manifestação" header="Manifestação"></Column>
+                    </DataTable>
+                </div>
+            </div>
+        );
+
+        //////////////////////////////////////////
+    }
+
+    const DataTableRACFinalCRIT = () => {
+
+        if (!TableRacFinalCRIT) return;
+
+        ////debugger
+
+        let json = []
+
+        for (let i = 0; i < TableRacFinalCRIT.length; i++) {
+            json.push(TableRacFinalCRIT[i])
+        }
+
+        
+
+        return (
+            <div>
+                <div >
+                    <DataTable value={json} sortMode="multiple">
+                        <Column field="Unidade" header="Unidade"></Column>
+                        <Column field="Mercado" header="Mercado"></Column>
+                        <Column field="Rac" header="Rac"></Column>
+                        <Column field="Cd Item" header="Cd Item"></Column>
+                        <Column field="Item" header="Item"></Column>
+                        <Column field="Marca" header="Marca"></Column>
+                        <Column field="Data de Fabricação" header="Data de Fabricação"></Column>
+                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
+                        <Column field="Manifestação" header="Manifestação"></Column>
+                    </DataTable>
+                </div>
+            </div>
+        );
+
+        //////////////////////////////////////////
+    }
+
+    const buscarTabelaRACUnicoUnidade = () => {
         let parm = " ";
         
         api.getSearaBaseRacME(parm).then((response) => {
@@ -872,17 +1138,81 @@ function Home() {
         })
     }
 
+    const buscarTabelaRACUnicoProblema = () => {
+        let parm = " ";
+        
+        api.getSearaBaseRacME(parm).then((response) => {
+            let json = JSON.parse(response.data)
+
+            return  (
+                <div>
+                    <div className="card">
+                        <DataTable value={json} sortMode="multiple">
+                            <Column field="Unidade" header="Unidade"></Column>
+                            <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
+                            <Column field="Manifestante" header="Manifestante"></Column>
+                            <Column field="Nº RAC" header="Nº RAC"></Column>
+                        </DataTable>
+                    </div>
+                </div>
+            );
+
+        })
+    }
+
+    var flagTable = false;
+
     const buscarDados = (response, funcao, graficoRetorno, funcaoRetorno ) => {
   
         setIsUpdatingData(true)
 
         let parm = " ";
 
-        api.getSearaBaseRacME(parm).then((response) => {
+        if(!flagTable){
+            api.getSearaBaseRacME(parm).then((response) => {
 
-            let json = JSON.parse(response.data)
-            setTableRacME(json)
-        })        
+                let json = JSON.parse(response.data)
+                setTableRacME(json)
+            }) 
+            
+            api.getSearaBaseRacFinal(parm).then((response) => {
+
+                let json = JSON.parse(response.data)
+                setTableRacFinalME(json)
+            })
+
+            api.getSearaBaseRacFinal(parm).then((response) => {
+
+                let json = JSON.parse(response.data)
+                setTableRacFinalMI(json)
+            })
+
+            api.getSearaBaseRacFinal(parm).then((response) => {
+
+                let json = JSON.parse(response.data)
+                setTableRacFinalRECL(json)
+            })
+
+            api.getSearaBaseRacFinal(parm).then((response) => {
+
+                let json = JSON.parse(response.data)
+                setTableRacFinalPDV(json)
+            })
+
+            api.getSearaBaseRacFinal(parm).then((response) => {
+
+                let json = JSON.parse(response.data)
+                setTableRacFinalTE(json)
+            })
+
+            api.getSearaBaseRacFinal(parm).then((response) => {
+
+                let json = JSON.parse(response.data)
+                setTableRacFinalCRIT(json)
+            })
+
+            flagTable = true;
+        }
 
         let json = JSON.parse(response.data)
 
@@ -1358,7 +1688,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
+                                        <Chart type="bar" data={responseGrafico6} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
@@ -1395,7 +1725,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
+                                        <Chart type="bar" data={responseGrafico6} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
@@ -1432,7 +1762,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
+                                        <Chart type="bar" data={responseGrafico6} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
@@ -1469,7 +1799,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
+                                        <Chart type="bar" data={responseGrafico6} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
@@ -1507,7 +1837,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
+                                        <Chart type="bar" data={responseGrafico6} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
@@ -1523,13 +1853,6 @@ function Home() {
                                 {/* Testes finais */}
 
                                 {/* <Row>
-                                    <Col>
-                                        {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                            <Card title="Total RAC" subTitle="RA" className="mt-5">
-                                                <Chart type="bar" data={responseGrafico5} options={lightOptions}/>
-                                            </Card>
-                                        )}
-                                    </Col>
 
                                     <Col className="mt-5">                     
 
@@ -1541,6 +1864,115 @@ function Home() {
 
                                     </Col>  
                                 </Row> */}
+                <reg id="region RAC - Total">
+                    <Row>
+                        <Col className="mt-1 col-12 cssSeara2021_titulo">
+                            RACs Abertura ME
+                            <hr></hr>
+                        </Col>    
+                    </Row>
+                     <Row>
+                        <Col className="mb-5">                     
+
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                
+                                DataTableRACFinalME() 
+                            
+                            )}
+
+                        </Col>  
+                    </Row>
+                    <Row>
+                        <Col className="mt-1 col-12 cssSeara2021_titulo">
+                            RACs Abertura MI
+                            <hr></hr>
+                        </Col>    
+                    </Row>
+                   <Row>
+
+                        <Col className="mb-5">                     
+
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                
+                                DataTableRACFinalMI() 
+                            
+                            )}
+
+                        </Col>  
+                    </Row>
+                    <Row>
+                        <Col className="mt-1 col-12 cssSeara2021_titulo">
+                            RACs Abertura MI Especiais
+                            <hr></hr>
+                        </Col>    
+                    </Row>
+                     <Row>
+
+                        <Col className="mb-5">                     
+
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                
+                                DataTableRACFinalRECL() 
+                            
+                            )}
+
+                        </Col>  
+                    </Row>
+                    <Row>
+                        <Col className="mt-1 col-12 cssSeara2021_titulo">
+                            RACs PDV Abertura
+                            <hr></hr>
+                        </Col>    
+                    </Row>
+                    <Row>
+
+                        <Col className="mb-5">                     
+
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                
+                                DataTableRACFinalPDV() 
+                            
+                            )}
+
+                        </Col>  
+                    </Row>
+                    <Row>
+                        <Col className="mt-1 col-12 cssSeara2021_titulo">
+                            RACs terceiros Abertura
+                            <hr></hr>
+                        </Col>    
+                    </Row>
+                    <Row>
+
+                        <Col className="mb-5">                     
+
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                
+                                DataTableRACFinalTE() 
+                            
+                            )}
+
+                        </Col>  
+                    </Row>
+                    <Row>
+                        <Col className="mt-1 col-12 cssSeara2021_titulo">
+                            RACs Crítica Abertura
+                            <hr></hr>
+                        </Col>    
+                    </Row>
+                    <Row>
+
+                        <Col className="mb-5">                     
+
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                
+                                DataTableRACFinalCRIT() 
+                            
+                            )}
+
+                        </Col>  
+                    </Row> 
+                </reg>
                                         
             </div>
 
