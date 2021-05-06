@@ -115,7 +115,7 @@ class CreateUserJxs extends React.Component {
 
         return (
             <form onSubmit={this.handleSubmit}>
-                <Toast ref={this.toast}></Toast>
+                <Toast ref={this.toast} position="bottom-right"></Toast>
                 {/* NOME COMPELTO */}
                 <div className="form-group input-group">
                     <div className="input-group-prepend" >
