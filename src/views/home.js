@@ -60,7 +60,8 @@ function Home() {
  
     const [isUpdatingData, setIsUpdatingData] = React.useState(false)
     const toast = React.useRef(null);
-
+    const canvasRef = React.useRef();
+    
     var numeroChamados = [  false,
                             false,
                             false,
@@ -110,6 +111,9 @@ function Home() {
         }
         return true
     }
+
+    let [backgroundGradient, SetBackgroundGradient] = React.useState();
+    let [backgroundGradientMenor, SetBackgroundGradientMenor] = React.useState();
 
     //chamadas
     let [responseGraficoCETotal, setresponseGraficoCETotal] = React.useState({})
@@ -323,7 +327,23 @@ function Home() {
 
         chamarAPI("RACUnicoProblema",Grafico_6, "Grafico_6", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Pesadas\' '], setGrafico_6, setresponseGrafico6,30)
 
+
+        const bar_ctx = canvasRef.current.getContext('2d');
         
+        const background = bar_ctx.createLinearGradient(0, 0, 0, 400);
+        const backgroundMenor = bar_ctx.createLinearGradient(0, 0, 0, 200);
+
+        background.addColorStop(0, "orange");
+        background.addColorStop(1, "purple");
+
+        backgroundMenor.addColorStop(0, "orange");
+        backgroundMenor.addColorStop(1, "purple");
+
+        SetBackgroundGradient(background);
+        SetBackgroundGradientMenor(backgroundMenor);
+
+
+
     }, []);
 
     function chamarAPI(apiNome, objeto, numGrafico, parametros, funcao, funcaoRetorno, numeroChamado){
@@ -500,9 +520,9 @@ function Home() {
 
     function aplicar() {
         setTimeout(function(){
-            GerarGraficoHistorico(GraficoCETotal, setresponseGraficoCETotal)
+            GerarGraficoHistorico(GraficoCETotal, setresponseGraficoCETotal, backgroundGradient)
             GerarGraficoHistorico(GraficoNNCMPTotalCE, setresponseGraficoNNCMPTotalCE)
-            GerarGraficoHistorico(GraficoRACTotalCE, setresponseGraficoRACTotalCE)
+            GerarGraficoHistorico(GraficoRACTotalCE, setresponseGraficoRACTotalCE, backgroundGradientMenor)
             GerarGraficoHistorico(GraficoRAC, setresponseGraficoRAC)
             GerarGraficoHistorico(GraficoNCCMP, setresponseGraficoNCCMP)
 
@@ -543,7 +563,7 @@ function Home() {
     }
 
  
-    const GerarGraficoHistorico = (objeto, funcao) => {
+    const GerarGraficoHistorico = (objeto, funcao, gradient) => {
             
             setIsUpdatingData(true)
             let json = objeto; 
@@ -611,25 +631,25 @@ function Home() {
 
                     case "2019": 
                                     tipo = "bar"
-                                    cor = "#bfbfbf"
+                                    cor = gradient ?? "#bfbfbf"
                                     corLabel = "#bfbfbf"
                                     yAx = "A"
                                     break
                     case "2020": 
                                     tipo = "bar"
-                                    cor = "#bfbfbf"
+                                    cor = gradient ?? "#bfbfbf"
                                     corLabel = "#bfbfbf"
                                     yAx = "A"
                                     break
                     case "Meta": 
                                     tipo = "bar"
-                                    cor = "rgb(204,0,0)" //"rgb(245,156,0)"
+                                    cor = gradient ?? "rgb(204,0,0)" //"rgb(245,156,0)"
                                     corLabel = "rgb(245,156,0)"
                                     yAx = "A"
                                     break
                     case "2021": 
                                     tipo = "bar"
-                                    cor = "#cccccc"
+                                    cor = gradient ?? "#cccccc"
                                     corLabel = "#cccccc"
                                     yAx = "A"
                                     break
@@ -1255,6 +1275,7 @@ function Home() {
     return (
         // <div style="width: 1220px !important;">
         <div> 
+            <canvas style={{ display: 'none' }} ref={canvasRef} />
             <Row>
                 <Col lg={12} className="cssSeara2021">
                     {isUpdatingData ? (<UpdatingDatabase />) : (
