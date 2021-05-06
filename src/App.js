@@ -9,6 +9,8 @@ import Container from 'react-bootstrap/Container';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ProgressSpinner } from 'primereact/progressspinner';
 
+import UserApi from './api/loginApi'
+
 import 'react-pro-sidebar/dist/css/styles.css';
 import './index.css';
 import './css/sidebar-desktop.css';
@@ -30,28 +32,58 @@ const DashViewNNCLog = lazy(() => import("./views/dashViewNNCLog"));
 const DashViewNNCMP = lazy(() => import("./views/dashViewNNCMP"));
 const DashViewRac = lazy(() => import("./views/rac"));
 const Home = lazy(() => import("./views/home"));
-const CreateUser = lazy(()=> import("./views/createUser"));
+const CreateUser = lazy(() => import("./views/createUser"));
+const ListUsers = lazy(() => import("./views/listUsers"));
 
 function App() {
     const userKpiDigitalTemp = { name: 'admin', pass: 'admin' }
-    const [username, setUsername] = React.useState("");
-    const [password, setPassword] = React.useState("");
+    const [state, setState] = React.useState({ username: "", password: "" });
+    // const [password, setPassword] = React.useState("");
     const [user, setUser] = React.useState();
-    const toast = React.useRef(null);
     const [isAuthenticated, setIsAuthenticated] = React.useState(false);
-    
+    const toast = React.useRef(null);
+
     const handleLogin = (e) => {
-        if (username.toLocaleLowerCase() === userKpiDigitalTemp.name.toLocaleLowerCase() && password === userKpiDigitalTemp.pass) {
-            setUser({ name: username, pass: password });
-            localStorage.setItem('user', JSON.stringify({ name: username }));
-            setIsAuthenticated(true);
+       
+        const user = state;
+        
+        if(user.username.length < 1 || user.password.length < 1)
+        {
+            showInfo("Dados inválidos", "Os campos Usuário e Senha são obrigatórios",  6000)
+            return;   
         }
+
+        UserApi.post(user)
+            .then(r => {
+                if (r.status === 200) {
+                    localStorage.setItem('user', JSON.stringify({ name: user.username, token: r.data }));
+                    setIsAuthenticated(true);
+                    window.location.reload(false);
+                }
+            }).catch((e,ex) => {
+                if (e.response &&  e.response.status === 404) {
+                    showInfo("Usuário não encontrado", "Por favor verifique usuário e senha e tente novamente.", 6000)
+                }else {
+                    showInfo("Nao foi possivel compeltar esta ação", "No momento não é possível completar esta ação.", 6000)
+                }
+                setIsAuthenticated(false);
+            }).finally(() => {
+            })
+    }
+
+    const showInfo = (summaryMesage, detailMessage, time) => {
+        // toast.current.clear();
+        toast.current.show({ severity: 'info', summary: summaryMesage, detail: detailMessage, life: time ?? 3000 });
+    }
+    
+    const showError = (summaryMesage, detailMessage, time) => {
+        // toast.current.clear();
+        toast.current.show({ severity: 'error', summary: summaryMesage, detail: detailMessage, life: time ?? 3000 });
     }
 
     const handleLogout = (e) => {
         setUser({});
-        setUsername("");
-        setPassword("");
+        setState({ username: "", password: "" })
         localStorage.clear();
         window.location.reload(false);
         setIsAuthenticated(false);
@@ -63,37 +95,20 @@ function App() {
         if (loggedInUser) {
             const foundUser = JSON.parse(loggedInUser);
             setUser(foundUser);
-
         }
     }, []);
 
+    const handleInputChange = (e) => {
+        e.preventDefault()
+        const target = e.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+        let statetemp = { ...state };
+        statetemp[name] = value
+        setState({ ...statetemp });
+    }
 
     /* Local Componentes */
-    const Login = () => {
-        const loginfooter = <span>
-            <Button label="Entrar" onClick={(e) => handleLogin(e.target.value)} style={{ width: '100%', marginRight: '.25em' }} />
-        </span>;
-        return (
-            <div className="global-container">
-                <div className="card login-form">
-                    <Card title="Bem vindo" subTitle="faça o login para acessar o sistema" className="card-body" footer={loginfooter} >
-                        <div className="pt-4 p-field p-grid">
-                            <span className="p-float-label">
-                                <InputText id="username" style={{ width: '100%' }} value={username} onChange={(e) => setUsername(e.target.value)} />
-                                <label htmlFor="username">Usuário</label>
-                            </span>
-                        </div>
-                        <div className="pt-4 p-field p-grid">
-                            <span className="p-float-label">
-                                <Password value={password} style={{ width: '100%' }} onChange={(e) => setPassword(e.target.value)} feedback={false} toggleMask />
-                                <label htmlFor="in">Senha</label>
-                            </span>
-                        </div>
-                    </Card>
-                </div>
-            </div>
-        )
-    }
 
     const Layout = ({ children }) => {
         return (
@@ -115,10 +130,51 @@ function App() {
         )
     }
 
+    const loginfooter = <span>
+        <Button label="Entrar" onClick={(e) => handleLogin(e.target.value)} style={{ width: '100%', marginRight: '.25em' }} />
+    </span>;
+
     /* Se nao esta logado exibe tela de login: */
     if (!user) {
         return (
-            <Login />
+            <div className="global-container" >
+                <Toast ref={toast} position="bottom-right"></Toast>
+                <div className="card login-form">
+                    <Card
+                        title="Bem vindo"
+                        subTitle="faça o login para acessar o sistema"
+                        className="card-body"
+                        footer={<span>
+                            <Button label="Entrar" onClick={(e) => handleLogin(e.target.value)} style={{ width: '100%', marginRight: '.25em' }} />
+                        </span>} >
+                        <div className="pt-4 p-field p-grid">
+                            <span className="p-float-label">
+                                <InputText
+                                    id="name1"
+                                    name="username"
+                                    style={{ width: '100%' }}
+                                    value={state.username}
+                                    onChange={(e) => handleInputChange(e)}
+                                />
+                                <label htmlFor="name1">Usuário</label>
+                            </span>
+                        </div>
+                        <div className="pt-4 p-field p-grid">
+                            <span className="p-float-label">
+                                <Password
+                                    id="pass"
+                                    name="password"
+                                    style={{ width: '100%' }}
+                                    value={state.password}
+                                    onChange={(e) => handleInputChange(e)}
+                                    feedback={false}
+                                    toggleMask />
+                                <label htmlFor="pass">Senha</label>
+                            </span>
+                        </div>
+                    </Card>
+                </div>
+            </div>
         )
     }
 
@@ -132,6 +188,7 @@ function App() {
                         <Route path='/contact' component={ContactUs} />
                         <Route path='/absorcao' component={DashViewAbsorcao} />
                         <Route path='/cadastro' component={CreateUser} />
+                        <Route path='/usuarios' component={ListUsers} />
                         <Route path='/nnclog' component={DashViewNNCLog} />
                         <Route path='/nncmp' component={DashViewNNCMP} />
                         <Route path='/rac' component={DashViewRac} />

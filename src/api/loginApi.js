@@ -8,22 +8,10 @@ const instance = axios.create({
 })
 
 export default {
-
-    get: () =>
-    instance({
-        method: "GET",
-        url: `/get-users`,
-        transformResponse: [
-            function (data) {
-                return data;
-            }
-        ]
-    }),
-
     post: (user) =>
         instance({
             method: "POST",
-            url: `/create-user`,
+            url: `/login`,
             data: user,
             transformResponse: [
                 function (data) {
