@@ -45,6 +45,7 @@ import {
 import { LoadingSkeletonSquare, LoadingSkeletonCard } from '../components/skeletons';
 
 import Pdf from "react-to-pdf";
+import { LineWeight } from '@material-ui/icons';
 const ref = React.createRef();
 const options = {
     orientation: 'retrait',
@@ -113,7 +114,7 @@ function Home() {
     }
 
     let [backgroundGradient, SetBackgroundGradient] = React.useState();
-    let [backgroundGradientMenor, SetBackgroundGradientMenor] = React.useState();
+    let [backgroundGradientCinza, SetBackgroundGradientCinza] = React.useState();
 
     //chamadas
     let [responseGraficoCETotal, setresponseGraficoCETotal] = React.useState({})
@@ -211,12 +212,48 @@ function Home() {
     let [responseGraficoNCCMPPreparados, setresponseGraficoNCCMPPreparados] = React.useState({})
     let [GraficoNCCMPPreparados, setGraficoNCCMPPreparados] = React.useState()
 
-    //Testes
-    let [responseGrafico5, setresponseGrafico5] = React.useState({})
-    let [Grafico_5, setGrafico_5] = React.useState()
+    
+    let [responseGraficoRACUnidadesAvesPesadas, setresponseGraficoRACUnidadesAvesPesadas] = React.useState({})
+    let [GraficoRACUnidadesAvesPesadas, setGraficoRACUnidadesAvesPesadas] = React.useState()
+    let [responseGraficoRACProblemasAvesPesadas, setresponseGraficoRACProblemasAvesPesadas] = React.useState({})
+    let [GraficoRACProblemasAvesPesadas, setGraficoRACProblemasAvesPesadas] = React.useState()
 
-    let [responseGrafico6, setresponseGrafico6] = React.useState({})
-    let [Grafico_6, setGrafico_6] = React.useState()
+    let [responseGraficoRACUnidadesAvesPesadasPR, setresponseGraficoRACUnidadesAvesPesadasPR] = React.useState({})
+    let [GraficoRACUnidadesAvesPesadasPR, setGraficoRACUnidadesAvesPesadasPR] = React.useState()
+    let [responseGraficoRACProblemasAvesPesadasPR, setresponseGraficoRACProblemasAvesPesadasPR] = React.useState({})
+    let [GraficoRACProblemasAvesPesadasPR, setGraficoRACProblemasAvesPesadasPR] = React.useState()
+
+    let [responseGraficoRACUnidadesAvesLeves, setresponseGraficoRACUnidadesAvesLeves] = React.useState({})
+    let [GraficoRACUnidadesAvesLeves, setGraficoRACUnidadesAvesLeves] = React.useState()
+    let [responseGraficoRACProblemasAvesLeves, setresponseGraficoRACProblemasAvesLeves] = React.useState({})
+    let [GraficoRACProblemasAvesLeves, setGraficoRACProblemasAvesLeves] = React.useState()
+
+    let [responseGraficoRACUnidadesSuinos, setresponseGraficoRACUnidadesSuinos] = React.useState({})
+    let [GraficoRACUnidadesSuinos, setGraficoRACUnidadesSuinos] = React.useState()
+    let [responseGraficoRACProblemasSuinos, setresponseGraficoRACProblemasSuinos] = React.useState({})
+    let [GraficoRACProblemasSuinos, setGraficoRACProblemasSuinos] = React.useState()
+
+    let [responseGraficoRACUnidadesPreparados, setresponseGraficoRACUnidadesPreparados] = React.useState({})
+    let [GraficoRACUnidadesPreparados, setGraficoRACUnidadesPreparados] = React.useState()
+    let [responseGraficoRACProblemasPreparados, setresponseGraficoRACProblemasPreparados] = React.useState({})
+    let [GraficoRACProblemasPreparados, setGraficoRACProblemasPreparados] = React.useState()
+
+    let [responseGraficoRACME, setresponseGraficoRACME] = React.useState({})
+    let [GraficoRACME, setGraficoRACME] = React.useState()
+
+    let [TableRacAberturaME, setTableRacAberturaME] = React.useState() 
+
+    let [responseGraficoRACMI, setresponseGraficoRACMI] = React.useState({})
+    let [GraficoRACMI, setGraficoRACMI] = React.useState()
+
+    let [TableRacAberturaMEOrienteMedio, setTableRacAberturaMEOrienteMedio] = React.useState() 
+    let [TableRacAberturaMEEuropa, setTableRacAberturaMEEuropa] = React.useState() 
+    let [TableRacAberturaMEJapao, setTableRacAberturaMEJapao] = React.useState() 
+    let [TableRacAberturaMEAsia, setTableRacAberturaMEAsia] = React.useState() 
+    let [TableRacAberturaMEAmericasAfrica, setTableRacAberturaMEAmericasAfrica] = React.useState()
+    let [TableRacAberturaMEContasGlobais, setTableRacAberturaMEContasGlobais] = React.useState() 
+
+
 
     let [responseTable, setresponseTable] = React.useState({})
     let [TableRacME, setTableRacME] = React.useState()
@@ -322,25 +359,37 @@ function Home() {
         chamarAPI("RACIndicadores",GraficoRACPreparados, "GraficoRACPreparados", [whereRACPreparados], setGraficoRACPreparados, setresponseGraficoRACPreparados, 28)    // 14
         chamarAPI("NCCMP",GraficoNCCMPPreparados, "GraficoNCCMPPreparados", [whereNNCMP + ' and [Reg. Qual] in (\'Preparados 5\',\'Preparados 2\',\'Preparados 3\', \'Outros\')  '], setGraficoNCCMPPreparados, setresponseGraficoNCCMPPreparados, 29)    // 15
 
-        chamarAPI("RACUnicoUnidade",Grafico_5, "Grafico_5", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Pesadas\' '], setGrafico_5, setresponseGrafico5,30)  // 11                                                                    // 6
+        chamarAPI("RACUnicoUnidade",GraficoRACUnidadesAvesPesadas, "GraficoRACUnidadesAvesPesadas", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Pesadas\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) '], setGraficoRACUnidadesAvesPesadas, setresponseGraficoRACUnidadesAvesPesadas,30)                                                                    // 6
+        chamarAPI("RACUnicoProblema",GraficoRACProblemasAvesPesadas, "GraficoRACProblemasAvesPesadas", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Pesadas\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) '], setGraficoRACProblemasAvesPesadas, setresponseGraficoRACProblemasAvesPesadas,31)
 
+        chamarAPI("RACUnicoUnidade",GraficoRACUnidadesAvesPesadasPR, "GraficoRACUnidadesAvesPesadasPR", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Pesadas PR\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) '], setGraficoRACUnidadesAvesPesadasPR, setresponseGraficoRACUnidadesAvesPesadasPR,32)                                                                    // 6
+        chamarAPI("RACUnicoProblema",GraficoRACProblemasAvesPesadasPR, "GraficoRACProblemasAvesPesadasPR", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Pesadas PR\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) '], setGraficoRACProblemasAvesPesadasPR, setresponseGraficoRACProblemasAvesPesadasPR,33)
 
-        chamarAPI("RACUnicoProblema",Grafico_6, "Grafico_6", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Pesadas\' '], setGrafico_6, setresponseGrafico6,30)
+        chamarAPI("RACUnicoUnidade",GraficoRACUnidadesAvesLeves, "GraficoRACUnidadesAvesLeves", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Leves\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) '], setGraficoRACUnidadesAvesLeves, setresponseGraficoRACUnidadesAvesLeves,34)                                                                    // 6
+        chamarAPI("RACUnicoProblema",GraficoRACProblemasAvesLeves, "GraficoRACProblemasAvesLeves", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Leves\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) '], setGraficoRACProblemasAvesLeves, setresponseGraficoRACProblemasAvesLeves,35)
 
+        chamarAPI("RACUnicoUnidade",GraficoRACUnidadesSuinos, "GraficoRACUnidadesSuinos", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Suínos\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) '], setGraficoRACUnidadesSuinos, setresponseGraficoRACUnidadesSuinos,36)                                                                    // 6
+        chamarAPI("RACUnicoProblema",GraficoRACProblemasSuinos, "GraficoRACProblemasSuinos", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Suínos\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) '], setGraficoRACProblemasSuinos, setresponseGraficoRACProblemasSuinos,37)
+
+        chamarAPI("RACUnicoUnidade",GraficoRACUnidadesPreparados, "GraficoRACUnidadesPreparados", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] in (\'Preparados\') and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) '], setGraficoRACUnidadesPreparados, setresponseGraficoRACUnidadesPreparados,38)                                                                    // 6
+        chamarAPI("RACUnicoProblema",GraficoRACProblemasPreparados, "GraficoRACProblemasPreparados", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] in (\'Preparados\') and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) '], setGraficoRACProblemasPreparados, setresponseGraficoRACProblemasPreparados,39)
+
+        chamarAPI("RACIndicadores",GraficoRACME, "GraficoRACME", [" where 1=1 "], setGraficoRACME, setresponseGraficoRACME, 40)
+        chamarAPI("RACIndicadores",GraficoRACME, "GraficoRACMI", [" where 1=1 "], setGraficoRACMI, setresponseGraficoRACMI, 41)
 
         const bar_ctx = canvasRef.current.getContext('2d');
         
-        const background = bar_ctx.createLinearGradient(0, 0, 0, 400);
-        const backgroundMenor = bar_ctx.createLinearGradient(0, 0, 0, 200);
+        const background = bar_ctx.createLinearGradient(0, 0, 0, 300);
+        const backgroundCinza = bar_ctx.createLinearGradient(0, 0, 0, 300);
 
-        background.addColorStop(0, "orange");
-        background.addColorStop(1, "purple");
+        background.addColorStop(0, "#f59c00");
+        background.addColorStop(1, "#cc0000");
 
-        backgroundMenor.addColorStop(0, "orange");
-        backgroundMenor.addColorStop(1, "purple");
+        backgroundCinza.addColorStop(0, "#f2f2f2");
+        backgroundCinza.addColorStop(1, "#bfbfbf");
 
         SetBackgroundGradient(background);
-        SetBackgroundGradientMenor(backgroundMenor);
+        SetBackgroundGradientCinza(backgroundCinza);
 
 
 
@@ -520,50 +569,66 @@ function Home() {
 
     function aplicar() {
         setTimeout(function(){
-            GerarGraficoHistorico(GraficoCETotal, setresponseGraficoCETotal, backgroundGradient)
-            GerarGraficoHistorico(GraficoNNCMPTotalCE, setresponseGraficoNNCMPTotalCE)
-            GerarGraficoHistorico(GraficoRACTotalCE, setresponseGraficoRACTotalCE, backgroundGradientMenor)
-            GerarGraficoHistorico(GraficoRAC, setresponseGraficoRAC)
-            GerarGraficoHistorico(GraficoNCCMP, setresponseGraficoNCCMP)
+            GerarGraficoHistorico(GraficoCETotal, setresponseGraficoCETotal, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCE, setresponseGraficoNNCMPTotalCE, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACTotalCE, setresponseGraficoRACTotalCE, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoRAC, setresponseGraficoRAC, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNCCMP, setresponseGraficoNCCMP, backgroundGradient, backgroundGradientCinza)
 
-            GerarGraficoHistorico(GraficoCETotalAvesPesadas, setresponseGraficoCETotalAvesPesadas)
-            GerarGraficoHistorico(GraficoNNCMPTotalCEAvesPesadas, setresponseGraficoNNCMPTotalCEAvesPesadas)
-            GerarGraficoHistorico(GraficoRACTotalCEAvesPesadas, setresponseGraficoRACTotalCEAvesPesadas)
-            GerarGraficoHistorico(GraficoRACAvesPesadas, setresponseGraficoRACAvesPesadas)
-            GerarGraficoHistorico(GraficoNCCMPAvesPesadas, setresponseGraficoNCCMPAvesPesadas)
+            GerarGraficoHistorico(GraficoCETotalAvesPesadas, setresponseGraficoCETotalAvesPesadas, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEAvesPesadas, setresponseGraficoNNCMPTotalCEAvesPesadas, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACTotalCEAvesPesadas, setresponseGraficoRACTotalCEAvesPesadas, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoRACAvesPesadas, setresponseGraficoRACAvesPesadas, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNCCMPAvesPesadas, setresponseGraficoNCCMPAvesPesadas, backgroundGradient, backgroundGradientCinza)
 
-            GerarGraficoHistorico(GraficoCETotalAvesPesadasPR, setresponseGraficoCETotalAvesPesadasPR)
-            GerarGraficoHistorico(GraficoNNCMPTotalCEAvesPesadasPR, setresponseGraficoNNCMPTotalCEAvesPesadasPR)
-            GerarGraficoHistorico(GraficoRACTotalCEAvesPesadasPR, setresponseGraficoRACTotalCEAvesPesadasPR)
-            GerarGraficoHistorico(GraficoRACAvesPesadasPR, setresponseGraficoRACAvesPesadasPR)
-            GerarGraficoHistorico(GraficoNCCMPAvesPesadasPR, setresponseGraficoNCCMPAvesPesadasPR)
+            GerarGraficoHistorico(GraficoCETotalAvesPesadasPR, setresponseGraficoCETotalAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEAvesPesadasPR, setresponseGraficoNNCMPTotalCEAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACTotalCEAvesPesadasPR, setresponseGraficoRACTotalCEAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoRACAvesPesadasPR, setresponseGraficoRACAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNCCMPAvesPesadasPR, setresponseGraficoNCCMPAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
 
-            GerarGraficoHistorico(GraficoCETotalAvesLeves, setresponseGraficoCETotalAvesLeves)
-            GerarGraficoHistorico(GraficoNNCMPTotalCEAvesLeves, setresponseGraficoNNCMPTotalCEAvesLeves)
-            GerarGraficoHistorico(GraficoRACTotalCEAvesLeves, setresponseGraficoRACTotalCEAvesLeves)
-            GerarGraficoHistorico(GraficoRACAvesLeves, setresponseGraficoRACAvesLeves)
-            GerarGraficoHistorico(GraficoNCCMPAvesLeves, setresponseGraficoNCCMPAvesLeves)
+            GerarGraficoHistorico(GraficoCETotalAvesLeves, setresponseGraficoCETotalAvesLeves, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEAvesLeves, setresponseGraficoNNCMPTotalCEAvesLeves, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACTotalCEAvesLeves, setresponseGraficoRACTotalCEAvesLeves, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoRACAvesLeves, setresponseGraficoRACAvesLeves, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNCCMPAvesLeves, setresponseGraficoNCCMPAvesLeves, backgroundGradient, backgroundGradientCinza)
 
-            GerarGraficoHistorico(GraficoCETotalSuinos, setresponseGraficoCETotalSuinos)
-            GerarGraficoHistorico(GraficoNNCMPTotalCESuinos, setresponseGraficoNNCMPTotalCESuinos)
-            GerarGraficoHistorico(GraficoRACTotalCESuinos, setresponseGraficoRACTotalCESuinos)
-            GerarGraficoHistorico(GraficoRACSuinos, setresponseGraficoRACSuinos)
-            GerarGraficoHistorico(GraficoNCCMPSuinos, setresponseGraficoNCCMPSuinos)
+            GerarGraficoHistorico(GraficoCETotalSuinos, setresponseGraficoCETotalSuinos, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNNCMPTotalCESuinos, setresponseGraficoNNCMPTotalCESuinos, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoRACTotalCESuinos, setresponseGraficoRACTotalCESuinos, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoRACSuinos, setresponseGraficoRACSuinos, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNCCMPSuinos, setresponseGraficoNCCMPSuinos, backgroundGradient, backgroundGradientCinza)
 
-            GerarGraficoHistorico(GraficoCETotalPreparados, setresponseGraficoCETotalPreparados)
-            GerarGraficoHistorico(GraficoNNCMPTotalCEPreparados, setresponseGraficoNNCMPTotalCEPreparados)
-            GerarGraficoHistorico(GraficoRACTotalCEPreparados, setresponseGraficoRACTotalCEPreparados)
-            GerarGraficoHistorico(GraficoRACPreparados, setresponseGraficoRACPreparados)
-            GerarGraficoHistorico(GraficoNCCMPPreparados, setresponseGraficoNCCMPPreparados)
+            GerarGraficoHistorico(GraficoCETotalPreparados, setresponseGraficoCETotalPreparados, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEPreparados, setresponseGraficoNNCMPTotalCEPreparados, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACTotalCEPreparados, setresponseGraficoRACTotalCEPreparados, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoRACPreparados, setresponseGraficoRACPreparados, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNCCMPPreparados, setresponseGraficoNCCMPPreparados, backgroundGradient, backgroundGradientCinza)
 
-            GerarGraficoBarras(Grafico_5, setresponseGrafico5)
-            GerarGraficoBarras(Grafico_6, setresponseGrafico6)
+            GerarGraficoBarras(GraficoRACUnidadesAvesPesadas, setresponseGraficoRACUnidadesAvesPesadas, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoRACProblemasAvesPesadas, setresponseGraficoRACProblemasAvesPesadas, backgroundGradientCinza)
+
+            GerarGraficoBarras(GraficoRACUnidadesAvesPesadasPR, setresponseGraficoRACUnidadesAvesPesadasPR, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoRACProblemasAvesPesadasPR, setresponseGraficoRACProblemasAvesPesadasPR, backgroundGradientCinza)
+
+            GerarGraficoBarras(GraficoRACUnidadesAvesLeves, setresponseGraficoRACUnidadesAvesLeves, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoRACProblemasAvesLeves, setresponseGraficoRACProblemasAvesLeves, backgroundGradientCinza)
+
+            GerarGraficoBarras(GraficoRACUnidadesSuinos, setresponseGraficoRACUnidadesSuinos, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoRACProblemasSuinos, setresponseGraficoRACProblemasSuinos, backgroundGradientCinza)
+
+            GerarGraficoBarras(GraficoRACUnidadesPreparados, setresponseGraficoRACUnidadesPreparados, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoRACProblemasPreparados, setresponseGraficoRACProblemasPreparados, backgroundGradientCinza)
+
+            GerarGraficoHistoricoSemMeta(GraficoRACME, setresponseGraficoRACME, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACME, setresponseGraficoRACME, backgroundGradient, backgroundGradientCinza)
+
         }, 0)
         
     }
 
  
-    const GerarGraficoHistorico = (objeto, funcao, gradient) => {
+    const GerarGraficoHistorico = (objeto, funcao, gradient, gradient2) => {
             
             setIsUpdatingData(true)
             let json = objeto; 
@@ -606,8 +671,6 @@ function Home() {
                 }
             })
 
-            console.log(xaxis)
-
             let series = []
             let maiorValorSerie = 0
             let menorValorSerie = 100000
@@ -626,18 +689,21 @@ function Home() {
                 let corLabel = '#bfbfbf'
                 let yAx = "B"
                 let varborderDash = [0,0]
+                let fontWeight = 'bold'
+                let lineSize = 2
+                let fontSize = "12"
 
                 switch (y.name){
 
                     case "2019": 
                                     tipo = "bar"
-                                    cor = gradient ?? "#bfbfbf"
+                                    cor = gradient2 ?? "#bfbfbf"
                                     corLabel = "#bfbfbf"
                                     yAx = "A"
                                     break
                     case "2020": 
                                     tipo = "bar"
-                                    cor = gradient ?? "#bfbfbf"
+                                    cor = gradient2 ?? "#bfbfbf"
                                     corLabel = "#bfbfbf"
                                     yAx = "A"
                                     break
@@ -649,7 +715,7 @@ function Home() {
                                     break
                     case "2021": 
                                     tipo = "bar"
-                                    cor = gradient ?? "#cccccc"
+                                    cor = "#cccccc"
                                     corLabel = "#cccccc"
                                     yAx = "A"
                                     break
@@ -677,14 +743,15 @@ function Home() {
                                     cor = "#000000" //"rgb(245,156,0)"
                                     corLabel = "#000000"
                                     yAx = "B"
-                                    //console.log(xaxis)
+                                  
                                     break
                     case "Média Diária": 
                                     tipo = "bar"
                                     cor = "#000000" //"rgb(204,0,0)"
                                     corLabel = "#000000"
                                     yAx = "B"
-                                    //console.log(xaxis)
+                                    fontSize = "14"
+                                  
                                     break
                                  
                     default:
@@ -707,7 +774,7 @@ function Home() {
                     backgroundColor: cor,
                     fill: false,
                     borderColor: cor,
-                    borderWidth: 1,
+                    borderWidth: lineSize,
                     pointRadius: 5,
                     pointBackgroundColor: "transparent",
                     pointBorderColor: "transparent",
@@ -722,7 +789,8 @@ function Home() {
                         color: corLabel,
                         //clip: true,
                         font: {
-                            size: "12",
+                            size: fontSize,
+                            weight: fontWeight
                         },
                         
                     }
@@ -799,7 +867,247 @@ function Home() {
             setIsUpdatingData(false)
     }
 
-    const GerarGraficoBarras = (objeto, funcao, optionLet) => {
+    const GerarGraficoHistoricoSemMeta = (objeto, funcao, gradient, gradient2) => {
+            
+        setIsUpdatingData(true)
+        let json = objeto; 
+        let indicators = Object.keys(json[0]).map(key => key);
+
+        let groupBy = function groupBy(list, keyGetter) {
+            const map = new Map();
+            list.forEach((item) => {
+                const key = keyGetter(item);
+                const collection = map.get(key);
+                if (!collection) {
+                    map.set(key, [item]);
+                } else {
+                    collection.push(item);
+                }
+            });
+            return map;
+        }
+
+        let xaxis = Array.from(groupBy(json, x => x["Periodo"]), ([name, value]) => ({ name, value }));
+        xaxis.splice(2,1) //tira a meta
+        let yaxis = [{name:'Evolutivo 2020'},{name:'Evolutivo 2021'},{name:'Evolutivo Meta'},{name:'2019'},{name:'2020'},{name: '2021'},{name: 'forcast'},{name: 'Média Diária'}];
+
+        xaxis.forEach(x => {
+            if (x.name == "2019"){
+                x['yaxis'] = [{name: "2019", value: x.value[0].Valor == "" ? null : x.value[0].Valor}]
+            }else if (x.name == "2020"){
+                x['yaxis'] = [{name: "2020", value: x.value[0].Valor == "" ? null : x.value[0].Valor}]
+            }else if(x.name == "Meta"){
+                x['yaxis'] = [{name: "Meta", value: x.value[0].Valor == "" ? null : x.value[0].Valor}]
+            }else if(x.name == "2021"){
+                x['yaxis'] = [{name: "2021", value: x.value[0].Valor == "" ? null : x.value[0].Valor}]
+            }else{
+                x['yaxis'] = [
+                                {name: "Evolutivo 2020", value: x.value[0].a2020},
+                                {name: "Evolutivo Meta", value: x.value[0].aMeta},
+                                {name: "Evolutivo 2021", value: x.value[0].a2021},
+                                {name: "forcast", value: x.value[0].forcast.replace(",",".")},
+                                {name: "Média Diária", value: x.value[0].mediaDiaria.replace(",",".")},
+                            ]
+            }
+        })
+
+        let series = []
+        let maiorValorSerie = 0
+        let menorValorSerie = 100000
+
+        yaxis.forEach((y, index) => {
+            let dataset = xaxis.map(xx => {
+                let yaxysvalue = xx.yaxis.filter(r => r.name === y.name);
+                if (yaxysvalue.length)
+                    return yaxysvalue[0].value
+
+                return null
+            })
+
+            let tipo = 'line'
+            let cor = '#bfbfbf'
+            let corLabel = '#bfbfbf'
+            let yAx = "B"
+            let varborderDash = [0,0]
+
+            switch (y.name){
+
+                case "2019": 
+                                tipo = "bar"
+                                cor = gradient2 ?? "#bfbfbf"
+                                corLabel = "#bfbfbf"
+                                yAx = "A"
+                                break
+                case "2020": 
+                                tipo = "bar"
+                                cor = gradient2 ?? "#bfbfbf"
+                                corLabel = "#bfbfbf"
+                                yAx = "A"
+                                break
+                case "Meta": 
+                                tipo = "bar"
+                                cor = gradient ?? "rgb(204,0,0)" //"rgb(245,156,0)"
+                                corLabel = "rgb(245,156,0)"
+                                yAx = "A"
+                                break
+                case "2021": 
+                                tipo = "bar"
+                                cor = "#cccccc"
+                                corLabel = "#cccccc"
+                                yAx = "A"
+                                break
+                case "Evolutivo 2020": 
+                                tipo = "line"
+                                cor = "rgb(166, 166, 166)"
+                                corLabel = "rgb(166, 166, 166)"
+                                varborderDash = [10,5]
+                                yAx = "B"
+                                break
+                case "Evolutivo Meta": 
+                                tipo = "line"
+                                cor = "rgb(245,156,0)"
+                                corLabel = "rgb(245,156,0)"
+                                yAx = "B"
+                                break
+                case "Evolutivo 2021": 
+                                tipo = "line"
+                                cor = "rgb(89,89,89)"
+                                corLabel = "rgb(89,89,89)"
+                                yAx = "B"
+                                break
+                case "forcast": 
+                                tipo = "line"
+                                cor = "#000000" //"rgb(245,156,0)"
+                                corLabel = "#000000"
+                                yAx = "B"
+                              
+                                break
+                case "Média Diária": 
+                                tipo = "bar"
+                                cor = "#000000" //"rgb(204,0,0)"
+                                corLabel = "#000000"
+                                yAx = "B"
+                              
+                                break
+                             
+                default:
+                                break
+
+
+            }
+
+            for(var i = 0; i < dataset.length; i++){
+                if(dataset[i] == "") dataset[i] = null
+                if(parseFloat(dataset[i]) > maiorValorSerie && yAx == "B") maiorValorSerie = parseFloat(dataset[i])
+                if(parseFloat(dataset[i]) < menorValorSerie && yAx == "B") menorValorSerie = parseFloat(dataset[i])
+            }
+
+
+            let serie = {
+                type: tipo,
+                yAxisID: yAx,
+                label: y.name,
+                backgroundColor: cor,
+                fill: false,
+                borderColor: cor,
+                borderWidth: 2,
+                pointRadius: 5,
+                pointBackgroundColor: "transparent",
+                pointBorderColor: "transparent",
+                borderDash: varborderDash, 
+                data: dataset,
+                datalabels: {
+                
+                    align: "top",
+                    anchor: "end",
+                    offset: 10,
+                    padding: -2,
+                    color: corLabel,
+                    //clip: true,
+                    font: {
+                        size: "12",
+                    },
+                    
+                }
+                 
+            }
+
+            if(y.name == "Meta" || y.name == "Evolutivo Meta" ){
+                console.log("Não entra neste relatório por ser meta")
+            }else{
+                series.push(serie)
+            }
+        })
+
+        //debugger
+        maiorValorSerie = parseFloat(maiorValorSerie)
+        menorValorSerie = parseFloat(menorValorSerie)
+        let maxYB = maiorValorSerie*(menorValorSerie/maiorValorSerie + 1.2)
+
+        let tipo = 'line'
+        let cor = 'transparent'
+        let corLabel = 'transparent'
+        let yAx = "B"
+        let varborderDash = [0,0]
+
+        let serieEixo = {
+            type: tipo,
+            yAxisID: yAx,
+            label: '',
+            backgroundColor: cor,
+            fill: false,
+            borderColor: cor,
+            borderWidth: 1,
+            pointRadius: 5,
+            pointBackgroundColor: "transparent",
+            pointBorderColor: "transparent",
+            borderDash: varborderDash, 
+            data: [null,null,null,null,null,null,null,null,null,null,null,null,null,null,maxYB ],
+            datalabels: {
+            
+                align: "top",
+                anchor: "end",
+                offset: 10,
+                padding: -2,
+                color: corLabel,
+                //clip: true,
+                font: {
+                    size: "12",
+                },
+                
+            }
+             
+        }
+
+        series.push(serieEixo)
+
+        let seriesAdd = []
+        
+            series.filter(s => s.label != null).forEach(element => {
+                seriesAdd.push(element)
+            });
+
+        
+        //setoptionRelativaresponseGraficoCETotal = f_optionRelativa (2000, 500);
+
+        const dashboardData = {
+            labels: xaxis.map(r => r.name),
+            datasets: seriesAdd,
+            indicators
+            
+        };
+
+
+        
+
+        if(typeof(funcao)=="function"){
+            funcao(dashboardData);
+        }
+
+        setIsUpdatingData(false)
+}
+
+    const GerarGraficoBarras = (objeto, funcao, gradient) => {
         
         if(!objeto) return
         setIsUpdatingData(true)
@@ -838,7 +1146,7 @@ function Home() {
             })
 
             let tipo = 'bar'
-            let cor = '#bfbfbf'
+            let cor = gradient ?? '#bfbfbf'
             let corLabel = '#000000'
             let yAx = "B"
             let varborderDash = [0,0]
@@ -1136,26 +1444,202 @@ function Home() {
         //////////////////////////////////////////
     }
 
-    const buscarTabelaRACUnicoUnidade = () => {
-        let parm = " ";
-        
-        api.getSearaBaseRacME(parm).then((response) => {
-            let json = JSON.parse(response.data)
+    const DataTableRACAberturaME = () => {
 
-            return  (
-                <div>
-                    <div className="card">
-                        <DataTable value={json} sortMode="multiple">
-                            <Column field="Unidade" header="Unidade"></Column>
-                            <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
-                            <Column field="Manifestante" header="Manifestante"></Column>
-                            <Column field="Nº RAC" header="Nº RAC"></Column>
-                        </DataTable>
-                    </div>
+        if (!TableRACAberturaME) return;
+
+        ////debugger
+
+        let json = []
+
+        for (let i = 0; i < TableRACAberturaME.length; i++) {
+            json.push(TableRACAberturaME[i])
+        }
+
+        return  (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple">
+                        <Column field="Unidade" header="Unidade"></Column>
+                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
+                        <Column field="Manifestante" header="Manifestante"></Column>
+                        <Column field="Nº RAC" header="Nº RAC"></Column>
+                    </DataTable>
                 </div>
-            );
+            </div>
+        );
 
-        })
+        
+    }
+
+    const DataTableRACAberturaMEOrienteMedio = () => {
+
+        if (!TableRacAberturaMEOrienteMedio) return;
+
+        ////debugger
+
+        let json = []
+
+        for (let i = 0; i < TableRacAberturaMEOrienteMedio.length; i++) {
+            json.push(TableRacAberturaMEOrienteMedio[i])
+        }
+
+        return  (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple">
+                        <Column field="Unidade" header="Unidade"></Column>
+                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
+                        <Column field="Manifestante" header="Manifestante"></Column>
+                        <Column field="Nº RAC" header="Nº RAC"></Column>
+                    </DataTable>
+                </div>
+            </div>
+        );
+
+        
+    }
+
+
+
+    const DataTableRACAberturaMEEuropa = () => {
+
+        if (!TableRacAberturaMEEuropa) return;
+
+        ////debugger
+
+        let json = []
+
+        for (let i = 0; i < TableRacAberturaMEEuropa.length; i++) {
+            json.push(TableRacAberturaMEEuropa[i])
+        }
+
+        return  (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple">
+                        <Column field="Unidade" header="Unidade"></Column>
+                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
+                        <Column field="Manifestante" header="Manifestante"></Column>
+                        <Column field="Nº RAC" header="Nº RAC"></Column>
+                    </DataTable>
+                </div>
+            </div>
+        );
+
+        
+    }
+
+    const DataTableRACAberturaMEJapao = () => {
+
+        if (!TableRacAberturaMEJapao) return;
+
+        ////debugger
+
+        let json = []
+
+        for (let i = 0; i < TableRacAberturaMEJapao.length; i++) {
+            json.push(TableRacAberturaMEJapao[i])
+        }
+
+        return  (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple">
+                        <Column field="Unidade" header="Unidade"></Column>
+                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
+                        <Column field="Manifestante" header="Manifestante"></Column>
+                        <Column field="Nº RAC" header="Nº RAC"></Column>
+                    </DataTable>
+                </div>
+            </div>
+        );
+
+        
+    }
+
+    const DataTableRACAberturaMEAsia = () => {
+
+        if (!TableRacAberturaMEAsia) return;
+
+        ////debugger
+
+        let json = []
+
+        for (let i = 0; i < TableRacAberturaMEAsia.length; i++) {
+            json.push(TableRacAberturaMEAsia[i])
+        }
+
+        return  (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple">
+                        <Column field="Unidade" header="Unidade"></Column>
+                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
+                        <Column field="Manifestante" header="Manifestante"></Column>
+                        <Column field="Nº RAC" header="Nº RAC"></Column>
+                    </DataTable>
+                </div>
+            </div>
+        );
+
+        
+    }
+
+    const DataTableRACAberturaMEAmericasAfrica = () => {
+
+        if (!TableRacAberturaMEAmericasAfrica) return;
+
+        ////debugger
+
+        let json = []
+
+        for (let i = 0; i < TableRacAberturaMEAmericasAfrica.length; i++) {
+            json.push(TableRacAberturaMEAmericasAfrica[i])
+        }
+
+        return  (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple">
+                        <Column field="Unidade" header="Unidade"></Column>
+                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
+                        <Column field="Manifestante" header="Manifestante"></Column>
+                        <Column field="Nº RAC" header="Nº RAC"></Column>
+                    </DataTable>
+                </div>
+            </div>
+        );
+
+        
+    }
+
+    const DataTableRACAberturaMEContasGlobais = () => {
+
+        if (!TableRacAberturaMEContasGlobais) return;
+
+        ////debugger
+
+        let json = []
+
+        for (let i = 0; i < TableRacAberturaMEContasGlobais.length; i++) {
+            json.push(TableRacAberturaMEContasGlobais[i])
+        }
+
+        return  (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple">
+                        <Column field="Unidade" header="Unidade"></Column>
+                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
+                        <Column field="Manifestante" header="Manifestante"></Column>
+                        <Column field="Nº RAC" header="Nº RAC"></Column>
+                    </DataTable>
+                </div>
+            </div>
+        );
+
+        
     }
 
     const buscarTabelaRACUnicoProblema = () => {
@@ -1195,40 +1679,82 @@ function Home() {
                 setTableRacME(json)
             }) 
             
-            api.getSearaBaseRacFinal(parm).then((response) => {
+            api.getSearaBaseRacFinal(["  AND Unidade = 'Brasília'  "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacFinalME(json)
             })
 
-            api.getSearaBaseRacFinal(parm).then((response) => {
+            api.getSearaBaseRacFinal(["  AND Unidade = 'Itapiranga'  "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacFinalMI(json)
             })
 
-            api.getSearaBaseRacFinal(parm).then((response) => {
+            api.getSearaBaseRacFinal(["  AND Unidade = 'Forquilinha'  "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacFinalRECL(json)
             })
 
-            api.getSearaBaseRacFinal(parm).then((response) => {
+            api.getSearaBaseRacFinal(["  AND Unidade = 'Seara'  "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacFinalPDV(json)
             })
 
-            api.getSearaBaseRacFinal(parm).then((response) => {
+            api.getSearaBaseRacFinal(["  AND Unidade = 'Lapa' "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacFinalTE(json)
             })
 
-            api.getSearaBaseRacFinal(parm).then((response) => {
+            api.getSearaBaseRacFinal([" AND Unidade = 'Ipumirim' "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacFinalCRIT(json)
+            })
+
+            api.getSearaBaseRacAberturaME([" AND 1=1 "]).then((response) => {
+
+                let json = JSON.parse(response.data)
+                setTableRacAberturaME(json)
+            })
+
+            api.getSearaBaseRacAberturaME([" AND 1=1 "]).then((response) => {
+
+                let json = JSON.parse(response.data)
+                setTableRacAberturaMEOrienteMedio(json)
+            })
+
+            api.getSearaBaseRacAberturaME([" AND 1=1 "]).then((response) => {
+
+                let json = JSON.parse(response.data)
+                setTableRacAberturaMEEuropa(json)
+            })
+
+            api.getSearaBaseRacAberturaME([" AND 1=1 "]).then((response) => {
+
+                let json = JSON.parse(response.data)
+                setTableRacAberturaMEJapao(json)
+            })
+
+            api.getSearaBaseRacAberturaME([" AND 1=1 "]).then((response) => {
+
+                let json = JSON.parse(response.data)
+                setTableRacAberturaMEAsia(json)
+            })
+
+            api.getSearaBaseRacAberturaME([" AND 1=1 "]).then((response) => {
+
+                let json = JSON.parse(response.data)
+                setTableRacAberturaMEAmericasAfrica(json)
+            })
+
+            api.getSearaBaseRacAberturaME([" AND 1=1 "]).then((response) => {
+
+                let json = JSON.parse(response.data)
+                setTableRacAberturaMEContasGlobais(json)
             })
 
             flagTable = true;
@@ -1702,14 +2228,14 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
+                                        <Chart type="bar" data={responseGraficoRACUnidadesAvesPesadas} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGrafico6} options={optionsComparativo} className="divMenor2"/>
+                                        <Chart type="bar" data={responseGraficoRACProblemasAvesPesadas} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
@@ -1739,14 +2265,14 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
+                                        <Chart type="bar" data={responseGraficoRACUnidadesAvesPesadasPR} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGrafico6} options={optionsComparativo} className="divMenor2"/>
+                                        <Chart type="bar" data={responseGraficoRACProblemasAvesPesadasPR} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
@@ -1776,14 +2302,14 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
+                                        <Chart type="bar" data={responseGraficoRACUnidadesAvesLeves} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGrafico6} options={optionsComparativo} className="divMenor2"/>
+                                        <Chart type="bar" data={responseGraficoRACProblemasAvesLeves} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
@@ -1813,14 +2339,14 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
+                                        <Chart type="bar" data={responseGraficoRACUnidadesSuinos} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGrafico6} options={optionsComparativo} className="divMenor2"/>
+                                        <Chart type="bar" data={responseGraficoRACProblemasSuinos} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
@@ -1843,7 +2369,7 @@ function Home() {
                         <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoCETotalPreparados} options={lightOptions} className="divMaior2"/>
+                                    <Chart type="bar" data={responseGraficoRACPreparados} options={lightOptions} className="divMaior2"/>
                                 </Card>
                             )}
                         </Col>
@@ -1851,14 +2377,14 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGrafico5} options={optionsComparativo} className="divMenor2"/>
+                                        <Chart type="bar" data={responseGraficoRACUnidadesPreparados} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGrafico6} options={optionsComparativo} className="divMenor2"/>
+                                        <Chart type="bar" data={responseGraficoRACProblemasPreparados} options={optionsComparativo} className="divMenor2"/>
                                     </Card>
                                 )}
                             </Col>
@@ -1868,6 +2394,99 @@ function Home() {
 
 
                 </reg> 
+
+                <reg id="region RAC - Abertura ME e MI">
+
+                    <Row>
+                        <Col className="mt-1 col-12 cssSeara2021_titulo">
+                            Mercado Interno
+                            <hr></hr>
+                        </Col>    
+                    </Row>
+                    <Row>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoRACMI} options={lightOptions} className="divMaior2"/>
+                                </Card>
+                            )}
+                        </Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12">
+                            
+                        </Col>
+                        
+                    </Row>
+                    <Row>
+                        <Col className="mt-1 col-12 cssSeara2021_titulo">
+                            Mercado Externo
+                            <hr></hr>
+                        </Col>    
+                    </Row>
+                    <Row>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoRACME} options={lightOptions} className="divMaior2"/>
+                                </Card>
+                            )}
+                        </Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                
+                                DataTableRACAberturaME() 
+                            
+                            )}
+                        </Col>
+                        
+                    </Row>
+
+                    <Row>
+                        <Col className="col-lg-2 col-md-4 col-sm-1">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                
+                                DataTableRACAberturaMEOrienteMedio() 
+                            
+                            )}  
+                        </Col>
+                        <Col className="col-lg-2 col-md-4 col-sm-1">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                
+                                DataTableRACAberturaMEEuropa() 
+                            
+                            )}
+                        </Col>
+                        <Col className="col-lg-2 col-md-4 col-sm-1">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                
+                                DataTableRACAberturaMEJapao() 
+                            
+                            )}
+                        </Col>
+                        <Col className="col-lg-2 col-md-4 col-sm-1">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                
+                                DataTableRACAberturaMEAsia() 
+                            
+                            )}
+                        </Col>
+                        <Col className="col-lg-2 col-md-4 col-sm-1">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                
+                                DataTableRACAberturaMEAmericasAfrica() 
+                            
+                            )}
+                        </Col>
+                        <Col className="col-lg-2 col-md-4 col-sm-1">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                
+                                DataTableRACAberturaMEContasGlobais() 
+                            
+                            )}
+                        </Col>
+                        
+                    </Row>
+
+                </reg>
 
 
 

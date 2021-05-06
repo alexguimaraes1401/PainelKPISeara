@@ -117,15 +117,13 @@ export default {
             method: "POST",
             url: `/RacFinal`, 
             data: {'where': p[0]},
-            params: {
-                datatype: "json"
-            },
             transformResponse: [
                 function (data) {
                     
                     return data;
                 }
             ]
+            
         }),
 
     getSearaBaseNCCMP: (p) =>
@@ -217,6 +215,21 @@ export default {
             //url: `/Service/RAC?data=${params[0]}&nome=${params[1]}`, //`/SearaDashboard/RAC?data=${params[0]}&nome=${params[1]}`,
             //url: `/RACTotal?data=${params[0]}&nome=${params[1]}`, 
             url: `/RACUnicoProblema`, 
+            data: {'where': p[0]},
+            params: {
+                datatype: "json"
+            },
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
+        }),
+
+    getSearaBaseRacAberturaME: (p) =>
+        instance({
+            method: "POST",
+            url: `/RACAberturaME`, 
             data: {'where': p[0]},
             params: {
                 datatype: "json"
