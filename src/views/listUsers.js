@@ -57,8 +57,8 @@ class ListUserJxs extends React.Component {
     actionBodyTemplate(rowData) {
         return (
             <React.Fragment>
-                <Button icon="pi pi-pencil" className="mr-1 p-button-rounded p-button-warning p-mr-2" onClick={() => this.edit(rowData)} />
-                <Button icon="pi pi-trash" className="p-button-rounded p-button-danger" onClick={() => this.confirmInactivate(rowData)} />
+                <Button disabled icon="pi pi-pencil" className="mr-1 p-button-rounded p-button-warning p-mr-2" onClick={() => this.edit(rowData)} />
+                <Button disabled icon="pi pi-trash" className="p-button-rounded p-button-danger" onClick={() => this.confirmInactivate(rowData)} />
             </React.Fragment>
         );
     }
@@ -69,10 +69,7 @@ class ListUserJxs extends React.Component {
                 <div>
                     {rowData.Roles.map((r, index) => {
                         return (<div key={index}>
-                            Role:
-                            <span className={`customer-badge status-qualified`}>{r.Role}</span>
-                            Claims in Role:
-                            <span className={`customer-badge status-qualified`}>{JSON.stringify(r.Claims)}</span>
+                            Role: {r.Role}. Claims in Role: {JSON.stringify(r.Claims)}
                         </div>)
                     })}
                 </div>
