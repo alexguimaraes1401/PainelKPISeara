@@ -186,7 +186,7 @@ const optionsComparativo = {
         xAxes: [{
             stacked: true,
             gridLines: {
-                display:true
+                display:false
             },
         }],
         yAxes: [
@@ -198,9 +198,9 @@ const optionsComparativo = {
                     fontColor: '#495057',
                     display: true
                 },
-                display: true,
+                display: false,
                 gridLines: {
-                    display:true
+                    display:false
                 },
             }, 
             {
@@ -210,9 +210,9 @@ const optionsComparativo = {
                     fontColor: '#495057',
                     display: true
                 },
-                display: true,
+                display: false,
                 gridLines: {
-                    display:true
+                    display:false
                 },
             }
         ]

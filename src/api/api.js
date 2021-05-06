@@ -11,8 +11,8 @@ import { months } from '../domain/constants'
 
 const instance = axios.create({
     //baseURL: "http://192.168.25.200/Seara" //"http://179.184.236.89/Seara" "http://localhost"
-    //baseURL: "http://localhost/SearaDashboard"
-    baseURL: "http://192.168.25.200/KPISeara/APISeara/PainelKPIAdm"
+    baseURL: "http://localhost/SearaDashboard"
+    //baseURL: "http://192.168.25.200/KPISeara/APISeara/PainelKPIAdm"
     //baseURL: "http://intranet.grxsolucoes.com.br/KPISeara/APISeara/PainelKPIAdm"
 })
 
@@ -112,6 +112,22 @@ export default {
             ]
         }),
 
+    getSearaBaseRacFinal: (p) =>
+        instance({
+            method: "POST",
+            url: `/RacFinal`, 
+            data: {'where': p[0]},
+            params: {
+                datatype: "json"
+            },
+            transformResponse: [
+                function (data) {
+                    
+                    return data;
+                }
+            ]
+        }),
+
     getSearaBaseNCCMP: (p) =>
         instance({
             method: "POST",
@@ -178,12 +194,30 @@ export default {
             ]
         }),
 
-    getSearaBaseRACUnico: (params) =>
+    getSearaBaseRACUnicoUnidade: (p) =>
         instance({
-            method: "GET",
+            method: "POST",
             //url: `/Service/RAC?data=${params[0]}&nome=${params[1]}`, //`/SearaDashboard/RAC?data=${params[0]}&nome=${params[1]}`,
             //url: `/RACTotal?data=${params[0]}&nome=${params[1]}`, 
-            url: `/RACUnico?where=${params[0]}`, 
+            url: `/RACUnicoUnidade`, 
+            data: {'where': p[0]},
+            params: {
+                datatype: "json"
+            },
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
+        }),
+
+    getSearaBaseRACUnicoProblema: (p) =>
+        instance({
+            method: "POST",
+            //url: `/Service/RAC?data=${params[0]}&nome=${params[1]}`, //`/SearaDashboard/RAC?data=${params[0]}&nome=${params[1]}`,
+            //url: `/RACTotal?data=${params[0]}&nome=${params[1]}`, 
+            url: `/RACUnicoProblema`, 
+            data: {'where': p[0]},
             params: {
                 datatype: "json"
             },
