@@ -1,34 +1,35 @@
-import React from 'react';
+import React from "react";
+import { withRouter } from "react-router";
 import 'primeicons/primeicons.css'
 import Api from '../api/userApi'
 import { Toast } from 'primereact/toast';
 import { ProgressBar } from 'primereact/progressbar';
-import { Password } from 'primereact/password';
 import { Card } from 'primereact/card';
 
 const registerTexts = {
+    SelectRole: "Select a role",
     FullName: "Full name",
     EmailAddress: "Email address",
-    CreatePassword: "Create password",
+    EditPassword: "Edit password",
     RepeatPassword: "Repeat password",
     HaveAnAaccount: "Have an account?",
-    CreateAccount: "Create Account",
+    EditAccount: "Edit Account",
     LogIn: "Log In",
     SelectRole: "Select a role",
     UnableSaveUserData: "unable to save user data.",
     UserDataSaved: "User data successfully saved!",
-    PageTitle: "Create Account"
+    PageTitle: "Edit Account"
 }
-
 const toastStatus = {
     success: 'success',
     error: 'error',
 }
 
-class CreateUserJxs extends React.Component {
+class EditUserJxs extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: 0,
             username: '',
             password: '',
             passwordConfirm: '',
@@ -38,7 +39,7 @@ class CreateUserJxs extends React.Component {
                 { id: 2, value: "Write", isChecked: false },
             ],
             Role: 'user',
-            enableSubmit: true,
+            enableSubmit: false,
             showProgressbar: false
         };
         this.toast = React.createRef();
@@ -47,21 +48,83 @@ class CreateUserJxs extends React.Component {
         this.handleCheckChieldElement = this.handleCheckChieldElement.bind(this);
     }
 
+    componentDidMount() {
+        const id = this.props.match.params.id;
+        const user = this.fetchData(id);
+    }
+
+    fetchData = id => {
+        this.refs.btn.setAttribute("disabled", "disabled");
+        this.refs.loader.style.display = "block";
+        Api.getOne(id).then(r => {
+            this.refs.btn.removeAttribute("disabled");
+
+            if (r.data === "null")
+                window.location.href = `${window.location.origin}/404`;
+
+            return JSON.parse(r.data);
+        }).then(user => {
+            this.setState({
+                id: user.Id,
+                username: user.Username,
+                email: user.Email,
+                arr: [ //claims
+                    { id: 1, value: "Read", isChecked: true },
+                    { id: 2, value: "Write", isChecked: false },
+                ],
+                enableSubmit: true,
+                showProgressbar: false
+            })
+
+            const userRoles = JSON.parse(user.Roles)
+
+            if (userRoles.length)
+                this.setState({ Role: userRoles[0].Role })
+
+            userRoles.forEach(role => {
+                role.Claims.forEach(claim => {
+
+                    let arrCopy = this.state.arr
+                    arrCopy.forEach(item => {
+                        if (item.value.toLowerCase() === claim.toLowerCase())
+                            item.isChecked = true
+                    })
+                    this.setState({ arr: arrCopy })
+
+                });
+            });
+
+        }).catch(e => {
+            if (e?.response?.status === 401 && e?.response?.data) {
+                const response = JSON.parse(e.response.data)
+                this.showToast(toastStatus.error, e.response.Message)
+
+            } if (e?.response?.status === 400 && e?.response?.data) {
+                const response = JSON.parse(e.response.data)
+                this.showToast(toastStatus.error, response.Message, "")
+            } else {
+
+            }
+        }).finally(() => {
+            this.refs.loader.style.display = "none";
+        })
+
+    };
+
     handleSubmit(event) {
         event.preventDefault();
         this.refs.btn.setAttribute("disabled", "disabled");
         this.refs.loader.style.display = "block";
-
         let user = {}
         user["username"] = this.state.username
         user["email"] = this.state.email
-        user["password"] = this.state.password
+        user["Id"] = this.state.id
         user["Roles"] = [{
             Role: this.state.Role,
             Claims: this.state.arr.filter(r => r.isChecked).map(r => r.value)
         }]
 
-        Api.post(user).then(r => {
+        Api.put(user).then(r => {
             if (r.status === 201) {
                 this.showToast(toastStatus.success, registerTexts.UserDataSaved)
             }
@@ -76,7 +139,6 @@ class CreateUserJxs extends React.Component {
             this.refs.btn.removeAttribute("disabled");
             this.refs.loader.style.display = "none";
         })
-
         event.preventDefault();
     }
 
@@ -84,7 +146,6 @@ class CreateUserJxs extends React.Component {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-
         this.setState({
             [name]: value
         });
@@ -105,13 +166,9 @@ class CreateUserJxs extends React.Component {
 
     render() {
         const usernameOk = this.state.username.length > 0;
-        const passwordOk = this.state.password.length > 0;
-        const passwordConfirmOk = this.state.passwordConfirm.length > 0 && (this.state.password === this.state.passwordConfirm);
         const emailOk = this.state.email.length > 0;
         const enabledSubmit =
             usernameOk
-            && passwordOk
-            && passwordConfirmOk
             && emailOk;
 
         return (
@@ -176,44 +233,14 @@ class CreateUserJxs extends React.Component {
                         }
                     </div>
 
-                    {/* SENHA */}
-                    <div className="form-group input-group">
-                        <div className="input-group-prepend">
-                            <span className="input-group-text"> <i style={{ color: passwordOk ? 'green' : 'red' }} className="pi pi-lock"></i> </span>
-                        </div>
-                        <Password
-                            name="password"
-                            placeholder={registerTexts.CreatePassword}
-                            value={this.state.password}
-                            onChange={this.handleInputChange}
-                            toggleMask />
-
-                    </div>
-
-                    {/* CONFIRMAR SENHA */}
-                    <div className="form-group input-group">
-                        <div className="input-group-prepend">
-                            <span className="input-group-text"> <i style={{ color: passwordConfirmOk ? 'green' : 'red' }} className="pi pi-lock"></i> </span>
-                        </div>
-                        <Password
-                            name="passwordConfirm"
-                            placeholder={registerTexts.RepeatPassword}
-                            value={this.state.passwordConfirm}
-                            onChange={this.handleInputChange}
-                            feedback={false}
-                            toggleMask />
-
-                    </div>
-
                     <div className="form-group">
                         <button type="submit"
                             ref="btn"
                             disabled={!enabledSubmit}
                             className="btn btn-primary btn-block">
-                            {registerTexts.CreateAccount}
+                            {registerTexts.EditAccount}
                         </button>
                     </div>
-                    <p className="text-center">{registerTexts.HaveAnAccount} <a href="">{registerTexts.LogIn}</a> </p>
                     <br />
                     <div ref="loader" style={{ display: 'none' }}>
                         <ProgressBar mode="indeterminate" style={{ height: '6px' }}></ProgressBar>
@@ -225,8 +252,4 @@ class CreateUserJxs extends React.Component {
     }
 }
 
-const CreateUser = () => {
-    return <CreateUserJxs />
-};
-
-export default CreateUser;
+export default withRouter(EditUserJxs);

@@ -34,6 +34,7 @@ const DashViewRac = lazy(() => import("./views/rac"));
 const Home = lazy(() => import("./views/home"));
 const CreateUser = lazy(() => import("./views/createUser"));
 const ListUsers = lazy(() => import("./views/listUsers"));
+const EditUser = lazy(() => import("./views/editUser"));
 
 function App() {
     const userKpiDigitalTemp = { name: 'admin', pass: 'admin' }
@@ -189,9 +190,11 @@ function App() {
                         <Route path='/absorcao' component={DashViewAbsorcao} />
                         <Route path='/cadastro' component={CreateUser} />
                         <Route path='/usuarios' component={ListUsers} />
+                        <Route exact path='/usuario/:id' component={EditUser} />
                         <Route path='/nnclog' component={DashViewNNCLog} />
                         <Route path='/nncmp' component={DashViewNNCMP} />
                         <Route path='/rac' component={DashViewRac} />
+                        <Route path='404' component={NotFoundPage} />
                         <Route path='*' component={NotFoundPage} />
                     </Switch>
                 </Layout>

@@ -4,7 +4,7 @@ import Api from '../api/userApi'
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
-import { InputText } from 'primereact/inputtext';
+import { Card } from 'primereact/card';
 
 const listUsersTexts = {
     columnName: "Nome de usuario",
@@ -15,6 +15,7 @@ const listUsersTexts = {
     searchColumnEmailPlaceholder: "Busque por e-mail",
     searchColumnNamePlaceholder: "Busque por nome de usuário",
     searchColumnRole: "Busque por roles/claims",
+    pageTitle: "Users"
 }
 
 class ListUserJxs extends React.Component {
@@ -39,7 +40,6 @@ class ListUserJxs extends React.Component {
                 totalRecords: totalRecords,
                 loading: false
             });
-            console.log(this.state)
         }).catch(e => {
 
         }).finally(() => {
@@ -47,18 +47,14 @@ class ListUserJxs extends React.Component {
         })
     }
 
-    edit(rowData) {
-        console.log(rowData)
-    }
-    confirmInactivate(rowData) {
-        console.log(rowData)
-    }
-
     actionBodyTemplate(rowData) {
+        const edit = (rowData) => {
+            window.location.href = `${window.location.origin}/usuario/${rowData.Id}`;
+        }
         return (
             <React.Fragment>
-                <Button disabled icon="pi pi-pencil" className="mr-1 p-button-rounded p-button-warning p-mr-2" onClick={() => this.edit(rowData)} />
-                <Button disabled icon="pi pi-trash" className="p-button-rounded p-button-danger" onClick={() => this.confirmInactivate(rowData)} />
+                <Button icon="pi pi-pencil" className="mr-1 p-button-rounded p-button-warning p-mr-2" onClick={() => edit(rowData)} />
+                {/* <Button disabled icon="pi pi-trash" className="p-button-rounded p-button-danger" onClick={() => this.confirmInactivate(rowData)} /> */}
             </React.Fragment>
         );
     }
@@ -89,52 +85,54 @@ class ListUserJxs extends React.Component {
         );
 
         return (
-            <div>
-                <div className="card">
-                    <DataTable
-                        value={this.state.users}
-                        header={header}
-                        lazy
-                        paginator
-                        first={this.state.users.first}
-                        rows={10}
-                        loading={this.state.loading}
-                        totalRecords={this.state.totalRecords}
-                        resizableColumns
-                        columnResizeMode="expand"
-                        globalFilter={this.state.globalFilter}
-                        emptyMessage="No customers found."
-                        className="p-datatable-responsive-demo p-datatable-sm p-datatable-striped">
-                        <Column
-                            field="Username"
-                            header={listUsersTexts.columnName}
-                            filter
-                            filterPlaceholder={listUsersTexts.searchColumnNamePlaceholder}
-                            filterMatchMode="contains"
-                            style={{ width: '20%' }}
-                            sortable>
-                        </Column>
-                        <Column
-                            field="Email"
-                            filter
-                            filterPlaceholder={listUsersTexts.searchColumnEmailPlaceholder}
-                            filterMatchMode="contains"
-                            header={listUsersTexts.columnEmail}
-                            style={{ width: '25%' }}
-                            sortable>
-                        </Column>
-                        <Column
-                            header={listUsersTexts.columnRoles}
-                            body={this.rolesBodyTemplate}>
-                        </Column>
-                        <Column
-                            header={listUsersTexts.columnActions}
-                            style={{ width: '15%' }}
-                            body={this.actionBodyTemplate}>
-                        </Column>
-                    </DataTable>
+            <Card title={listUsersTexts.pageTitle} style={{ marginBottom: '2em' }}>
+                <div>
+                    <div className="card">
+                        <DataTable
+                            value={this.state.users}
+                            header={header}
+                            lazy
+                            paginator
+                            first={this.state.users.first}
+                            rows={10}
+                            loading={this.state.loading}
+                            totalRecords={this.state.totalRecords}
+                            resizableColumns
+                            columnResizeMode="expand"
+                            globalFilter={this.state.globalFilter}
+                            emptyMessage="No customers found."
+                            className="p-datatable-responsive-demo p-datatable-sm p-datatable-striped">
+                            <Column
+                                field="Username"
+                                header={listUsersTexts.columnName}
+                                filter
+                                filterPlaceholder={listUsersTexts.searchColumnNamePlaceholder}
+                                filterMatchMode="contains"
+                                style={{ width: '20%' }}
+                                sortable>
+                            </Column>
+                            <Column
+                                field="Email"
+                                filter
+                                filterPlaceholder={listUsersTexts.searchColumnEmailPlaceholder}
+                                filterMatchMode="contains"
+                                header={listUsersTexts.columnEmail}
+                                style={{ width: '25%' }}
+                                sortable>
+                            </Column>
+                            <Column
+                                header={listUsersTexts.columnRoles}
+                                body={this.rolesBodyTemplate}>
+                            </Column>
+                            <Column
+                                header={listUsersTexts.columnActions}
+                                style={{ width: '15%' }}
+                                body={this.actionBodyTemplate}>
+                            </Column>
+                        </DataTable>
+                    </div>
                 </div>
-            </div>
+            </Card>
         );
     }
 }
