@@ -587,61 +587,61 @@ function Home() {
 
             GerarGraficoHistorico(GraficoCETotal, setresponseGraficoCETotal, backgroundGradient, backgroundGradientCinza)
 
+            
+            GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCE, setresponseGraficoNNCMPTotalCE, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACTotalCE, setresponseGraficoRACTotalCE, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoRAC, setresponseGraficoRAC, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNCCMP, setresponseGraficoNCCMP, backgroundGradient, backgroundGradientCinza)
+            
+            GerarGraficoHistorico(GraficoCETotalAvesPesadas, setresponseGraficoCETotalAvesPesadas, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEAvesPesadas, setresponseGraficoNNCMPTotalCEAvesPesadas, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACTotalCEAvesPesadas, setresponseGraficoRACTotalCEAvesPesadas, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoRACAvesPesadas, setresponseGraficoRACAvesPesadas, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNCCMPAvesPesadas, setresponseGraficoNCCMPAvesPesadas, backgroundGradient, backgroundGradientCinza)
+            
+            GerarGraficoHistorico(GraficoCETotalAvesPesadasPR, setresponseGraficoCETotalAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEAvesPesadasPR, setresponseGraficoNNCMPTotalCEAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACTotalCEAvesPesadasPR, setresponseGraficoRACTotalCEAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoRACAvesPesadasPR, setresponseGraficoRACAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNCCMPAvesPesadasPR, setresponseGraficoNCCMPAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
+            
+            GerarGraficoHistorico(GraficoCETotalAvesLeves, setresponseGraficoCETotalAvesLeves, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEAvesLeves, setresponseGraficoNNCMPTotalCEAvesLeves, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACTotalCEAvesLeves, setresponseGraficoRACTotalCEAvesLeves, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoRACAvesLeves, setresponseGraficoRACAvesLeves, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNCCMPAvesLeves, setresponseGraficoNCCMPAvesLeves, backgroundGradient, backgroundGradientCinza)
+            
+            GerarGraficoHistorico(GraficoCETotalSuinos, setresponseGraficoCETotalSuinos, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNNCMPTotalCESuinos, setresponseGraficoNNCMPTotalCESuinos, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoRACTotalCESuinos, setresponseGraficoRACTotalCESuinos, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoRACSuinos, setresponseGraficoRACSuinos, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNCCMPSuinos, setresponseGraficoNCCMPSuinos, backgroundGradient, backgroundGradientCinza)
+            
+            GerarGraficoHistorico(GraficoCETotalPreparados, setresponseGraficoCETotalPreparados, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEPreparados, setresponseGraficoNNCMPTotalCEPreparados, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACTotalCEPreparados, setresponseGraficoRACTotalCEPreparados, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoRACPreparados, setresponseGraficoRACPreparados, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNCCMPPreparados, setresponseGraficoNCCMPPreparados, backgroundGradient, backgroundGradientCinza)
+            
+            GerarGraficoBarras(GraficoRACUnidadesAvesPesadas, setresponseGraficoRACUnidadesAvesPesadas, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoRACProblemasAvesPesadas, setresponseGraficoRACProblemasAvesPesadas, backgroundGradientCinza)
+            
+            GerarGraficoBarras(GraficoRACUnidadesAvesPesadasPR, setresponseGraficoRACUnidadesAvesPesadasPR, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoRACProblemasAvesPesadasPR, setresponseGraficoRACProblemasAvesPesadasPR, backgroundGradientCinza)
+            
+            GerarGraficoBarras(GraficoRACUnidadesAvesLeves, setresponseGraficoRACUnidadesAvesLeves, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoRACProblemasAvesLeves, setresponseGraficoRACProblemasAvesLeves, backgroundGradientCinza)
+            
+            GerarGraficoBarras(GraficoRACUnidadesSuinos, setresponseGraficoRACUnidadesSuinos, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoRACProblemasSuinos, setresponseGraficoRACProblemasSuinos, backgroundGradientCinza)
+
+            GerarGraficoBarras(GraficoRACUnidadesPreparados, setresponseGraficoRACUnidadesPreparados, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoRACProblemasPreparados, setresponseGraficoRACProblemasPreparados, backgroundGradientCinza)
+
+            GerarGraficoHistoricoSemMeta(GraficoRACMI, setresponseGraficoRACMI, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACME, setresponseGraficoRACME, backgroundGradient, backgroundGradientCinza)
+            
             console.timeEnd("Inicio Aplicar");
-
-            // GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCE, setresponseGraficoNNCMPTotalCE, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistoricoSemMeta(GraficoRACTotalCE, setresponseGraficoRACTotalCE, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoRAC, setresponseGraficoRAC, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNCCMP, setresponseGraficoNCCMP, backgroundGradient, backgroundGradientCinza)
-
-            // GerarGraficoHistorico(GraficoCETotalAvesPesadas, setresponseGraficoCETotalAvesPesadas, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEAvesPesadas, setresponseGraficoNNCMPTotalCEAvesPesadas, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistoricoSemMeta(GraficoRACTotalCEAvesPesadas, setresponseGraficoRACTotalCEAvesPesadas, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoRACAvesPesadas, setresponseGraficoRACAvesPesadas, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNCCMPAvesPesadas, setresponseGraficoNCCMPAvesPesadas, backgroundGradient, backgroundGradientCinza)
-
-            // GerarGraficoHistorico(GraficoCETotalAvesPesadasPR, setresponseGraficoCETotalAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEAvesPesadasPR, setresponseGraficoNNCMPTotalCEAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistoricoSemMeta(GraficoRACTotalCEAvesPesadasPR, setresponseGraficoRACTotalCEAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoRACAvesPesadasPR, setresponseGraficoRACAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNCCMPAvesPesadasPR, setresponseGraficoNCCMPAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
-
-            // GerarGraficoHistorico(GraficoCETotalAvesLeves, setresponseGraficoCETotalAvesLeves, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEAvesLeves, setresponseGraficoNNCMPTotalCEAvesLeves, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistoricoSemMeta(GraficoRACTotalCEAvesLeves, setresponseGraficoRACTotalCEAvesLeves, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoRACAvesLeves, setresponseGraficoRACAvesLeves, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNCCMPAvesLeves, setresponseGraficoNCCMPAvesLeves, backgroundGradient, backgroundGradientCinza)
-
-            // GerarGraficoHistorico(GraficoCETotalSuinos, setresponseGraficoCETotalSuinos, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNNCMPTotalCESuinos, setresponseGraficoNNCMPTotalCESuinos, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoRACTotalCESuinos, setresponseGraficoRACTotalCESuinos, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoRACSuinos, setresponseGraficoRACSuinos, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNCCMPSuinos, setresponseGraficoNCCMPSuinos, backgroundGradient, backgroundGradientCinza)
-
-            // GerarGraficoHistorico(GraficoCETotalPreparados, setresponseGraficoCETotalPreparados, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEPreparados, setresponseGraficoNNCMPTotalCEPreparados, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistoricoSemMeta(GraficoRACTotalCEPreparados, setresponseGraficoRACTotalCEPreparados, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoRACPreparados, setresponseGraficoRACPreparados, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNCCMPPreparados, setresponseGraficoNCCMPPreparados, backgroundGradient, backgroundGradientCinza)
-
-            // GerarGraficoBarras(GraficoRACUnidadesAvesPesadas, setresponseGraficoRACUnidadesAvesPesadas, backgroundGradientCinza)
-            // GerarGraficoBarras(GraficoRACProblemasAvesPesadas, setresponseGraficoRACProblemasAvesPesadas, backgroundGradientCinza)
-
-            // GerarGraficoBarras(GraficoRACUnidadesAvesPesadasPR, setresponseGraficoRACUnidadesAvesPesadasPR, backgroundGradientCinza)
-            // GerarGraficoBarras(GraficoRACProblemasAvesPesadasPR, setresponseGraficoRACProblemasAvesPesadasPR, backgroundGradientCinza)
-
-            // GerarGraficoBarras(GraficoRACUnidadesAvesLeves, setresponseGraficoRACUnidadesAvesLeves, backgroundGradientCinza)
-            // GerarGraficoBarras(GraficoRACProblemasAvesLeves, setresponseGraficoRACProblemasAvesLeves, backgroundGradientCinza)
-
-            // GerarGraficoBarras(GraficoRACUnidadesSuinos, setresponseGraficoRACUnidadesSuinos, backgroundGradientCinza)
-            // GerarGraficoBarras(GraficoRACProblemasSuinos, setresponseGraficoRACProblemasSuinos, backgroundGradientCinza)
-
-            // GerarGraficoBarras(GraficoRACUnidadesPreparados, setresponseGraficoRACUnidadesPreparados, backgroundGradientCinza)
-            // GerarGraficoBarras(GraficoRACProblemasPreparados, setresponseGraficoRACProblemasPreparados, backgroundGradientCinza)
-
-            // GerarGraficoHistoricoSemMeta(GraficoRACMI, setresponseGraficoRACMI, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistoricoSemMeta(GraficoRACME, setresponseGraficoRACME, backgroundGradient, backgroundGradientCinza)
-
         }, 0)
         
     }
