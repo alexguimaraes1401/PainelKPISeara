@@ -241,6 +241,21 @@ export default {
             ]
         }),
 
+        getSearaBaseRacAberturaME2: (p) =>
+        instance({
+            method: "POST",
+            url: `/RACAberturaME2`, 
+            data: {'where': p[0]},
+            params: {
+                datatype: "json"
+            },
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
+        }),
+
 
 
         

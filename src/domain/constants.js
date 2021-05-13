@@ -171,7 +171,7 @@ const optionsComparativo = {
     },
     layout: {
         padding: {                
-          top: 10                
+          top: 25                
         }
       },
     legend: {
