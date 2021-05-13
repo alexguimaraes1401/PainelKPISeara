@@ -100,6 +100,19 @@ function Home() {
                             false,
 
                             false,
+                            false,
+                            false,
+                            false,
+                            false,
+
+                            false,
+                            false,
+                            false,
+                            false,
+                            false,
+                            false
+                            
+                            
                         ]
 
 
@@ -241,7 +254,7 @@ function Home() {
     let [responseGraficoRACME, setresponseGraficoRACME] = React.useState({})
     let [GraficoRACME, setGraficoRACME] = React.useState()
 
-    let [TableRacAberturaME, setTableRacAberturaME] = React.useState() 
+    let [TableRACAberturaME, setTableRacAberturaME] = React.useState() 
 
     let [responseGraficoRACMI, setresponseGraficoRACMI] = React.useState({})
     let [GraficoRACMI, setGraficoRACMI] = React.useState()
@@ -329,7 +342,7 @@ function Home() {
         chamarAPI("RAC",GraficoRAC, "GraficoRAC", [' where 1=1 '], setGraficoRAC, setresponseGraficoRAC, 3)    // 4
         chamarAPI("NCCMP",GraficoNCCMP, "GraficoNCCMP", [whereNNCMP], setGraficoNCCMP, setresponseGraficoNCCMP, 4)    // 5 
         
-        chamarAPI("CETotal",GraficoCETotalAvesPesadas, "GraficoCETotalAvesPesadas", [' where NEGOCIO = \'Aves Pesadas\'  '], setGraficoCETotalAvesPesadas, setresponseGraficoCETotalAvesPesadas, 5)     // 6
+        chamarAPI("CETotal",GraficoCETotalAvesPesadas, "GraficoCETotalAvesPesadas", [' where NEGOCIO in (\'Aves Pesadas\', \'Aves Pesadas PR\')  '], setGraficoCETotalAvesPesadas, setresponseGraficoCETotalAvesPesadas, 5)     // 6
         chamarAPI("NNCMPTotalCE",GraficoNNCMPTotalCEAvesPesadas, "GraficoNNCMPTotalCEAvesPesadas", [' where [Regional (Qualidade)] in (\'Aves Pesadas 1\',\'Aves Pesadas 2\',\'Aves Pesadas 3\', \'Aves Pesadas PR\') '], setGraficoNNCMPTotalCEAvesPesadas, setresponseGraficoNNCMPTotalCEAvesPesadas, 6)       // 7
         chamarAPI("RACTotalCE",GraficoRACTotalCEAvesPesadas, "GraficoRACTotalCEAvesPesadas", [' WHERE [Regional (Qualidade)] in (\'Aves Pesadas 1\',\'Aves Pesadas 2\',\'Aves Pesadas 3\', \'Aves Pesadas PR\')  '], setGraficoRACTotalCEAvesPesadas, setresponseGraficoRACTotalCEAvesPesadas, 7)     // 8
         chamarAPI("RACIndicadores",GraficoRACAvesPesadas, "GraficoRACAvesPesadas", [' WHERE [Regional (Qualidade)] in (\'Aves Pesadas 1\',\'Aves Pesadas 2\',\'Aves Pesadas 3\', \'Aves Pesadas PR\')  '], setGraficoRACAvesPesadas, setresponseGraficoRACAvesPesadas, 8)    // 9
@@ -347,35 +360,35 @@ function Home() {
         chamarAPI("RACIndicadores",GraficoRACAvesLeves, "GraficoRACAvesLeves", [' WHERE [Negócio (Qualidade)] = \'Aves Leves\'  '], setGraficoRACAvesLeves, setresponseGraficoRACAvesLeves, 18)    // 14
         chamarAPI("NCCMP",GraficoNCCMPAvesLeves, "GraficoNCCMPAvesLeves", [whereNNCMP + ' and [Reg. Qual] = \'Aves Leves\'  '], setGraficoNCCMPAvesLeves, setresponseGraficoNCCMPAvesLeves, 19)    // 15
 
-        chamarAPI("CETotal",GraficoCETotalSuinos, "GraficoCETotalSuinos", [' where [NEGOCIO]  = \'Suínos\' '], setGraficoCETotalSuinos, setresponseGraficoCETotalSuinos, 20)     // 11
+        chamarAPI("CETotal",GraficoCETotalSuinos, "GraficoCETotalSuinos", [' where [NEGOCIO]  in (\'Suínos\',\'Suíno\') '], setGraficoCETotalSuinos, setresponseGraficoCETotalSuinos, 20)     // 11
         chamarAPI("NNCMPTotalCE",GraficoNNCMPTotalCESuinos, "GraficoNNCMPTotalCESuinos", [' where [Regional (Qualidade)] = \'Suínos\' '], setGraficoNNCMPTotalCESuinos, setresponseGraficoNNCMPTotalCESuinos, 21)       // 12
         chamarAPI("RACTotalCE",GraficoRACTotalCESuinos, "GraficoRACTotalCESuinos", ['  WHERE [Negócio (Qualidade)] = \'Suínos\'   '], setGraficoRACTotalCESuinos, setresponseGraficoRACTotalCESuinos, 22)     // 13
         chamarAPI("RACIndicadores",GraficoRACSuinos, "GraficoRACSuinos", [' WHERE [Negócio (Qualidade)] = \'Suínos\'  '], setGraficoRACSuinos, setresponseGraficoRACSuinos, 23)    // 14
         chamarAPI("NCCMP",GraficoNCCMPSuinos, "GraficoNCCMPSuinos", [whereNNCMP + ' and [Reg. Qual] = \'Suínos\'  '], setGraficoNCCMPSuinos, setresponseGraficoNCCMPSuinos, 24)    // 15
 
-        chamarAPI("CETotal",GraficoCETotalPreparados, "GraficoCETotalPreparados", [' where [NEGOCIO]  = \'Preparados\' '], setGraficoCETotalPreparados, setresponseGraficoCETotalPreparados, 25)     // 11
+        chamarAPI("CETotal",GraficoCETotalPreparados, "GraficoCETotalPreparados", [' where [NEGOCIO]  in (\'Preparados\',\'Itajaí\') '], setGraficoCETotalPreparados, setresponseGraficoCETotalPreparados, 25)     // 11
         chamarAPI("NNCMPTotalCE",GraficoNNCMPTotalCEPreparados, "GraficoNNCMPTotalCEPreparados", [' where [Regional (Qualidade)] in (\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\') '], setGraficoNNCMPTotalCEPreparados, setresponseGraficoNNCMPTotalCEPreparados, 26)       // 12
-        chamarAPI("RACTotalCE",GraficoRACTotalCEPreparados, "GraficoRACTotalCEPreparados", ['  WHERE [Negócio (Qualidade)] = \'Preparados\'   '], setGraficoRACTotalCEPreparados, setresponseGraficoRACTotalCEPreparados, 27)     // 13
+        chamarAPI("RACTotalCE",GraficoRACTotalCEPreparados, "GraficoRACTotalCEPreparados", ['  WHERE [Negócio (Qualidade)] in (\'Preparados\',\'Itajaí\')   '], setGraficoRACTotalCEPreparados, setresponseGraficoRACTotalCEPreparados, 27)     // 13
         chamarAPI("RACIndicadores",GraficoRACPreparados, "GraficoRACPreparados", [whereRACPreparados], setGraficoRACPreparados, setresponseGraficoRACPreparados, 28)    // 14
-        chamarAPI("NCCMP",GraficoNCCMPPreparados, "GraficoNCCMPPreparados", [whereNNCMP + ' and [Reg. Qual] in (\'Preparados 5\',\'Preparados 2\',\'Preparados 3\', \'Outros\')  '], setGraficoNCCMPPreparados, setresponseGraficoNCCMPPreparados, 29)    // 15
+        chamarAPI("NCCMP",GraficoNCCMPPreparados, "GraficoNCCMPPreparados", [whereNNCMP + ' and [Reg. Qual] in (\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\')  '], setGraficoNCCMPPreparados, setresponseGraficoNCCMPPreparados, 29)    // 15
 
-        chamarAPI("RACUnicoUnidade",GraficoRACUnidadesAvesPesadas, "GraficoRACUnidadesAvesPesadas", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Pesadas\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) '], setGraficoRACUnidadesAvesPesadas, setresponseGraficoRACUnidadesAvesPesadas,30)                                                                    // 6
-        chamarAPI("RACUnicoProblema",GraficoRACProblemasAvesPesadas, "GraficoRACProblemasAvesPesadas", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Pesadas\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) '], setGraficoRACProblemasAvesPesadas, setresponseGraficoRACProblemasAvesPesadas,31)
+        chamarAPI("RACUnicoUnidade",GraficoRACUnidadesAvesPesadas, "GraficoRACUnidadesAvesPesadas", [" where Tipo = 'REAL' and [Negócio (Qualidade)] IN ('Aves Pesadas','Aves Pesadas PR') and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\') "], setGraficoRACUnidadesAvesPesadas, setresponseGraficoRACUnidadesAvesPesadas,30)                                                                    // 6
+        chamarAPI("RACUnicoProblema",GraficoRACProblemasAvesPesadas, "GraficoRACProblemasAvesPesadas", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Pesadas\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\') '], setGraficoRACProblemasAvesPesadas, setresponseGraficoRACProblemasAvesPesadas,31)
 
-        chamarAPI("RACUnicoUnidade",GraficoRACUnidadesAvesPesadasPR, "GraficoRACUnidadesAvesPesadasPR", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Pesadas PR\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) '], setGraficoRACUnidadesAvesPesadasPR, setresponseGraficoRACUnidadesAvesPesadasPR,32)                                                                    // 6
-        chamarAPI("RACUnicoProblema",GraficoRACProblemasAvesPesadasPR, "GraficoRACProblemasAvesPesadasPR", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Pesadas PR\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) '], setGraficoRACProblemasAvesPesadasPR, setresponseGraficoRACProblemasAvesPesadasPR,33)
+        chamarAPI("RACUnicoUnidade",GraficoRACUnidadesAvesPesadasPR, "GraficoRACUnidadesAvesPesadasPR", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Pesadas PR\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\') '], setGraficoRACUnidadesAvesPesadasPR, setresponseGraficoRACUnidadesAvesPesadasPR,32)                                                                    // 6
+        chamarAPI("RACUnicoProblema",GraficoRACProblemasAvesPesadasPR, "GraficoRACProblemasAvesPesadasPR", [" where Tipo = \'REAL\' and [Negócio (Qualidade)] = 'Aves Pesadas PR' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in ('DOCUMENTAÇÃO UNIDADE', 'EXPEDIÇÃO FÁBRICA', 'FÁBRICA PRODUÇÃO', 'Fabricação/ Produção', 'FABRICACAO/FABRICA')"], setGraficoRACProblemasAvesPesadasPR, setresponseGraficoRACProblemasAvesPesadasPR,33)
 
-        chamarAPI("RACUnicoUnidade",GraficoRACUnidadesAvesLeves, "GraficoRACUnidadesAvesLeves", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Leves\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) '], setGraficoRACUnidadesAvesLeves, setresponseGraficoRACUnidadesAvesLeves,34)                                                                    // 6
-        chamarAPI("RACUnicoProblema",GraficoRACProblemasAvesLeves, "GraficoRACProblemasAvesLeves", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Leves\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) '], setGraficoRACProblemasAvesLeves, setresponseGraficoRACProblemasAvesLeves,35)
+        chamarAPI("RACUnicoUnidade",GraficoRACUnidadesAvesLeves, "GraficoRACUnidadesAvesLeves", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Leves\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\') '], setGraficoRACUnidadesAvesLeves, setresponseGraficoRACUnidadesAvesLeves,34)                                                                    // 6
+        chamarAPI("RACUnicoProblema",GraficoRACProblemasAvesLeves, "GraficoRACProblemasAvesLeves", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Leves\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\') '], setGraficoRACProblemasAvesLeves, setresponseGraficoRACProblemasAvesLeves,35)
 
-        chamarAPI("RACUnicoUnidade",GraficoRACUnidadesSuinos, "GraficoRACUnidadesSuinos", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Suínos\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) '], setGraficoRACUnidadesSuinos, setresponseGraficoRACUnidadesSuinos,36)                                                                    // 6
-        chamarAPI("RACUnicoProblema",GraficoRACProblemasSuinos, "GraficoRACProblemasSuinos", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Suínos\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) '], setGraficoRACProblemasSuinos, setresponseGraficoRACProblemasSuinos,37)
+        chamarAPI("RACUnicoUnidade",GraficoRACUnidadesSuinos, "GraficoRACUnidadesSuinos", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Suínos\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\') '], setGraficoRACUnidadesSuinos, setresponseGraficoRACUnidadesSuinos,36)                                                                    // 6
+        chamarAPI("RACUnicoProblema",GraficoRACProblemasSuinos, "GraficoRACProblemasSuinos", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Suínos\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\') '], setGraficoRACProblemasSuinos, setresponseGraficoRACProblemasSuinos,37)
 
-        chamarAPI("RACUnicoUnidade",GraficoRACUnidadesPreparados, "GraficoRACUnidadesPreparados", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] in (\'Preparados\') and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) '], setGraficoRACUnidadesPreparados, setresponseGraficoRACUnidadesPreparados,38)                                                                    // 6
-        chamarAPI("RACUnicoProblema",GraficoRACProblemasPreparados, "GraficoRACProblemasPreparados", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] in (\'Preparados\') and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) '], setGraficoRACProblemasPreparados, setresponseGraficoRACProblemasPreparados,39)
+        chamarAPI("RACUnicoUnidade",GraficoRACUnidadesPreparados, "GraficoRACUnidadesPreparados", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] in (\'Preparados\') and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\') '], setGraficoRACUnidadesPreparados, setresponseGraficoRACUnidadesPreparados,38)                                                                    // 6
+        chamarAPI("RACUnicoProblema",GraficoRACProblemasPreparados, "GraficoRACProblemasPreparados", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] in (\'Preparados\') and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\') '], setGraficoRACProblemasPreparados, setresponseGraficoRACProblemasPreparados,39)
 
         chamarAPI("RACIndicadores",GraficoRACME, "GraficoRACME", [" where 1=1 "], setGraficoRACME, setresponseGraficoRACME, 40)
-        chamarAPI("RACIndicadores",GraficoRACME, "GraficoRACMI", [" where 1=1 "], setGraficoRACMI, setresponseGraficoRACMI, 41)
+        chamarAPI("RACIndicadores",GraficoRACMI, "GraficoRACMI", [" where 2=2 "], setGraficoRACMI, setresponseGraficoRACMI, 41)
 
         const bar_ctx = canvasRef.current.getContext('2d');
         
@@ -569,59 +582,65 @@ function Home() {
 
     function aplicar() {
         setTimeout(function(){
+
+            console.time("Inicio Aplicar");
+
             GerarGraficoHistorico(GraficoCETotal, setresponseGraficoCETotal, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCE, setresponseGraficoNNCMPTotalCE, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoRACTotalCE, setresponseGraficoRACTotalCE, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoRAC, setresponseGraficoRAC, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoNCCMP, setresponseGraficoNCCMP, backgroundGradient, backgroundGradientCinza)
 
-            GerarGraficoHistorico(GraficoCETotalAvesPesadas, setresponseGraficoCETotalAvesPesadas, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEAvesPesadas, setresponseGraficoNNCMPTotalCEAvesPesadas, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoRACTotalCEAvesPesadas, setresponseGraficoRACTotalCEAvesPesadas, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoRACAvesPesadas, setresponseGraficoRACAvesPesadas, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoNCCMPAvesPesadas, setresponseGraficoNCCMPAvesPesadas, backgroundGradient, backgroundGradientCinza)
+            console.timeEnd("Inicio Aplicar");
 
-            GerarGraficoHistorico(GraficoCETotalAvesPesadasPR, setresponseGraficoCETotalAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEAvesPesadasPR, setresponseGraficoNNCMPTotalCEAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoRACTotalCEAvesPesadasPR, setresponseGraficoRACTotalCEAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoRACAvesPesadasPR, setresponseGraficoRACAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoNCCMPAvesPesadasPR, setresponseGraficoNCCMPAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCE, setresponseGraficoNNCMPTotalCE, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistoricoSemMeta(GraficoRACTotalCE, setresponseGraficoRACTotalCE, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistorico(GraficoRAC, setresponseGraficoRAC, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistorico(GraficoNCCMP, setresponseGraficoNCCMP, backgroundGradient, backgroundGradientCinza)
 
-            GerarGraficoHistorico(GraficoCETotalAvesLeves, setresponseGraficoCETotalAvesLeves, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEAvesLeves, setresponseGraficoNNCMPTotalCEAvesLeves, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoRACTotalCEAvesLeves, setresponseGraficoRACTotalCEAvesLeves, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoRACAvesLeves, setresponseGraficoRACAvesLeves, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoNCCMPAvesLeves, setresponseGraficoNCCMPAvesLeves, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistorico(GraficoCETotalAvesPesadas, setresponseGraficoCETotalAvesPesadas, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEAvesPesadas, setresponseGraficoNNCMPTotalCEAvesPesadas, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistoricoSemMeta(GraficoRACTotalCEAvesPesadas, setresponseGraficoRACTotalCEAvesPesadas, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistorico(GraficoRACAvesPesadas, setresponseGraficoRACAvesPesadas, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistorico(GraficoNCCMPAvesPesadas, setresponseGraficoNCCMPAvesPesadas, backgroundGradient, backgroundGradientCinza)
 
-            GerarGraficoHistorico(GraficoCETotalSuinos, setresponseGraficoCETotalSuinos, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoNNCMPTotalCESuinos, setresponseGraficoNNCMPTotalCESuinos, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoRACTotalCESuinos, setresponseGraficoRACTotalCESuinos, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoRACSuinos, setresponseGraficoRACSuinos, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoNCCMPSuinos, setresponseGraficoNCCMPSuinos, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistorico(GraficoCETotalAvesPesadasPR, setresponseGraficoCETotalAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEAvesPesadasPR, setresponseGraficoNNCMPTotalCEAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistoricoSemMeta(GraficoRACTotalCEAvesPesadasPR, setresponseGraficoRACTotalCEAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistorico(GraficoRACAvesPesadasPR, setresponseGraficoRACAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistorico(GraficoNCCMPAvesPesadasPR, setresponseGraficoNCCMPAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
 
-            GerarGraficoHistorico(GraficoCETotalPreparados, setresponseGraficoCETotalPreparados, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEPreparados, setresponseGraficoNNCMPTotalCEPreparados, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoRACTotalCEPreparados, setresponseGraficoRACTotalCEPreparados, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoRACPreparados, setresponseGraficoRACPreparados, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoNCCMPPreparados, setresponseGraficoNCCMPPreparados, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistorico(GraficoCETotalAvesLeves, setresponseGraficoCETotalAvesLeves, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEAvesLeves, setresponseGraficoNNCMPTotalCEAvesLeves, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistoricoSemMeta(GraficoRACTotalCEAvesLeves, setresponseGraficoRACTotalCEAvesLeves, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistorico(GraficoRACAvesLeves, setresponseGraficoRACAvesLeves, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistorico(GraficoNCCMPAvesLeves, setresponseGraficoNCCMPAvesLeves, backgroundGradient, backgroundGradientCinza)
 
-            GerarGraficoBarras(GraficoRACUnidadesAvesPesadas, setresponseGraficoRACUnidadesAvesPesadas, backgroundGradientCinza)
-            GerarGraficoBarras(GraficoRACProblemasAvesPesadas, setresponseGraficoRACProblemasAvesPesadas, backgroundGradientCinza)
+            // GerarGraficoHistorico(GraficoCETotalSuinos, setresponseGraficoCETotalSuinos, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistorico(GraficoNNCMPTotalCESuinos, setresponseGraficoNNCMPTotalCESuinos, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistorico(GraficoRACTotalCESuinos, setresponseGraficoRACTotalCESuinos, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistorico(GraficoRACSuinos, setresponseGraficoRACSuinos, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistorico(GraficoNCCMPSuinos, setresponseGraficoNCCMPSuinos, backgroundGradient, backgroundGradientCinza)
 
-            GerarGraficoBarras(GraficoRACUnidadesAvesPesadasPR, setresponseGraficoRACUnidadesAvesPesadasPR, backgroundGradientCinza)
-            GerarGraficoBarras(GraficoRACProblemasAvesPesadasPR, setresponseGraficoRACProblemasAvesPesadasPR, backgroundGradientCinza)
+            // GerarGraficoHistorico(GraficoCETotalPreparados, setresponseGraficoCETotalPreparados, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEPreparados, setresponseGraficoNNCMPTotalCEPreparados, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistoricoSemMeta(GraficoRACTotalCEPreparados, setresponseGraficoRACTotalCEPreparados, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistorico(GraficoRACPreparados, setresponseGraficoRACPreparados, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistorico(GraficoNCCMPPreparados, setresponseGraficoNCCMPPreparados, backgroundGradient, backgroundGradientCinza)
 
-            GerarGraficoBarras(GraficoRACUnidadesAvesLeves, setresponseGraficoRACUnidadesAvesLeves, backgroundGradientCinza)
-            GerarGraficoBarras(GraficoRACProblemasAvesLeves, setresponseGraficoRACProblemasAvesLeves, backgroundGradientCinza)
+            // GerarGraficoBarras(GraficoRACUnidadesAvesPesadas, setresponseGraficoRACUnidadesAvesPesadas, backgroundGradientCinza)
+            // GerarGraficoBarras(GraficoRACProblemasAvesPesadas, setresponseGraficoRACProblemasAvesPesadas, backgroundGradientCinza)
 
-            GerarGraficoBarras(GraficoRACUnidadesSuinos, setresponseGraficoRACUnidadesSuinos, backgroundGradientCinza)
-            GerarGraficoBarras(GraficoRACProblemasSuinos, setresponseGraficoRACProblemasSuinos, backgroundGradientCinza)
+            // GerarGraficoBarras(GraficoRACUnidadesAvesPesadasPR, setresponseGraficoRACUnidadesAvesPesadasPR, backgroundGradientCinza)
+            // GerarGraficoBarras(GraficoRACProblemasAvesPesadasPR, setresponseGraficoRACProblemasAvesPesadasPR, backgroundGradientCinza)
 
-            GerarGraficoBarras(GraficoRACUnidadesPreparados, setresponseGraficoRACUnidadesPreparados, backgroundGradientCinza)
-            GerarGraficoBarras(GraficoRACProblemasPreparados, setresponseGraficoRACProblemasPreparados, backgroundGradientCinza)
+            // GerarGraficoBarras(GraficoRACUnidadesAvesLeves, setresponseGraficoRACUnidadesAvesLeves, backgroundGradientCinza)
+            // GerarGraficoBarras(GraficoRACProblemasAvesLeves, setresponseGraficoRACProblemasAvesLeves, backgroundGradientCinza)
 
-            GerarGraficoHistoricoSemMeta(GraficoRACME, setresponseGraficoRACME, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoRACME, setresponseGraficoRACME, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoBarras(GraficoRACUnidadesSuinos, setresponseGraficoRACUnidadesSuinos, backgroundGradientCinza)
+            // GerarGraficoBarras(GraficoRACProblemasSuinos, setresponseGraficoRACProblemasSuinos, backgroundGradientCinza)
+
+            // GerarGraficoBarras(GraficoRACUnidadesPreparados, setresponseGraficoRACUnidadesPreparados, backgroundGradientCinza)
+            // GerarGraficoBarras(GraficoRACProblemasPreparados, setresponseGraficoRACProblemasPreparados, backgroundGradientCinza)
+
+            // GerarGraficoHistoricoSemMeta(GraficoRACMI, setresponseGraficoRACMI, backgroundGradient, backgroundGradientCinza)
+            // GerarGraficoHistoricoSemMeta(GraficoRACME, setresponseGraficoRACME, backgroundGradient, backgroundGradientCinza)
 
         }, 0)
         
@@ -630,8 +649,13 @@ function Home() {
  
     const GerarGraficoHistorico = (objeto, funcao, gradient, gradient2) => {
             
+            if(!objeto) return
+        
             setIsUpdatingData(true)
             let json = objeto; 
+
+            
+
             let indicators = Object.keys(json[0]).map(key => key);
 
             let groupBy = function groupBy(list, keyGetter) {
@@ -869,8 +893,12 @@ function Home() {
 
     const GerarGraficoHistoricoSemMeta = (objeto, funcao, gradient, gradient2) => {
             
+        if(!objeto) return
+
         setIsUpdatingData(true)
         let json = objeto; 
+
+
         let indicators = Object.keys(json[0]).map(key => key);
 
         let groupBy = function groupBy(list, keyGetter) {
@@ -1112,6 +1140,7 @@ function Home() {
         if(!objeto) return
         setIsUpdatingData(true)
         let json = objeto; 
+
         let indicators = Object.keys(json[0]).map(key => key);
 
         let groupBy = function groupBy(list, keyGetter) {
@@ -1221,7 +1250,7 @@ function Home() {
         return (
             <div>
                 <div className="card">
-                    <DataTable value={json} sortMode="multiple">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
                         <Column field="Unidade" header="Unidade"></Column>
                         <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
                         <Column field="Manifestante" header="Manifestante"></Column>
@@ -1251,16 +1280,16 @@ function Home() {
         return (
             <div>
                 <div >
-                    <DataTable value={json} sortMode="multiple">
-                        <Column field="Unidade" header="Unidade"></Column>
-                        <Column field="Mercado" header="Mercado"></Column>
-                        <Column field="Rac" header="Rac"></Column>
-                        <Column field="Cd Item" header="Cd Item"></Column>
-                        <Column field="Item" header="Item"></Column>
-                        <Column field="Marca" header="Marca"></Column>
-                        <Column field="Data de Fabricação" header="Data de Fabricação"></Column>
-                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
-                        <Column field="Manifestação" header="Manifestação"></Column>
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
+                        <Column field="Unidade" header="Unidade" headerStyle={{ width: '200px'}}></Column>
+                        <Column field="Mercado" header="Mercado" headerStyle={{ width: '100px'}}></Column>
+                        <Column field="Rac" header="Rac" headerStyle={{ width: '100px'}}></Column>
+                        <Column field="Cd Item" header="Cd Item" headerStyle={{ width: '100px'}}></Column>
+                        <Column field="Item" header="Item" headerStyle={{ width: '200px'}}></Column>
+                        <Column field="Marca" header="Marca" headerStyle={{ width: '200px'}}></Column>
+                        <Column field="Data de Fabricação" header="Data de Fabricação" headerStyle={{ width: '150px'}}></Column>
+                        <Column field="Tipo do Problema" header="Tipo do Problema" headerStyle={{ width: '300px'}}></Column>
+                        <Column field="Manifestação" header="Manifestação" ></Column>
                     </DataTable>
                 </div>
             </div>
@@ -1286,16 +1315,16 @@ function Home() {
         return (
             <div>
                 <div >
-                    <DataTable value={json} sortMode="multiple">
-                        <Column field="Unidade" header="Unidade"></Column>
-                        <Column field="Mercado" header="Mercado"></Column>
-                        <Column field="Rac" header="Rac"></Column>
-                        <Column field="Cd Item" header="Cd Item"></Column>
-                        <Column field="Item" header="Item"></Column>
-                        <Column field="Marca" header="Marca"></Column>
-                        <Column field="Data de Fabricação" header="Data de Fabricação"></Column>
-                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
-                        <Column field="Manifestação" header="Manifestação"></Column>
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
+                        <Column field="Unidade" header="Unidade" headerStyle={{ width: '200px'}}></Column>
+                        <Column field="Mercado" header="Mercado" headerStyle={{ width: '100px'}}></Column>
+                        <Column field="Rac" header="Rac" headerStyle={{ width: '100px'}}></Column>
+                        <Column field="Cd Item" header="Cd Item" headerStyle={{ width: '100px'}}></Column>
+                        <Column field="Item" header="Item" headerStyle={{ width: '200px'}}></Column>
+                        <Column field="Marca" header="Marca" headerStyle={{ width: '200px'}}></Column>
+                        <Column field="Data de Fabricação" header="Data de Fabricação" headerStyle={{ width: '150px'}}></Column>
+                        <Column field="Tipo do Problema" header="Tipo do Problema" headerStyle={{ width: '300px'}}></Column>
+                        <Column field="Manifestação" header="Manifestação" ></Column>
                     </DataTable>
                 </div>
             </div>
@@ -1321,16 +1350,16 @@ function Home() {
         return (
             <div>
                 <div >
-                    <DataTable value={json} sortMode="multiple">
-                        <Column field="Unidade" header="Unidade"></Column>
-                        <Column field="Mercado" header="Mercado"></Column>
-                        <Column field="Rac" header="Rac"></Column>
-                        <Column field="Cd Item" header="Cd Item"></Column>
-                        <Column field="Item" header="Item"></Column>
-                        <Column field="Marca" header="Marca"></Column>
-                        <Column field="Data de Fabricação" header="Data de Fabricação"></Column>
-                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
-                        <Column field="Manifestação" header="Manifestação"></Column>
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
+                        <Column field="Unidade" header="Unidade" headerStyle={{ width: '200px'}}></Column>
+                        <Column field="Mercado" header="Mercado" headerStyle={{ width: '100px'}}></Column>
+                        <Column field="Rac" header="Rac" headerStyle={{ width: '100px'}}></Column>
+                        <Column field="Cd Item" header="Cd Item" headerStyle={{ width: '100px'}}></Column>
+                        <Column field="Item" header="Item" headerStyle={{ width: '200px'}}></Column>
+                        <Column field="Marca" header="Marca" headerStyle={{ width: '200px'}}></Column>
+                        <Column field="Data de Fabricação" header="Data de Fabricação" headerStyle={{ width: '150px'}}></Column>
+                        <Column field="Tipo do Problema" header="Tipo do Problema" headerStyle={{ width: '300px'}}></Column>
+                        <Column field="Manifestação" header="Manifestação" ></Column>
                     </DataTable>
                 </div>
             </div>
@@ -1356,16 +1385,16 @@ function Home() {
         return (
             <div>
                 <div >
-                    <DataTable value={json} sortMode="multiple">
-                        <Column field="Unidade" header="Unidade"></Column>
-                        <Column field="Mercado" header="Mercado"></Column>
-                        <Column field="Rac" header="Rac"></Column>
-                        <Column field="Cd Item" header="Cd Item"></Column>
-                        <Column field="Item" header="Item"></Column>
-                        <Column field="Marca" header="Marca"></Column>
-                        <Column field="Data de Fabricação" header="Data de Fabricação"></Column>
-                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
-                        <Column field="Manifestação" header="Manifestação"></Column>
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
+                        <Column field="Unidade" header="Unidade" headerStyle={{ width: '200px'}}></Column>
+                        <Column field="Mercado" header="Mercado" headerStyle={{ width: '100px'}}></Column>
+                        <Column field="Rac" header="Rac" headerStyle={{ width: '100px'}}></Column>
+                        <Column field="Cd Item" header="Cd Item" headerStyle={{ width: '100px'}}></Column>
+                        <Column field="Item" header="Item" headerStyle={{ width: '200px'}}></Column>
+                        <Column field="Marca" header="Marca" headerStyle={{ width: '200px'}}></Column>
+                        <Column field="Data de Fabricação" header="Data de Fabricação" headerStyle={{ width: '150px'}}></Column>
+                        <Column field="Tipo do Problema" header="Tipo do Problema" headerStyle={{ width: '300px'}}></Column>
+                        <Column field="Manifestação" header="Manifestação" ></Column>
                     </DataTable>
                 </div>
             </div>
@@ -1391,16 +1420,16 @@ function Home() {
         return (
             <div>
                 <div >
-                    <DataTable value={json} sortMode="multiple">
-                        <Column field="Unidade" header="Unidade"></Column>
-                        <Column field="Mercado" header="Mercado"></Column>
-                        <Column field="Rac" header="Rac"></Column>
-                        <Column field="Cd Item" header="Cd Item"></Column>
-                        <Column field="Item" header="Item"></Column>
-                        <Column field="Marca" header="Marca"></Column>
-                        <Column field="Data de Fabricação" header="Data de Fabricação"></Column>
-                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
-                        <Column field="Manifestação" header="Manifestação"></Column>
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
+                        <Column field="Unidade" header="Unidade" headerStyle={{ width: '200px'}}></Column>
+                        <Column field="Mercado" header="Mercado" headerStyle={{ width: '100px'}}></Column>
+                        <Column field="Rac" header="Rac" headerStyle={{ width: '100px'}}></Column>
+                        <Column field="Cd Item" header="Cd Item" headerStyle={{ width: '100px'}}></Column>
+                        <Column field="Item" header="Item" headerStyle={{ width: '200px'}}></Column>
+                        <Column field="Marca" header="Marca" headerStyle={{ width: '200px'}}></Column>
+                        <Column field="Data de Fabricação" header="Data de Fabricação" headerStyle={{ width: '150px'}}></Column>
+                        <Column field="Tipo do Problema" header="Tipo do Problema" headerStyle={{ width: '300px'}}></Column>
+                        <Column field="Manifestação" header="Manifestação" ></Column>
                     </DataTable>
                 </div>
             </div>
@@ -1426,16 +1455,16 @@ function Home() {
         return (
             <div>
                 <div >
-                    <DataTable value={json} sortMode="multiple">
-                        <Column field="Unidade" header="Unidade"></Column>
-                        <Column field="Mercado" header="Mercado"></Column>
-                        <Column field="Rac" header="Rac"></Column>
-                        <Column field="Cd Item" header="Cd Item"></Column>
-                        <Column field="Item" header="Item"></Column>
-                        <Column field="Marca" header="Marca"></Column>
-                        <Column field="Data de Fabricação" header="Data de Fabricação"></Column>
-                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
-                        <Column field="Manifestação" header="Manifestação"></Column>
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
+                        <Column field="Unidade" header="Unidade" headerStyle={{ width: '200px'}}></Column>
+                        <Column field="Mercado" header="Mercado" headerStyle={{ width: '100px'}}></Column>
+                        <Column field="Rac" header="Rac" headerStyle={{ width: '100px'}}></Column>
+                        <Column field="Cd Item" header="Cd Item" headerStyle={{ width: '100px'}}></Column>
+                        <Column field="Item" header="Item" headerStyle={{ width: '200px'}}></Column>
+                        <Column field="Marca" header="Marca" headerStyle={{ width: '200px'}}></Column>
+                        <Column field="Data de Fabricação" header="Data de Fabricação" headerStyle={{ width: '150px'}}></Column>
+                        <Column field="Tipo do Problema" header="Tipo do Problema" headerStyle={{ width: '300px'}}></Column>
+                        <Column field="Manifestação" header="Manifestação" ></Column>
                     </DataTable>
                 </div>
             </div>
@@ -1459,7 +1488,7 @@ function Home() {
         return  (
             <div>
                 <div className="card">
-                    <DataTable value={json} sortMode="multiple">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
                         <Column field="Unidade" header="Unidade"></Column>
                         <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
                         <Column field="Manifestante" header="Manifestante"></Column>
@@ -1487,8 +1516,8 @@ function Home() {
         return  (
             <div>
                 <div className="card">
-                    <DataTable value={json} sortMode="multiple">
-                        <Column field="Unidade" header="Unidade"></Column>
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
+                        <Column field="Mercado" header="Mercado"></Column>
                         <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
                         <Column field="Manifestante" header="Manifestante"></Column>
                         <Column field="Nº RAC" header="Nº RAC"></Column>
@@ -1517,8 +1546,8 @@ function Home() {
         return  (
             <div>
                 <div className="card">
-                    <DataTable value={json} sortMode="multiple">
-                        <Column field="Unidade" header="Unidade"></Column>
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
+                        <Column field="Mercado" header="Mercado"></Column>
                         <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
                         <Column field="Manifestante" header="Manifestante"></Column>
                         <Column field="Nº RAC" header="Nº RAC"></Column>
@@ -1545,8 +1574,8 @@ function Home() {
         return  (
             <div>
                 <div className="card">
-                    <DataTable value={json} sortMode="multiple">
-                        <Column field="Unidade" header="Unidade"></Column>
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
+                        <Column field="Mercado" header="Mercado"></Column>
                         <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
                         <Column field="Manifestante" header="Manifestante"></Column>
                         <Column field="Nº RAC" header="Nº RAC"></Column>
@@ -1573,8 +1602,8 @@ function Home() {
         return  (
             <div>
                 <div className="card">
-                    <DataTable value={json} sortMode="multiple">
-                        <Column field="Unidade" header="Unidade"></Column>
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
+                        <Column field="Mercado" header="Mercado"></Column>
                         <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
                         <Column field="Manifestante" header="Manifestante"></Column>
                         <Column field="Nº RAC" header="Nº RAC"></Column>
@@ -1601,8 +1630,8 @@ function Home() {
         return  (
             <div>
                 <div className="card">
-                    <DataTable value={json} sortMode="multiple">
-                        <Column field="Unidade" header="Unidade"></Column>
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
+                        <Column field="Mercado" header="Mercado"></Column>
                         <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
                         <Column field="Manifestante" header="Manifestante"></Column>
                         <Column field="Nº RAC" header="Nº RAC"></Column>
@@ -1629,8 +1658,8 @@ function Home() {
         return  (
             <div>
                 <div className="card">
-                    <DataTable value={json} sortMode="multiple">
-                        <Column field="Unidade" header="Unidade"></Column>
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
+                        <Column field="Mercado" header="Mercado"></Column>
                         <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
                         <Column field="Manifestante" header="Manifestante"></Column>
                         <Column field="Nº RAC" header="Nº RAC"></Column>
@@ -1651,7 +1680,7 @@ function Home() {
             return  (
                 <div>
                     <div className="card">
-                        <DataTable value={json} sortMode="multiple">
+                        <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
                             <Column field="Unidade" header="Unidade"></Column>
                             <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
                             <Column field="Manifestante" header="Manifestante"></Column>
@@ -1678,80 +1707,182 @@ function Home() {
                 let json = JSON.parse(response.data)
                 setTableRacME(json)
             }) 
+
+            var whereFinalME = " AND Mercado_rac = 'ME' " +
+            " AND [Origem] IN (  " +
+                "     'Documentação Unidade',   " +
+                "     'EXPEDIÇÃO FÁBRICA',  " +
+                "     'EXPEDIÇÃO FÁBRICA FFO', " +
+                "     'FÁBRICA PRODUÇÃO FFO', " +
+                "    'FABRICAÇÃO')  " +
+                " AND  [Tipo_Atendimento_rac] IN (  " +
+                    "     'CONTATO EXCELSIOR_RAC',   " +
+                    "     'CONTATO JBS CARNES',   " +
+                    "     'CONTATO MERCADO DA CARNE',  " + 
+                    "     'NOTIFICAÇÃO',   " +
+                    "    'RECLAMAÇÃO',   " +
+                    "    'RECLAMAÇÃO ABUSO DE PRODUTO',  " + 
+                    "    'RECLAMAÇÃO ABUSO PROD.',   " +
+                    "     'Reclamação Contas Globais',  " + 
+                    "    'RECLAMAÇÃO FAB. NÃO IDENTIF.',  " + 
+                    "   'RECLAMAÇÃO HANS',   " +
+                    "    'RECLAMAÇÃO VOSSKO', " +
+                    "   'RECLAMAÇÃO FFO', " +
+                    "    'REINCIDÊNCIA') "
             
-            api.getSearaBaseRacFinal(["  AND Unidade = 'Brasília'  "]).then((response) => {
+            api.getSearaBaseRacFinal([whereFinalME]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacFinalME(json)
             })
 
-            api.getSearaBaseRacFinal(["  AND Unidade = 'Itapiranga'  "]).then((response) => {
+            var whereFinalMI = " AND Mercado_rac IN ('MI','INTERNO') " +
+            " AND [Origem] IN (  " +
+                "     'Documentação Unidade',   " +
+                "     'EXPEDIÇÃO FÁBRICA',  " +
+                "     'EXPEDIÇÃO FÁBRICA FFO', " +
+                "     'FÁBRICA PRODUÇÃO FFO', " +
+                "    'FABRICAÇÃO')  " +
+                " AND  [Tipo_Atendimento_rac] IN (  " +
+                    "     'CONTATO EXCELSIOR_RAC',   " +
+                    "     'CONTATO JBS CARNES',   " +
+                    "     'CONTATO MERCADO DA CARNE',  " + 
+                    "     'NOTIFICAÇÃO',   " +
+                    "    'RECLAMAÇÃO',   " +
+                    "    'RECLAMAÇÃO ABUSO DE PRODUTO',  " + 
+                    "    'RECLAMAÇÃO ABUSO PROD.',   " +
+                    "     'Reclamação Contas Globais',  " + 
+                    "    'RECLAMAÇÃO FAB. NÃO IDENTIF.',  " + 
+                    "   'RECLAMAÇÃO HANS',   " +
+                    "    'RECLAMAÇÃO VOSSKO', " +
+                    "   'RECLAMAÇÃO FFO', " +
+                    "    'REINCIDÊNCIA') "
+
+            api.getSearaBaseRacFinal([ whereFinalMI ]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacFinalMI(json)
             })
 
-            api.getSearaBaseRacFinal(["  AND Unidade = 'Forquilinha'  "]).then((response) => {
+            var whereFinalRECL = " AND Mercado_rac IN ('MI', 'INTERNO') 																				" + 
+            " AND [Origem] IN ( 																			" + 
+            "     'Documentação Unidade',  																		" + 
+            "     'EXPEDIÇÃO FÁBRICA', 																			" + 
+            " 	'EXPEDIÇÃO FÁBRICA FFO',																		" + 
+            " 	'FÁBRICA PRODUÇÃO FFO',																			" + 
+            "     'FABRICAÇÃO') 																					" + 
+            " AND  [Tipo_Atendimento_rac] IN ( 																	" + 
+            "     'CONTATO EXCELSIOR_RAC',  																		" + 
+            "     'CONTATO JBS CARNES',  																			" + 
+            "     'CONTATO MERCADO DA CARNE',  																	" + 
+            "     'NOTIFICAÇÃO',  																				" + 
+            "     'RECLAMAÇÃO',  																					" + 
+            "     'RECLAMAÇÃO ABUSO DE PRODUTO',  																" + 
+            "     'RECLAMAÇÃO ABUSO PROD.',  																		" + 
+            "     'Reclamação Contas Globais',  																	" + 
+            "     'RECLAMAÇÃO FAB. NÃO IDENTIF.',  																" + 
+            "     'RECLAMAÇÃO HANS',  																			" + 
+            "     'RECLAMAÇÃO VOSSKO',																			" + 
+            " 	'RECLAMAÇÃO FFO',																				" + 
+            " 	'REINCIDÊNCIA') 																				" + 
+            " and [Nm_Marca_rac] IN ('SEARA GOURMET', 'SEARA NATURE', 'SEARA INCRIVEL', 'SEARA ROTISSERIE') 		" 
+            
+
+            api.getSearaBaseRacFinal([ whereFinalRECL ]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacFinalRECL(json)
             })
 
-            api.getSearaBaseRacFinal(["  AND Unidade = 'Seara'  "]).then((response) => {
+            var whereFinalPDV = " AND Mercado_rac IN ('MI', 'INTERNO') 			" +
+            " AND [Origem] IN ( 		" +
+            "     'ABUSO DE PRODUTO PDV') 	" 
+            
+
+            api.getSearaBaseRacFinal([ whereFinalPDV ]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacFinalPDV(json)
             })
 
-            api.getSearaBaseRacFinal(["  AND Unidade = 'Lapa' "]).then((response) => {
+            var whereFinalTE = " AND Mercado_rac IN ('MI', 'INTERNO') 		" +
+            " AND [Origem] IN ( 	" +
+            "     'PRODUÇÃO EM TERCEIRO') " 
+            
+
+            api.getSearaBaseRacFinal([ whereFinalTE ]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacFinalTE(json)
             })
 
-            api.getSearaBaseRacFinal([" AND Unidade = 'Ipumirim' "]).then((response) => {
+            var whereFinalCRIT = " AND Mercado_rac IN ('MI', 'INTERNO') " +
+            " AND  [Tipo_Atendimento_rac] IN ( 'CRÍTICA' ) "
+            
+
+            api.getSearaBaseRacFinal([ whereFinalCRIT ]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacFinalCRIT(json)
             })
 
-            api.getSearaBaseRacAberturaME([" AND 1=1 "]).then((response) => {
+            var whereAberturaME = "  " +
+            " AND [Tipo_Atendimento_rac] in ( " +
+            " 'RECLAMAÇÃO', " +
+            " 'RECLAMAÇÃO ABUSO PROD.', " +
+            " 'RECLAMAÇÃO FAB. NÃO IDENTIF.', " +
+            " 'RECLAMAÇÃO HANS', " +
+            " 'CONTATO EXCELSIOR_RAC', " +
+            " 'CONTATO MERCADO DA CARNE', " +
+            " 'CONTATO JBS CARNES', " +
+            " 'NOTIFICAÇÃO', " +
+            " 'Reincidência', " +
+            " 'RECLAMAÇÃO FFO', " +
+            " 'RECLAMAÇÃO ABUSO DE PRODUTO', " +
+            " 'RECLAMAÇÃO VOSSKO', " +
+            " 'Reclamação Contas Globais' " +
+            " ) "
+
+            api.getSearaBaseRacAberturaME([ whereAberturaME + " and data_rac = (select data from v_maiorData) "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaME(json)
             })
 
-            api.getSearaBaseRacAberturaME([" AND 1=1 "]).then((response) => {
+           
+
+
+            api.getSearaBaseRacAberturaME2([ whereAberturaME + " AND Especialista_rac = 'YARA' " ]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEOrienteMedio(json)
             })
 
-            api.getSearaBaseRacAberturaME([" AND 1=1 "]).then((response) => {
+            api.getSearaBaseRacAberturaME2([ whereAberturaME + "  AND Especialista_rac IN ('Igor', 'Rejane')   "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEEuropa(json)
             })
 
-            api.getSearaBaseRacAberturaME([" AND 1=1 "]).then((response) => {
+            api.getSearaBaseRacAberturaME2([ whereAberturaME + " AND Especialista_rac IN ('Marcela')  "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEJapao(json)
             })
 
-            api.getSearaBaseRacAberturaME([" AND 1=1 "]).then((response) => {
+            api.getSearaBaseRacAberturaME2([ whereAberturaME + " AND Especialista_rac IN ('Amanda')  "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEAsia(json)
             })
 
-            api.getSearaBaseRacAberturaME([" AND 1=1 "]).then((response) => {
+            api.getSearaBaseRacAberturaME2([ whereAberturaME + " AND Especialista_rac IN ('Regina')  "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEAmericasAfrica(json)
             })
 
-            api.getSearaBaseRacAberturaME([" AND 1=1 "]).then((response) => {
+            api.getSearaBaseRacAberturaME2([ whereAberturaME + " AND Especialista_rac IN ('Jéssica') "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEContasGlobais(json)
@@ -1761,6 +1892,8 @@ function Home() {
         }
 
         let json = JSON.parse(response.data)
+
+        if(json.length == 0) return
 
         let datasets = [];
         let indicators = Object.keys(json[0]).map(key => key);
@@ -1832,7 +1965,7 @@ function Home() {
 
             {/* Botão aplicar */}
             {isUpdatingData ? (<div> </div>) : (
-                <Row style={{ paddingRight: '15px', paddingLeft: '15px', display: 'none' }}>
+                <Row style={{ paddingRight: '15px', paddingLeft: '15px' }}>
                     <button className="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={aplicar} id="btnAplicar">Aplicar</button>
                 </Row>
             )}
@@ -1988,7 +2121,7 @@ function Home() {
                         <Col className="col-lg-12 col-md-12 col-sm-12">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoNNCMPTotalCEAvesPesadasPR} options={lightOptions} className="divMenor"/>
+                                    <Chart type="bar" data={responseGraficoRACTotalCEAvesPesadasPR} options={lightOptions} className="divMenor"/>
                                 </Card>
                             )}
                         </Col>
@@ -2048,7 +2181,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCEAvesLeves} options={lightOptions} className="divMenor"/>
+                                        <Chart type="bar" data={responseGraficoRACTotalCEAvesLeves} options={lightOptions} className="divMenor"/>
                                     </Card>
                                 )}
                             </Col>
@@ -2108,7 +2241,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCESuinos} options={lightOptions} className="divMenor"/>
+                                        <Chart type="bar" data={responseGraficoRACTotalCESuinos} options={lightOptions} className="divMenor"/>
                                     </Card>
                                 )}
                             </Col>
@@ -2168,7 +2301,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCEPreparados} options={lightOptions} className="divMenor"/>
+                                        <Chart type="bar" data={responseGraficoRACTotalCEPreparados} options={lightOptions} className="divMenor"/>
                                     </Card>
                                 )}
                             </Col>
@@ -2441,48 +2574,109 @@ function Home() {
                     </Row>
 
                     <Row>
-                        <Col className="col-lg-2 col-md-4 col-sm-1">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                        <Col className="col-lg-4 col-md-4 col-sm-1">
+                            <Row>
+                                <Col className="mt-1 col-12 cssSeara2021_titulo">
+                                    Oriente Médio
+                                    <hr></hr>
+                                </Col>    
+                            </Row>
+                            <Row>
+                                <Col className="col-lg-12 col-md-12 col-sm-1">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    
+                                    DataTableRACAberturaMEOrienteMedio() 
                                 
-                                DataTableRACAberturaMEOrienteMedio() 
-                            
-                            )}  
+                                )}  
+                                </Col>
+                            </Row>
                         </Col>
-                        <Col className="col-lg-2 col-md-4 col-sm-1">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                        <Col className="col-lg-4 col-md-4 col-sm-1">
+                            <Row>
+                                <Col className="mt-1 col-12 cssSeara2021_titulo">
+                                    Europa
+                                    <hr></hr>
+                                </Col>    
+                            </Row>
+                            <Row>
+                                <Col className="col-lg-12 col-md-12 col-sm-1">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    
+                                    DataTableRACAberturaMEEuropa() 
                                 
-                                DataTableRACAberturaMEEuropa() 
-                            
-                            )}
+                                )}  
+                                </Col>
+                            </Row>
                         </Col>
-                        <Col className="col-lg-2 col-md-4 col-sm-1">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                        <Col className="col-lg-4 col-md-4 col-sm-1">
+                            <Row>
+                                <Col className="mt-1 col-12 cssSeara2021_titulo">
+                                    Japão
+                                    <hr></hr>
+                                </Col>    
+                            </Row>
+                            <Row>
+                                <Col className="col-lg-12 col-md-12 col-sm-1">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    
+                                    DataTableRACAberturaMEJapao() 
                                 
-                                DataTableRACAberturaMEJapao() 
-                            
-                            )}
+                                )}  
+                                </Col>
+                            </Row>
                         </Col>
-                        <Col className="col-lg-2 col-md-4 col-sm-1">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                        <Col className="col-lg-4 col-md-4 col-sm-1">
+                            <Row>
+                                <Col className="mt-1 col-12 cssSeara2021_titulo">
+                                    Ásia
+                                    <hr></hr>
+                                </Col>    
+                            </Row>
+                            <Row>
+                                <Col className="col-lg-12 col-md-12 col-sm-1">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    
+                                    DataTableRACAberturaMEAsia() 
                                 
-                                DataTableRACAberturaMEAsia() 
-                            
-                            )}
+                                )}  
+                                </Col>
+                            </Row>
                         </Col>
-                        <Col className="col-lg-2 col-md-4 col-sm-1">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                        <Col className="col-lg-4 col-md-4 col-sm-1">
+                            <Row>
+                                <Col className="mt-1 col-12 cssSeara2021_titulo">
+                                    Américas / África
+                                    <hr></hr>
+                                </Col>    
+                            </Row>
+                            <Row>
+                                <Col className="col-lg-12 col-md-12 col-sm-1">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    
+                                    DataTableRACAberturaMEAmericasAfrica() 
                                 
-                                DataTableRACAberturaMEAmericasAfrica() 
-                            
-                            )}
+                                )}  
+                                </Col>
+                            </Row>
                         </Col>
-                        <Col className="col-lg-2 col-md-4 col-sm-1">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                        <Col className="col-lg-4 col-md-4 col-sm-1">
+                            <Row>
+                                <Col className="mt-1 col-12 cssSeara2021_titulo">
+                                    Contas globais
+                                    <hr></hr>
+                                </Col>    
+                            </Row>
+                            <Row>
+                                <Col className="col-lg-12 col-md-12 col-sm-1">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    
+                                    DataTableRACAberturaMEContasGlobais() 
                                 
-                                DataTableRACAberturaMEContasGlobais() 
-                            
-                            )}
+                                )}  
+                                </Col>
+                            </Row>
                         </Col>
+                        
                         
                     </Row>
 
