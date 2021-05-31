@@ -101,19 +101,23 @@ th{
     background-color: rgb(245,156,0)!important;
     color: #ffffff!important;
     font-weight: bold!important;
-    font-size: 16px!important;
+    font-size: 14px!important;
     padding: 2px!important;
+}
+
+tr{
+    padding: 2px!important;
+    border:0px!important;
+    font-size: 14px!important;
+}
+
+tr:nth-child(even){
+    background:rgb(238, 238, 238)!important;
 }
 
 td{
     padding: 2px!important;
     border:0px!important;
-    font-size: 16px!important;
-}
-
-tr{
-    border:0px!important;
-    font-size: 16px!important;
 }
 
 .p-filter-column .p-inputtext .p-component .p-column-filter{
@@ -122,6 +126,10 @@ tr{
 
 .p-datatable-tbody{
     font-size: 16px!important;
+}
+
+.p-datatable .p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
+    background:greenyellow!important;
 }
 
 .sidebar-desk {
