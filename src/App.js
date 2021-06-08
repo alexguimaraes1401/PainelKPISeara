@@ -121,6 +121,8 @@ function App() {
         )
     }
 
+    
+
     /*Exibe paginas no Router*/
     return (
         <Router>

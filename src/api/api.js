@@ -98,10 +98,11 @@ export default {
             ]
         }),
     
-    getSearaBaseRacME: (params) =>
+    getSearaBaseRacME: (p) =>
         instance({
-            method: "GET",
-            url: `/RacME?where=${params[0]}`, 
+            method: "POST",
+            url: `/RacME`, 
+            data: {'where': p[0]},
             params: {
                 datatype: "json"
             },

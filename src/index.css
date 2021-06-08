@@ -108,10 +108,10 @@ th{
 tr{
     padding: 2px!important;
     border:0px!important;
-    font-size: 14px!important;
+    font-size: 10 px!important;
 }
 
-tr:nth-child(even){
+.p-datatable-striped tr:nth-child(even){
     background:rgb(238, 238, 238)!important;
 }
 
@@ -125,7 +125,7 @@ td{
 }
 
 .p-datatable-tbody{
-    font-size: 16px!important;
+    font-size: 10px!important;
 }
 
 .p-datatable .p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
@@ -184,5 +184,14 @@ td{
 .p-card .p-card-body {
     padding: 0!important;
 }
+
+.pdnivel1{
+    padding-left: 20px!important;
+}
+
+.pdnivel2{
+    padding-left: 40px!important;
+}
+
 
 

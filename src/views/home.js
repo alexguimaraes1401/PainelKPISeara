@@ -1,5 +1,8 @@
 //#region Imports
 import React, { useState, useEffect, useRef } from 'react';
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import ReactDOM from 'react-dom'; 
+import $ from 'jquery';
 import { Chart } from 'primereact/chart';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Button } from 'primereact/button';
@@ -46,6 +49,9 @@ import { LoadingSkeletonSquare, LoadingSkeletonCard } from '../components/skelet
 
 import Pdf from "react-to-pdf";
 import { LineWeight } from '@material-ui/icons';
+
+import Funcao from "./funcoes"
+
 const ref = React.createRef();
 const options = {
     orientation: 'retrait',
@@ -57,6 +63,8 @@ var cors = require('cors'); // Already done “npm i cors --save-dev”
 
 //#endregion
 
+
+
 function Home() {
 
     const [isUpdatingData, setIsUpdatingData] = React.useState(false)
@@ -64,6 +72,10 @@ function Home() {
     const toast = React.useRef(null);
     const canvasRef = React.useRef();
 
+    
+
+    
+    
     var numeroChamados = [false,false,false,false,false,false,false,false,false,false,
         false,false,false,false,false,false,false,false,false,false,
         false,false,false,false,false,false,false,false,false,false,
@@ -71,10 +83,46 @@ function Home() {
         false,false,false,false,false,false,false,false,false,false,
         false,false,false,false,false,false,false,false,false,false,
         false,false,false,false,false,false,false,false,false,false,
-        false,false,false,false,false,false,false,false]  
+        false,false]  
         
-        numeroChamados = [true]
+        
+    function arrumaTabela(classTable){
 
+        
+        var linhas = 0
+        
+        try{
+            linhas = $('.'+classTable+' table').rows.length
+        
+           
+            for (var i=0; i<linhas;i++){
+                //console.log($('.'+classTable+' table').rows[i].cells[0].innerText);
+                if($('.'+classTable+' table').rows[i].cells[0].innerText.match(/.*@@.*/)  ){
+                    //alert($('.'+classTable+' table').rows[i].cells[0].innerText)
+                    $('.'+classTable+' table').rows[i].style.background = '#cccccc'
+                }
+            }
+        
+            $('.'+classTable+'').innerHTML = $('.'+classTable+'').innerHTML.replaceAll(".....","&nbsp;&nbsp;&nbsp;&nbsp;")
+        
+            $('.'+classTable+'').innerHTML = $('.'+classTable+'').innerHTML.replaceAll("@@","")
+        
+            $('.'+classTable+'').innerHTML = $('.'+classTable+'').innerHTML.replaceAll("&lt;b&gt;","<b>")
+        
+            $('.'+classTable+'').innerHTML = $('.'+classTable+'').innerHTML.replaceAll("&lt;/b&gt;","</b>")
+        
+            if($('.'+classTable+' table').rows[$('.'+classTable+' table').rows.length-1].cells[0].innerText == "Total"){
+                $('.'+classTable+' table').rows[$('.'+classTable+' table').rows.length-1].style.background = '#999999'
+                $('.'+classTable+' table').rows[$('.'+classTable+' table').rows.length-1].style.color = 'white'
+        
+            }
+        }catch(e){
+            linhas = 0
+        }
+    }
+        
+        
+        
 
     const percorreNumeroChamados = () => {
         // debugger
@@ -83,6 +131,15 @@ function Home() {
                 return false
             }
         }
+
+        
+
+        if(document.getElementsByClassName('clOrienteMedio').length > 0) {
+            arrumaTabela('clOrienteMedio')
+            //arrumaTabela('clEuropa')
+            //arrumaTabela('clJapao')
+        }
+
         return true
     }
 
@@ -264,6 +321,7 @@ function Home() {
     let [TableRacAberturaMEOrienteMedio, setTableRacAberturaMEOrienteMedio] = React.useState()
     let [TableRacAberturaMEEuropa, setTableRacAberturaMEEuropa] = React.useState()
     let [TableRacAberturaMEJapao, setTableRacAberturaMEJapao] = React.useState()
+
     let [TableRacAberturaMEAsia, setTableRacAberturaMEAsia] = React.useState()
     let [TableRacAberturaMEAmericasAfrica, setTableRacAberturaMEAmericasAfrica] = React.useState()
     let [TableRacAberturaMEContasGlobais, setTableRacAberturaMEContasGlobais] = React.useState()
@@ -599,6 +657,82 @@ function Home() {
     whereNNCMP += " AND ([Grupo Problema] NOT IN ('Distr / Log', 'Embalagem Secundária') or [Grupo Problema] is null) "
     whereNNCMP += " AND ([Entra para a Meta] <> 'Não' or [Entra para a Meta] is null) "
 
+    function arrumaTabela(classTable){
+
+        for (var i=0; i<$('.'+classTable+' table').rows.length;i++){
+            //console.log($('.'+classTable+' table').rows[i].cells[0].innerText);
+            if($('.'+classTable+' table').rows[i].cells[0].innerText.match(/.*@@.*/)  ){
+                //alert($('.'+classTable+' table').rows[i].cells[0].innerText)
+                $('.'+classTable+' table').rows[i].style.background = '#cccccc'
+            }
+        }
+    
+            $('.'+classTable+'').innerHTML = $('.'+classTable+'').innerHTML.replaceAll(".....","&nbsp;&nbsp;&nbsp;&nbsp;")
+    
+        $('.'+classTable+'').innerHTML = $('.'+classTable+'').innerHTML.replaceAll("@@","")
+    
+    
+            $('.'+classTable+'').innerHTML = $('.'+classTable+'').innerHTML.replaceAll("&lt;b&gt;","<b>")
+    
+            $('.'+classTable+'').innerHTML = $('.'+classTable+'').innerHTML.replaceAll("&lt;/b&gt;","</b>")
+    
+            if($('.'+classTable+' table').rows[$('.'+classTable+' table').rows.length-1].cells[0].innerText == "Total"){
+                $('.'+classTable+' table').rows[$('.'+classTable+' table').rows.length-1].style.background = '#999999'
+                $('.'+classTable+' table').rows[$('.'+classTable+' table').rows.length-1].style.color = 'white'
+        
+            }
+    }
+
+    function ttt(aa){
+        for (var i=0; i<$('.clOrienteMedio table').rows.length;i++)
+        {      
+            if($('.clOrienteMedio table').rows[i].cells[0].innerText.match(/.*@@.*/)  ){         
+                $('.clOrienteMedio table').rows[i].style.background = '#cccccc'     
+            } 
+        }     
+        $('.clOrienteMedio').innerHTML = $('.clOrienteMedio').innerHTML.replaceAll('.....','&nbsp;&nbsp;&nbsp;&nbsp;')  
+        $('.clOrienteMedio').innerHTML = $('.clOrienteMedio').innerHTML.replaceAll('@@','')     
+        $('.clOrienteMedio').innerHTML = $('.clOrienteMedio').innerHTML.replaceAll('&lt;b&gt;','<b>')     
+        $('.clOrienteMedio').innerHTML = $('.clOrienteMedio').innerHTML.replaceAll('&lt;/b&gt;','</b>')    
+        
+            if($('.clOrienteMedio table').rows[$('.clOrienteMedio table').rows.length-1].cells[0].innerText == 'Total'){         
+            $('.clOrienteMedio table').rows[$('.clOrienteMedio table').rows.length-1].style.background = '#999999'         
+        $('.clOrienteMedio table').rows[$('.clOrienteMedio table').rows.length-1].style.color = 'white'   
+            }
+        }
+
+    function chamararrumaTabela(){
+        
+        let funcaoNova =    "  for (var i=0; i<$('.'+classTable+' table').rows.length;i++){ " +
+           
+            "     if($('.'+classTable+' table').rows[i].cells[0].innerText.match(/.*@@.*/)  ){ " +
+             
+             "        $('.'+classTable+' table').rows[i].style.background = '#cccccc'; " +
+             "    } " +
+             "} " +
+             "    $('.'+classTable+'').innerHTML = $('.'+classTable+'').innerHTML.replaceAll('.....','&nbsp;&nbsp;&nbsp;&nbsp;') ;" +
+             " $('.'+classTable+'').innerHTML = $('.'+classTable+'').innerHTML.replaceAll('@@','') ;" +
+             "    $('.'+classTable+'').innerHTML = $('.'+classTable+'').innerHTML.replaceAll('&lt;b&gt;','<b>'); " +   
+             "    $('.'+classTable+'').innerHTML = $('.'+classTable+'').innerHTML.replaceAll('&lt;/b&gt;','</b>'); " +   
+              "   if($('.'+classTable+' table').rows[$('.'+classTable+' table').rows.length-1].cells[0].innerText == 'Total'){  " +
+              "       $('.'+classTable+' table').rows[$('.'+classTable+' table').rows.length-1].style.background = '#999999' ; " +
+              "       $('.'+classTable+' table').rows[$('.'+classTable+' table').rows.length-1].style.color = 'white' ;" +     
+               "  } "
+        
+               /*var f = new Function('classTable', funcaoNova);
+               f("clOrienteMedio")
+         f('clOrienteMedio')
+         f('clEuropa')
+         f('clJapao')
+         f('clAsia')
+         f('clAmericasAfrica')
+         f('clContasGlobais')
+         f('clAberturaME')
+         f('clAberturaTerceiro')*/
+    }
+
+    
+
     //Handlers
     React.useEffect(() => {
         setIsUpdatingData(true);
@@ -787,6 +921,8 @@ function Home() {
             
         /////////////////////
 
+        buscarDadosTable([" and 1=1 "])
+
         const bar_ctx = canvasRef.current.getContext('2d');
 
         const background = bar_ctx.createLinearGradient(0, 0, 0, 300);
@@ -800,6 +936,9 @@ function Home() {
 
         SetBackgroundGradient(background);
         SetBackgroundGradientCinza(backgroundCinza);
+
+        
+
     }, []);
 
     function callbackChamarAPI (apiNome) {
@@ -809,6 +948,8 @@ function Home() {
             setIsUpdatingData(false);
         }
     }
+
+    
 
     const chamarAPI = (apiNome, objeto, numGrafico, parametros, funcao, funcaoRetorno, numeroChamado) => {
 
@@ -1720,12 +1861,14 @@ function Home() {
             json.push(TableRacME[i])
         }
 
+        
+
 
 
         return (
             <div>
                 <div className="card">
-                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped" id="tab1">
                         <Column field="Unidade" header="Unidade"></Column>
                         <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
                         <Column field="Manifestante" header="Manifestante"></Column>
@@ -1755,7 +1898,7 @@ function Home() {
         return (
             <div>
                 <div >
-                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped" id="tab2">
                         <Column field="Unidade" header="Unidade" headerStyle={{ width: '200px' }}></Column>
                         <Column field="Mercado" header="Mercado" headerStyle={{ width: '100px' }}></Column>
                         <Column field="Rac" header="Rac" headerStyle={{ width: '100px' }}></Column>
@@ -1790,7 +1933,7 @@ function Home() {
         return (
             <div>
                 <div >
-                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped" id="tab3">
                         <Column field="Unidade" header="Unidade" headerStyle={{ width: '200px' }}></Column>
                         <Column field="Mercado" header="Mercado" headerStyle={{ width: '100px' }}></Column>
                         <Column field="Rac" header="Rac" headerStyle={{ width: '100px' }}></Column>
@@ -1963,10 +2106,8 @@ function Home() {
         return (
             <div>
                 <div className="card">
-                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
-                        <Column field="Unidade" header="Unidade"></Column>
-                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
-                        <Column field="Manifestante" header="Manifestante"></Column>
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped clAberturaME">
+                        <Column field="Mercado" header="Mercado Externo" headerStyle={{ width: '70%' }}></Column>
                         <Column field="Nº RAC" header="Nº RAC"></Column>
                     </DataTable>
                 </div>
@@ -1991,10 +2132,8 @@ function Home() {
         return (
             <div>
                 <div className="card">
-                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
-                        <Column field="Mercado" header="Mercado"></Column>
-                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
-                        <Column field="Manifestante" header="Manifestante"></Column>
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clOrienteMedio">
+                        <Column field="Mercado" header="Oriente Médio" headerStyle={{ width: '70%' }}></Column>
                         <Column field="Nº RAC" header="Nº RAC"></Column>
                     </DataTable>
                 </div>
@@ -2019,10 +2158,8 @@ function Home() {
         return (
             <div>
                 <div className="card">
-                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
-                        <Column field="Mercado" header="Mercado"></Column>
-                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
-                        <Column field="Manifestante" header="Manifestante"></Column>
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clEuropa">
+                        <Column field="Mercado" header="Europa" headerStyle={{ width: '70%' }}></Column>
                         <Column field="Nº RAC" header="Nº RAC"></Column>
                     </DataTable>
                 </div>
@@ -2031,12 +2168,10 @@ function Home() {
 
 
     }
-
+    
     const DataTableRACAberturaMEJapao = () => {
 
         if (!TableRacAberturaMEJapao) return;
-
-        ////debugger
 
         let json = []
 
@@ -2044,18 +2179,20 @@ function Home() {
             json.push(TableRacAberturaMEJapao[i])
         }
 
-        return (
+        let retorno = (
             <div>
+                <button onClick={chamararrumaTabela}>Teste</button>
                 <div className="card">
-                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
-                        <Column field="Mercado" header="Mercado"></Column>
-                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
-                        <Column field="Manifestante" header="Manifestante"></Column>
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clJapao">
+                        <Column field="Mercado" header="Japão" headerStyle={{ width: '70%' }}></Column>
                         <Column field="Nº RAC" header="Nº RAC"></Column>
                     </DataTable>
                 </div>
             </div>
+            
         );
+
+        return retorno;
 
 
     }
@@ -2075,10 +2212,8 @@ function Home() {
         return (
             <div>
                 <div className="card">
-                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
-                        <Column field="Mercado" header="Mercado"></Column>
-                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
-                        <Column field="Manifestante" header="Manifestante"></Column>
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clAsia">
+                        <Column field="Mercado" header="Ásia" headerStyle={{ width: '70%' }}></Column>
                         <Column field="Nº RAC" header="Nº RAC"></Column>
                     </DataTable>
                 </div>
@@ -2103,10 +2238,8 @@ function Home() {
         return (
             <div>
                 <div className="card">
-                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
-                        <Column field="Mercado" header="Mercado"></Column>
-                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
-                        <Column field="Manifestante" header="Manifestante"></Column>
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clAmericasAfrica">
+                        <Column field="Mercado" header="Américas / África" headerStyle={{ width: '70%' }}></Column>
                         <Column field="Nº RAC" header="Nº RAC"></Column>
                     </DataTable>
                 </div>
@@ -2131,10 +2264,8 @@ function Home() {
         return (
             <div>
                 <div className="card">
-                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
-                        <Column field="Mercado" header="Mercado"></Column>
-                        <Column field="Tipo do Problema" header="Tipo do Problema"></Column>
-                        <Column field="Manifestante" header="Manifestante"></Column>
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clContasGlobais">
+                        <Column field="Mercado" header="Contas globais" headerStyle={{ width: '70%' }}></Column>
                         <Column field="Nº RAC" header="Nº RAC"></Column>
                     </DataTable>
                 </div>
@@ -2151,7 +2282,7 @@ function Home() {
         for (var key in obj) { // obtém as chaves do objeto
             // se o valor for diferente de objeto (caso events)
             if (typeof obj[key] !== 'object') 
-            rows.push(<Column field={key} header={key} name='linha'></Column>);
+            rows.push(<Column field={key} header={key}></Column>);
             else
             // se o valor for um array de objetos, é iterado o array
             // e as chaves de cada objeto
@@ -2170,7 +2301,7 @@ function Home() {
 
         if (!TableRacRACDetalhesTerceiro) return;
 
-        debugger
+        //debugger
 
         let json = []
 
@@ -2183,7 +2314,7 @@ function Home() {
         return (
             <div>
                 <div className="card">
-                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped clAberturaTerceiro">
                         {retorno}
                     </DataTable>
                 </div>
@@ -2268,11 +2399,7 @@ function Home() {
 
     var flagTable = false;
 
-    const buscarDados = (response, funcao, graficoRetorno, funcaoRetorno) => {
-
-        setIsUpdatingData(true)
-
-        let parm = " ";
+    const buscarDadosTable = (parm) => {
 
         if (!flagTable) {
             api.getSearaBaseRacME(parm).then((response) => {
@@ -2438,9 +2565,10 @@ function Home() {
             })
 
             api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac IN ('Marcela')  "]).then((response) => {
-
+                
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEJapao(json)
+                          
             })
 
             api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac IN ('Amanda')  "]).then((response) => {
@@ -2547,7 +2675,7 @@ function Home() {
 	
 
             api.getSearaBaseSQLNINJA([ sqlTableRacRACDetalhesPDV ]).then((response) => {
-                debugger
+                //debugger
                 let json = JSON.parse(response.data)
 
                 for (var i=0; i<json.length; i++){
@@ -2733,7 +2861,7 @@ function Home() {
 
 
             api.getSearaBaseSQLNINJA([ sqlTableRacRACDetalhesCritica ]).then((response) => {
-                debugger
+                //debugger
                 let json = JSON.parse(response.data)
 
                 for (var i=0; i<json.length; i++){
@@ -2750,7 +2878,17 @@ function Home() {
             })
 
             flagTable = true;
+
+           
         }
+
+    }
+
+    const buscarDados = (response, funcao, graficoRetorno, funcaoRetorno) => {
+
+        setIsUpdatingData(true)
+
+        let parm = " ";
 
         let json = JSON.parse(response.data)
 
@@ -2763,11 +2901,9 @@ function Home() {
             funcao(json);
         }
 
-        // setIsUpdatingData(false)
-
-        //GerarGraficoHistorico(graficoRetorno, funcaoRetorno)
-
     };
+
+    
 
     const showSuccess = (errorMessage, detailMessage) => {
         toast.current.show({ severity: 'success', summary: errorMessage, detail: detailMessage });
@@ -2815,6 +2951,8 @@ function Home() {
                                         <button className="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={toPdf} id="btnPDF">Gerar PDF</button>
                                     )}
                                 </Pdf>
+
+                         
 
                             </div>
                         </div>
@@ -3629,7 +3767,7 @@ function Home() {
                     </Row>
 
                     <Row>
-                        <Col className="col-lg-4 col-md-4 col-sm-1">
+                        <Col className="col-lg-2 col-md-2 col-sm-1">
                             <Row>
                                 <Col className="mt-1 col-12 cssSeara2021_titulo">
                                     Oriente Médio
@@ -3646,7 +3784,7 @@ function Home() {
                                 </Col>
                             </Row>
                         </Col>
-                        <Col className="col-lg-4 col-md-4 col-sm-1">
+                        <Col className="col-lg-2 col-md-2 col-sm-1">
                             <Row>
                                 <Col className="mt-1 col-12 cssSeara2021_titulo">
                                     Europa
@@ -3663,7 +3801,7 @@ function Home() {
                                 </Col>
                             </Row>
                         </Col>
-                        <Col className="col-lg-4 col-md-4 col-sm-1">
+                        <Col className="col-lg-2 col-md-2 col-sm-1">
                             <Row>
                                 <Col className="mt-1 col-12 cssSeara2021_titulo">
                                     Japão
@@ -3680,7 +3818,7 @@ function Home() {
                                 </Col>
                             </Row>
                         </Col>
-                        <Col className="col-lg-4 col-md-4 col-sm-1">
+                        <Col className="col-lg-2 col-md-2 col-sm-1">
                             <Row>
                                 <Col className="mt-1 col-12 cssSeara2021_titulo">
                                     Ásia
@@ -3697,7 +3835,7 @@ function Home() {
                                 </Col>
                             </Row>
                         </Col>
-                        <Col className="col-lg-4 col-md-4 col-sm-1">
+                        <Col className="col-lg-2 col-md-2 col-sm-1">
                             <Row>
                                 <Col className="mt-1 col-12 cssSeara2021_titulo">
                                     Américas / África
@@ -3714,7 +3852,7 @@ function Home() {
                                 </Col>
                             </Row>
                         </Col>
-                        <Col className="col-lg-4 col-md-4 col-sm-1">
+                        <Col className="col-lg-2 col-md-2 col-sm-1">
                             <Row>
                                 <Col className="mt-1 col-12 cssSeara2021_titulo">
                                     Contas globais
