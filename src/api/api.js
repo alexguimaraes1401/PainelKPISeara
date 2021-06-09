@@ -11,9 +11,9 @@ import { months } from '../domain/constants'
 
 const instance = axios.create({
    //baseURL: "http://192.168.25.200/Seara" //"http://179.184.236.89/Seara" "http://localhost"
-   baseURL: "https://localhost:44317/SearaDashboard"
+   baseURL: "http://localhost/SearaDashboard"
    //baseURL: "http://192.168.25.200/KPISeara/APISeara/PainelKPIAdm"
-//    baseURL: "http://intranet.grxsolucoes.com.br/KPISeara/APISeara/PainelKPIAdm"
+   //baseURL: "http://intranet.grxsolucoes.com.br/KPISeara/APISeara/PainelKPIAdm"
 })
 
 
@@ -44,10 +44,22 @@ export default {
                 }
             ]
         }),
+        
     getSearaBaseRacIndicadores: (p) =>
         instance({
             method: "POST",
             url: `/RacTotalIndicadores`, 
+            data: {'where': p[0]},
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
+        }),
+    getSearaBaseRacIndicadores_: (p) =>
+        instance({
+            method: "POST",
+            url: `/RacTotalIndicadoresSemFiltro`, 
             data: {'where': p[0]},
             transformResponse: [
                 function (data) {

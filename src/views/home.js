@@ -605,8 +605,8 @@ function Home() {
 
 
     let whereRACPreparados = "WHERE ([Regional (Qualidade)] like 'Preparados%' or [Regional (Qualidade)] in ('Outros', 'Itajaí')) "
-    whereRACPreparados += " AND ([Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','FABRICAÇÃO')"
-    whereRACPreparados += "                                 OR [Origem da RAC] IS NULL) "
+    whereRACPreparados += " AND ([ORIGEM DO PROBLEMA] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','FABRICAÇÃO')"
+    whereRACPreparados += "                                 OR [ORIGEM DO PROBLEMA] IS NULL) "
     whereRACPreparados += " and unidade in ( "
     whereRACPreparados += " 'Brasília',  "
     whereRACPreparados += " 'Dourados',  "
@@ -647,7 +647,7 @@ function Home() {
     whereRACCE += " 'RECLAMAÇÃO FAB. NÃO IDENTIF.',  "
     whereRACCE += " 'RECLAMAÇÃO HANS',  "
     whereRACCE += " 'RECLAMAÇÃO VOSSKO')  "
-    whereRACCE += " AND [Origem da RAC] IN ( "
+    whereRACCE += " AND [Origem_do_Problema_rac] IN ( "
     whereRACCE += " 'Documentação Unidade',  "
     whereRACCE += " 'EXPEDIÇÃO FÁBRICA',  "
     whereRACCE += " 'FABRICAÇÃO',  "
@@ -746,37 +746,37 @@ function Home() {
         chamarAPI("CETotal", GraficoCETotalAvesPesadas, "GraficoCETotalAvesPesadas", [" where [Regional Qualidade] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR')  "], setGraficoCETotalAvesPesadas, setresponseGraficoCETotalAvesPesadas, 5)     // 6
         chamarAPI("CETotal", GraficoNNCMPTotalCEAvesPesadas, "GraficoNNCMPTotalCEAvesPesadas", [" where tipo = 'NNC MP' AND [Regional Qualidade] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR') "], setGraficoNNCMPTotalCEAvesPesadas, setresponseGraficoNNCMPTotalCEAvesPesadas, 6)       // 7
         chamarAPI("CETotal", GraficoRACTotalCEAvesPesadas, "GraficoRACTotalCEAvesPesadas", [" where TIPO = 'RAC' AND [Regional Qualidade] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR')  "], setGraficoRACTotalCEAvesPesadas, setresponseGraficoRACTotalCEAvesPesadas, 7)     // 8
-        chamarAPI("RACIndicadores", GraficoRACAvesPesadas, "GraficoRACAvesPesadas", [" where [Regional (Qualidade)] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR')  AND [Origem da RAC] NOT IN (\'ABUSO DE PRODUTO PDV\') "], setGraficoRACAvesPesadas, setresponseGraficoRACAvesPesadas, 8)    // 9
+        chamarAPI("RACIndicadores", GraficoRACAvesPesadas, "GraficoRACAvesPesadas", [" where [Regional (Qualidade)] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR')  AND [ORIGEM DO PROBLEMA] NOT IN (\'ABUSO DE PRODUTO PDV\') "], setGraficoRACAvesPesadas, setresponseGraficoRACAvesPesadas, 8)    // 9
         chamarAPI("NCCMP", GraficoNCCMPAvesPesadas, "GraficoNCCMPAvesPesadas", [whereNNCMP + " and [Reg. Qual] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR')  "], setGraficoNCCMPAvesPesadas, setresponseGraficoNCCMPAvesPesadas, 9)    // 10
 
         chamarAPI("CETotal", GraficoCETotalAvesPesadasPR, "GraficoCETotalAvesPesadasPR", [' where [Regional Qualidade] = \'Aves Pesadas PR\' '], setGraficoCETotalAvesPesadasPR, setresponseGraficoCETotalAvesPesadasPR, 10)     // 11
         chamarAPI("CETotal", GraficoNNCMPTotalCEAvesPesadasPR, "GraficoNNCMPTotalCEAvesPesadasPR", ["  where tipo = 'NNC MP' AND [Regional Qualidade] = 'Aves Pesadas PR'  "], setGraficoNNCMPTotalCEAvesPesadasPR, setresponseGraficoNNCMPTotalCEAvesPesadasPR, 11)       // 12
         chamarAPI("CETotal", GraficoRACTotalCEAvesPesadasPR, "GraficoRACTotalCEAvesPesadasPR", ["  WHERE tipo = 'RAC' AND [Regional Qualidade] in ('Aves Pesadas PR')   "], setGraficoRACTotalCEAvesPesadasPR, setresponseGraficoRACTotalCEAvesPesadasPR, 12)     // 13
-        chamarAPI("RACIndicadores", GraficoRACAvesPesadasPR, "GraficoRACAvesPesadasPR", [' WHERE [Regional (Qualidade)] in (\'Aves Pesadas PR\') AND [Origem da RAC] NOT IN (\'ABUSO DE PRODUTO PDV\')            '], setGraficoRACAvesPesadasPR, setresponseGraficoRACAvesPesadasPR, 13)    // 14
+        chamarAPI("RACIndicadores", GraficoRACAvesPesadasPR, "GraficoRACAvesPesadasPR", [' WHERE [Regional (Qualidade)] in (\'Aves Pesadas PR\') AND [ORIGEM DO PROBLEMA] NOT IN (\'ABUSO DE PRODUTO PDV\')            '], setGraficoRACAvesPesadasPR, setresponseGraficoRACAvesPesadasPR, 13)    // 14
         chamarAPI("NCCMP", GraficoNCCMPAvesPesadasPR, "GraficoNCCMPAvesPesadasPR", [whereNNCMP + ' and [Reg. Qual] = \'Aves Pesadas PR\'  '], setGraficoNCCMPAvesPesadasPR, setresponseGraficoNCCMPAvesPesadasPR, 14)    // 15
 
         chamarAPI("CETotal", GraficoCETotalAvesPesadasSP, "GraficoCETotalAvesPesadasSP", [" where [Regional Qualidade] = 'Aves Pesadas SP/CO/NE' "], setGraficoCETotalAvesPesadasSP, setresponseGraficoCETotalAvesPesadasSP, 42)     // 11
         chamarAPI("CETotal", GraficoNNCMPTotalCEAvesPesadasSP, "GraficoNNCMPTotalCEAvesPesadasSP", ["  where tipo = 'NNC MP' AND [Regional Qualidade] = 'Aves Pesadas SP/CO/NE'  "], setGraficoNNCMPTotalCEAvesPesadasSP, setresponseGraficoNNCMPTotalCEAvesPesadasSP, 43)       // 12
         chamarAPI("CETotal", GraficoRACTotalCEAvesPesadasSP, "GraficoRACTotalCEAvesPesadasSP", ["  WHERE tipo = 'RAC' AND [Regional Qualidade] in ('Aves Pesadas SP/CO/NE')   "], setGraficoRACTotalCEAvesPesadasSP, setresponseGraficoRACTotalCEAvesPesadasSP, 44)     // 13
-        chamarAPI("RACIndicadores", GraficoRACAvesPesadasSP, "GraficoRACAvesPesadasSP", [' WHERE [Regional (Qualidade)] in (\'Aves Pesadas SP/CO/NE\')  AND [Origem da RAC] NOT IN (\'ABUSO DE PRODUTO PDV\') '], setGraficoRACAvesPesadasSP, setresponseGraficoRACAvesPesadasSP, 45)    // 14
+        chamarAPI("RACIndicadores", GraficoRACAvesPesadasSP, "GraficoRACAvesPesadasSP", [' WHERE [Regional (Qualidade)] in (\'Aves Pesadas SP/CO/NE\')  AND [ORIGEM DO PROBLEMA] NOT IN (\'ABUSO DE PRODUTO PDV\') '], setGraficoRACAvesPesadasSP, setresponseGraficoRACAvesPesadasSP, 45)    // 14
         chamarAPI("NCCMP", GraficoNCCMPAvesPesadasSP, "GraficoNCCMPAvesPesadasSP", [whereNNCMP + ' and [Reg. Qual] = \'Aves Pesadas SP/CO/NE\'  '], setGraficoNCCMPAvesPesadasSP, setresponseGraficoNCCMPAvesPesadasSP, 46)    // 15
 
         chamarAPI("CETotal", GraficoCETotalAvesPesadasRS, "GraficoCETotalAvesPesadasRS", [" where [Regional Qualidade] = 'Aves Pesadas RS/SC/SP' "], setGraficoCETotalAvesPesadasRS, setresponseGraficoCETotalAvesPesadasRS, 47)     // 11
         chamarAPI("CETotal", GraficoNNCMPTotalCEAvesPesadasRS, "GraficoNNCMPTotalCEAvesPesadasRS", ["  where tipo = 'NNC MP' AND [Regional Qualidade] = 'Aves Pesadas RS/SC/SP'  "], setGraficoNNCMPTotalCEAvesPesadasRS, setresponseGraficoNNCMPTotalCEAvesPesadasRS, 48)       // 12
         chamarAPI("CETotal", GraficoRACTotalCEAvesPesadasRS, "GraficoRACTotalCEAvesPesadasRS", ["  WHERE tipo = 'RAC' AND [Regional Qualidade] in ('Aves Pesadas RS/SC/SP')   "], setGraficoRACTotalCEAvesPesadasRS, setresponseGraficoRACTotalCEAvesPesadasRS, 49)     // 13
-        chamarAPI("RACIndicadores", GraficoRACAvesPesadasRS, "GraficoRACAvesPesadasRS", [' WHERE [Regional (Qualidade)] in (\'Aves Pesadas RS/SC/SP\' ) AND [Origem da RAC] NOT IN (\'ABUSO DE PRODUTO PDV\')  '], setGraficoRACAvesPesadasRS, setresponseGraficoRACAvesPesadasRS, 50)    // 14
+        chamarAPI("RACIndicadores", GraficoRACAvesPesadasRS, "GraficoRACAvesPesadasRS", [' WHERE [Regional (Qualidade)] in (\'Aves Pesadas RS/SC/SP\' ) AND [ORIGEM DO PROBLEMA] NOT IN (\'ABUSO DE PRODUTO PDV\')  '], setGraficoRACAvesPesadasRS, setresponseGraficoRACAvesPesadasRS, 50)    // 14
         chamarAPI("NCCMP", GraficoNCCMPAvesPesadasRS, "GraficoNCCMPAvesPesadasRS", [whereNNCMP + ' and [Reg. Qual] = \'Aves Pesadas RS/SC/SP\'  '], setGraficoNCCMPAvesPesadasRS, setresponseGraficoNCCMPAvesPesadasRS, 51)    // 15
 
         chamarAPI("CETotal", GraficoCETotalAvesLeves, "GraficoCETotalAvesLeves", [' where [Regional Qualidade]  = \'Aves Leves\' '], setGraficoCETotalAvesLeves, setresponseGraficoCETotalAvesLeves, 15)     // 11
         chamarAPI("NNCMPTotalCE", GraficoNNCMPTotalCEAvesLeves, "GraficoNNCMPTotalCEAvesLeves", [' where [Regional (Qualidade)] = \'Aves Leves\' '], setGraficoNNCMPTotalCEAvesLeves, setresponseGraficoNNCMPTotalCEAvesLeves, 16)       // 12
         chamarAPI("RACTotalCE", GraficoRACTotalCEAvesLeves, "GraficoRACTotalCEAvesLeves", ['  WHERE [Negócio (Qualidade)] = \'Aves Leves\'   '], setGraficoRACTotalCEAvesLeves, setresponseGraficoRACTotalCEAvesLeves, 17)     // 13
-        chamarAPI("RACIndicadores", GraficoRACAvesLeves, "GraficoRACAvesLeves", [' WHERE [Regional (Qualidade)] = \'Aves Leves\'  AND [Origem da RAC] NOT IN (\'ABUSO DE PRODUTO PDV\') '], setGraficoRACAvesLeves, setresponseGraficoRACAvesLeves, 18)    // 14
+        chamarAPI("RACIndicadores", GraficoRACAvesLeves, "GraficoRACAvesLeves", [' WHERE [Regional (Qualidade)] = \'Aves Leves\'  AND [ORIGEM DO PROBLEMA] NOT IN (\'ABUSO DE PRODUTO PDV\') '], setGraficoRACAvesLeves, setresponseGraficoRACAvesLeves, 18)    // 14
         chamarAPI("NCCMP", GraficoNCCMPAvesLeves, "GraficoNCCMPAvesLeves", [whereNNCMP + ' and [Reg. Qual] = \'Aves Leves\'  '], setGraficoNCCMPAvesLeves, setresponseGraficoNCCMPAvesLeves, 19)    // 15
 
         chamarAPI("CETotal", GraficoCETotalSuinos, "GraficoCETotalSuinos", [' where [Regional Qualidade]  in (\'Suínos\',\'Suíno\') '], setGraficoCETotalSuinos, setresponseGraficoCETotalSuinos, 20)     // 11
         chamarAPI("NNCMPTotalCE", GraficoNNCMPTotalCESuinos, "GraficoNNCMPTotalCESuinos", [' where [Regional (Qualidade)] = \'Suínos\' '], setGraficoNNCMPTotalCESuinos, setresponseGraficoNNCMPTotalCESuinos, 21)       // 12
         chamarAPI("RACTotalCE", GraficoRACTotalCESuinos, "GraficoRACTotalCESuinos", ['  WHERE [Negócio (Qualidade)] = \'Suínos\'   '], setGraficoRACTotalCESuinos, setresponseGraficoRACTotalCESuinos, 22)     // 13
-        chamarAPI("RACIndicadores", GraficoRACSuinos, "GraficoRACSuinos", [' WHERE [Regional (Qualidade)] = \'Suínos\'  AND [Origem da RAC] NOT IN (\'ABUSO DE PRODUTO PDV\') '], setGraficoRACSuinos, setresponseGraficoRACSuinos, 23)    // 14
+        chamarAPI("RACIndicadores", GraficoRACSuinos, "GraficoRACSuinos", [' WHERE [Regional (Qualidade)] = \'Suínos\'  AND [ORIGEM DO PROBLEMA] NOT IN (\'ABUSO DE PRODUTO PDV\') '], setGraficoRACSuinos, setresponseGraficoRACSuinos, 23)    // 14
         chamarAPI("NCCMP", GraficoNCCMPSuinos, "GraficoNCCMPSuinos", [whereNNCMP + ' and [Reg. Qual] = \'Suínos\'  '], setGraficoNCCMPSuinos, setresponseGraficoNCCMPSuinos, 24)    // 15
 
         chamarAPI("CETotal", GraficoCETotalPreparados, "GraficoCETotalPreparados", [' where [Regional Qualidade] in (\'Preparados\',\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\',\'Itajaí\') '], setGraficoCETotalPreparados, setresponseGraficoCETotalPreparados, 25)     // 11
@@ -813,68 +813,68 @@ function Home() {
         /////////////////////
 
         //FFO
-        chamarAPI("RACIndicadores", GraficoRACDetalhesFFO, "GraficoRACDetalhesFFO", [" where 1=1 AND [ORIGEM DA RAC] IN ('EXPEDIÇÃO FÁBRICA','FABRICAÇÃO','PRODUÇÃO EM TERCEIRO') AND [TIPO_ATENDIMENTO_RAC] IN ('RECLAMAÇÃO FFO') "] , setGraficoRACDetalhesFFO, setresponseGraficoRACDetalhesFFO, 52) 
+        chamarAPI("RACIndicadores", GraficoRACDetalhesFFO, "GraficoRACDetalhesFFO", [" where 1=1 AND [ORIGEM DO PROBLEMA]  IN ('EXPEDIÇÃO FÁBRICA','FABRICAÇÃO','PRODUÇÃO EM TERCEIRO') AND [TIPO_ATENDIMENTO_RAC] IN ('RECLAMAÇÃO FFO') "] , setGraficoRACDetalhesFFO, setresponseGraficoRACDetalhesFFO, 52) 
 
         //Atendimento Comercial
-        chamarAPI("RACIndicadores", GraficoRACDetalhesAC, "GraficoRACDetalhesAC", [" WHERE 1=1 AND [ORIGEM DA RAC] IN ('ATENDIMENTO COMERCIAL') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRÍTICA', 'NEGOCIAÇÃO COMERCIAL', 'OBRIGAÇÃO', 'RAC CAIXA', 'RAC COMPLEMENTAR') "] , setGraficoRACDetalhesAC, setresponseGraficoRACDetalhesAC, 53)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesAC, "GraficoRACDetalhesAC", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA]  IN ('ATENDIMENTO COMERCIAL') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRÍTICA', 'NEGOCIAÇÃO COMERCIAL', 'OBRIGAÇÃO', 'RAC CAIXA', 'RAC COMPLEMENTAR') "] , setGraficoRACDetalhesAC, setresponseGraficoRACDetalhesAC, 53)
 
         //Logística Exportação
-        chamarAPI("RACIndicadores", GraficoRACDetalhesLogME, "GraficoRACDetalhesLogME", [" WHERE 1=1 AND [ORIGEM DA RAC] IN ('LOGÍSTICA EXPORTAÇÃO') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRÍTICA', 'NEGOCIAÇÃO COMERCIAL', 'OBRIGAÇÃO', 'RAC CAIXA', 'RAC COMPLEMENTAR') "] , setGraficoRACDetalhesLogME, setresponseGraficoRACDetalhesLogME, 54)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesLogME, "GraficoRACDetalhesLogME", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA]  IN ('LOGÍSTICA EXPORTAÇÃO') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRÍTICA', 'NEGOCIAÇÃO COMERCIAL', 'OBRIGAÇÃO', 'RAC CAIXA', 'RAC COMPLEMENTAR') "] , setGraficoRACDetalhesLogME, setresponseGraficoRACDetalhesLogME, 54)
 
         //Logística Importação
-        chamarAPI("RACIndicadores", GraficoRACDetalhesLogMI, "GraficoRACDetalhesLogMI", [" WHERE 1=1  AND [ORIGEM DA RAC] IN ('LOGÍSTICA MI')  AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "] , setGraficoRACDetalhesLogMI, setresponseGraficoRACDetalhesLogMI, 55)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesLogMI, "GraficoRACDetalhesLogMI", [" WHERE 1=1  AND [ORIGEM DO PROBLEMA]  IN ('LOGÍSTICA MI')  AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "] , setGraficoRACDetalhesLogMI, setresponseGraficoRACDetalhesLogMI, 55)
 
         //Documentação
-        chamarAPI("RACIndicadores", GraficoRACDetalhesDoc, "GraficoRACDetalhesDoc", [" WHERE 1=1 AND [ORIGEM DA RAC] IN ('DOCUMENTAÇÃO CORPORATIVO') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('NEGOCIAÇÃO COMERCIAL', 'OBRIGAÇÃO','RAC COMPLEMENTAR') "] , setGraficoRACDetalhesDoc, setresponseGraficoRACDetalhesDoc, 56)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesDoc, "GraficoRACDetalhesDoc", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA]  IN ('DOCUMENTAÇÃO CORPORATIVO') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('NEGOCIAÇÃO COMERCIAL', 'OBRIGAÇÃO','RAC COMPLEMENTAR') "] , setGraficoRACDetalhesDoc, setresponseGraficoRACDetalhesDoc, 56)
 
         //Transporte Terrestre
-        chamarAPI("RACIndicadores", GraficoRACDetalhesTT, "GraficoRACDetalhesTT", [" WHERE 1=1 AND [ORIGEM DA RAC] IN ('TRANSPORTE TERRESTRE') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') "] , setGraficoRACDetalhesTT, setresponseGraficoRACDetalhesTT, 57)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesTT, "GraficoRACDetalhesTT", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA]  IN ('TRANSPORTE TERRESTRE') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') "] , setGraficoRACDetalhesTT, setresponseGraficoRACDetalhesTT, 57)
 
         //Produção em Terceiro (ex. Massatake)
-        chamarAPI("RACIndicadores", GraficoRACDetalhesTerceiro, "GraficoRACDetalhesTerceiro", [" WHERE 1=1 AND [ORIGEM DA RAC] IN ('PRODUÇÃO EM TERCEIRO') AND UNIDADE NOT IN ('ITAJAI ÓLEO COMESTÍVEIS','MASSATAKE','VIGOR') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "] , setGraficoRACDetalhesTerceiro, setresponseGraficoRACDetalhesTerceiro, 58)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesTerceiro, "GraficoRACDetalhesTerceiro", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA]  IN ('PRODUÇÃO EM TERCEIRO') AND UNIDADE NOT IN ('ITAJAI ÓLEO COMESTÍVEIS','MASSATAKE','VIGOR') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "] , setGraficoRACDetalhesTerceiro, setresponseGraficoRACDetalhesTerceiro, 58)
 
         //Massatake
-        chamarAPI("RACIndicadores", GraficoRACDetalhesMassatake, "GraficoRACDetalhesMassatake", [" WHERE 1=1 AND [ORIGEM DA RAC] IN ('PRODUÇÃO EM TERCEIRO') AND UNIDADE IN ('MASSATAKE') AND  [TIPO_ATENDIMENTO_RAC] IN ('RECLAMAÇÃO') "] , setGraficoRACDetalhesMassatake, setresponseGraficoRACDetalhesMassatake, 59)
+        chamarAPI("RACIndicadoresSemFiltro", GraficoRACDetalhesMassatake, "GraficoRACDetalhesMassatake", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA]  IN ('PRODUÇÃO EM TERCEIRO') AND UNIDADE IN ('MASSATAKE') AND  [TIPO_ATENDIMENTO_RAC] IN ('RECLAMAÇÃO') "] , setGraficoRACDetalhesMassatake, setresponseGraficoRACDetalhesMassatake, 59)
 
         //PDV
-        chamarAPI("RACIndicadores", GraficoRACDetalhesPDV, "GraficoRACDetalhesPDV", [" WHERE 1=1 AND [ORIGEM DA RAC] IN ('ABUSO DE PRODUTO PDV') AND UNIDADE NOT IN ('DAN VIGOR','GRAND ALIMENTOS S.A.','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR') AND  [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "] , setGraficoRACDetalhesPDV, setresponseGraficoRACDetalhesPDV, 60)
-        chamarAPI("RACIndicadores", GraficoRACDetalhesAberturaPDV, "GraficoRACDetalhesAberturaPDV", [" WHERE 1=1 AND [ORIGEM DA RAC] IN ('ABUSO DE PRODUTO PDV') AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR')  AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "] , setGraficoRACDetalhesAberturaPDV, setresponseGraficoRACDetalhesAberturaPDV, 61)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesPDV, "GraficoRACDetalhesPDV", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA]  IN ('ABUSO DE PRODUTO PDV') AND UNIDADE NOT IN ('DAN VIGOR','GRAND ALIMENTOS S.A.','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR') AND  [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "] , setGraficoRACDetalhesPDV, setresponseGraficoRACDetalhesPDV, 60)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesAberturaPDV, "GraficoRACDetalhesAberturaPDV", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA] IN ('ABUSO DE PRODUTO PDV') AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR')  AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "] , setGraficoRACDetalhesAberturaPDV, setresponseGraficoRACDetalhesAberturaPDV, 61)
 
-        //RAC Crítica
-        chamarAPI("RACIndicadores", GraficoRACDetalhesCritica, "GraficoRACDetalhesCritica", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA] NOT IN ('ABUSO DE PRODUTO HOME','LOGÍSTICA MI','SERVICO') AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  AND [TIPO_ATENDIMENTO_RAC] IN ('CRÍTICA') "] , setGraficoRACDetalhesCritica, setresponseGraficoRACDetalhesCritica, 62)
+        //RAC Crítica RACIndicadoresSemFiltro
+        chamarAPI("RACIndicadoresSemFiltro", GraficoRACDetalhesCritica, "GraficoRACDetalhesCritica", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA] NOT IN ('ABUSO DE PRODUTO HOME','LOGÍSTICA MI','SERVICO') AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  AND [TIPO_ATENDIMENTO_RAC] IN ('CRÍTICA') "] , setGraficoRACDetalhesCritica, setresponseGraficoRACDetalhesCritica, 62)
 
         //RAC Linhas Especiais (Seara Nature, Gourmet, Incrível)
         chamarAPI("RACIndicadores", GraficoRACDetalhesEspeciais, "GraficoRACDetalhesEspeciais", [" where 99=99 "] , setGraficoRACDetalhesEspeciais, setresponseGraficoRACDetalhesEspeciais, 63)
 
         //RAC Corpo Estanho - [Totais]
-        chamarAPI("RACIndicadores", GraficoRACDetalhesCE, "GraficoRACDetalhesCE", [" WHERE 1=1 AND [ORIGEM DA RAC] IN ('EXPEDIÇÃO FÁBRICA','FABRICAÇÃO') AND [TIPO CE] IN ('INERENTE','NÃO INERENTE') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') "] , setGraficoRACDetalhesCE, setresponseGraficoRACDetalhesCE, 64)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesCE, "GraficoRACDetalhesCE", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA]  IN ('EXPEDIÇÃO FÁBRICA','FABRICAÇÃO') AND [TIPO CE] IN ('INERENTE','NÃO INERENTE') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') "] , setGraficoRACDetalhesCE, setresponseGraficoRACDetalhesCE, 64)
 
         //RAC Corpo Estanho - [Inerente]
-        chamarAPI("RACIndicadores", GraficoRACDetalhesCEInerente, "GraficoRACDetalhesCEInerente", [" WHERE 1=1 AND [ORIGEM DA RAC] IN ('FABRICAÇÃO') AND [TIPO CE] IN ('INERENTE') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO','MORRO GRANDE') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') "] , setGraficoRACDetalhesCEInerente, setresponseGraficoRACDetalhesCEInerente, 65)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesCEInerente, "GraficoRACDetalhesCEInerente", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA] IN ('FABRICAÇÃO') AND [TIPO CE] IN ('INERENTE') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO','MORRO GRANDE') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') "] , setGraficoRACDetalhesCEInerente, setresponseGraficoRACDetalhesCEInerente, 65)
 
         //RAC Corpo Estanho - [Não Inerente]
-        chamarAPI("RACIndicadores", GraficoRACDetalhesCENaoInerente, "GraficoRACDetalhesCENaoInerente", [" WHERE 1=1 AND [ORIGEM DA RAC] IN ('EXPEDIÇÃO FÁBRICA','FABRICAÇÃO') AND [TIPO CE] IN ('NÃO INERENTE') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA','VERÍSSIMO','MORRO GRANDE') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') "] , setGraficoRACDetalhesCENaoInerente, setresponseGraficoRACDetalhesCENaoInerente, 66)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesCENaoInerente, "GraficoRACDetalhesCENaoInerente", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA] IN ('EXPEDIÇÃO FÁBRICA','FABRICAÇÃO') AND [TIPO CE] IN ('NÃO INERENTE') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA','VERÍSSIMO','MORRO GRANDE') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') "] , setGraficoRACDetalhesCENaoInerente, setresponseGraficoRACDetalhesCENaoInerente, 66)
 
         //RAC Corpo Estanho - [Plástico]
-        chamarAPI("RACIndicadores", GraficoRACDetalhesCEPlastico, "GraficoRACDetalhesCEPlastico", [" WHERE 1=1 AND [ORIGEM DA RAC] IN ('FABRICAÇÃO') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA','SANTA CRUZ DO SUL') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') AND [TIPO DO PROBLEMA] IN ('LUVA','LUVA NITRÍLICA','PLÁSTICO','PLÁSTICO DURO','PLÁSTICO MOLE') "] , setGraficoRACDetalhesCEPlastico, setresponseGraficoRACDetalhesCEPlastico, 67)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesCEPlastico, "GraficoRACDetalhesCEPlastico", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA] IN ('FABRICAÇÃO') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA','SANTA CRUZ DO SUL') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') AND [TIPO DO PROBLEMA] IN ('LUVA','LUVA NITRÍLICA','PLÁSTICO','PLÁSTICO DURO','PLÁSTICO MOLE') "] , setGraficoRACDetalhesCEPlastico, setresponseGraficoRACDetalhesCEPlastico, 67)
 
         //RAC Inseto
-        chamarAPI("RACIndicadores", GraficoRACDetalhesInseto, "GraficoRACDetalhesInseto", [" WHERE 1=1 AND [ORIGEM DA RAC] IN ('FABRICAÇÃO') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') AND [TIPO DO PROBLEMA] IN ('INSETO') AND [SUB TIPO PROBLEMA] NOT IN ('LARVA') "] , setGraficoRACDetalhesInseto, setresponseGraficoRACDetalhesInseto, 68)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesInseto, "GraficoRACDetalhesInseto", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA] IN ('FABRICAÇÃO') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') AND [TIPO DO PROBLEMA] IN ('INSETO') AND [SUB TIPO PROBLEMA] NOT IN ('LARVA') "] , setGraficoRACDetalhesInseto, setresponseGraficoRACDetalhesInseto, 68)
 
         //RAC Cabelo
-        chamarAPI("RACIndicadores", GraficoRACDetalhesCabelo, "GraficoRACDetalhesCabelo", [" WHERE 1=1 AND [ORIGEM DA RAC] IN ('FABRICAÇÃO') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('AMAI','DAN VIGOR','MARBA','GRANO','GRIFFOOD','JBS','MASSATAKE','SANTA CRIZ DO SUL','SERYA','VIGOR') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') AND [TIPO DO PROBLEMA] IN ('FIO DE CABELO / PÊLO HUMANO','FIO DE CABELO/PÊLO HUMANO') "] , setGraficoRACDetalhesCabelo, setresponseGraficoRACDetalhesCabelo, 69)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesCabelo, "GraficoRACDetalhesCabelo", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA] IN ('FABRICAÇÃO') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('AMAI','DAN VIGOR','MARBA','GRANO','GRIFFOOD','JBS','MASSATAKE','SANTA CRIZ DO SUL','SERYA','VIGOR') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') AND [TIPO DO PROBLEMA] IN ('FIO DE CABELO / PÊLO HUMANO','FIO DE CABELO/PÊLO HUMANO') "] , setGraficoRACDetalhesCabelo, setresponseGraficoRACDetalhesCabelo, 69)
 
         //RAC Plastico
-        chamarAPI("RACIndicadores", GraficoRACDetalhesPlastico, "GraficoRACDetalhesPlastico", [" WHERE 1=1 AND [ORIGEM DA RAC] IN ('FABRICAÇÃO') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA','SANTA CRUZ DO SUL') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') AND [TIPO DO PROBLEMA] IN ('LUVA','LUVA NITRÍLICA','PLÁSTICO','PLÁSTICO DURO','PLÁSTICO MOLE') "] , setGraficoRACDetalhesPlastico, setresponseGraficoRACDetalhesPlastico,70)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesPlastico, "GraficoRACDetalhesPlastico", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA] IN ('FABRICAÇÃO') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA','SANTA CRUZ DO SUL') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') AND [TIPO DO PROBLEMA] IN ('LUVA','LUVA NITRÍLICA','PLÁSTICO','PLÁSTICO DURO','PLÁSTICO MOLE') "] , setGraficoRACDetalhesPlastico, setresponseGraficoRACDetalhesPlastico,70)
 
         //RAC Metal
-        chamarAPI("RACIndicadores", GraficoRACDetalhesMetal, "GraficoRACDetalhesMetal", [" WHERE 1=1 AND [ORIGEM DA RAC] IN ('FABRICAÇÃO','EXPEDIÇÃO FÁBRICA','P&D','PRODUÇÃO EM TERCEIRO') AND UNIDADE NOT IN ('AGRO ALFA','AMAI','ATI-GEL','CLAREBOUT','GRANO','GRIFFOOD','MASSATAKE','SANTA CRUZ DO SUL','VIGOR')  AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') AND [PROBLEMA] IN ('METAL','METÁLICO') "] , setGraficoRACDetalhesMetal, setresponseGraficoRACDetalhesMetal,71)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesMetal, "GraficoRACDetalhesMetal", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA] IN ('FABRICAÇÃO','EXPEDIÇÃO FÁBRICA','P&D','PRODUÇÃO EM TERCEIRO') AND UNIDADE NOT IN ('AGRO ALFA','AMAI','ATI-GEL','CLAREBOUT','GRANO','GRIFFOOD','MASSATAKE','SANTA CRUZ DO SUL','VIGOR')  AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') AND [PROBLEMA] IN ('METAL','METÁLICO') "] , setGraficoRACDetalhesMetal, setresponseGraficoRACDetalhesMetal,71)
 
         //RAC Intoxicação
-        chamarAPI("RACIndicadores", GraficoRACDetalhesIntoxicacao, "GraficoRACDetalhesIntoxicacao", [" WHERE 1=1 AND [ORIGEM DA RAC] IN ('FABRICAÇÃO','COMERCIALIZAÇÃO') AND UNIDADE NOT IN ('HORTUS','JBS','MASSATAKE','VIGOR') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') AND [PROBLEMA] IN ('INTOXICAÇÃO ALIMENTAR') "] , setGraficoRACDetalhesIntoxicacao, setresponseGraficoRACDetalhesIntoxicacao,72)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesIntoxicacao, "GraficoRACDetalhesIntoxicacao", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA] IN ('FABRICAÇÃO','COMERCIALIZAÇÃO') AND UNIDADE NOT IN ('HORTUS','JBS','MASSATAKE','VIGOR') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') AND [PROBLEMA] IN ('INTOXICAÇÃO ALIMENTAR') "] , setGraficoRACDetalhesIntoxicacao, setresponseGraficoRACDetalhesIntoxicacao,72)
 
         //RAC Larva
-        chamarAPI("RACIndicadores", GraficoRACDetalhesLarva, "GraficoRACDetalhesLarva", [" WHERE 1=1 AND [ORIGEM DA RAC] IN ('FABRICAÇÃO') AND [GRUPO] IN ('CORPO ESTRANHO') AND [REGIONAL (Qualidade)] NOT IN ('FATIADOS','PESCADOS','AVES PR','AVES RS/SC/SP','AVES SP/CO/NE') AND UNIDADE NOT IN ('AGRO ALFA','AMAI','ATI-GEL','CLAREBOUT','GRANO','GRIFFOOD','MASSATAKE','SANTA CRUZ DO SUL','VIGOR','ARTES GRÁFICAS','CAMPINAS-CD','CAMPO VERDE','CD RIBEIRÃO DAS NEVES','CPO','DOC INDUSTRIA','EIRELI EPP','EIRELI ME','EXCELSIOR','GENESEAS AQUACULTURA','GERÊNCIA NACIONA FS','GRANO ALIMENTOS S.A.','GRIFFOOD','ICOFORT','ITAJAI','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','ITAJAI PESCADOS','LABREZZA','M P FOODS','MARBA','MASSAS SANTA ENERSTINA LTDA','NORONHA', 'OUTROS','PINHAIS - CD','QUALIDADE SUPPLY CHAIN','RIBEIRÃO PRETO – CD','SALVADOR – CD','SAO PAULO – CD','SEARA MEATS','SOMAVE','VARZEA GRANDE – CD') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO','NOTIFICAÇÃO') AND [PROBLEMA] IN ('INSETO','INSETO VIVO') AND [TIPO DO PROBLEMA] IN ('INSETO','LARVA', 'INSETO VIVO','LARVA VIVA')	 AND [SUB TIPO PROBLEMA] IN ('LARVA','LARVA VIVA') "] , setGraficoRACDetalhesLarva, setresponseGraficoRACDetalhesLarva,73)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesLarva, "GraficoRACDetalhesLarva", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA] IN ('FABRICAÇÃO') AND [GRUPO] IN ('CORPO ESTRANHO') AND [REGIONAL (Qualidade)] NOT IN ('FATIADOS','PESCADOS','AVES PR','AVES RS/SC/SP','AVES SP/CO/NE') AND UNIDADE NOT IN ('AGRO ALFA','AMAI','ATI-GEL','CLAREBOUT','GRANO','GRIFFOOD','MASSATAKE','SANTA CRUZ DO SUL','VIGOR','ARTES GRÁFICAS','CAMPINAS-CD','CAMPO VERDE','CD RIBEIRÃO DAS NEVES','CPO','DOC INDUSTRIA','EIRELI EPP','EIRELI ME','EXCELSIOR','GENESEAS AQUACULTURA','GERÊNCIA NACIONA FS','GRANO ALIMENTOS S.A.','GRIFFOOD','ICOFORT','ITAJAI','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','ITAJAI PESCADOS','LABREZZA','M P FOODS','MARBA','MASSAS SANTA ENERSTINA LTDA','NORONHA', 'OUTROS','PINHAIS - CD','QUALIDADE SUPPLY CHAIN','RIBEIRÃO PRETO – CD','SALVADOR – CD','SAO PAULO – CD','SEARA MEATS','SOMAVE','VARZEA GRANDE – CD') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO','NOTIFICAÇÃO') AND [PROBLEMA] IN ('INSETO','INSETO VIVO') AND [TIPO DO PROBLEMA] IN ('INSETO','LARVA', 'INSETO VIVO','LARVA VIVA')	 AND [SUB TIPO PROBLEMA] IN ('LARVA','LARVA VIVA') "] , setGraficoRACDetalhesLarva, setresponseGraficoRACDetalhesLarva,73)
 
         // //NNC Log
         // chamarAPI("NCCLOG", GraficoNNCLogDetalhesTotal, "GraficoNNCLogDetalhesTotal", [" where 1=1 "] , setGraficoNNCLogDetalhesTotal, setresponseGraficoNNCLogDetalhesTotal,74)
@@ -1004,6 +1004,7 @@ function Home() {
                     console.log(err);
                 });
                 break
+           
             case 'RACIndicadores':
 
                 api.getSearaBaseRacIndicadores(parametros).then((response) => {
@@ -1015,6 +1016,19 @@ function Home() {
                     console.log(err);
                 });
                 break
+
+            case 'RACIndicadoresSemFiltro':
+
+                api.getSearaBaseRacIndicadores_(parametros).then((response) => {
+                    buscarDados(response, funcao, objeto, funcaoRetorno)
+                    numeroChamados[numeroChamado] = true;
+                    callbackChamarAPI(apiNome)
+                    return response
+                }).catch(err => {
+                    console.log(err);
+                });
+                break
+                
             case 'NCCMP':
 
                 api.getSearaBaseNCCMP(parametros).then((response) => {
@@ -2181,7 +2195,7 @@ function Home() {
 
         let retorno = (
             <div>
-                <button onClick={chamararrumaTabela}>Teste</button>
+               
                 <div className="card">
                     <DataTable value={json} sortMode="multiple" className="p-datatable clJapao">
                         <Column field="Mercado" header="Japão" headerStyle={{ width: '70%' }}></Column>
@@ -2699,9 +2713,9 @@ function Home() {
             + " WHERE 1=1																																																		"
             + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
             + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
-            + " AND [Origem_do_Problema_rac] IN ('ABUSO DE PRODUTO PDV')																																						"
-            + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR')													"
-            + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA')																																							"
+            + " AND [Origem_do_Problema_rac] NOT IN ('ABUSO DE PRODUTO HOME','LOGÍSTICA MI','SERVICO') 																																						"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND [TIPO_ATENDIMENTO_RAC] IN ('CRÍTICA')																																							"
             + " AND Tipo_rac = 'Real' 																																															"
             + " GROUP BY Unidade																																																"
             + " 																																																				"
@@ -2713,9 +2727,9 @@ function Home() {
             + " WHERE 1=1																																																		"
             + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
             + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
-            + " AND [Origem_do_Problema_rac] IN ('ABUSO DE PRODUTO PDV')																																						"
-            + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR')													"
-            + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA')																																							"
+            + " AND [Origem_do_Problema_rac] NOT IN ('ABUSO DE PRODUTO HOME','LOGÍSTICA MI','SERVICO') 																																						"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND [TIPO_ATENDIMENTO_RAC] IN ('CRÍTICA')																																							"
             + " AND Tipo_rac = 'Real' 																																															"
             + " GROUP BY Unidade																																																"
             + " 																																																				"
@@ -2726,9 +2740,9 @@ function Home() {
             + " WHERE 1=1																																																		"
             + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
             + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
-            + " AND [Origem_do_Problema_rac] IN ('ABUSO DE PRODUTO PDV')																																						"
-            + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR')													"
-            + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA')																																							"
+            + " AND [Origem_do_Problema_rac] NOT IN ('ABUSO DE PRODUTO HOME','LOGÍSTICA MI','SERVICO') 																																						"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND [TIPO_ATENDIMENTO_RAC] IN ('CRÍTICA')																																						"
             + " AND Tipo_rac = 'Real' 																																															"
             + " 																																																				"
             + " 																																																				"
@@ -2743,9 +2757,9 @@ function Home() {
             + " WHERE 1=1																																																		"
             + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
             + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
-            + " AND [Origem_do_Problema_rac] IN ('ABUSO DE PRODUTO PDV')																																						"
-            + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR')													"
-            + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA')																																							"
+            + " AND [Origem_do_Problema_rac] NOT IN ('ABUSO DE PRODUTO HOME','LOGÍSTICA MI','SERVICO') 																																						"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND [TIPO_ATENDIMENTO_RAC] IN ('CRÍTICA')																																						"
             + " AND Tipo_rac = 'Real' 																																															"
             + " GROUP BY [MES-DIA]																																																"
             + " 																																																				"
@@ -2820,9 +2834,9 @@ function Home() {
             + " 		' WHERE 1=1 ' +																																															"
             + "         ' AND month(Data_rac) = month((select * from v_maiorData))																																	' +			"
             + " 		' AND year(Data_rac) = year((select * from v_maiorData))																																	' +			"
-            + " 		' AND [Origem_do_Problema_rac] IN (''ABUSO DE PRODUTO PDV'')																																' +			"
-            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''EIRELI ME'',''GERÊNCIA NACIONAL FS'',''ITAJAÍ'',''ITAJAI ÓLEO COMESTÍVEIS'',''MARBA'',''MASSATAKE'',''MARBA'',''SANTA CRUZ DO SUL'',''VIGOR'')		' +			"
-            + " 		' AND [TIPO_ATENDIMENTO_RAC] NOT IN (''ALERTA'',''CRÍTICA'')																																' +			"
+            + " 		' AND [Origem_do_Problema_rac] NOT IN (''ABUSO DE PRODUTO HOME'',''LOGÍSTICA MI'',''SERVICO'')																																' +			"
+            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''MASSATAKE'',''MARBA'',''NORONHA'',''VIGOR'') 		' +			"
+            + " 		' AND [TIPO_ATENDIMENTO_RAC] IN (''CRÍTICA'')																																' +			"
             + " 		' AND Tipo_rac = ''Real'' 																																									' +			"
             + " 																																																				"
             + "         ' GROUP BY [Unidade], [MES-DIA] '+      																																								"
@@ -2841,9 +2855,9 @@ function Home() {
             + " 		' WHERE 1=1 ' +																																															"
             + "         ' AND month(Data_rac) = month((select * from v_maiorData))																																	' +			"
             + " 		' AND year(Data_rac) = year((select * from v_maiorData))																																	' +			"
-            + " 		' AND [Origem_do_Problema_rac] IN (''ABUSO DE PRODUTO PDV'')																																' +			"
-            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''EIRELI ME'',''GERÊNCIA NACIONAL FS'',''ITAJAÍ'',''ITAJAI ÓLEO COMESTÍVEIS'',''MARBA'',''MASSATAKE'',''MARBA'',''SANTA CRUZ DO SUL'',''VIGOR'')		' +			"
-            + " 		' AND [TIPO_ATENDIMENTO_RAC] NOT IN (''ALERTA'',''CRÍTICA'')																																' +			"
+            + " 		' AND [Origem_do_Problema_rac] NOT IN (''ABUSO DE PRODUTO HOME'',''LOGÍSTICA MI'',''SERVICO'')																																' +			"
+            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''MASSATAKE'',''MARBA'',''NORONHA'',''VIGOR'') 		' +			"
+            + " 		' AND [TIPO_ATENDIMENTO_RAC] IN (''CRÍTICA'')																																	' +			"
             + " 		' AND Tipo_rac = ''Real'' 																																									' +			"
             + " 																																																				"
             + "         ' GROUP BY [MES-DIA] '+      																																											"
