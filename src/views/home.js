@@ -36,6 +36,9 @@ import 'primeicons/primeicons.css'
 
 import { ProgressBar } from 'primereact/progressbar';
 import { months, colorsBars, lightOptions, optionsComparativo } from '../domain/constants';
+
+import {testeSQLPivotRollup} from '../domain/sql';
+
 import {
     SetDateInJsonArrayToQueryOverObjects,
     SetParamsToQuery,
@@ -2292,17 +2295,30 @@ function Home() {
     function percorrerJson(obj){    
         
         var rows = [];
-
+        var j = 0;
         for (var key in obj) { // obtém as chaves do objeto
             // se o valor for diferente de objeto (caso events)
-            if (typeof obj[key] !== 'object') 
-            rows.push(<Column field={key} header={key}></Column>);
+            if (typeof obj[key] !== 'object') {
+                if (j == 0){
+                    rows.push(<Column field={key} header={key} headerStyle={{ width: '20%' }}></Column>);
+                }else{
+                    rows.push(<Column field={key} header={key}></Column>);
+                }
+                j++
+            }
             else
             // se o valor for um array de objetos, é iterado o array
             // e as chaves de cada objeto
+            
             obj[key].forEach(function(item) {
+                var i = 0;
                 for (var key2 in item) {
-                    rows.push(<Column field={key2} header={key2} name='linha'></Column>);
+                    if (i == 0){
+                        rows.push(<Column field={key2} header={key2} name='linha' headerStyle={{ width: '70%' }}></Column>);
+                    }else{
+                        rows.push(<Column field={key2} header={key2} name='linha'></Column>);
+                    }
+                    i++
                 }
             });
         }
@@ -2386,6 +2402,158 @@ function Home() {
             );
         
     }
+
+    const DataTableRacRACDetalhesEvolucaoTotal = () => {
+
+        if (!TableRacRACDetalhesEvolucaoTotal) return;
+
+
+        let json = []
+
+        for (let i = 0; i < TableRacRACDetalhesEvolucaoTotal.length; i++) {
+            json.push(TableRacRACDetalhesEvolucaoTotal[i])
+        }
+
+        var retorno = percorrerJson(TableRacRACDetalhesEvolucaoTotal[0])
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
+                        {retorno}
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
+
+    const DataTableRacRACDetalhesEvolucaoAves = () => {
+
+        if (!TableRacRACDetalhesEvolucaoAves) return;
+
+
+        let json = []
+
+        for (let i = 0; i < TableRacRACDetalhesEvolucaoAves.length; i++) {
+            json.push(TableRacRACDetalhesEvolucaoAves[i])
+        }
+
+        var retorno = percorrerJson(TableRacRACDetalhesEvolucaoAves[0])
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
+                        {retorno}
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
+
+    const DataTableRacRACDetalhesEvolucaoPreparados = () => {
+
+        if (!TableRacRACDetalhesEvolucaoPreparados) return;
+
+
+        let json = []
+
+        for (let i = 0; i < TableRacRACDetalhesEvolucaoPreparados.length; i++) {
+            json.push(TableRacRACDetalhesEvolucaoPreparados[i])
+        }
+
+        var retorno = percorrerJson(TableRacRACDetalhesEvolucaoPreparados[0])
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
+                        {retorno}
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
+
+    const DataTableRacRACDetalhesEvolucaoFatiados = () => {
+
+        if (!TableRacRACDetalhesEvolucaoFatiados) return;
+
+
+        let json = []
+
+        for (let i = 0; i < TableRacRACDetalhesEvolucaoFatiados.length; i++) {
+            json.push(TableRacRACDetalhesEvolucaoFatiados[i])
+        }
+
+        var retorno = percorrerJson(TableRacRACDetalhesEvolucaoFatiados[0])
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
+                        {retorno}
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
+
+    const DataTableRacRACDetalhesEvolucaoPescados = () => {
+
+        if (!TableRacRACDetalhesEvolucaoPescados) return;
+
+
+        let json = []
+
+        for (let i = 0; i < TableRacRACDetalhesEvolucaoPescados.length; i++) {
+            json.push(TableRacRACDetalhesEvolucaoPescados[i])
+        }
+
+        var retorno = percorrerJson(TableRacRACDetalhesEvolucaoPescados[0])
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
+                        {retorno}
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
+
+    const DataTableRacRACDetalhesEvolucaoSuinos = () => {
+
+        if (!TableRacRACDetalhesEvolucaoSuinos) return;
+
+
+        let json = []
+
+        for (let i = 0; i < TableRacRACDetalhesEvolucaoSuinos.length; i++) {
+            json.push(TableRacRACDetalhesEvolucaoSuinos[i])
+        }
+
+        var retorno = percorrerJson(TableRacRACDetalhesEvolucaoSuinos[0])
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped">
+                        {retorno}
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
+
+    
 
     
 
@@ -2704,6 +2872,8 @@ function Home() {
             })
 
 
+            
+            
             var sqlTableRacRACDetalhesCritica = ""
             + " SELECT																																																			"
             + " [Unidade],																																																		"
@@ -2884,6 +3054,1219 @@ function Home() {
                 
                 setTableRacRACDetalhesCritica(json)
             })
+
+            var sqlTableRacRACDetalhesEvolucaoTotal = ""
+            + " SELECT																																																			"
+            + " [Origem_do_Problema_rac] Origem,																																																		"
+            + " sum(Quant_rac) Quant_rac																																														"
+            + " INTO #TOTAL																																																		"
+            + " FROM [v_base_rac]																																																"
+            + " WHERE 1=1																																																		"
+            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
+            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND Tipo_rac = 'Real' 																																															"
+            + " GROUP BY [Origem_do_Problema_rac]																																																"
+            + " 																																																				"
+            + " SELECT																																																			"
+            + " 'Total' as Origem,																																															"
+            + " sum(Quant_rac) Quant_rac																																														"
+            + " INTO #TOTALFINAL																																																"
+            + " FROM [v_base_rac]																																																"
+            + " WHERE 1=1																																																		"
+            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
+            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND Tipo_rac = 'Real' 																																															"
+            + " GROUP BY [Origem_do_Problema_rac]																																																"
+            + " 																																																				"
+            + " SELECT																																																			"
+            + " sum(Quant_rac) Quant_rac																																														"
+            + " INTO #TOTALF																																																	"
+            + " FROM [v_base_rac]																																																"
+            + " WHERE 1=1																																																		"
+            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
+            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND Tipo_rac = 'Real' 																																															"
+            + " 																																																				"
+            + " 																																																				"
+            + " DECLARE @SQLStr VARCHAR(max)																																													"
+            + " SET @SQLStr=''																																																	"
+            + " 																																																				"
+            + " SELECT																																																			"
+            + " [MES-DIA] Descricao																																																"
+            + " INTO #TAB																																																		"
+            + " FROM [v_base_rac]																																																"
+            + " 																																																				"
+            + " WHERE 1=1																																																		"
+            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
+            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND Tipo_rac = 'Real' 																																															"
+            + " GROUP BY [MES-DIA]																																																"
+            + " 																																																				"
+            + " DECLARE @LINHAS INT 																																															"
+            + " 																																																				"
+            + " SELECT @LINHAS = (SELECT COUNT(1) FROM #TAB)																																									"
+            + " 																																																				"
+            + " DECLARE @Tabela TABLE (																																															"
+            + "     VALOR VARCHAR(MAX)																																															"
+            + " )																																																				"
+            + "  																																																				"
+            + " INSERT @Tabela ( 																																																"
+            + "     VALOR																																																		"
+            + " )																																																				"
+            + " SELECT  																																																		"
+            + "     '||' 																																															"
+            + " FROM																																																			"
+            + "     #TAB																																																		"
+            + " GROUP BY 																																																		"
+            + "     Descricao																																																	"
+            + "  																																																				"
+            + " DECLARE @Descricao VARCHAR(MAX)																																													"
+            + "  																																																				"
+            + " DECLARE c CURSOR LOCAL FAST_FORWARD																																												"
+            + " FOR																																																				"
+            + "  																																																				"
+            + "     SELECT  																																																	"
+            + "         Descricao																																																"
+            + "     FROM																																																		"
+            + "         #TAB																																																	"
+            + "     ORDER BY 																																																	"
+            + "         Descricao ASC																																															"
+            + "  																																																				"
+            + "  																																																				"
+            + " OPEN c																																																			"
+            + "  																																																				"
+            + " FETCH c INTO @Descricao																																															"
+            + "  																																																				"
+            + " WHILE @@FETCH_STATUS = 0																																														"
+            + " BEGIN																																																			"
+            + "  																																																				"
+            + "     UPDATE  @Tabela																																																"
+            + "     SET     VALOR += ', [' + @Descricao + ']'																																									"
+            + "  																																																				"
+            + "     FETCH c INTO @Descricao																																														"
+            + " END																																																				"
+            + "  																																																				"
+            + " CLOSE c																																																			"
+            + " DEALLOCATE c																																																	"
+            + "  																																																				"
+            + " SELECT  																																																		"
+            + "     TOP 1 Descricoes = REPLACE(STUFF(VALOR, 1, 0, ''),'||,','')																																					"
+            + " INTO #TAB2																																																		"
+            + " FROM																																																			"
+            + "     @Tabela																																																		"
+            + " 																																																				"
+            + " SELECT @SQLStr = @SQLStr + (SELECT TOP 1 Descricoes FROM #TAB2)																																					"
+            + " 																																																				"
+            + " DROP TABLE #TAB																																																	"
+            + " DROP TABLE #TAB2																																																"
+            + " 																																																				"
+            + " PRINT @SQLStr																																																	"
+            + " SET @SQLStr = LEFT(@SQLStr,len(@SQLStr))																																										"
+            + " 																																																				"
+            + " SET @SQLStr ='SELECT pt.[Origem],   '																																											"
+            + " + @SQLStr																																																		"
+            + " + ' , T.Quant_rac as Total ' +																																													"
+            + " + ' , 0 as Total2 ' +																																															"
+            + " + ' FROM (SELECT [Origem_do_Problema_rac] Origem, [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																																"
+            + " '         from [v_base_rac] base with (nolock)  ' +																																								"
+            + " 																																																				"
+            + " 		' WHERE 1=1 ' +																																															"
+            + "         ' AND month(Data_rac) = month((select * from v_maiorData))																																	' +			"
+            + " 		' AND year(Data_rac) = year((select * from v_maiorData))																																	' +			"
+            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''MASSATAKE'',''MARBA'',''NORONHA'',''VIGOR'') 		' +			"
+            + " 		' AND Tipo_rac = ''Real'' 																																									' +			"
+            + " 																																																				"
+            + "         ' GROUP BY [Origem_do_Problema_rac], [MES-DIA] '+      																																								"
+            + " '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																						"
+            + " + @SQLStr+')) AS pt ' +																																															"
+            + " ' INNER JOIN #TOTAL T ON T.origem = PT.origem ' +																																								"
+            + " 																																																				"
+            + " ' UNION ALL ' +																																																	"
+            + " ' SELECT pt.[Origem],   '																																														"
+            + " + @SQLStr																																																		"
+            + " + ' , (SELECT SUM(Quant_rac) from #TOTALF) as Total ' +																																							"
+            + " + ' , (SELECT SUM(Quant_rac) from #TOTALF) as Total2 ' +																																						"
+            + " + ' FROM (SELECT ''Total'' as Origem, [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																													"
+            + " '         from [v_base_rac] base with (nolock)  ' +																																								"
+            + " 																																																				"
+            + " 		' WHERE 1=1 ' +																																															"
+            + "         ' AND month(Data_rac) = month((select * from v_maiorData))																																	' +			"
+            + " 		' AND year(Data_rac) = year((select * from v_maiorData))																																	' +			"
+            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''MASSATAKE'',''MARBA'',''NORONHA'',''VIGOR'') 		' +			"
+            + " 		' AND Tipo_rac = ''Real'' 																																									' +			"
+            + " 																																																				"
+            + "         ' GROUP BY [MES-DIA] '+      																																											"
+            + " '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																						"
+            + " + @SQLStr+')) AS pt ' +																																															"
+            + " 																																																				"
+            + " ' ORDER BY  ' + CAST(@LINHAS + 3 AS VARCHAR) + ' ASC, ' + CAST(@LINHAS + 2 AS VARCHAR) + ' DESC ' 																												"
+            + " 																																																				"
+            + " PRINT @SQLStr																																																	"
+            + " EXEC(@SQLStr)																																																	"
+            + " 																																																				"
+            + " DROP TABLE #TOTAL																																																"
+            + " DROP TABLE #TOTALFINAL																																															"
+            + " DROP TABLE #TOTALF																																																"
+
+
+            api.getSearaBaseSQLNINJA([ sqlTableRacRACDetalhesEvolucaoTotal ]).then((response) => {
+                
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['Total2'];
+                }
+                
+                setTableRacRACDetalhesEvolucaoTotal(json)
+            })
+
+            var sqlTableRacRACDetalhesEvolucaoAves = ""
+            + "SELECT																																																																																																																"
++ "[Regional Qual] as Coluna1																																																																																																											"
++ ", Unidade as Coluna2																																																																																																													"
++ ", null as Coluna3																																																																																																													"
++ ", count(Rac_rac) as [Nº RAC]																																																																																																											"
++ "INTO #RESULTADO 																																																																																																														"
++ "FROM [v_base_rac]																																																																																																													"
++ "WHERE 1=1																																																																																																											"
++ "and year(data_rac) = (select year(data) as data from v_maiorData)																																																																																																	"
++ "and month(data_rac) = (select month(data) as data from v_maiorData)																																																																																																	"
++ "AND Tipo_rac = 'Real'																																																																																																												"
++ " AND  [Regional Qual] LIKE '%AVES%'   															"
++ "GROUP BY [Regional Qual], Unidade																																																																																																									"
++ "																																																																																																																		"
++ "																																																																																																																		"
++ "SELECT																																																																																																																"
++ "Coluna1																																																																																																																"
++ ", SUM([Nº RAC]) [Nº RAC]																																																																																																												"
++ "INTO #TABELA1																																																																																																														"
++ "FROM #RESULTADO																																																																																																														"
++ "GROUP BY Coluna1																																																																																																														"
++ "																																																																																																																		"
++ "SELECT																																																																																																																"
++ "Coluna1																																																																																																																"
++ ", Coluna2																																																																																																															"
++ ", SUM([Nº RAC]) [Nº RAC]																																																																																																												"
++ "INTO #TABELA2																																																																																																														"
++ "FROM #RESULTADO																																																																																																														"
++ "GROUP BY Coluna1, Coluna2																																																																																																											"
++ "																																																																																																																		"
++ "SELECT																																																																																																																"
++ "Coluna1																																																																																																																"
++ ", Coluna2																																																																																																															"
++ ", Coluna3																																																																																																															"
++ ", SUM([Nº RAC]) [Nº RAC]																																																																																																												"
++ "INTO #TABELA3																																																																																																														"
++ "FROM #RESULTADO																																																																																																														"
++ "GROUP BY Coluna1, Coluna2, Coluna3																																																																																																									"
++ "																																																																																																																		"
++ "SELECT																																																																																																																"
++ "GROUPING(R.Coluna1) C1																																																																																																												"
++ ", GROUPING(R.Coluna2) C2																																																																																																												"
++ ", 0 C3																																																																																																																"
++ ", R.Coluna1 AS C1_																																																																																																													"
++ ", R.Coluna2 AS C2_ 																																																																																																													"
++ ", R.Coluna3 AS C3_																																																																																																													"
++ ", SUM([Nº RAC]) [Nº RAC]																																																																																																												"
++ "INTO #BASE																																																																																																															"
++ "FROM #RESULTADO R																																																																																																													"
++ "GROUP BY Coluna1, Coluna2, Coluna3																																																																																																									"
++ "WITH ROLLUP													  																																																																																																		"
++ "																																																																																																																		"
++ "																																																																																																																		"
++ "SELECT DISTINCT B.C1, B.C2, B.C3,  ISNULL(B.C1_,'Total') as Coluna1, ISNULL(B.C2_,'Total') as Coluna2, null as Coluna3																																																																																				"
++ ", B.[Nº RAC]																																																																																																															"
++ ", T1.[Nº RAC] C1__																																																																																																													"
++ ", T2.[Nº RAC] C2__																																																																																																													"
++ ", null C3__																																																																																																															"
++ ", CASE																																																																																																																"
++ "	WHEN B.C3_ IS NULL THEN																																																																																																												"
++ "		CASE																																																																																																															"
++ "			WHEN B.C2_ IS NULL THEN 																																																																																																									"
++ "                CASE 																																																																																																												"
++ "					WHEN B.C1_ IS NULL THEN																																																																																																								"
++ "					'<b>Total</b>'																																																																																																										"
++ "					ELSE '<b>'+cast(B.C1_ as varchar)+'</b>'																																																																																																			"
++ "				END																																																																																																														"
++ "			ELSE '@@.....'+cast(B.C2_ as varchar)																																																																																																						"
++ "		END																																																																																																																"
++ "	ELSE '..........'+cast(B.C3_ as varchar)																																																																																																							"
++ "    END Coluna																																																																																																														"
++ ", CASE																																																																																																																"
++ "	WHEN B.C3_ IS NULL THEN																																																																																																												"
++ "		CASE																																																																																																															"
++ "			WHEN B.C2_ IS NULL THEN 																																																																																																									"
++ "                CASE 																																																																																																												"
++ "					WHEN B.C1_ IS NULL THEN																																																																																																								"
++ "					'Total'																																																																																																												"
++ "					ELSE cast(B.C1_ as varchar)																																																																																																							"
++ "				END																																																																																																														"
++ "			ELSE cast(B.C2_ as varchar)																																																																																																									"
++ "		END																																																																																																																"
++ "	ELSE cast(B.C3_ as varchar)																																																																																																											"
++ "    END Coluna_																																																																																																														"
++ "	INTO #NIVEIS																																																																																																														"
++ "FROM #BASE B																																																																																																															"
++ "LEFT JOIN #TABELA1 T1 ON B.C1_ = T1.Coluna1																																																																																																							"
++ "LEFT JOIN #TABELA2 T2 ON B.C1_ = T2.Coluna1 AND B.C2_ = T2.Coluna2																																																																																																	"
++ "																																																																																																																		"
++ "ORDER BY 1, 8 DESC, 4, 2 DESC, 9 DESC, 5, 3 DESC, 10 DESC, 6																																																																																																			"
++ "																																																																																																																		"
++ "             SELECT																																																																																																													"
++ "             [Regional Qual] as Coluna1																																																																																																								"
++ "             , Unidade as Coluna2																																																																																																									"
++ "             , null as Coluna3																																																																																																										"
++ "             , sum(Quant_rac) Quant_rac																																																																																																								"
++ "             INTO #TOTAL																																																																																																												"
++ "             FROM [v_base_rac]																																																																																																										"
++ "             WHERE 1=1																																																																																																								"
++ "            and year(data_rac) = (select year(data) as data from v_maiorData)																																																																																														"
++ "            and month(data_rac) = (select month(data) as data from v_maiorData)																																																																																														"
++ "            AND Tipo_rac = 'Real'																																																																																																									"
++ "            AND  [Regional Qual] LIKE '%AVES%'    													"
++ "            GROUP BY [Regional Qual], Unidade																																																																																																						"
++ "																																																																																																																		"
++ "             																																																																																																														"
++ "             SELECT																																																																																																													"
++ "             'Total' as Coluna1,																																																																																																										"
++ "             sum(Quant_rac) Quant_rac																																																																																																								"
++ "             INTO #TOTALFINAL																																																																																																										"
++ "             FROM [v_base_rac]																																																																																																										"
++ "             WHERE 1=1																																																																																																								"
++ "            and year(data_rac) = (select year(data) as data from v_maiorData)																																																																																														"
++ "            and month(data_rac) = (select month(data) as data from v_maiorData)																																																																																														"
++ "            AND Tipo_rac = 'Real'																																																																																																									"
++ "             AND  [Regional Qual] LIKE '%AVES%'  													"
++ "            GROUP BY [Regional Qual], Unidade																																																																																																						"
++ "             																																																																																																														"
++ "             SELECT																																																																																																													"
++ "             sum(Quant_rac) Quant_rac																																																																																																								"
++ "             INTO #TOTALF																																																																																																											"
++ "             FROM [v_base_rac]																																																																																																										"
++ "             WHERE 1=1																																																																																																								"
++ "            and year(data_rac) = (select year(data) as data from v_maiorData)																																																																																														"
++ "            and month(data_rac) = (select month(data) as data from v_maiorData)																																																																																														"
++ "            AND Tipo_rac = 'Real'																																																																																																									"
++ "             AND  [Regional Qual] LIKE '%AVES%'  													"
++ "      																																																																																																																"
++ "             																																																																																																														"
++ "             																																																																																																														"
++ "             DECLARE @SQLStr VARCHAR(max)																																																																																																							"
++ "             SET @SQLStr=''																																																																																																											"
++ "             																																																																																																														"
++ "             SELECT																																																																																																													"
++ "             [MES-DIA] Descricao																																																																																																										"
++ "             INTO #TAB																																																																																																												"
++ "             FROM [v_base_rac]																																																																																																										"
++ "             																																																																																																														"
++ "             WHERE 1=1																																																																																																								"
++ "			 and year(data_rac) = (select year(data) as data from v_maiorData) and month(data_rac) = (select month(data) as data from v_maiorData)																																																																														"
++ "			 AND Tipo_rac = 'Real'																																																																																																										"
++ "			  AND  [Regional Qual] LIKE '%AVES%'  														"																												
++ "             GROUP BY [MES-DIA]																																																																																																										"
++ "             																																																																																																														"
++ "             DECLARE @LINHAS INT 																																																																																																									"
++ "             																																																																																																														"
++ "             SELECT @LINHAS = (SELECT COUNT(1) FROM #TAB)																																																																																																			"
++ "             																																																																																																														"
++ "             DECLARE @Tabela TABLE (																																																																																																									"
++ "                 VALOR VARCHAR(MAX)																																																																																																									"
++ "             )																																																																																																														"
++ "              																																																																																																														"
++ "             INSERT @Tabela ( 																																																																																																										"
++ "                 VALOR																																																																																																												"
++ "             )																																																																																																														"
++ "             SELECT  																																																																																																												"
++ "                 '||' 																																																																																																												"
++ "             FROM																																																																																																													"
++ "                 #TAB																																																																																																												"
++ "             GROUP BY 																																																																																																												"
++ "                 Descricao																																																																																																											"
++ "              																																																																																																														"
++ "             DECLARE @Descricao VARCHAR(MAX)																																																																																																							"
++ "              																																																																																																														"
++ "             DECLARE c CURSOR LOCAL FAST_FORWARD																																																																																																						"
++ "             FOR																																																																																																														"
++ "              																																																																																																														"
++ "                 SELECT  																																																																																																											"
++ "                     Descricao																																																																																																										"
++ "                 FROM																																																																																																												"
++ "                     #TAB																																																																																																											"
++ "                 ORDER BY 																																																																																																											"
++ "                     Descricao ASC																																																																																																									"
++ "              																																																																																																														"
++ "              																																																																																																														"
++ "             OPEN c																																																																																																													"
++ "              																																																																																																														"
++ "             FETCH c INTO @Descricao																																																																																																									"
++ "              																																																																																																														"
++ "             WHILE @@FETCH_STATUS = 0																																																																																																								"
++ "             BEGIN																																																																																																													"
++ "              																																																																																																														"
++ "                 UPDATE  @Tabela																																																																																																										"
++ "                 SET     VALOR += ', [' + @Descricao + ']'																																																																																																			"
++ "              																																																																																																														"
++ "                 FETCH c INTO @Descricao																																																																																																								"
++ "             END																																																																																																														"
++ "              																																																																																																														"
++ "             CLOSE c																																																																																																													"
++ "             DEALLOCATE c																																																																																																											"
++ "              																																																																																																														"
++ "             SELECT  																																																																																																												"
++ "                 TOP 1 Descricoes = REPLACE(STUFF(VALOR, 1, 0, ''),'||,','')																																																																																															"
++ "             INTO #TAB2																																																																																																												"
++ "             FROM																																																																																																													"
++ "                 @Tabela																																																																																																												"
++ "             																																																																																																														"
++ "             SELECT @SQLStr = @SQLStr + (SELECT TOP 1 Descricoes FROM #TAB2)																																																																																															"
++ "             																																																																																																														"
++ "             DROP TABLE #TAB																																																																																																											"
++ "             DROP TABLE #TAB2																																																																																																										"
++ "             																																																																																																														"
++ "             PRINT @SQLStr																																																																																																											"
++ "             SET @SQLStr = LEFT(@SQLStr,len(@SQLStr))																																																																																																				"
++ "																																																																																																																		"
++ "			 DECLARE @SQLStr1 VARCHAR(max)																																																																																																								"
++ "             SET @SQLStr1=''																																																																																																											"
++ "																																																																																																																		"
++ "             SET @SQLStr1 ='select * into #gabriel1 from ( SELECT pt.[Coluna1], pt.[Coluna2], pt.[Coluna3],   '																																																																																						"
++ "             + @SQLStr																																																																																																												"
++ "             + ' , null as Total ' +																																																																																																									"
++ "             + ' , null as Total2 ' +																																																																																																								"
++ "             + ' FROM (SELECT [Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3, [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																																																																													"
++ "             '         from [v_base_rac] base with (nolock)  ' +																																																																																																		"
++ "             																																																																																																														"
++ "             		' WHERE 1=1 ' +																																																																																																				"
++ "                    ' AND  [Regional Qual] LIKE '%AVES%'    '		+	"																									
++ "             		' and year(data_rac) = (select year(data) as data from v_maiorData) and month(data_rac) = (select month(data) as data from v_maiorData) AND Tipo_rac = ''Real'' 		' +																																																																		"
++ "             																																																																																																														"
++ "                     ' GROUP BY [Regional Qual], Unidade, [MES-DIA] '+      																																																																																															"
++ "             '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																																																																																"
++ "             + @SQLStr+')) AS pt ' +																																																																																																									"
++ "           																																																																																																															"
++ "             																																																																																																														"
++ "             ' UNION ALL ' +																																																																																																											"
++ "             ' SELECT pt.[Coluna1], pt.[Coluna2], pt.[Coluna3],   '																																																																																																	"
++ "             + @SQLStr																																																																																																												"
++ "             + ' , null as Total ' +																																																																																																									"
++ "             + ' , null as Total2 ' +																																																																																																								"
++ "             + ' FROM (SELECT ''Total'' as Coluna1, ''Total'' as Coluna2, null as Coluna3,  [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																																																																													"
++ "             '         from [v_base_rac] base with (nolock)  ' +																																																																																																		"
++ "             																																																																																																														"
++ "             		' WHERE 1=1 ' +																																																																																																				"
++ "                    ' AND  [Regional Qual] LIKE '%AVES%'   '		+	"																									          		
++ "					' and year(data_rac) = (select year(data) as data from v_maiorData) and month(data_rac) = (select month(data) as data from v_maiorData) AND Tipo_rac = ''Real'' 		'  +																																																																		"
++ "             																																																																																																														"
++ "                     ' GROUP BY [MES-DIA] '+      																																																																																																					"
++ "             '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																																																																																"
++ "             + @SQLStr+')) AS pt ' +																																																																																																									"
++ "             ' ) TT '																																																																																																												"
++ "																																																																																																																		"
++ "			 DECLARE @SQLStr2 VARCHAR(max)																																																																																																								"
++ "             SET @SQLStr2=''																																																																																																											"
++ "																																																																																																																		"
++ "             SET @SQLStr2 ='select * into #gabriel2 from ( SELECT pt.[Coluna1], ''total'' as [Coluna2], null as [Coluna3],   '																																																																																		"
++ "             + @SQLStr																																																																																																												"
++ "             + ' , null as Total ' +																																																																																																									"
++ "             + ' , null as Total2 ' +																																																																																																								"
++ "             + ' FROM (SELECT [Regional Qual] as Coluna1, [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																																																																																						"
++ "             '         from [v_base_rac] base with (nolock)  ' +																																																																																																		"
++ "             																																																																																																														"
++ "             		' WHERE 1=1 ' +																																																																																																				"
++ "                    '  AND  [Regional Qual] LIKE '%AVES%'   '		+	"																									
++ "             		' and year(data_rac) = (select year(data) as data from v_maiorData) and month(data_rac) = (select month(data) as data from v_maiorData) AND Tipo_rac = ''Real'' 		' +																																																																		"
++ "             																																																																																																														"
++ "                     ' GROUP BY [Regional Qual], [MES-DIA] '+      																																																																																																	"
++ "             '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																																																																																"
++ "             + @SQLStr+')) AS pt ' +																																																																																																									"
++ "          																																																																																																															"
++ "             																																																																																																														"
++ "             ' UNION ALL ' +																																																																																																											"
++ "             ' SELECT pt.[Coluna1], ''total'' as [Coluna2], null as [Coluna3],   '																																																																																													"
++ "             + @SQLStr																																																																																																												"
++ "             + ' , null as Total ' +																																																																																																									"
++ "             + ' , null as Total2 ' +																																																																																																								"
++ "             + ' FROM (SELECT ''Total'' as Coluna1,  [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																																																																																							"
++ "             '         from [v_base_rac] base with (nolock)  ' +																																																																																																		"
++ "             																																																																																																														"
++ "             		' WHERE 1=1 ' +																																																																																																				"
++ "                    ' AND  [Regional Qual] LIKE '%AVES%'   '		+	"																									          		
++ "					' and year(data_rac) = (select year(data) as data from v_maiorData) and month(data_rac) = (select month(data) as data from v_maiorData) AND Tipo_rac = ''Real'' 		'  +																																																																		"
++ "             																																																																																																														"
++ "                     ' GROUP BY [MES-DIA] '+      																																																																																																					"
++ "             '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																																																																																"
++ "             + @SQLStr+')) AS pt ' +																																																																																																									"
++ "             ' ) TT '																																																																																																												"
++ "																																																																																																																		"
++ "			 DECLARE @SQLStr3 VARCHAR(max)																																																																																																								"
++ "             SET @SQLStr3=''																																																																																																											"
++ "																																																																																																																		"
++ "             SET @SQLStr3 ='select * into #gabriel3 from ( SELECT pt.[Coluna1], pt.[Coluna2], null as [Coluna3],   '																																																																																					"
++ "             + @SQLStr																																																																																																												"
++ "             + ' , null as Total ' +																																																																																																									"
++ "             + ' , null as Total2 ' +																																																																																																								"
++ "             + ' FROM (SELECT [Regional Qual] as Coluna1, Unidade as Coluna2, [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																																																																																	"
++ "             '         from [v_base_rac] base with (nolock)  ' +																																																																																																		"
++ "             																																																																																																														"
++ "             		' WHERE 1=1 ' +																																																																																																				"
++ "                    '  AND  [Regional Qual] LIKE '%AVES%'  '		+	"																									
++ "             		' and year(data_rac) = (select year(data) as data from v_maiorData) and month(data_rac) = (select month(data) as data from v_maiorData) AND Tipo_rac = ''Real'' 		' +																																																																		"
++ "             																																																																																																														"
++ "                     ' GROUP BY [Regional Qual], Unidade, [MES-DIA] '+      																																																																																															"
++ "             '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																																																																																"
++ "             + @SQLStr+')) AS pt ' +																																																																																																									"
++ "            																																																																																																															"
++ "             																																																																																																														"
++ "             ' UNION ALL ' +																																																																																																											"
++ "             ' SELECT pt.[Coluna1], pt.[Coluna2], null as [Coluna3],   '																																																																																																"
++ "             + @SQLStr																																																																																																												"
++ "             + ' , null as Total ' +																																																																																																									"
++ "             + ' , null as Total2 ' +																																																																																																								"
++ "             + ' FROM (SELECT ''Total'' as Coluna1, ''Total'' as [Coluna2],  [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																																																																																	"
++ "             '         from [v_base_rac] base with (nolock)  ' +																																																																																																		"
++ "             																																																																																																														"
++ "             		' WHERE 1=1 ' +																																																																																																				"
++ "                    '  AND  [Regional Qual] LIKE '%AVES%'  '		+	"																									          		
++ "					' and year(data_rac) = (select year(data) as data from v_maiorData) and month(data_rac) = (select month(data) as data from v_maiorData) AND Tipo_rac = ''Real'' 		'  +																																																																		"
++ "             																																																																																																														"
++ "                     ' GROUP BY [MES-DIA] '+      																																																																																																					"
++ "             '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																																																																																"
++ "             + @SQLStr+')) AS pt ' +																																																																																																									"
++ "             ' ) TT '																																																																																																												"
++ "																																																																																																																		"
++ "			 SET @SQLStr = @SQLStr1 + ' ' + @SQLStr2 + ' ' + @SQLStr3 + ' ' + 																																																																																															"
++ "																																																																																																																		"
++ "			 + ' SELECT * INTO #TTTT FROM  ((select * from #gabriel1) union all (select * from #gabriel2) union all (select * from #gabriel3)) FF  '																																																																													"
++ "																																																																																																																		"
++ "			 + ' SELECT distinct *, N.[Nº RAC] AS RAC FROM #NIVEIS N '																																																																																																						"
++ "			 + ' LEFT JOIN #TTTT T1 ON T1.Coluna1 = N.Coluna1 AND T1.Coluna2 = N.Coluna2 '																																																																																												"
++ "			 + ' ORDER BY 1, 8 DESC, 4, 2 DESC, 9 DESC, 5, 3 DESC, 10 DESC, 6 '																																																																																															"
++ "																																																																																																																		"
++ "             																																																																																																														"
++ "             PRINT @SQLStr																																																																																																											"
++ "             EXEC(@SQLStr)																																																																																																											"
++ "			 																																																																																																															"
++ "			 																																																																																																															"
++ "             																																																																																																														"
++ "             DROP TABLE #TOTAL																																																																																																										"
++ "             DROP TABLE #TOTALFINAL																																																																																																									"
++ "             DROP TABLE #TOTALF																																																																																																										"
++ "			 																																																																																																															"
++ "			 DROP TABLE #RESULTADO																																																																																																										"
++ "            DROP TABLE #TABELA1																																																																																																										"
++ "            DROP TABLE #TABELA2																																																																																																										"
++ "            DROP TABLE #TABELA3																																																																																																										"
++ "            DROP TABLE #BASE																																																																																																											"
++ "																																																																																																																		"
++ "			DROP TABLE #NIVEIS																																																																																																											"
+																																																																																																																		
+																																																																																																																		
+            api.getSearaBaseSQLNINJA([ sqlTableRacRACDetalhesEvolucaoAves ]).then((response) => {
+                
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['Coluna1'];
+                    delete json[i]['Coluna2'];
+                    delete json[i]['Coluna3'];
+                    delete json[i]['Nº RAC'];
+                    delete json[i]['C1__'];
+                    delete json[i]['C2__'];
+                    delete json[i]['C3__'];
+                    delete json[i]['Coluna_'];
+                    delete json[i]['Total'];
+                    delete json[i]['Total2'];
+                }
+                
+                setTableRacRACDetalhesEvolucaoAves(json)
+            })
+
+            var sqlTableRacRACDetalhesEvolucaoPreparados = ""
+            + " SELECT																																																			"
+            + " [Origem_do_Problema_rac] Origem,																																																		"
+            + " sum(Quant_rac) Quant_rac																																														"
+            + " INTO #TOTAL																																																		"
+            + " FROM [v_base_rac]																																																"
+            + " WHERE 1=1																																																		"
+            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
+            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND Tipo_rac = 'Real' 																																															"
+            + " GROUP BY [Origem_do_Problema_rac]																																																"
+            + " 																																																				"
+            + " SELECT																																																			"
+            + " 'Total' as Origem,																																															"
+            + " sum(Quant_rac) Quant_rac																																														"
+            + " INTO #TOTALFINAL																																																"
+            + " FROM [v_base_rac]																																																"
+            + " WHERE 1=1																																																		"
+            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
+            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND Tipo_rac = 'Real' 																																															"
+            + " GROUP BY [Origem_do_Problema_rac]																																																"
+            + " 																																																				"
+            + " SELECT																																																			"
+            + " sum(Quant_rac) Quant_rac																																														"
+            + " INTO #TOTALF																																																	"
+            + " FROM [v_base_rac]																																																"
+            + " WHERE 1=1																																																		"
+            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
+            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND Tipo_rac = 'Real' 																																															"
+            + " 																																																				"
+            + " 																																																				"
+            + " DECLARE @SQLStr VARCHAR(max)																																													"
+            + " SET @SQLStr=''																																																	"
+            + " 																																																				"
+            + " SELECT																																																			"
+            + " [MES-DIA] Descricao																																																"
+            + " INTO #TAB																																																		"
+            + " FROM [v_base_rac]																																																"
+            + " 																																																				"
+            + " WHERE 1=1																																																		"
+            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
+            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND Tipo_rac = 'Real' 																																															"
+            + " GROUP BY [MES-DIA]																																																"
+            + " 																																																				"
+            + " DECLARE @LINHAS INT 																																															"
+            + " 																																																				"
+            + " SELECT @LINHAS = (SELECT COUNT(1) FROM #TAB)																																									"
+            + " 																																																				"
+            + " DECLARE @Tabela TABLE (																																															"
+            + "     VALOR VARCHAR(MAX)																																															"
+            + " )																																																				"
+            + "  																																																				"
+            + " INSERT @Tabela ( 																																																"
+            + "     VALOR																																																		"
+            + " )																																																				"
+            + " SELECT  																																																		"
+            + "     '||' 																																															"
+            + " FROM																																																			"
+            + "     #TAB																																																		"
+            + " GROUP BY 																																																		"
+            + "     Descricao																																																	"
+            + "  																																																				"
+            + " DECLARE @Descricao VARCHAR(MAX)																																													"
+            + "  																																																				"
+            + " DECLARE c CURSOR LOCAL FAST_FORWARD																																												"
+            + " FOR																																																				"
+            + "  																																																				"
+            + "     SELECT  																																																	"
+            + "         Descricao																																																"
+            + "     FROM																																																		"
+            + "         #TAB																																																	"
+            + "     ORDER BY 																																																	"
+            + "         Descricao ASC																																															"
+            + "  																																																				"
+            + "  																																																				"
+            + " OPEN c																																																			"
+            + "  																																																				"
+            + " FETCH c INTO @Descricao																																															"
+            + "  																																																				"
+            + " WHILE @@FETCH_STATUS = 0																																														"
+            + " BEGIN																																																			"
+            + "  																																																				"
+            + "     UPDATE  @Tabela																																																"
+            + "     SET     VALOR += ', [' + @Descricao + ']'																																									"
+            + "  																																																				"
+            + "     FETCH c INTO @Descricao																																														"
+            + " END																																																				"
+            + "  																																																				"
+            + " CLOSE c																																																			"
+            + " DEALLOCATE c																																																	"
+            + "  																																																				"
+            + " SELECT  																																																		"
+            + "     TOP 1 Descricoes = REPLACE(STUFF(VALOR, 1, 0, ''),'||,','')																																					"
+            + " INTO #TAB2																																																		"
+            + " FROM																																																			"
+            + "     @Tabela																																																		"
+            + " 																																																				"
+            + " SELECT @SQLStr = @SQLStr + (SELECT TOP 1 Descricoes FROM #TAB2)																																					"
+            + " 																																																				"
+            + " DROP TABLE #TAB																																																	"
+            + " DROP TABLE #TAB2																																																"
+            + " 																																																				"
+            + " PRINT @SQLStr																																																	"
+            + " SET @SQLStr = LEFT(@SQLStr,len(@SQLStr))																																										"
+            + " 																																																				"
+            + " SET @SQLStr ='SELECT pt.[Origem],   '																																											"
+            + " + @SQLStr																																																		"
+            + " + ' , T.Quant_rac as Total ' +																																													"
+            + " + ' , 0 as Total2 ' +																																															"
+            + " + ' FROM (SELECT [Origem_do_Problema_rac] Origem, [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																																"
+            + " '         from [v_base_rac] base with (nolock)  ' +																																								"
+            + " 																																																				"
+            + " 		' WHERE 1=1 ' +																																															"
+            + "         ' AND month(Data_rac) = month((select * from v_maiorData))																																	' +			"
+            + " 		' AND year(Data_rac) = year((select * from v_maiorData))																																	' +			"
+            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''MASSATAKE'',''MARBA'',''NORONHA'',''VIGOR'') 		' +			"
+            + " 		' AND Tipo_rac = ''Real'' 																																									' +			"
+            + " 																																																				"
+            + "         ' GROUP BY [Origem_do_Problema_rac], [MES-DIA] '+      																																								"
+            + " '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																						"
+            + " + @SQLStr+')) AS pt ' +																																															"
+            + " ' INNER JOIN #TOTAL T ON T.origem = PT.origem ' +																																								"
+            + " 																																																				"
+            + " ' UNION ALL ' +																																																	"
+            + " ' SELECT pt.[Origem],   '																																														"
+            + " + @SQLStr																																																		"
+            + " + ' , (SELECT SUM(Quant_rac) from #TOTALF) as Total ' +																																							"
+            + " + ' , (SELECT SUM(Quant_rac) from #TOTALF) as Total2 ' +																																						"
+            + " + ' FROM (SELECT ''Total'' as Origem, [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																													"
+            + " '         from [v_base_rac] base with (nolock)  ' +																																								"
+            + " 																																																				"
+            + " 		' WHERE 1=1 ' +																																															"
+            + "         ' AND month(Data_rac) = month((select * from v_maiorData))																																	' +			"
+            + " 		' AND year(Data_rac) = year((select * from v_maiorData))																																	' +			"
+            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''MASSATAKE'',''MARBA'',''NORONHA'',''VIGOR'') 		' +			"
+            + " 		' AND Tipo_rac = ''Real'' 																																									' +			"
+            + " 																																																				"
+            + "         ' GROUP BY [MES-DIA] '+      																																											"
+            + " '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																						"
+            + " + @SQLStr+')) AS pt ' +																																															"
+            + " 																																																				"
+            + " ' ORDER BY  ' + CAST(@LINHAS + 3 AS VARCHAR) + ' ASC, ' + CAST(@LINHAS + 2 AS VARCHAR) + ' DESC ' 																												"
+            + " 																																																				"
+            + " PRINT @SQLStr																																																	"
+            + " EXEC(@SQLStr)																																																	"
+            + " 																																																				"
+            + " DROP TABLE #TOTAL																																																"
+            + " DROP TABLE #TOTALFINAL																																															"
+            + " DROP TABLE #TOTALF																																																"
+
+
+            api.getSearaBaseSQLNINJA([ sqlTableRacRACDetalhesEvolucaoPreparados ]).then((response) => {
+                
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['Total2'];
+                }
+                
+                setTableRacRACDetalhesEvolucaoPreparados(json)
+            })
+
+
+            var sqlTableRacRACDetalhesEvolucaoFatiados = ""
+            + " SELECT																																																			"
+            + " [Origem_do_Problema_rac] Origem,																																																		"
+            + " sum(Quant_rac) Quant_rac																																														"
+            + " INTO #TOTAL																																																		"
+            + " FROM [v_base_rac]																																																"
+            + " WHERE 1=1																																																		"
+            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
+            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND Tipo_rac = 'Real' 																																															"
+            + " GROUP BY [Origem_do_Problema_rac]																																																"
+            + " 																																																				"
+            + " SELECT																																																			"
+            + " 'Total' as Origem,																																															"
+            + " sum(Quant_rac) Quant_rac																																														"
+            + " INTO #TOTALFINAL																																																"
+            + " FROM [v_base_rac]																																																"
+            + " WHERE 1=1																																																		"
+            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
+            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND Tipo_rac = 'Real' 																																															"
+            + " GROUP BY [Origem_do_Problema_rac]																																																"
+            + " 																																																				"
+            + " SELECT																																																			"
+            + " sum(Quant_rac) Quant_rac																																														"
+            + " INTO #TOTALF																																																	"
+            + " FROM [v_base_rac]																																																"
+            + " WHERE 1=1																																																		"
+            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
+            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND Tipo_rac = 'Real' 																																															"
+            + " 																																																				"
+            + " 																																																				"
+            + " DECLARE @SQLStr VARCHAR(max)																																													"
+            + " SET @SQLStr=''																																																	"
+            + " 																																																				"
+            + " SELECT																																																			"
+            + " [MES-DIA] Descricao																																																"
+            + " INTO #TAB																																																		"
+            + " FROM [v_base_rac]																																																"
+            + " 																																																				"
+            + " WHERE 1=1																																																		"
+            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
+            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND Tipo_rac = 'Real' 																																															"
+            + " GROUP BY [MES-DIA]																																																"
+            + " 																																																				"
+            + " DECLARE @LINHAS INT 																																															"
+            + " 																																																				"
+            + " SELECT @LINHAS = (SELECT COUNT(1) FROM #TAB)																																									"
+            + " 																																																				"
+            + " DECLARE @Tabela TABLE (																																															"
+            + "     VALOR VARCHAR(MAX)																																															"
+            + " )																																																				"
+            + "  																																																				"
+            + " INSERT @Tabela ( 																																																"
+            + "     VALOR																																																		"
+            + " )																																																				"
+            + " SELECT  																																																		"
+            + "     '||' 																																															"
+            + " FROM																																																			"
+            + "     #TAB																																																		"
+            + " GROUP BY 																																																		"
+            + "     Descricao																																																	"
+            + "  																																																				"
+            + " DECLARE @Descricao VARCHAR(MAX)																																													"
+            + "  																																																				"
+            + " DECLARE c CURSOR LOCAL FAST_FORWARD																																												"
+            + " FOR																																																				"
+            + "  																																																				"
+            + "     SELECT  																																																	"
+            + "         Descricao																																																"
+            + "     FROM																																																		"
+            + "         #TAB																																																	"
+            + "     ORDER BY 																																																	"
+            + "         Descricao ASC																																															"
+            + "  																																																				"
+            + "  																																																				"
+            + " OPEN c																																																			"
+            + "  																																																				"
+            + " FETCH c INTO @Descricao																																															"
+            + "  																																																				"
+            + " WHILE @@FETCH_STATUS = 0																																														"
+            + " BEGIN																																																			"
+            + "  																																																				"
+            + "     UPDATE  @Tabela																																																"
+            + "     SET     VALOR += ', [' + @Descricao + ']'																																									"
+            + "  																																																				"
+            + "     FETCH c INTO @Descricao																																														"
+            + " END																																																				"
+            + "  																																																				"
+            + " CLOSE c																																																			"
+            + " DEALLOCATE c																																																	"
+            + "  																																																				"
+            + " SELECT  																																																		"
+            + "     TOP 1 Descricoes = REPLACE(STUFF(VALOR, 1, 0, ''),'||,','')																																					"
+            + " INTO #TAB2																																																		"
+            + " FROM																																																			"
+            + "     @Tabela																																																		"
+            + " 																																																				"
+            + " SELECT @SQLStr = @SQLStr + (SELECT TOP 1 Descricoes FROM #TAB2)																																					"
+            + " 																																																				"
+            + " DROP TABLE #TAB																																																	"
+            + " DROP TABLE #TAB2																																																"
+            + " 																																																				"
+            + " PRINT @SQLStr																																																	"
+            + " SET @SQLStr = LEFT(@SQLStr,len(@SQLStr))																																										"
+            + " 																																																				"
+            + " SET @SQLStr ='SELECT pt.[Origem],   '																																											"
+            + " + @SQLStr																																																		"
+            + " + ' , T.Quant_rac as Total ' +																																													"
+            + " + ' , 0 as Total2 ' +																																															"
+            + " + ' FROM (SELECT [Origem_do_Problema_rac] Origem, [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																																"
+            + " '         from [v_base_rac] base with (nolock)  ' +																																								"
+            + " 																																																				"
+            + " 		' WHERE 1=1 ' +																																															"
+            + "         ' AND month(Data_rac) = month((select * from v_maiorData))																																	' +			"
+            + " 		' AND year(Data_rac) = year((select * from v_maiorData))																																	' +			"
+            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''MASSATAKE'',''MARBA'',''NORONHA'',''VIGOR'') 		' +			"
+            + " 		' AND Tipo_rac = ''Real'' 																																									' +			"
+            + " 																																																				"
+            + "         ' GROUP BY [Origem_do_Problema_rac], [MES-DIA] '+      																																								"
+            + " '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																						"
+            + " + @SQLStr+')) AS pt ' +																																															"
+            + " ' INNER JOIN #TOTAL T ON T.origem = PT.origem ' +																																								"
+            + " 																																																				"
+            + " ' UNION ALL ' +																																																	"
+            + " ' SELECT pt.[Origem],   '																																														"
+            + " + @SQLStr																																																		"
+            + " + ' , (SELECT SUM(Quant_rac) from #TOTALF) as Total ' +																																							"
+            + " + ' , (SELECT SUM(Quant_rac) from #TOTALF) as Total2 ' +																																						"
+            + " + ' FROM (SELECT ''Total'' as Origem, [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																													"
+            + " '         from [v_base_rac] base with (nolock)  ' +																																								"
+            + " 																																																				"
+            + " 		' WHERE 1=1 ' +																																															"
+            + "         ' AND month(Data_rac) = month((select * from v_maiorData))																																	' +			"
+            + " 		' AND year(Data_rac) = year((select * from v_maiorData))																																	' +			"
+            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''MASSATAKE'',''MARBA'',''NORONHA'',''VIGOR'') 		' +			"
+            + " 		' AND Tipo_rac = ''Real'' 																																									' +			"
+            + " 																																																				"
+            + "         ' GROUP BY [MES-DIA] '+      																																											"
+            + " '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																						"
+            + " + @SQLStr+')) AS pt ' +																																															"
+            + " 																																																				"
+            + " ' ORDER BY  ' + CAST(@LINHAS + 3 AS VARCHAR) + ' ASC, ' + CAST(@LINHAS + 2 AS VARCHAR) + ' DESC ' 																												"
+            + " 																																																				"
+            + " PRINT @SQLStr																																																	"
+            + " EXEC(@SQLStr)																																																	"
+            + " 																																																				"
+            + " DROP TABLE #TOTAL																																																"
+            + " DROP TABLE #TOTALFINAL																																															"
+            + " DROP TABLE #TOTALF																																																"
+
+
+            api.getSearaBaseSQLNINJA([ sqlTableRacRACDetalhesEvolucaoFatiados ]).then((response) => {
+                
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['Total2'];
+                }
+                
+                setTableRacRACDetalhesEvolucaoFatiados(json)
+            })
+
+
+            var sqlTableRacRACDetalhesEvolucaoPescados = ""
+            + " SELECT																																																			"
+            + " [Origem_do_Problema_rac] Origem,																																																		"
+            + " sum(Quant_rac) Quant_rac																																														"
+            + " INTO #TOTAL																																																		"
+            + " FROM [v_base_rac]																																																"
+            + " WHERE 1=1																																																		"
+            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
+            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND Tipo_rac = 'Real' 																																															"
+            + " GROUP BY [Origem_do_Problema_rac]																																																"
+            + " 																																																				"
+            + " SELECT																																																			"
+            + " 'Total' as Origem,																																															"
+            + " sum(Quant_rac) Quant_rac																																														"
+            + " INTO #TOTALFINAL																																																"
+            + " FROM [v_base_rac]																																																"
+            + " WHERE 1=1																																																		"
+            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
+            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND Tipo_rac = 'Real' 																																															"
+            + " GROUP BY [Origem_do_Problema_rac]																																																"
+            + " 																																																				"
+            + " SELECT																																																			"
+            + " sum(Quant_rac) Quant_rac																																														"
+            + " INTO #TOTALF																																																	"
+            + " FROM [v_base_rac]																																																"
+            + " WHERE 1=1																																																		"
+            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
+            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND Tipo_rac = 'Real' 																																															"
+            + " 																																																				"
+            + " 																																																				"
+            + " DECLARE @SQLStr VARCHAR(max)																																													"
+            + " SET @SQLStr=''																																																	"
+            + " 																																																				"
+            + " SELECT																																																			"
+            + " [MES-DIA] Descricao																																																"
+            + " INTO #TAB																																																		"
+            + " FROM [v_base_rac]																																																"
+            + " 																																																				"
+            + " WHERE 1=1																																																		"
+            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
+            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND Tipo_rac = 'Real' 																																															"
+            + " GROUP BY [MES-DIA]																																																"
+            + " 																																																				"
+            + " DECLARE @LINHAS INT 																																															"
+            + " 																																																				"
+            + " SELECT @LINHAS = (SELECT COUNT(1) FROM #TAB)																																									"
+            + " 																																																				"
+            + " DECLARE @Tabela TABLE (																																															"
+            + "     VALOR VARCHAR(MAX)																																															"
+            + " )																																																				"
+            + "  																																																				"
+            + " INSERT @Tabela ( 																																																"
+            + "     VALOR																																																		"
+            + " )																																																				"
+            + " SELECT  																																																		"
+            + "     '||' 																																															"
+            + " FROM																																																			"
+            + "     #TAB																																																		"
+            + " GROUP BY 																																																		"
+            + "     Descricao																																																	"
+            + "  																																																				"
+            + " DECLARE @Descricao VARCHAR(MAX)																																													"
+            + "  																																																				"
+            + " DECLARE c CURSOR LOCAL FAST_FORWARD																																												"
+            + " FOR																																																				"
+            + "  																																																				"
+            + "     SELECT  																																																	"
+            + "         Descricao																																																"
+            + "     FROM																																																		"
+            + "         #TAB																																																	"
+            + "     ORDER BY 																																																	"
+            + "         Descricao ASC																																															"
+            + "  																																																				"
+            + "  																																																				"
+            + " OPEN c																																																			"
+            + "  																																																				"
+            + " FETCH c INTO @Descricao																																															"
+            + "  																																																				"
+            + " WHILE @@FETCH_STATUS = 0																																														"
+            + " BEGIN																																																			"
+            + "  																																																				"
+            + "     UPDATE  @Tabela																																																"
+            + "     SET     VALOR += ', [' + @Descricao + ']'																																									"
+            + "  																																																				"
+            + "     FETCH c INTO @Descricao																																														"
+            + " END																																																				"
+            + "  																																																				"
+            + " CLOSE c																																																			"
+            + " DEALLOCATE c																																																	"
+            + "  																																																				"
+            + " SELECT  																																																		"
+            + "     TOP 1 Descricoes = REPLACE(STUFF(VALOR, 1, 0, ''),'||,','')																																					"
+            + " INTO #TAB2																																																		"
+            + " FROM																																																			"
+            + "     @Tabela																																																		"
+            + " 																																																				"
+            + " SELECT @SQLStr = @SQLStr + (SELECT TOP 1 Descricoes FROM #TAB2)																																					"
+            + " 																																																				"
+            + " DROP TABLE #TAB																																																	"
+            + " DROP TABLE #TAB2																																																"
+            + " 																																																				"
+            + " PRINT @SQLStr																																																	"
+            + " SET @SQLStr = LEFT(@SQLStr,len(@SQLStr))																																										"
+            + " 																																																				"
+            + " SET @SQLStr ='SELECT pt.[Origem],   '																																											"
+            + " + @SQLStr																																																		"
+            + " + ' , T.Quant_rac as Total ' +																																													"
+            + " + ' , 0 as Total2 ' +																																															"
+            + " + ' FROM (SELECT [Origem_do_Problema_rac] Origem, [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																																"
+            + " '         from [v_base_rac] base with (nolock)  ' +																																								"
+            + " 																																																				"
+            + " 		' WHERE 1=1 ' +																																															"
+            + "         ' AND month(Data_rac) = month((select * from v_maiorData))																																	' +			"
+            + " 		' AND year(Data_rac) = year((select * from v_maiorData))																																	' +			"
+            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''MASSATAKE'',''MARBA'',''NORONHA'',''VIGOR'') 		' +			"
+            + " 		' AND Tipo_rac = ''Real'' 																																									' +			"
+            + " 																																																				"
+            + "         ' GROUP BY [Origem_do_Problema_rac], [MES-DIA] '+      																																								"
+            + " '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																						"
+            + " + @SQLStr+')) AS pt ' +																																															"
+            + " ' INNER JOIN #TOTAL T ON T.origem = PT.origem ' +																																								"
+            + " 																																																				"
+            + " ' UNION ALL ' +																																																	"
+            + " ' SELECT pt.[Origem],   '																																														"
+            + " + @SQLStr																																																		"
+            + " + ' , (SELECT SUM(Quant_rac) from #TOTALF) as Total ' +																																							"
+            + " + ' , (SELECT SUM(Quant_rac) from #TOTALF) as Total2 ' +																																						"
+            + " + ' FROM (SELECT ''Total'' as Origem, [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																													"
+            + " '         from [v_base_rac] base with (nolock)  ' +																																								"
+            + " 																																																				"
+            + " 		' WHERE 1=1 ' +																																															"
+            + "         ' AND month(Data_rac) = month((select * from v_maiorData))																																	' +			"
+            + " 		' AND year(Data_rac) = year((select * from v_maiorData))																																	' +			"
+            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''MASSATAKE'',''MARBA'',''NORONHA'',''VIGOR'') 		' +			"
+            + " 		' AND Tipo_rac = ''Real'' 																																									' +			"
+            + " 																																																				"
+            + "         ' GROUP BY [MES-DIA] '+      																																											"
+            + " '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																						"
+            + " + @SQLStr+')) AS pt ' +																																															"
+            + " 																																																				"
+            + " ' ORDER BY  ' + CAST(@LINHAS + 3 AS VARCHAR) + ' ASC, ' + CAST(@LINHAS + 2 AS VARCHAR) + ' DESC ' 																												"
+            + " 																																																				"
+            + " PRINT @SQLStr																																																	"
+            + " EXEC(@SQLStr)																																																	"
+            + " 																																																				"
+            + " DROP TABLE #TOTAL																																																"
+            + " DROP TABLE #TOTALFINAL																																															"
+            + " DROP TABLE #TOTALF																																																"
+
+
+            api.getSearaBaseSQLNINJA([ sqlTableRacRACDetalhesEvolucaoPescados ]).then((response) => {
+                
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['Total2'];
+                }
+                
+                setTableRacRACDetalhesEvolucaoPescados(json)
+            })
+
+
+            var sqlTableRacRACDetalhesEvolucaoSuinos = ""
+            + " SELECT																																																			"
+            + " [Origem_do_Problema_rac] Origem,																																																		"
+            + " sum(Quant_rac) Quant_rac																																														"
+            + " INTO #TOTAL																																																		"
+            + " FROM [v_base_rac]																																																"
+            + " WHERE 1=1																																																		"
+            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
+            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND Tipo_rac = 'Real' 																																															"
+            + " GROUP BY [Origem_do_Problema_rac]																																																"
+            + " 																																																				"
+            + " SELECT																																																			"
+            + " 'Total' as Origem,																																															"
+            + " sum(Quant_rac) Quant_rac																																														"
+            + " INTO #TOTALFINAL																																																"
+            + " FROM [v_base_rac]																																																"
+            + " WHERE 1=1																																																		"
+            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
+            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND Tipo_rac = 'Real' 																																															"
+            + " GROUP BY [Origem_do_Problema_rac]																																																"
+            + " 																																																				"
+            + " SELECT																																																			"
+            + " sum(Quant_rac) Quant_rac																																														"
+            + " INTO #TOTALF																																																	"
+            + " FROM [v_base_rac]																																																"
+            + " WHERE 1=1																																																		"
+            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
+            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND Tipo_rac = 'Real' 																																															"
+            + " 																																																				"
+            + " 																																																				"
+            + " DECLARE @SQLStr VARCHAR(max)																																													"
+            + " SET @SQLStr=''																																																	"
+            + " 																																																				"
+            + " SELECT																																																			"
+            + " [MES-DIA] Descricao																																																"
+            + " INTO #TAB																																																		"
+            + " FROM [v_base_rac]																																																"
+            + " 																																																				"
+            + " WHERE 1=1																																																		"
+            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
+            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND Tipo_rac = 'Real' 																																															"
+            + " GROUP BY [MES-DIA]																																																"
+            + " 																																																				"
+            + " DECLARE @LINHAS INT 																																															"
+            + " 																																																				"
+            + " SELECT @LINHAS = (SELECT COUNT(1) FROM #TAB)																																									"
+            + " 																																																				"
+            + " DECLARE @Tabela TABLE (																																															"
+            + "     VALOR VARCHAR(MAX)																																															"
+            + " )																																																				"
+            + "  																																																				"
+            + " INSERT @Tabela ( 																																																"
+            + "     VALOR																																																		"
+            + " )																																																				"
+            + " SELECT  																																																		"
+            + "     '||' 																																															"
+            + " FROM																																																			"
+            + "     #TAB																																																		"
+            + " GROUP BY 																																																		"
+            + "     Descricao																																																	"
+            + "  																																																				"
+            + " DECLARE @Descricao VARCHAR(MAX)																																													"
+            + "  																																																				"
+            + " DECLARE c CURSOR LOCAL FAST_FORWARD																																												"
+            + " FOR																																																				"
+            + "  																																																				"
+            + "     SELECT  																																																	"
+            + "         Descricao																																																"
+            + "     FROM																																																		"
+            + "         #TAB																																																	"
+            + "     ORDER BY 																																																	"
+            + "         Descricao ASC																																															"
+            + "  																																																				"
+            + "  																																																				"
+            + " OPEN c																																																			"
+            + "  																																																				"
+            + " FETCH c INTO @Descricao																																															"
+            + "  																																																				"
+            + " WHILE @@FETCH_STATUS = 0																																														"
+            + " BEGIN																																																			"
+            + "  																																																				"
+            + "     UPDATE  @Tabela																																																"
+            + "     SET     VALOR += ', [' + @Descricao + ']'																																									"
+            + "  																																																				"
+            + "     FETCH c INTO @Descricao																																														"
+            + " END																																																				"
+            + "  																																																				"
+            + " CLOSE c																																																			"
+            + " DEALLOCATE c																																																	"
+            + "  																																																				"
+            + " SELECT  																																																		"
+            + "     TOP 1 Descricoes = REPLACE(STUFF(VALOR, 1, 0, ''),'||,','')																																					"
+            + " INTO #TAB2																																																		"
+            + " FROM																																																			"
+            + "     @Tabela																																																		"
+            + " 																																																				"
+            + " SELECT @SQLStr = @SQLStr + (SELECT TOP 1 Descricoes FROM #TAB2)																																					"
+            + " 																																																				"
+            + " DROP TABLE #TAB																																																	"
+            + " DROP TABLE #TAB2																																																"
+            + " 																																																				"
+            + " PRINT @SQLStr																																																	"
+            + " SET @SQLStr = LEFT(@SQLStr,len(@SQLStr))																																										"
+            + " 																																																				"
+            + " SET @SQLStr ='SELECT pt.[Origem],   '																																											"
+            + " + @SQLStr																																																		"
+            + " + ' , T.Quant_rac as Total ' +																																													"
+            + " + ' , 0 as Total2 ' +																																															"
+            + " + ' FROM (SELECT [Origem_do_Problema_rac] Origem, [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																																"
+            + " '         from [v_base_rac] base with (nolock)  ' +																																								"
+            + " 																																																				"
+            + " 		' WHERE 1=1 ' +																																															"
+            + "         ' AND month(Data_rac) = month((select * from v_maiorData))																																	' +			"
+            + " 		' AND year(Data_rac) = year((select * from v_maiorData))																																	' +			"
+            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''MASSATAKE'',''MARBA'',''NORONHA'',''VIGOR'') 		' +			"
+            + " 		' AND Tipo_rac = ''Real'' 																																									' +			"
+            + " 																																																				"
+            + "         ' GROUP BY [Origem_do_Problema_rac], [MES-DIA] '+      																																								"
+            + " '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																						"
+            + " + @SQLStr+')) AS pt ' +																																															"
+            + " ' INNER JOIN #TOTAL T ON T.origem = PT.origem ' +																																								"
+            + " 																																																				"
+            + " ' UNION ALL ' +																																																	"
+            + " ' SELECT pt.[Origem],   '																																														"
+            + " + @SQLStr																																																		"
+            + " + ' , (SELECT SUM(Quant_rac) from #TOTALF) as Total ' +																																							"
+            + " + ' , (SELECT SUM(Quant_rac) from #TOTALF) as Total2 ' +																																						"
+            + " + ' FROM (SELECT ''Total'' as Origem, [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																													"
+            + " '         from [v_base_rac] base with (nolock)  ' +																																								"
+            + " 																																																				"
+            + " 		' WHERE 1=1 ' +																																															"
+            + "         ' AND month(Data_rac) = month((select * from v_maiorData))																																	' +			"
+            + " 		' AND year(Data_rac) = year((select * from v_maiorData))																																	' +			"
+            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''MASSATAKE'',''MARBA'',''NORONHA'',''VIGOR'') 		' +			"
+            + " 		' AND Tipo_rac = ''Real'' 																																									' +			"
+            + " 																																																				"
+            + "         ' GROUP BY [MES-DIA] '+      																																											"
+            + " '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																						"
+            + " + @SQLStr+')) AS pt ' +																																															"
+            + " 																																																				"
+            + " ' ORDER BY  ' + CAST(@LINHAS + 3 AS VARCHAR) + ' ASC, ' + CAST(@LINHAS + 2 AS VARCHAR) + ' DESC ' 																												"
+            + " 																																																				"
+            + " PRINT @SQLStr																																																	"
+            + " EXEC(@SQLStr)																																																	"
+            + " 																																																				"
+            + " DROP TABLE #TOTAL																																																"
+            + " DROP TABLE #TOTALFINAL																																															"
+            + " DROP TABLE #TOTALF																																																"
+
+
+            api.getSearaBaseSQLNINJA([ sqlTableRacRACDetalhesEvolucaoSuinos ]).then((response) => {
+                
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['Total2'];
+                }
+                
+                setTableRacRACDetalhesEvolucaoSuinos(json)
+            })
+
 
             api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac IN ('Jéssica') "]).then((response) => {
 
@@ -4154,7 +5537,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
 
-                                    DataTableRACAberturaME()
+                                    DataTableRacRACDetalhesEvolucaoTotal()
 
                                 )}
                             </Col>
@@ -4175,7 +5558,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
 
-                                    DataTableRACAberturaME()
+                                    DataTableRacRACDetalhesEvolucaoAves()
 
                                 )}
                             </Col>
@@ -4217,7 +5600,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
 
-                                    DataTableRACAberturaME()
+                                    DataTableRacRACDetalhesEvolucaoPreparados()
 
                                 )}
                             </Col>
@@ -4238,7 +5621,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
 
-                                    DataTableRACAberturaME()
+                                    DataTableRacRACDetalhesEvolucaoFatiados()
 
                                 )}
                             </Col>
@@ -4259,7 +5642,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
 
-                                    DataTableRACAberturaME()
+                                    DataTableRacRACDetalhesEvolucaoPescados()
 
                                 )}
                             </Col>
@@ -4301,7 +5684,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
 
-                                    DataTableRACAberturaME()
+                                    DataTableRacRACDetalhesEvolucaoSuinos()
 
                                 )}
                             </Col>
