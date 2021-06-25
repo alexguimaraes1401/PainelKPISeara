@@ -128,6 +128,7 @@ function Home() {
         
 
     const percorreNumeroChamados = () => {
+        
         // debugger
         for (var i = 0; i < numeroChamados.length; i++) {
             if (numeroChamados[i] == false) {
@@ -135,7 +136,6 @@ function Home() {
             }
         }
 
-        
 
         if(document.getElementsByClassName('clOrienteMedio').length > 0) {
             arrumaTabela('clOrienteMedio')
@@ -659,31 +659,31 @@ function Home() {
     let whereNNCMP = " WHERE ([Reg. Qual] NOT IN ('Itajaí', 'Outros')) "
     whereNNCMP += " AND ([Grupo Problema] NOT IN ('Distr / Log', 'Embalagem Secundária') or [Grupo Problema] is null) "
     whereNNCMP += " AND ([Entra para a Meta] <> 'Não' or [Entra para a Meta] is null) "
+    
+    function arrumaTabela2(classTable) {
 
-    function arrumaTabela(classTable){
+        var table = $('.' + classTable + ' table')[0];
+        if(table) {
 
-        for (var i=0; i<$('.'+classTable+' table').rows.length;i++){
-            //console.log($('.'+classTable+' table').rows[i].cells[0].innerText);
-            if($('.'+classTable+' table').rows[i].cells[0].innerText.match(/.*@@.*/)  ){
-                //alert($('.'+classTable+' table').rows[i].cells[0].innerText)
-                $('.'+classTable+' table').rows[i].style.background = '#cccccc'
+            for (var i = 0; i < table.rows.length; i++) {
+                //console.log($('.'+classTable+' table').rows[i].cells[0].innerText);
+                if (table.rows[i].cells[0].innerText.match(/.*@@.*/)) {
+                    //alert($('.'+classTable+' table').rows[i].cells[0].innerText)
+                    table.rows[i].style.background = '#cccccc'
+                }
+            }
+            var classtable = $('.' + classTable + '')[0];
+            classtable.innerHTML = classtable.innerHTML.replaceAll(".....", "&nbsp;&nbsp;&nbsp;&nbsp;")
+            classtable.innerHTML = classtable.innerHTML.replaceAll("@@", "")
+            classtable.innerHTML = classtable.innerHTML.replaceAll("&lt;b&gt;", "<b>")
+            classtable.innerHTML = classtable.innerHTML.replaceAll("&lt;/b&gt;", "</b>")
+            
+            if (table.rows[table.rows.length - 1].cells[0].innerText == "Total") {
+                table.rows[table.rows.length - 1].style.background = '#999999'
+                table.rows[table.rows.length - 1].style.color = 'white'
+    
             }
         }
-    
-            $('.'+classTable+'').innerHTML = $('.'+classTable+'').innerHTML.replaceAll(".....","&nbsp;&nbsp;&nbsp;&nbsp;")
-    
-        $('.'+classTable+'').innerHTML = $('.'+classTable+'').innerHTML.replaceAll("@@","")
-    
-    
-            $('.'+classTable+'').innerHTML = $('.'+classTable+'').innerHTML.replaceAll("&lt;b&gt;","<b>")
-    
-            $('.'+classTable+'').innerHTML = $('.'+classTable+'').innerHTML.replaceAll("&lt;/b&gt;","</b>")
-    
-            if($('.'+classTable+' table').rows[$('.'+classTable+' table').rows.length-1].cells[0].innerText == "Total"){
-                $('.'+classTable+' table').rows[$('.'+classTable+' table').rows.length-1].style.background = '#999999'
-                $('.'+classTable+' table').rows[$('.'+classTable+' table').rows.length-1].style.color = 'white'
-        
-            }
     }
 
     function ttt(aa){
@@ -2757,6 +2757,7 @@ function Home() {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEAsia(json)
+                setTimeout(arrumaTabela2('clJapao'), 3000)
             })
 
             api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac IN ('Regina')  "]).then((response) => {
@@ -4329,6 +4330,7 @@ function Home() {
         // <div style="width: 1220px !important;">
         <div>
             <canvas style={{ display: 'none' }} ref={canvasRef} />
+            {/* <button className="btn btn-sm btn-outline-secondary" onClick={arrumaTabela2('clJapao')}>Atualizar</button> */}
             <Row>
                 <Col lg={12} className="cssSeara2021">
                     {isUpdatingData ? (<UpdatingDatabase />) : (
