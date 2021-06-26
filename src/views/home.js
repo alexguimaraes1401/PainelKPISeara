@@ -74,12 +74,12 @@ function Home() {
     const [estaRodandoAplicar, setEstaRodandoAplicar] = React.useState(false)
     const toast = React.useRef(null);
     const canvasRef = React.useRef();
-
-    
-
-    
+ 
     
     var numeroChamados = [false,false,false,false,false,false,false,false,false,false,
+        false,false,false,false,false,false,false,false,false,false,
+        false,false,false,false,false,false,false,false,false,false,
+        false,false,false,false,false,false,false,false,false,false,
         false,false,false,false,false,false,false,false,false,false,
         false,false,false,false,false,false,false,false,false,false,
         false,false,false,false,false,false,false,false,false,false,
@@ -741,8 +741,8 @@ function Home() {
         setIsUpdatingData(true);
 
         chamarAPI("CETotal", GraficoCETotal, "GraficoCETotal", [' where 1=1 '], setGraficoCETotal, setresponseGraficoCETotal, 0)     // 1
-        chamarAPI("NNCMPTotalCE", GraficoNNCMPTotalCE, "GraficoNNCMPTotalCE", [' where 1=1 '], setGraficoNNCMPTotalCE, setresponseGraficoNNCMPTotalCE, 1)       // 2
-        chamarAPI("RAC", GraficoRACTotalCE, "GraficoRACTotalCE", [whereRACCE], setGraficoRACTotalCE, setresponseGraficoRACTotalCE, 2)     // 3
+        chamarAPI("CETotal", GraficoNNCMPTotalCE, "GraficoNNCMPTotalCE", [" where tipo = 'NNC MP' "], setGraficoNNCMPTotalCE, setresponseGraficoNNCMPTotalCE, 1)       // 2
+        chamarAPI("CETotal", GraficoRACTotalCE, "GraficoRACTotalCE", [" where TIPO = 'RAC' "], setGraficoRACTotalCE, setresponseGraficoRACTotalCE, 2)     // 3
         chamarAPI("RAC", GraficoRAC, "GraficoRAC", [' where 1=1 '], setGraficoRAC, setresponseGraficoRAC, 3)    // 4
         chamarAPI("NCCMP", GraficoNCCMP, "GraficoNCCMP", [whereNNCMP], setGraficoNCCMP, setresponseGraficoNCCMP, 4)    // 5 
 
@@ -850,76 +850,76 @@ function Home() {
         chamarAPI("RACIndicadores", GraficoRACDetalhesEspeciais, "GraficoRACDetalhesEspeciais", [" where 99=99 "] , setGraficoRACDetalhesEspeciais, setresponseGraficoRACDetalhesEspeciais, 63)
 
         //RAC Corpo Estanho - [Totais]
-        chamarAPI("RACIndicadores", GraficoRACDetalhesCE, "GraficoRACDetalhesCE", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA]  IN ('EXPEDIÇÃO FÁBRICA','FABRICAÇÃO') AND [TIPO CE] IN ('INERENTE','NÃO INERENTE') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') "] , setGraficoRACDetalhesCE, setresponseGraficoRACDetalhesCE, 64)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesCE, "GraficoRACDetalhesCE", [" WHERE 1=1 AND [TIPO CE] IN ('INERENTE','NÃO INERENTE') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') "] , setGraficoRACDetalhesCE, setresponseGraficoRACDetalhesCE, 64)
 
         //RAC Corpo Estanho - [Inerente]
-        chamarAPI("RACIndicadores", GraficoRACDetalhesCEInerente, "GraficoRACDetalhesCEInerente", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA] IN ('FABRICAÇÃO') AND [TIPO CE] IN ('INERENTE') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO','MORRO GRANDE') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') "] , setGraficoRACDetalhesCEInerente, setresponseGraficoRACDetalhesCEInerente, 65)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesCEInerente, "GraficoRACDetalhesCEInerente", [" WHERE 1=1 AND [TIPO CE] IN ('INERENTE') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO','MORRO GRANDE') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') "] , setGraficoRACDetalhesCEInerente, setresponseGraficoRACDetalhesCEInerente, 65)
 
         //RAC Corpo Estanho - [Não Inerente]
-        chamarAPI("RACIndicadores", GraficoRACDetalhesCENaoInerente, "GraficoRACDetalhesCENaoInerente", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA] IN ('EXPEDIÇÃO FÁBRICA','FABRICAÇÃO') AND [TIPO CE] IN ('NÃO INERENTE') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA','VERÍSSIMO','MORRO GRANDE') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') "] , setGraficoRACDetalhesCENaoInerente, setresponseGraficoRACDetalhesCENaoInerente, 66)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesCENaoInerente, "GraficoRACDetalhesCENaoInerente", [" WHERE 1=1 AND [TIPO CE] IN ('NÃO INERENTE') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA','VERÍSSIMO','MORRO GRANDE') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') "] , setGraficoRACDetalhesCENaoInerente, setresponseGraficoRACDetalhesCENaoInerente, 66)
 
         //RAC Corpo Estanho - [Plástico]
-        chamarAPI("RACIndicadores", GraficoRACDetalhesCEPlastico, "GraficoRACDetalhesCEPlastico", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA] IN ('FABRICAÇÃO') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA','SANTA CRUZ DO SUL') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') AND [TIPO DO PROBLEMA] IN ('LUVA','LUVA NITRÍLICA','PLÁSTICO','PLÁSTICO DURO','PLÁSTICO MOLE') "] , setGraficoRACDetalhesCEPlastico, setresponseGraficoRACDetalhesCEPlastico, 67)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesCEPlastico, "GraficoRACDetalhesCEPlastico", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA','SANTA CRUZ DO SUL') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') AND [TIPO DO PROBLEMA] IN ('LUVA','LUVA NITRÍLICA','PLÁSTICO','PLÁSTICO DURO','PLÁSTICO MOLE') "] , setGraficoRACDetalhesCEPlastico, setresponseGraficoRACDetalhesCEPlastico, 67)
 
         //RAC Inseto
-        chamarAPI("RACIndicadores", GraficoRACDetalhesInseto, "GraficoRACDetalhesInseto", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA] IN ('FABRICAÇÃO') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') AND [TIPO DO PROBLEMA] IN ('INSETO') AND [SUB TIPO PROBLEMA] NOT IN ('LARVA') "] , setGraficoRACDetalhesInseto, setresponseGraficoRACDetalhesInseto, 68)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesInseto, "GraficoRACDetalhesInseto", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') AND [TIPO DO PROBLEMA] IN ('INSETO') AND [SUB TIPO PROBLEMA] NOT IN ('LARVA') "] , setGraficoRACDetalhesInseto, setresponseGraficoRACDetalhesInseto, 68)
 
         //RAC Cabelo
-        chamarAPI("RACIndicadores", GraficoRACDetalhesCabelo, "GraficoRACDetalhesCabelo", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA] IN ('FABRICAÇÃO') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('AMAI','DAN VIGOR','MARBA','GRANO','GRIFFOOD','JBS','MASSATAKE','SANTA CRIZ DO SUL','SERYA','VIGOR') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') AND [TIPO DO PROBLEMA] IN ('FIO DE CABELO / PÊLO HUMANO','FIO DE CABELO/PÊLO HUMANO') "] , setGraficoRACDetalhesCabelo, setresponseGraficoRACDetalhesCabelo, 69)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesCabelo, "GraficoRACDetalhesCabelo", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('AMAI','DAN VIGOR','MARBA','GRANO','GRIFFOOD','JBS','MASSATAKE','SANTA CRIZ DO SUL','SERYA','VIGOR') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') AND [TIPO DO PROBLEMA] LIKE '%CABELO%' "] , setGraficoRACDetalhesCabelo, setresponseGraficoRACDetalhesCabelo, 69)
 
         //RAC Plastico
-        chamarAPI("RACIndicadores", GraficoRACDetalhesPlastico, "GraficoRACDetalhesPlastico", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA] IN ('FABRICAÇÃO') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA','SANTA CRUZ DO SUL') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') AND [TIPO DO PROBLEMA] IN ('LUVA','LUVA NITRÍLICA','PLÁSTICO','PLÁSTICO DURO','PLÁSTICO MOLE') "] , setGraficoRACDetalhesPlastico, setresponseGraficoRACDetalhesPlastico,70)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesPlastico, "GraficoRACDetalhesPlastico", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA','SANTA CRUZ DO SUL') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') AND [TIPO DO PROBLEMA] IN ('LUVA','LUVA NITRÍLICA','PLÁSTICO','PLÁSTICO DURO','PLÁSTICO MOLE') "] , setGraficoRACDetalhesPlastico, setresponseGraficoRACDetalhesPlastico,70)
 
         //RAC Metal
-        chamarAPI("RACIndicadores", GraficoRACDetalhesMetal, "GraficoRACDetalhesMetal", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA] IN ('FABRICAÇÃO','EXPEDIÇÃO FÁBRICA','P&D','PRODUÇÃO EM TERCEIRO') AND UNIDADE NOT IN ('AGRO ALFA','AMAI','ATI-GEL','CLAREBOUT','GRANO','GRIFFOOD','MASSATAKE','SANTA CRUZ DO SUL','VIGOR')  AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') AND [PROBLEMA] IN ('METAL','METÁLICO') "] , setGraficoRACDetalhesMetal, setresponseGraficoRACDetalhesMetal,71)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesMetal, "GraficoRACDetalhesMetal", [" WHERE 1=1 AND UNIDADE NOT IN ('AGRO ALFA','AMAI','ATI-GEL','CLAREBOUT','GRANO','GRIFFOOD','MASSATAKE','SANTA CRUZ DO SUL','VIGOR')  AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') AND [PROBLEMA] IN ('METAL','METÁLICO') "] , setGraficoRACDetalhesMetal, setresponseGraficoRACDetalhesMetal,71)
 
         //RAC Intoxicação
-        chamarAPI("RACIndicadores", GraficoRACDetalhesIntoxicacao, "GraficoRACDetalhesIntoxicacao", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA] IN ('FABRICAÇÃO','COMERCIALIZAÇÃO') AND UNIDADE NOT IN ('HORTUS','JBS','MASSATAKE','VIGOR') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') AND [PROBLEMA] IN ('INTOXICAÇÃO ALIMENTAR') "] , setGraficoRACDetalhesIntoxicacao, setresponseGraficoRACDetalhesIntoxicacao,72)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesIntoxicacao, "GraficoRACDetalhesIntoxicacao", [" WHERE 1=1 AND UNIDADE NOT IN ('HORTUS','JBS','MASSATAKE','VIGOR') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') AND [PROBLEMA] IN ('INTOXICAÇÃO ALIMENTAR') "] , setGraficoRACDetalhesIntoxicacao, setresponseGraficoRACDetalhesIntoxicacao,72)
 
         //RAC Larva
-        chamarAPI("RACIndicadores", GraficoRACDetalhesLarva, "GraficoRACDetalhesLarva", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA] IN ('FABRICAÇÃO') AND [GRUPO] IN ('CORPO ESTRANHO') AND [REGIONAL (Qualidade)] NOT IN ('FATIADOS','PESCADOS','AVES PR','AVES RS/SC/SP','AVES SP/CO/NE') AND UNIDADE NOT IN ('AGRO ALFA','AMAI','ATI-GEL','CLAREBOUT','GRANO','GRIFFOOD','MASSATAKE','SANTA CRUZ DO SUL','VIGOR','ARTES GRÁFICAS','CAMPINAS-CD','CAMPO VERDE','CD RIBEIRÃO DAS NEVES','CPO','DOC INDUSTRIA','EIRELI EPP','EIRELI ME','EXCELSIOR','GENESEAS AQUACULTURA','GERÊNCIA NACIONA FS','GRANO ALIMENTOS S.A.','GRIFFOOD','ICOFORT','ITAJAI','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','ITAJAI PESCADOS','LABREZZA','M P FOODS','MARBA','MASSAS SANTA ENERSTINA LTDA','NORONHA', 'OUTROS','PINHAIS - CD','QUALIDADE SUPPLY CHAIN','RIBEIRÃO PRETO – CD','SALVADOR – CD','SAO PAULO – CD','SEARA MEATS','SOMAVE','VARZEA GRANDE – CD') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO','NOTIFICAÇÃO') AND [PROBLEMA] IN ('INSETO','INSETO VIVO') AND [TIPO DO PROBLEMA] IN ('INSETO','LARVA', 'INSETO VIVO','LARVA VIVA')	 AND [SUB TIPO PROBLEMA] IN ('LARVA','LARVA VIVA') "] , setGraficoRACDetalhesLarva, setresponseGraficoRACDetalhesLarva,73)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesLarva, "GraficoRACDetalhesLarva", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND [REGIONAL (Qualidade)] NOT IN ('FATIADOS','PESCADOS','AVES PR','AVES RS/SC/SP','AVES SP/CO/NE') AND UNIDADE NOT IN ('AGRO ALFA','AMAI','ATI-GEL','CLAREBOUT','GRANO','GRIFFOOD','MASSATAKE','SANTA CRUZ DO SUL','VIGOR','ARTES GRÁFICAS','CAMPINAS-CD','CAMPO VERDE','CD RIBEIRÃO DAS NEVES','CPO','DOC INDUSTRIA','EIRELI EPP','EIRELI ME','EXCELSIOR','GENESEAS AQUACULTURA','GERÊNCIA NACIONA FS','GRANO ALIMENTOS S.A.','GRIFFOOD','ICOFORT','ITAJAI','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','ITAJAI PESCADOS','LABREZZA','M P FOODS','MARBA','MASSAS SANTA ENERSTINA LTDA','NORONHA', 'OUTROS','PINHAIS - CD','QUALIDADE SUPPLY CHAIN','RIBEIRÃO PRETO – CD','SALVADOR – CD','SAO PAULO – CD','SEARA MEATS','SOMAVE','VARZEA GRANDE – CD') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO','NOTIFICAÇÃO') AND [PROBLEMA] IN ('INSETO','INSETO VIVO') AND [TIPO DO PROBLEMA] IN ('INSETO','LARVA', 'INSETO VIVO','LARVA VIVA')	 AND [SUB TIPO PROBLEMA] IN ('LARVA','LARVA VIVA') "] , setGraficoRACDetalhesLarva, setresponseGraficoRACDetalhesLarva,73)
 
-        // //NNC Log
-        // chamarAPI("NCCLOG", GraficoNNCLogDetalhesTotal, "GraficoNNCLogDetalhesTotal", [" where 1=1 "] , setGraficoNNCLogDetalhesTotal, setresponseGraficoNNCLogDetalhesTotal,74)
-        // chamarAPI("NCCLOG", GraficoNNCLogDetalhesAves, "GraficoNNCLogDetalhesAves", [" where 1=1 "] , setGraficoNNCLogDetalhesAves, setresponseGraficoNNCLogDetalhesAves,75)
-        // chamarAPI("NCCLOG", GraficoNNCLogDetalhesPreparados, "GraficoNNCLogDetalhesPreparados", [" where 1=1 "] , setGraficoNNCLogDetalhesPreparados, setresponseGraficoNNCLogDetalhesPreparados,76)
-        // chamarAPI("NCCLOG", GraficoNNCLogDetalhesSuinos, "GraficoNNCLogDetalhesSuinos", [" where 1=1 "] , setGraficoNNCLogDetalhesSuinos, setresponseGraficoNNCLogDetalhesSuinos,77)
+        //NNC Log
+        chamarAPI("NCCLOG", GraficoNNCLogDetalhesTotal, "GraficoNNCLogDetalhesTotal", [" where 1=1 "] , setGraficoNNCLogDetalhesTotal, setresponseGraficoNNCLogDetalhesTotal,74)
+        chamarAPI("NCCLOG", GraficoNNCLogDetalhesAves, "GraficoNNCLogDetalhesAves", [" where [Regional (Qualidade)] like '%aves%' "] , setGraficoNNCLogDetalhesAves, setresponseGraficoNNCLogDetalhesAves,75)
+        chamarAPI("NCCLOG", GraficoNNCLogDetalhesPreparados, "GraficoNNCLogDetalhesPreparados", [" where [Regional (Qualidade)] like '%prepa%' "] , setGraficoNNCLogDetalhesPreparados, setresponseGraficoNNCLogDetalhesPreparados,76)
+        chamarAPI("NCCLOG", GraficoNNCLogDetalhesSuinos, "GraficoNNCLogDetalhesSuinos", [" where [Regional (Qualidade)] like '%su%no%' "] , setGraficoNNCLogDetalhesSuinos, setresponseGraficoNNCLogDetalhesSuinos,77)
 
-        // //NNC MP
-        // chamarAPI("NCCMP", GraficoNNCAvesPesadas, "GraficoNNCAvesPesadas", [ ' WHERE 1=1 '], setGraficoNNCAvesPesadas, setresponseGraficoNNCAvesPesadas, 78)
-        // chamarAPI("NCCMP", GraficoNNCAvesPesadasUnidades, "GraficoNNCAvesPesadasUnidades", [ ' WHERE 1=1 '], setGraficoNNCAvesPesadasUnidades, setresponseGraficoNNCAvesPesadasUnidades, 79)
-        // chamarAPI("NCCMP", GraficoNNCAvesPesadasProblemas, "GraficoNNCAvesPesadasProblemas", [ ' WHERE 1=1 '], setGraficoNNCAvesPesadasProblemas, setresponseGraficoNNCAvesPesadasProblemas, 80)
+        //NNC MP
+        chamarAPI("NCCMP", GraficoNNCAvesPesadas, "GraficoNNCAvesPesadas", [" where [Reg. Qual] like '%Aves%Pe%' "], setGraficoNNCAvesPesadas, setresponseGraficoNNCAvesPesadas, 78)
+        chamarAPI("NCCMPUnidade", GraficoNNCAvesPesadasUnidades, "GraficoNNCAvesPesadasUnidades", [ " where [Reg. Qual] like '%Aves%Pe%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCAvesPesadasUnidades, setresponseGraficoNNCAvesPesadasUnidades, 79)
+        chamarAPI("NCCMPProblema", GraficoNNCAvesPesadasProblemas, "GraficoNNCAvesPesadasProblemas", [ " where [Reg. Qual] like '%Aves%Pe%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCAvesPesadasProblemas, setresponseGraficoNNCAvesPesadasProblemas, 80)
 
-        // chamarAPI("NCCMP", GraficoNNCAvesRS, "GraficoNNCAvesRS", [ ' WHERE 1=1 '], setGraficoNNCAvesRS, setresponseGraficoNNCAvesRS, 81)
-        // chamarAPI("NCCMP", GraficoNNCAvesRSUnidades, "GraficoNNCAvesRSUnidades", [ ' WHERE 1=1 '], setGraficoNNCAvesRSUnidades, setresponseGraficoNNCAvesRSUnidades, 82)
-        // chamarAPI("NCCMP", GraficoNNCAvesRSProblemas, "GraficoNNCAvesRSProblemas", [ ' WHERE 1=1 '], setGraficoNNCAvesRSProblemas, setresponseGraficoNNCAvesRSProblemas, 83)
+        chamarAPI("NCCMP", GraficoNNCAvesRS, "GraficoNNCAvesRS", [" where [Reg. Qual] like '%Aves Pesadas RS/SC/SP%' "], setGraficoNNCAvesRS, setresponseGraficoNNCAvesRS, 81)
+        chamarAPI("NCCMPUnidade", GraficoNNCAvesRSUnidades, "GraficoNNCAvesRSUnidades", [" where [Reg. Qual] like '%Aves Pesadas RS/SC/SP%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCAvesRSUnidades, setresponseGraficoNNCAvesRSUnidades, 82)
+        chamarAPI("NCCMPProblema", GraficoNNCAvesRSProblemas, "GraficoNNCAvesRSProblemas", [" where [Reg. Qual] like '%Aves Pesadas RS/SC/SP%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCAvesRSProblemas, setresponseGraficoNNCAvesRSProblemas, 83)
 
-        // chamarAPI("NCCMP", GraficoNNCAvesSP, "GraficoNNCAvesSP", [ ' WHERE 1=1 '], setGraficoNNCAvesSP, setresponseGraficoNNCAvesSP, 84)
-        // chamarAPI("NCCMP", GraficoNNCAvesSPUnidades, "GraficoNNCAvesSPUnidades", [ ' WHERE 1=1 '], setGraficoNNCAvesSPUnidades, setresponseGraficoNNCAvesSPUnidades, 85)
-        // chamarAPI("NCCMP", GraficoNNCAvesSPProblemas, "GraficoNNCAvesSPProblemas", [ ' WHERE 1=1 '], setGraficoNNCAvesSPProblemas, setresponseGraficoNNCAvesSPProblemas, 86)
+        chamarAPI("NCCMP", GraficoNNCAvesSP, "GraficoNNCAvesSP", [" where [Reg. Qual] like '%Aves Pesadas SP/CO/NE%' "], setGraficoNNCAvesSP, setresponseGraficoNNCAvesSP, 84)
+        chamarAPI("NCCMPUnidade", GraficoNNCAvesSPUnidades, "GraficoNNCAvesSPUnidades", [" where [Reg. Qual] like '%Aves Pesadas SP/CO/NE%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCAvesSPUnidades, setresponseGraficoNNCAvesSPUnidades, 85)
+        chamarAPI("NCCMPProblema", GraficoNNCAvesSPProblemas, "GraficoNNCAvesSPProblemas", [" where [Reg. Qual] like '%Aves Pesadas SP/CO/NE%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCAvesSPProblemas, setresponseGraficoNNCAvesSPProblemas, 86)
 
-        // chamarAPI("NCCMP", GraficoNNCAvesPR, "GraficoNNCAvesPR", [ ' WHERE 1=1 '], setGraficoNNCAvesPR, setresponseGraficoNNCAvesPR, 87)
-        // chamarAPI("NCCMP", GraficoNNCAvesPRUnidades, "GraficoNNCAvesPRUnidades", [ ' WHERE 1=1 '], setGraficoNNCAvesPRUnidades, setresponseGraficoNNCAvesPRUnidades, 88)
-        // chamarAPI("NCCMP", GraficoNNCAvesPRProblemas, "GraficoNNCAvesPRProblemas", [ ' WHERE 1=1 '], setGraficoNNCAvesPRProblemas, setresponseGraficoNNCAvesPRProblemas, 89)
+        chamarAPI("NCCMP", GraficoNNCAvesPR, "GraficoNNCAvesPR", [" where [Reg. Qual] like '%Aves Pesadas PR%' "], setGraficoNNCAvesPR, setresponseGraficoNNCAvesPR, 87)
+        chamarAPI("NCCMPUnidade", GraficoNNCAvesPRUnidades, "GraficoNNCAvesPRUnidades", [" where [Reg. Qual] like '%Aves Pesadas PR%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCAvesPRUnidades, setresponseGraficoNNCAvesPRUnidades, 88)
+        chamarAPI("NCCMPProblema", GraficoNNCAvesPRProblemas, "GraficoNNCAvesPRProblemas", [" where [Reg. Qual] like '%Aves Pesadas PR%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCAvesPRProblemas, setresponseGraficoNNCAvesPRProblemas, 89)
 
-        // chamarAPI("NCCMP", GraficoNNCAvesLeves, "GraficoNNCAvesLeves", [ ' WHERE 1=1 '], setGraficoNNCAvesLeves, setresponseGraficoNNCAvesLeves, 90)
-        // chamarAPI("NCCMP", GraficoNNCAvesLevesUnidades, "GraficoNNCAvesLevesUnidades", [ ' WHERE 1=1 '], setGraficoNNCAvesLevesUnidades, setresponseGraficoNNCAvesLevesUnidades, 91)
-        // chamarAPI("NCCMP", GraficoNNCAvesLevesProblemas, "GraficoNNCAvesLevesProblemas", [ ' WHERE 1=1 '], setGraficoNNCAvesLevesProblemas, setresponseGraficoNNCAvesLevesProblemas, 92)
+        chamarAPI("NCCMP", GraficoNNCAvesLeves, "GraficoNNCAvesLeves", [" where [Reg. Qual] like '%Aves Leves%' "], setGraficoNNCAvesLeves, setresponseGraficoNNCAvesLeves, 90)
+        chamarAPI("NCCMPUnidade", GraficoNNCAvesLevesUnidades, "GraficoNNCAvesLevesUnidades", [" where [Reg. Qual] like '%Aves Leves%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCAvesLevesUnidades, setresponseGraficoNNCAvesLevesUnidades, 91)
+        chamarAPI("NCCMPProblema", GraficoNNCAvesLevesProblemas, "GraficoNNCAvesLevesProblemas", [" where [Reg. Qual] like '%Aves Leves%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCAvesLevesProblemas, setresponseGraficoNNCAvesLevesProblemas, 92)
 
-        // chamarAPI("NCCMP", GraficoNNCSuinos, "GraficoNNCSuinos", [ ' WHERE 1=1 '], setGraficoNNCSuinos, setresponseGraficoNNCSuinos, 93)
-        // chamarAPI("NCCMP", GraficoNNCSuinosUnidades, "GraficoNNCSuinosUnidades", [ ' WHERE 1=1 '], setGraficoNNCSuinosUnidades, setresponseGraficoNNCSuinosUnidades, 94)
-        // chamarAPI("NCCMP", GraficoNNCSuinosProblemas, "GraficoNNCSuinosProblemas", [ ' WHERE 1=1 '], setGraficoNNCSuinosProblemas, setresponseGraficoNNCSuinosProblemas, 95)
+        chamarAPI("NCCMP", GraficoNNCSuinos, "GraficoNNCSuinos", [" where [Reg. Qual] like '%Suínos%' "], setGraficoNNCSuinos, setresponseGraficoNNCSuinos, 93)
+        chamarAPI("NCCMPUnidade", GraficoNNCSuinosUnidades, "GraficoNNCSuinosUnidades", [" where [Reg. Qual] like '%Suínos%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCSuinosUnidades, setresponseGraficoNNCSuinosUnidades, 94)
+        chamarAPI("NCCMPProblema", GraficoNNCSuinosProblemas, "GraficoNNCSuinosProblemas", [" where [Reg. Qual] like '%Suínos%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCSuinosProblemas, setresponseGraficoNNCSuinosProblemas, 95)
 
-        // chamarAPI("NCCMP", GraficoNNCPreparados, "GraficoNNCPreparados", [ ' WHERE 99=99 '], setGraficoNNCPreparados, setresponseGraficoNNCPreparados, 96)
-        // chamarAPI("NCCMP", GraficoNNCPreparadosUnidades, "GraficoNNCPreparadosUnidades", [ ' WHERE 99=99 '], setGraficoNNCPreparadosUnidades, setresponseGraficoNNCPreparadosUnidades, 97)
-        // chamarAPI("NCCMP", GraficoNNCPreparadosProblemas, "GraficoNNCPreparadosProblemas", [ ' WHERE 99=99 '], setGraficoNNCPreparadosProblemas, setresponseGraficoNNCPreparadosProblemas, 98)
+        chamarAPI("NCCMP", GraficoNNCPreparados, "GraficoNNCPreparados", [" where [Reg. Qual] like '%Preparados%' "], setGraficoNNCPreparados, setresponseGraficoNNCPreparados, 96)
+        chamarAPI("NCCMPUnidade", GraficoNNCPreparadosUnidades, "GraficoNNCPreparadosUnidades", [" where [Reg. Qual] like '%Preparados%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCPreparadosUnidades, setresponseGraficoNNCPreparadosUnidades, 97)
+        chamarAPI("NCCMPProblema", GraficoNNCPreparadosProblemas, "GraficoNNCPreparadosProblemas", [" where [Reg. Qual] like '%Preparados%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCPreparadosProblemas, setresponseGraficoNNCPreparadosProblemas, 98)
         
-        // chamarAPI("NCCMP", GraficoNNCCETotal, "GraficoNNCCETotal", [ ' WHERE 99=99 '], setGraficoNNCCETotal, setresponseGraficoNNCCETotal, 99)
-        // chamarAPI("NCCMP", GraficoNNCCEInerente, "GraficoNNCCEInerente", [ ' WHERE 99=99 '], setGraficoNNCCEInerente, setresponseGraficoNNCCEInerente, 100)
-        // chamarAPI("NCCMP", GraficoNNCCENaoInerente, "GraficoNNCCENaoInerente", [ ' WHERE 99=99 '], setGraficoNNCCENaoInerente, setresponseGraficoNNCCENaoInerente, 101)
-        // chamarAPI("NCCMP", GraficoNNCCEOssos, "GraficoNNCCEOssos", [ ' WHERE 99=99 '], setGraficoNNCCEOssos, setresponseGraficoNNCCEOssos, 102)
-        // chamarAPI("NCCMP", GraficoNNCCEPlastico, "GraficoNNCCEPlastico", [ ' WHERE 99=99 '], setGraficoNNCCEPlastico, setresponseGraficoNNCCEPlastico, 103)
-        // chamarAPI("NCCMP", GraficoNNCCEMetal, "GraficoNNCCEMetal", [ ' WHERE 99=99 '], setGraficoNNCCEMetal, setresponseGraficoNNCCEMetal, 104)
+        chamarAPI("NCCMP", GraficoNNCCETotal, "GraficoNNCCETotal", [" WHERE [Grupo Problema] = 'Corpo Estranho' "], setGraficoNNCCETotal, setresponseGraficoNNCCETotal, 99)
+        chamarAPI("NCCMP", GraficoNNCCEInerente, "GraficoNNCCEInerente", [" WHERE [Grupo Problema] = 'Corpo Estranho' AND [Tipo CE] = 'Inerente' "], setGraficoNNCCEInerente, setresponseGraficoNNCCEInerente, 100)
+        chamarAPI("NCCMP", GraficoNNCCENaoInerente, "GraficoNNCCENaoInerente", [" WHERE [Grupo Problema] = 'Corpo Estranho' AND [Tipo CE] = 'Não Inerente' "], setGraficoNNCCENaoInerente, setresponseGraficoNNCCENaoInerente, 101)
+        chamarAPI("NCCMP", GraficoNNCCEOssos, "GraficoNNCCEOssos", [" WHERE [Grupo Problema] = 'Corpo Estranho' AND [Tipo Problema] = 'Ossos' "], setGraficoNNCCEOssos, setresponseGraficoNNCCEOssos, 102)
+        chamarAPI("NCCMP", GraficoNNCCEPlastico, "GraficoNNCCEPlastico", [" WHERE [Grupo Problema] = 'Corpo Estranho' AND [Tipo Problema] like '%Plás%' "], setGraficoNNCCEPlastico, setresponseGraficoNNCCEPlastico, 103)
+        chamarAPI("NCCMP", GraficoNNCCEMetal, "GraficoNNCCEMetal", [" WHERE [Grupo Problema] = 'Corpo Estranho' AND [Tipo Problema] like '%Metal%' "], setGraficoNNCCEMetal, setresponseGraficoNNCCEMetal, 104)
         
             
         /////////////////////
@@ -1035,6 +1035,30 @@ function Home() {
             case 'NCCMP':
 
                 api.getSearaBaseNCCMP(parametros).then((response) => {
+                    buscarDados(response, funcao, objeto, funcaoRetorno)
+                    numeroChamados[numeroChamado] = true;
+                    callbackChamarAPI(apiNome)
+                    return response
+                }).catch(err => {
+                    console.log(err);
+                });
+                break
+
+            case 'NCCMPUnidade':
+
+                api.getSearaBaseNCCMPUnidade(parametros).then((response) => {
+                    buscarDados(response, funcao, objeto, funcaoRetorno)
+                    numeroChamados[numeroChamado] = true;
+                    callbackChamarAPI(apiNome)
+                    return response
+                }).catch(err => {
+                    console.log(err);
+                });
+                break
+
+            case 'NCCMPProblema':
+
+                api.getSearaBaseNCCMPProblema(parametros).then((response) => {
                     buscarDados(response, funcao, objeto, funcaoRetorno)
                     numeroChamados[numeroChamado] = true;
                     callbackChamarAPI(apiNome)
@@ -1231,46 +1255,46 @@ function Home() {
             GerarGraficoHistorico(GraficoRACDetalhesLarva, setresponseGraficoRACDetalhesLarva, backgroundGradient, backgroundGradientCinza)
 
             // //NNC Log
-            // GerarGraficoHistorico(GraficoNNCLogDetalhesTotal, setresponseGraficoNNCLogDetalhesTotal, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNNCLogDetalhesAves, setresponseGraficoNNCLogDetalhesAves, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNNCLogDetalhesPreparados, setresponseGraficoNNCLogDetalhesPreparados, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNNCLogDetalhesSuinos, setresponseGraficoNNCLogDetalhesSuinos, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNNCLogDetalhesTotal, setresponseGraficoNNCLogDetalhesTotal, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNNCLogDetalhesAves, setresponseGraficoNNCLogDetalhesAves, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNNCLogDetalhesPreparados, setresponseGraficoNNCLogDetalhesPreparados, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNNCLogDetalhesSuinos, setresponseGraficoNNCLogDetalhesSuinos, backgroundGradient, backgroundGradientCinza)
 
             // //NNC
-            // GerarGraficoHistorico(GraficoNNCAvesPesadas, setresponseGraficoNNCAvesPesadas, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNNCAvesPesadasUnidades, setresponseGraficoNNCAvesPesadasUnidades, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNNCAvesPesadasProblemas, setresponseGraficoNNCAvesPesadasProblemas, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNNCAvesPesadas, setresponseGraficoNNCAvesPesadas, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoNNCAvesPesadasUnidades, setresponseGraficoNNCAvesPesadasUnidades, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoNNCAvesPesadasProblemas, setresponseGraficoNNCAvesPesadasProblemas, backgroundGradientCinza)
 
-            // GerarGraficoHistorico(GraficoNNCAvesRS, setresponseGraficoNNCAvesRS, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNNCAvesRSUnidades, setresponseGraficoNNCAvesRSUnidades, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNNCAvesRSProblemas, setresponseGraficoNNCAvesRSProblemas, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNNCAvesRS, setresponseGraficoNNCAvesRS, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoNNCAvesRSUnidades, setresponseGraficoNNCAvesRSUnidades, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoNNCAvesRSProblemas, setresponseGraficoNNCAvesRSProblemas, backgroundGradientCinza)
 
-            // GerarGraficoHistorico(GraficoNNCAvesSP, setresponseGraficoNNCAvesSP, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNNCAvesSPUnidades, setresponseGraficoNNCAvesSPUnidades, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNNCAvesSPProblemas, setresponseGraficoNNCAvesSPProblemas, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNNCAvesSP, setresponseGraficoNNCAvesSP, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoNNCAvesSPUnidades, setresponseGraficoNNCAvesSPUnidades, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoNNCAvesSPProblemas, setresponseGraficoNNCAvesSPProblemas, backgroundGradientCinza)
 
-            // GerarGraficoHistorico(GraficoNNCAvesPR, setresponseGraficoNNCAvesPR, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNNCAvesPRUnidades, setresponseGraficoNNCAvesPRUnidades, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNNCAvesPRProblemas, setresponseGraficoNNCAvesPRProblemas, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNNCAvesPR, setresponseGraficoNNCAvesPR, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoNNCAvesPRUnidades, setresponseGraficoNNCAvesPRUnidades, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoNNCAvesPRProblemas, setresponseGraficoNNCAvesPRProblemas, backgroundGradientCinza)
 
-            // GerarGraficoHistorico(GraficoNNCAvesLeves, setresponseGraficoNNCAvesLeves, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNNCAvesLevesUnidades, setresponseGraficoNNCAvesLevesUnidades, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNNCAvesLevesProblemas, setresponseGraficoNNCAvesLevesProblemas, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNNCAvesLeves, setresponseGraficoNNCAvesLeves, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoNNCAvesLevesUnidades, setresponseGraficoNNCAvesLevesUnidades, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoNNCAvesLevesProblemas, setresponseGraficoNNCAvesLevesProblemas, backgroundGradientCinza)
 
-            // GerarGraficoHistorico(GraficoNNCSuinos, setresponseGraficoNNCSuinos, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNNCSuinosUnidades, setresponseGraficoNNCSuinosUnidades, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNNCSuinosProblemas, setresponseGraficoNNCSuinosProblemas, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNNCSuinos, setresponseGraficoNNCSuinos, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoNNCSuinosUnidades, setresponseGraficoNNCSuinosUnidades, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoNNCSuinosProblemas, setresponseGraficoNNCSuinosProblemas, backgroundGradientCinza)
 
-            // GerarGraficoHistorico(GraficoNNCPreparados, setresponseGraficoNNCPreparados, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNNCPreparadosUnidades, setresponseGraficoNNCPreparadosUnidades, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNNCPreparadosProblemas, setresponseGraficoNNCPreparadosProblemas, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNNCPreparados, setresponseGraficoNNCPreparados, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoNNCPreparadosUnidades, setresponseGraficoNNCPreparadosUnidades, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoNNCPreparadosProblemas, setresponseGraficoNNCPreparadosProblemas, backgroundGradientCinza)
 
-            // GerarGraficoHistorico(GraficoNNCCETotal, setresponseGraficoNNCCETotal, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNNCCEInerente, setresponseGraficoNNCCEInerente, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNNCCENaoInerente, setresponseGraficoNNCCENaoInerente, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNNCCEOssos, setresponseGraficoNNCCEOssos, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNNCCEPlastico, setresponseGraficoNNCCEPlastico, backgroundGradient, backgroundGradientCinza)
-            // GerarGraficoHistorico(GraficoNNCCEMetal, setresponseGraficoNNCCEMetal, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNNCCETotal, setresponseGraficoNNCCETotal, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNNCCEInerente, setresponseGraficoNNCCEInerente, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNNCCENaoInerente, setresponseGraficoNNCCENaoInerente, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNNCCEOssos, setresponseGraficoNNCCEOssos, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNNCCEPlastico, setresponseGraficoNNCCEPlastico, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoNNCCEMetal, setresponseGraficoNNCCEMetal, backgroundGradient, backgroundGradientCinza)
 
 
             
@@ -3441,7 +3465,7 @@ function Home() {
 + "             '         from [v_base_rac] base with (nolock)  ' +																																																																																																		"
 + "             																																																																																																														"
 + "             		' WHERE 1=1 ' +																																																																																																				"
-+ "                    ' AND  [Regional Qual] LIKE '%AVES%'    '		+	"																									
++ "                    ' AND  [Regional Qual] LIKE ''%AVES%''    '		+	"																									
 + "             		' and year(data_rac) = (select year(data) as data from v_maiorData) and month(data_rac) = (select month(data) as data from v_maiorData) AND Tipo_rac = ''Real'' 		' +																																																																		"
 + "             																																																																																																														"
 + "                     ' GROUP BY [Regional Qual], Unidade, [MES-DIA] '+      																																																																																															"
@@ -3458,7 +3482,7 @@ function Home() {
 + "             '         from [v_base_rac] base with (nolock)  ' +																																																																																																		"
 + "             																																																																																																														"
 + "             		' WHERE 1=1 ' +																																																																																																				"
-+ "                    ' AND  [Regional Qual] LIKE '%AVES%'   '		+	"																									          		
++ "                    ' AND  [Regional Qual] LIKE ''%AVES%''   '		+	"																									          		
 + "					' and year(data_rac) = (select year(data) as data from v_maiorData) and month(data_rac) = (select month(data) as data from v_maiorData) AND Tipo_rac = ''Real'' 		'  +																																																																		"
 + "             																																																																																																														"
 + "                     ' GROUP BY [MES-DIA] '+      																																																																																																					"
@@ -3477,7 +3501,7 @@ function Home() {
 + "             '         from [v_base_rac] base with (nolock)  ' +																																																																																																		"
 + "             																																																																																																														"
 + "             		' WHERE 1=1 ' +																																																																																																				"
-+ "                    '  AND  [Regional Qual] LIKE '%AVES%'   '		+	"																									
++ "                    '  AND  [Regional Qual] LIKE ''%AVES%''   '		+	"																									
 + "             		' and year(data_rac) = (select year(data) as data from v_maiorData) and month(data_rac) = (select month(data) as data from v_maiorData) AND Tipo_rac = ''Real'' 		' +																																																																		"
 + "             																																																																																																														"
 + "                     ' GROUP BY [Regional Qual], [MES-DIA] '+      																																																																																																	"
@@ -3494,7 +3518,7 @@ function Home() {
 + "             '         from [v_base_rac] base with (nolock)  ' +																																																																																																		"
 + "             																																																																																																														"
 + "             		' WHERE 1=1 ' +																																																																																																				"
-+ "                    ' AND  [Regional Qual] LIKE '%AVES%'   '		+	"																									          		
++ "                    ' AND  [Regional Qual] LIKE ''%AVES%''   '		+	"																									          		
 + "					' and year(data_rac) = (select year(data) as data from v_maiorData) and month(data_rac) = (select month(data) as data from v_maiorData) AND Tipo_rac = ''Real'' 		'  +																																																																		"
 + "             																																																																																																														"
 + "                     ' GROUP BY [MES-DIA] '+      																																																																																																					"
@@ -3513,7 +3537,7 @@ function Home() {
 + "             '         from [v_base_rac] base with (nolock)  ' +																																																																																																		"
 + "             																																																																																																														"
 + "             		' WHERE 1=1 ' +																																																																																																				"
-+ "                    '  AND  [Regional Qual] LIKE '%AVES%'  '		+	"																									
++ "                    '  AND  [Regional Qual] LIKE ''%AVES%''  '		+	"																									
 + "             		' and year(data_rac) = (select year(data) as data from v_maiorData) and month(data_rac) = (select month(data) as data from v_maiorData) AND Tipo_rac = ''Real'' 		' +																																																																		"
 + "             																																																																																																														"
 + "                     ' GROUP BY [Regional Qual], Unidade, [MES-DIA] '+      																																																																																															"
@@ -3530,7 +3554,7 @@ function Home() {
 + "             '         from [v_base_rac] base with (nolock)  ' +																																																																																																		"
 + "             																																																																																																														"
 + "             		' WHERE 1=1 ' +																																																																																																				"
-+ "                    '  AND  [Regional Qual] LIKE '%AVES%'  '		+	"																									          		
++ "                    '  AND  [Regional Qual] LIKE ''%AVES%''  '		+	"																									          		
 + "					' and year(data_rac) = (select year(data) as data from v_maiorData) and month(data_rac) = (select month(data) as data from v_maiorData) AND Tipo_rac = ''Real'' 		'  +																																																																		"
 + "             																																																																																																														"
 + "                     ' GROUP BY [MES-DIA] '+      																																																																																																					"
@@ -5207,11 +5231,14 @@ function Home() {
                             </Row>
                             <Row>
                                 <Col className="col-lg-12 col-md-12 col-sm-1">
-                                    {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    {
+                                    isUpdatingData ? (<LoadingSkeletonCard />) : (
 
                                         DataTableRACAberturaMEJapao()
-
-                                    )}
+                                    
+                                    )
+                                    }                                   
+                                    
                                 </Col>
                             </Row>
                         </Col>

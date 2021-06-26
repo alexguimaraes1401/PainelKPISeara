@@ -154,6 +154,36 @@ export default {
                 }
             ]
         }),
+    
+        getSearaBaseNCCMPUnidade: (p) =>
+        instance({
+            method: "POST",
+            url: `/NNCMPUnicoUnidade`, 
+            data: {'where': p[0]},
+            params: {
+                datatype: "json"
+            },
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
+        }),
+
+        getSearaBaseNCCMPProblema: (p) =>
+        instance({
+            method: "POST",
+            url: `/NNCMPUnicoProblema`, 
+            data: {'where': p[0]},
+            params: {
+                datatype: "json"
+            },
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
+        }),
 
     getSearaBaseNCCMPCE: (p) =>
         instance({
@@ -170,10 +200,11 @@ export default {
             ]
         }),
 
-    getSearaBaseNCCLOG: (params) =>
+    getSearaBaseNCCLOG: (p) =>
         instance({
-            method: "GET",
-            url: `/NNCLogTotal?where=${params[0]}`, 
+            method: "POST",
+            url: `/NNCLogTotal`, 
+            data: {'where': p[0]},
             params: {
                 datatype: "json"
             },
