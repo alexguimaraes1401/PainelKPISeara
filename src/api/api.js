@@ -288,5 +288,71 @@ export default {
                 }
             ]
         }),
+
+        getSearaBaseRAC3niveis: (p) =>
+        instance({
+            method: "POST",
+            url: `/RAC3niveis`, 
+            data: {'where': p[0], 'campos': p[1], 'groupBy': p[2]},
+            params: {
+                datatype: "json"
+            },
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
+        }),
+
+        getSearaBaseNNCLog3niveis: (p) =>
+        instance({
+            method: "POST",
+            url: `/NNCLog3niveis`, 
+            data: {'where': p[0], 'campos': p[1], 'groupBy': p[2]},
+            params: {
+                datatype: "json"
+            },
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
+        }),
+
+        getSearaBaseNNCMP3niveis: (p) =>
+        instance({
+            method: "POST",
+            url: `/NNCMP3niveis`, 
+            data: {'where': p[0], 'campos': p[1], 'groupBy': p[2]},
+            params: {
+                datatype: "json"
+            },
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
+        }),
+
+        getSearaBaseRAC3niveisPIVOTDIA: (p) =>
+        instance({
+            method: "POST",
+            url: `/RAC3niveisPIVOTDIA`, 
+            data: {'where': p[0], 'campos': p[1], 'groupBy': p[2], 'campoPivot': p[3]},
+            params: {
+                datatype: "json"
+            },
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
+        }),
+
+
+
+        
+
+        
   
 }
