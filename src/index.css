@@ -112,7 +112,7 @@ tr{
 }
 
 .p-datatable-striped tr:nth-child(even){
-    background:rgb(238, 238, 238)!important;
+    background:rgb(221, 221, 221)!important;
 }
 
 td{
@@ -128,9 +128,7 @@ td{
     font-size: 10px!important;
 }
 
-.p-datatable .p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
-    background:greenyellow!important;
-}
+
 
 .sidebar-desk {
     display: none!important;

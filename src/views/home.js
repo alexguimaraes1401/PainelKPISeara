@@ -91,7 +91,7 @@ function Home() {
         
     const percorreNumeroChamados = () => {
         
-        // debugger
+        // 
         for (var i = 0; i < numeroChamados.length; i++) {
             if (numeroChamados[i] == false) {
                 return false
@@ -352,6 +352,13 @@ function Home() {
     //RAC Evolução - Aves
     let [TableRacRACDetalhesEvolucaoAves, setTableRacRACDetalhesEvolucaoAves] = React.useState()
 
+    let [TableRacLarva, setTableRacLarva] = React.useState()
+    let [TableRacIntoxicacao, setTableRacIntoxicacao] = React.useState()
+    let [TableRacMetal, setTableRacMetal] = React.useState()
+    let [TableRacPlastico, setTableRacPlastico] = React.useState()
+    let [TableRacCabelo, setTableRacCabelo] = React.useState()
+    let [TableRacInseto, setTableRacInseto] = React.useState()
+
     //RAC Meta x Real Aves
     let [TableRacRACDetalhesMetaRealAves, setTableRacRACDetalhesMetaRealAves] = React.useState()
 
@@ -489,6 +496,10 @@ function Home() {
     //tabela NNC Evolução dia 
     let [TableNNCEvolucaoDia, setTableNNCEvolucaoDia] = React.useState()
 
+    let [TableNNCEvolucaoMes, setTableNNCEvolucaoMes] = React.useState()
+
+    let [TableNNCEvolucaoMesTotais, setTableNNCEvolucaoMesTotais] = React.useState()
+
     //NNC
     let [responseGraficoNNCAvesPesadas, setresponseGraficoNNCAvesPesadas] = React.useState({})
     let [GraficoNNCAvesPesadas, setGraficoNNCAvesPesadas] = React.useState()
@@ -576,10 +587,20 @@ function Home() {
     let [TableNNCMPCEOssosUnidadesReclamantes, setTableNNCMPCEOssosUnidadesReclamantes] = React.useState()
 
     let [TableRacCorposEstranhos, setTableRacCorposEstranhos] = React.useState()
+    let [TableRacCorposEstranhosInerentes, setTableRacCorposEstranhosInerentes] = React.useState()
+    let [TableRacCorposEstranhosNaoInerentes, setTableRacCorposEstranhosNaoInerentes] = React.useState()
+    let [TableRacCorposEstranhosInerentesNaoInerentes, setTableRacCorposEstranhosInerentesNaoInerentes] = React.useState()
 
 
+    let [TableNNCCEPlastico, setTableNNCCEPlastico] = React.useState()
+    let [TableNNCCEMetal, setTableNNCCEMetal] = React.useState()
+    let [TableNNCCEOssos, setTableNNCCEOssos] = React.useState()
+    let [TableNNCCE, setTableNNCCE] = React.useState()
+    let [TableNNCCEInerenteNaoInerente, setTableNNCCEInerenteNaoInerente] = React.useState()
+
+    let [TableHabilitadorCorposEstranhosNaoInerentes, setTableHabilitadorCorposEstranhosNaoInerentes] = React.useState()
     
-    
+
 
     let whereRACPreparados = "WHERE ([Regional (Qualidade)] like 'Preparados%' or [Regional (Qualidade)] in ('Outros', 'Itajaí')) "
     whereRACPreparados += " AND ([ORIGEM DO PROBLEMA] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','FABRICAÇÃO')"
@@ -637,15 +658,42 @@ function Home() {
     
 
     function arrumaTabela1nivel(classTable) {
-//debugger
+//
         var table = $('.' + classTable + ' table')[0];
         if(table) {
+
+            for(var j = 0; j<table.rows[0].cells.length; j++){
+                if(table.rows[0].cells[j].innerText == "RAC"){
+                    table.rows[0].cells[j].innerText = "Total"
+                }else if(table.rows[0].cells[j].innerText == "Nº RAC"){
+                    table.rows[0].cells[j].innerText = "Total"
+                }else if(table.rows[0].cells[j].innerText == "QTD"){
+                    table.rows[0].cells[j].innerText = "Total"
+                }else if(table.rows[0].cells[j].innerText == "Nº NNC MP"){
+                    table.rows[0].cells[j].innerText = "Total"
+                }else if(table.rows[0].cells[j].innerText == "Coluna"){
+                    table.rows[0].cells[j].innerText = ""
+                }
+                
+            }
 
             for (var i = 0; i < table.rows.length; i++) {
                 //console.log($('.'+classTable+' table').rows[i].cells[0].innerText);
                 if (table.rows[i].cells[0].innerText.match(/.*@@.*/)) {
                     //alert($('.'+classTable+' table').rows[i].cells[0].innerText)
                     table.rows[i].style.background = '#cccccc'
+                }
+            }
+
+            for(var i = 0; i<table.rows.length; i++){
+                for(var j = 0; j<table.rows[0].cells.length; j++){
+                    if(table.rows[i].cells[j].innerText == "<VERDE>"){
+                        table.rows[i].cells[j].innerText = "🟢"
+                    }else if(table.rows[i].cells[j].innerText == "<VERMELHO>"){
+                        table.rows[i].cells[j].innerText = "🔴"
+                    }else if(table.rows[i].cells[j].innerText == "<AMARELO>"){
+                        table.rows[i].cells[j].innerText = "🟡"
+                    }
                 }
             }
 
@@ -670,6 +718,22 @@ function Home() {
         var table = $('.' + classTable + ' table')[0];
         if(table) {
 
+            
+            for(var j = 0; j<table.rows[0].cells.length; j++){
+                if(table.rows[0].cells[j].innerText == "RAC"){
+                    table.rows[0].cells[j].innerText = "Total"
+                }else if(table.rows[0].cells[j].innerText == "Nº RAC"){
+                    table.rows[0].cells[j].innerText = "Total"
+                }else if(table.rows[0].cells[j].innerText == "QTD"){
+                    table.rows[0].cells[j].innerText = "Total"
+                }else if(table.rows[0].cells[j].innerText == "Nº NNC MP"){
+                    table.rows[0].cells[j].innerText = "Total"
+                }else if(table.rows[0].cells[j].innerText == "Coluna"){
+                    table.rows[0].cells[j].innerText = ""
+                }
+            }
+            
+
             for (var i = 0; i < table.rows.length; i++) {
                 //console.log($('.'+classTable+' table').rows[i].cells[0].innerText);
                 if (table.rows[i].cells[0].innerText.match(/.*<b>.*/)) {
@@ -677,6 +741,21 @@ function Home() {
                     table.rows[i].style.background = '#cccccc'
                 }
             }
+
+            for(var i = 0; i<table.rows.length; i++){
+                for(var j = 0; j<table.rows[0].cells.length; j++){
+                    if(table.rows[i].cells[j].innerText == "<VERDE>"){
+                        table.rows[i].cells[j].innerText = "🟢"
+                    }else if(table.rows[i].cells[j].innerText == "<VERMELHO>"){
+                        table.rows[i].cells[j].innerText = "🔴"
+                    }else if(table.rows[i].cells[j].innerText == "<AMARELO>"){
+                        table.rows[i].cells[j].innerText = "🟡"
+                    }
+                }
+            }
+
+            
+            
 
             if (table.rows[table.rows.length - 1].cells[0].innerText == "Total" || table.rows[table.rows.length - 1].cells[0].innerText == "<b>Total</b>" ) {
                 table.rows[table.rows.length - 1].style.background = '#999999'
@@ -690,6 +769,8 @@ function Home() {
             classtable_.innerHTML = classtable_.innerHTML.replaceAll("&lt;b&gt;", "<b>")
             classtable_.innerHTML = classtable_.innerHTML.replaceAll("&lt;/b&gt;", "</b>")
 
+            
+
 
             
         }
@@ -700,11 +781,37 @@ function Home() {
         var table = $('.' + classTable + ' table')[0];
         if(table) {
 
+            for(var j = 0; j<table.rows[0].cells.length; j++){
+                if(table.rows[0].cells[j].innerText == "RAC"){
+                    table.rows[0].cells[j].innerText = "Total"
+                }else if(table.rows[0].cells[j].innerText == "Nº RAC"){
+                    table.rows[0].cells[j].innerText = "Total"
+                }else if(table.rows[0].cells[j].innerText == "QTD"){
+                    table.rows[0].cells[j].innerText = "Total"
+                }else if(table.rows[0].cells[j].innerText == "Nº NNC MP"){
+                    table.rows[0].cells[j].innerText = "Total"
+                }else if(table.rows[0].cells[j].innerText == "Coluna"){
+                    table.rows[0].cells[j].innerText = ""
+                }
+            }
+
             for (var i = 0; i < table.rows.length; i++) {
                 //console.log($('.'+classTable+' table').rows[i].cells[0].innerText);
                 if (table.rows[i].cells[0].innerText.match(/.*@@.*/)) {
                     //alert($('.'+classTable+' table').rows[i].cells[0].innerText)
                     table.rows[i].style.background = '#cccccc'
+                }
+            }
+
+            for(var i = 0; i<table.rows.length; i++){
+                for(var j = 0; j<table.rows[0].cells.length; j++){
+                    if(table.rows[i].cells[j].innerText == "<VERDE>"){
+                        table.rows[i].cells[j].innerText = "🟢"
+                    }else if(table.rows[i].cells[j].innerText == "<VERMELHO>"){
+                        table.rows[i].cells[j].innerText = "🔴"
+                    }else if(table.rows[i].cells[j].innerText == "<AMARELO>"){
+                        table.rows[i].cells[j].innerText = "🟡"
+                    }
                 }
             }
 
@@ -736,6 +843,7 @@ function Home() {
         chamarAPI("CETotal", GraficoRACTotalCE, "GraficoRACTotalCE", [" where TIPO = 'RAC' "], setGraficoRACTotalCE, setresponseGraficoRACTotalCE, 2)     // 3
         chamarAPI("RAC", GraficoRAC, "GraficoRAC", [' where 1=1 '], setGraficoRAC, setresponseGraficoRAC, 3)    // 4
         chamarAPI("NCCMP", GraficoNCCMP, "GraficoNCCMP", [whereNNCMP], setGraficoNCCMP, setresponseGraficoNCCMP, 4)    // 5 
+        
 
         chamarAPI("CETotal", GraficoCETotalAvesPesadas, "GraficoCETotalAvesPesadas", [" where [Regional Qualidade] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR')  "], setGraficoCETotalAvesPesadas, setresponseGraficoCETotalAvesPesadas, 5)     // 6
         chamarAPI("CETotal", GraficoNNCMPTotalCEAvesPesadas, "GraficoNNCMPTotalCEAvesPesadas", [" where tipo = 'NNC MP' AND [Regional Qualidade] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR') "], setGraficoNNCMPTotalCEAvesPesadas, setresponseGraficoNNCMPTotalCEAvesPesadas, 6)       // 7
@@ -772,6 +880,8 @@ function Home() {
         chamarAPI("RACTotalCE", GraficoRACTotalCESuinos, "GraficoRACTotalCESuinos", ['  WHERE [Negócio (Qualidade)] = \'Suínos\'   '], setGraficoRACTotalCESuinos, setresponseGraficoRACTotalCESuinos, 22)     // 13
         chamarAPI("RACIndicadores", GraficoRACSuinos, "GraficoRACSuinos", [' WHERE [Regional (Qualidade)] = \'Suínos\'  AND [ORIGEM DO PROBLEMA] NOT IN (\'ABUSO DE PRODUTO PDV\') '], setGraficoRACSuinos, setresponseGraficoRACSuinos, 23)    // 14
         chamarAPI("NCCMP", GraficoNCCMPSuinos, "GraficoNCCMPSuinos", [whereNNCMP + ' and [Reg. Qual] = \'Suínos\'  '], setGraficoNCCMPSuinos, setresponseGraficoNCCMPSuinos, 24)    // 15
+
+
 
         chamarAPI("CETotal", GraficoCETotalPreparados, "GraficoCETotalPreparados", [' where [Regional Qualidade] in (\'Preparados\',\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\',\'Itajaí\') '], setGraficoCETotalPreparados, setresponseGraficoCETotalPreparados, 25)     // 11
         chamarAPI("NNCMPTotalCE", GraficoNNCMPTotalCEPreparados, "GraficoNNCMPTotalCEPreparados", [' where [Regional (Qualidade)] in (\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\',\'Itajaí\') '], setGraficoNNCMPTotalCEPreparados, setresponseGraficoNNCMPTotalCEPreparados, 26)       // 12
@@ -1345,7 +1455,7 @@ function Home() {
 
         let series = []
         let maiorValorSerie = 0
-        let menorValorSerie = 100000
+        let menorValorSerie = 130000
 
         yaxis.forEach((y, index) => {
             let dataset = xaxis.map(xx => {
@@ -1471,7 +1581,7 @@ function Home() {
             series.push(serie)
         })
 
-        //debugger
+        //
         maiorValorSerie = parseFloat(maiorValorSerie)
         menorValorSerie = parseFloat(menorValorSerie)
         let maxYB = maiorValorSerie * (menorValorSerie / maiorValorSerie + 1.2)
@@ -1589,7 +1699,7 @@ function Home() {
 
         let series = []
         let maiorValorSerie = 0
-        let menorValorSerie = 100000
+        let menorValorSerie = 130000
 
         yaxis.forEach((y, index) => {
             let dataset = xaxis.map(xx => {
@@ -1715,7 +1825,7 @@ function Home() {
             }
         })
 
-        //debugger
+        //
         maiorValorSerie = parseFloat(maiorValorSerie)
         menorValorSerie = parseFloat(menorValorSerie)
         let maxYB = maiorValorSerie * (menorValorSerie / maiorValorSerie + 1.2)
@@ -1885,7 +1995,7 @@ function Home() {
 
         if (!TableRacME) return;
 
-        ////debugger
+        ////
 
         let json = []
 
@@ -1917,7 +2027,7 @@ function Home() {
 
         if (!TableRacFinalME) return;
 
-        ////debugger
+        ////
 
         let json = []
 
@@ -1930,7 +2040,7 @@ function Home() {
         return (
             <div>
                 <div >
-                    <DataTable value={json} sortMode="multiple" className="p-datatable" id="tab2">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped" id="tab2" stripedRows>
                         <Column field="Unidade" header="Unidade" headerStyle={{ width: '200px' }}></Column>
                         <Column field="Mercado" header="Mercado" headerStyle={{ width: '100px' }}></Column>
                         <Column field="Rac" header="Rac" headerStyle={{ width: '100px' }}></Column>
@@ -1952,7 +2062,7 @@ function Home() {
 
         if (!TableRacFinalMI) return;
 
-        ////debugger
+        ////
 
         let json = []
 
@@ -1965,7 +2075,7 @@ function Home() {
         return (
             <div>
                 <div >
-                    <DataTable value={json} sortMode="multiple" className="p-datatable" id="tab3">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped" id="tab3" stripedRows>
                         <Column field="Unidade" header="Unidade" headerStyle={{ width: '200px' }}></Column>
                         <Column field="Mercado" header="Mercado" headerStyle={{ width: '100px' }}></Column>
                         <Column field="Rac" header="Rac" headerStyle={{ width: '100px' }}></Column>
@@ -1987,7 +2097,7 @@ function Home() {
 
         if (!TableRacFinalRECL) return;
 
-        ////debugger
+        ////
 
         let json = []
 
@@ -2000,7 +2110,7 @@ function Home() {
         return (
             <div>
                 <div >
-                    <DataTable value={json} sortMode="multiple" className="p-datatable">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable-striped" id="tab3" stripedRows>
                         <Column field="Unidade" header="Unidade" headerStyle={{ width: '200px' }}></Column>
                         <Column field="Mercado" header="Mercado" headerStyle={{ width: '100px' }}></Column>
                         <Column field="Rac" header="Rac" headerStyle={{ width: '100px' }}></Column>
@@ -2022,7 +2132,7 @@ function Home() {
 
         if (!TableRacFinalPDV) return;
 
-        ////debugger
+        ////
 
         let json = []
 
@@ -2035,7 +2145,7 @@ function Home() {
         return (
             <div>
                 <div >
-                    <DataTable value={json} sortMode="multiple" className="p-datatable">
+                    <DataTable value={json} sortMode="multiple"  className="p-datatable-striped" id="tab4" stripedRows>
                         <Column field="Unidade" header="Unidade" headerStyle={{ width: '200px' }}></Column>
                         <Column field="Mercado" header="Mercado" headerStyle={{ width: '100px' }}></Column>
                         <Column field="Rac" header="Rac" headerStyle={{ width: '100px' }}></Column>
@@ -2057,7 +2167,7 @@ function Home() {
 
         if (!TableRacFinalTE) return;
 
-        //debugger
+        //
 
         let json = []
 
@@ -2070,7 +2180,7 @@ function Home() {
         return (
             <div>
                 <div >
-                    <DataTable value={json} sortMode="multiple" className="p-datatable">
+                    <DataTable value={json} sortMode="multiple"  className="p-datatable-striped" id="tab5" stripedRows>
                         <Column field="Unidade" header="Unidade" headerStyle={{ width: '200px' }}></Column>
                         <Column field="Mercado" header="Mercado" headerStyle={{ width: '100px' }}></Column>
                         <Column field="Rac" header="Rac" headerStyle={{ width: '100px' }}></Column>
@@ -2092,7 +2202,7 @@ function Home() {
 
         if (!TableRacFinalCRIT) return;
 
-        ////debugger
+        ////
 
         let json = []
 
@@ -2105,7 +2215,7 @@ function Home() {
         return (
             <div>
                 <div >
-                    <DataTable value={json} sortMode="multiple" className="p-datatable">
+                    <DataTable value={json} sortMode="multiple"  className="p-datatable-striped" id="tab6" stripedRows>
                         <Column field="Unidade" header="Unidade" headerStyle={{ width: '200px' }}></Column>
                         <Column field="Mercado" header="Mercado" headerStyle={{ width: '100px' }}></Column>
                         <Column field="Rac" header="Rac" headerStyle={{ width: '100px' }}></Column>
@@ -2127,7 +2237,7 @@ function Home() {
 
         if (!TableRACAberturaME) return;
 
-        ////debugger
+        ////
 
         let json = []
 
@@ -2153,7 +2263,7 @@ function Home() {
 
         if (!TableRacAberturaMEOrienteMedio) return;
 
-        ////debugger
+        ////
 
         let json = []
 
@@ -2179,7 +2289,7 @@ function Home() {
 
         if (!TableRacAberturaMEEuropa) return;
 
-        ////debugger
+        ////
 
         let json = []
 
@@ -2233,7 +2343,7 @@ function Home() {
 
         if (!TableRacAberturaMEAsia) return;
 
-        ////debugger
+        ////
 
         let json = []
 
@@ -2259,7 +2369,7 @@ function Home() {
 
         if (!TableRacAberturaMEAmericasAfrica) return;
 
-        ////debugger
+        ////
 
         let json = []
 
@@ -2285,7 +2395,7 @@ function Home() {
 
         if (!TableRacAberturaMEContasGlobais) return;
 
-        ////debugger
+        ////
 
         let json = []
 
@@ -2312,7 +2422,7 @@ function Home() {
 
         if (!TableRacAberturaLinhaEspecialFamilia) return;
 
-        ////debugger
+        ////
 
         let json = []
 
@@ -2338,7 +2448,7 @@ function Home() {
 
         if (!TableRacAberturaLinhaEspecialAcumulado) return;
 
-        ////debugger
+        ////
 
         let json = []
 
@@ -2364,7 +2474,7 @@ function Home() {
 
         if (!TableNNCMPCEOssos) return;
 
-        ////debugger
+        ////
 
         let json = []
 
@@ -2388,7 +2498,7 @@ function Home() {
 
         if (!TableNNCMPCEOssosFornecedor) return;
 
-        ////debugger
+        ////
 
         let json = []
 
@@ -2412,7 +2522,7 @@ function Home() {
 
         if (!TableNNCMPCEOssosUnidadesReclamantes) return;
 
-        ////debugger
+        ////
 
         let json = []
 
@@ -2442,9 +2552,9 @@ function Home() {
             // se o valor for diferente de objeto (caso events)
             if (typeof obj[key] !== 'object') {
                 if (j == 0){
-                    rows.push(<Column field={key} header={key} headerStyle={{ width: '20%' }}></Column>);
+                    rows.push(<Column field={key} header={key.replaceAll("|","")} headerStyle={{ width: '20%' }}></Column>);
                 }else{
-                    rows.push(<Column field={key} header={key}></Column>);
+                    rows.push(<Column field={key} header={key.replaceAll("|","")}></Column>);
                 }
                 j++
             }
@@ -2456,9 +2566,44 @@ function Home() {
                 var i = 0;
                 for (var key2 in item) {
                     if (i == 0){
-                        rows.push(<Column field={key2} header={key2} name='linha' headerStyle={{ width: '70%' }}></Column>);
+                        rows.push(<Column field={key2} header={key2.replaceAll("|","")} name='linha' headerStyle={{ width: '70%' }}></Column>);
                     }else{
-                        rows.push(<Column field={key2} header={key2} name='linha'></Column>);
+                        rows.push(<Column field={key2} header={key2.replaceAll("|","")} name='linha'></Column>);
+                    }
+                    i++
+                }
+            });
+        }
+
+        return rows;
+        
+    }
+
+    function percorrerJsonHabilitador(obj){    
+
+        var rows = [];
+        var j = 0;
+        for (var key in obj) { // obtém as chaves do objeto
+            // se o valor for diferente de objeto (caso events)
+            if (typeof obj[key] !== 'object') {
+                if (j == 0){
+                    rows.push(<Column field={key} header={key.replaceAll("|","")} headerStyle={{ width: '20%' }}></Column>);
+                }else{
+                    rows.push(<Column field={key} header={key.replaceAll("|","")}></Column>);
+                }
+                j++
+            }
+            else
+            // se o valor for um array de objetos, é iterado o array
+            // e as chaves de cada objeto
+            
+            obj[key].forEach(function(item) {
+                var i = 0;
+                for (var key2 in item) {
+                    if (i == 0){
+                        rows.push(<Column field={key2} header={key2.replaceAll("|","")} name='linha' headerStyle={{ width: '70%' }}></Column>);
+                    }else{
+                        rows.push(<Column field={key2} header={key2.replaceAll("|","")} name='linha'></Column>);
                     }
                     i++
                 }
@@ -2473,7 +2618,7 @@ function Home() {
 
         if (!TableRacRACDetalhesTerceiro) return;
 
-        //debugger
+        //
 
         let json = []
 
@@ -2481,17 +2626,172 @@ function Home() {
             json.push(TableRacRACDetalhesTerceiro[i])
         }
 
+        
+
         var retorno = percorrerJson(TableRacRACDetalhesTerceiro[0])
 
         return (
             <div>
                 <div className="card">
                     <DataTable value={json} sortMode="multiple" className="p-datatable clAberturaTerceiro">
-                        {retorno}
+                    <Column field="Unidade" header="Abertura Terceiro" headerStyle={{ width: '70%' }}></Column>
+                        <Column field="RAC" header="QTD"></Column>
                     </DataTable>
                 </div>
             </div>
             );
+        
+    }
+
+    const DataTableRacRACDetalhesMetaRealAves = () => {
+
+        if (!TableRacRACDetalhesMetaRealAves) return;
+
+        //
+
+        let json = []
+
+        for (let i = 0; i < TableRacRACDetalhesMetaRealAves.length; i++) {
+            json.push(TableRacRACDetalhesMetaRealAves[i])
+        }
+
+    
+        let headerGroup = <ColumnGroup>
+                            <Row>
+                                <Column header="Meta x Real" rowSpan={2} />
+                                <Column header="Orçamento" colSpan={2} />
+                                <Column header="Real" colSpan={3} />
+                                <Column header="Desvio" colSpan={2} />
+                            </Row>    
+                            <Row>
+                               
+                                <Column field="ORÇ JUN"  header="Mês" />
+                                <Column field="ORÇ 2021"  header="Acumulado"  />
+                                <Column field="REAL JUN"  header="Mês"  />
+                                <Column field="FORCAST"  header="FORCAST"  />
+                                <Column field="REAL 2021"  header="Acumulado"  />
+                                <Column field="DESVIO MÊS"  header="Mês"  />
+                                <Column field="DESVIO 2021"  header="Acumulado"  />
+                            </Row>
+                        </ColumnGroup>;
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} headerColumnGroup={headerGroup} className="p-datatable clTableRacRACDetalhesMetaRealAves">
+                        <Column field="CAMPO1" header="Meta x Real" />
+                        <Column field="ORÇ JUN" header="Mês" />
+                        <Column field="ORÇ 2021" header="Acumulado"  />
+                        <Column field="REAL JUN" header="Mês"  />
+                        <Column field="FORCAST" header="FORCAST"  />
+                        <Column field="REAL 2021" header="Acumulado"  />
+                        <Column field="DESVIO MÊS" header="Mês"  />
+                        <Column field="DESVIO 2021" header="Acumulado"  />
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
+
+    const DataTableRacRACDetalhesMetaRealPreparados = () => {
+
+        if (!TableRacRACDetalhesMetaRealPreparados) return;
+
+        //
+
+        let json = []
+
+        for (let i = 0; i < TableRacRACDetalhesMetaRealPreparados.length; i++) {
+            json.push(TableRacRACDetalhesMetaRealPreparados[i])
+        }
+
+    
+        let headerGroup = <ColumnGroup>
+                            <Row>
+                                <Column header="Meta x Real" rowSpan={2} />
+                                <Column header="Orçamento" colSpan={2} />
+                                <Column header="Real" colSpan={3} />
+                                <Column header="Desvio" colSpan={2} />
+                            </Row>    
+                            <Row>
+                               
+                                <Column field="ORÇ JUN"  header="Mês" />
+                                <Column field="ORÇ 2021"  header="Acumulado"  />
+                                <Column field="REAL JUN"  header="Mês"  />
+                                <Column field="FORCAST"  header="FORCAST"  />
+                                <Column field="REAL 2021"  header="Acumulado"  />
+                                <Column field="DESVIO MÊS"  header="Mês"  />
+                                <Column field="DESVIO 2021"  header="Acumulado"  />
+                            </Row>
+                        </ColumnGroup>;
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} headerColumnGroup={headerGroup} className="p-datatable clTableRacRACDetalhesMetaRealPreparados">
+                        <Column field="CAMPO1" header="Meta x Real" />
+                        <Column field="ORÇ JUN" header="Mês" />
+                        <Column field="ORÇ 2021" header="Acumulado"  />
+                        <Column field="REAL JUN" header="Mês"  />
+                        <Column field="FORCAST" header="FORCAST"  />
+                        <Column field="REAL 2021" header="Acumulado"  />
+                        <Column field="DESVIO MÊS" header="Mês"  />
+                        <Column field="DESVIO 2021" header="Acumulado"  />
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
+
+    const DataTableRacRACDetalhesMetaRealSuinos = () => {
+
+        if (!TableRacRACDetalhesMetaRealSuinos) return;
+
+        //
+
+        let json = []
+
+        for (let i = 0; i < TableRacRACDetalhesMetaRealSuinos.length; i++) {
+            json.push(TableRacRACDetalhesMetaRealSuinos[i])
+        }
+
+        let headerGroup = <ColumnGroup>
+            <Row>
+                <Column header="Meta x Real" rowSpan={2} />
+                <Column header="Orçamento" colSpan={2} />
+                <Column header="Real" colSpan={3} />
+                <Column header="Desvio" colSpan={2} />
+            </Row>    
+            <Row>
+               
+                <Column field="ORÇ JUN"  header="Mês" />
+                <Column field="ORÇ 2021"  header="Acumulado"  />
+                <Column field="REAL JUN"  header="Mês"  />
+                <Column field="FORCAST"  header="FORCAST"  />
+                <Column field="REAL 2021"  header="Acumulado"  />
+                <Column field="DESVIO MÊS"  header="Mês"  />
+                <Column field="DESVIO 2021"  header="Acumulado"  />
+            </Row>
+        </ColumnGroup>;
+
+        return (
+        <div>
+        <div className="card">
+            <DataTable value={json} headerColumnGroup={headerGroup} className="p-datatable clTableRacRACDetalhesMetaRealSuinos">
+                <Column field="CAMPO1" header="Meta x Real" />
+                <Column field="ORÇ JUN" header="Mês" />
+                <Column field="ORÇ 2021" header="Acumulado"  />
+                <Column field="REAL JUN" header="Mês"  />
+                <Column field="FORCAST" header="FORCAST"  />
+                <Column field="REAL 2021" header="Acumulado"  />
+                <Column field="DESVIO MÊS" header="Mês"  />
+                <Column field="DESVIO 2021" header="Acumulado"  />
+            </DataTable>
+        </div>
+        </div>
+        );
         
     }
 
@@ -2501,7 +2801,7 @@ function Home() {
 
         if (!TableRacCorposEstranhos) return;
 
-        //debugger
+        //
 
         let json = []
 
@@ -2515,6 +2815,84 @@ function Home() {
             <div>
                 <div className="card">
                     <DataTable value={json} sortMode="multiple" className="p-datatable clTableRacCorposEstranhos">
+                        {retorno}
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
+
+    const DataTableRacCorposEstranhosInerentes = () => {
+
+        if (!TableRacCorposEstranhosInerentes) return;
+
+        //
+
+        let json = []
+
+        for (let i = 0; i < TableRacCorposEstranhosInerentes.length; i++) {
+            json.push(TableRacCorposEstranhosInerentes[i])
+        }
+
+        var retorno = percorrerJson(TableRacCorposEstranhosInerentes[0])
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableRacCorposEstranhosInerentes">
+                        {retorno}
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
+
+    const DataTableRacCorposEstranhosInerentesNaoInerentes = () => {
+
+        if (!TableRacCorposEstranhosInerentesNaoInerentes) return;
+
+        //
+
+        let json = []
+
+        for (let i = 0; i < TableRacCorposEstranhosInerentesNaoInerentes.length; i++) {
+            json.push(TableRacCorposEstranhosInerentesNaoInerentes[i])
+        }
+
+        var retorno = percorrerJson(TableRacCorposEstranhosInerentesNaoInerentes[0])
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableRacCorposEstranhosInerentesNaoInerentes">
+                        {retorno}
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
+
+    const DataTableRacCorposEstranhosNaoInerentes = () => {
+
+        if (!TableRacCorposEstranhosNaoInerentes) return;
+
+        //
+
+        let json = []
+
+        for (let i = 0; i < TableRacCorposEstranhosNaoInerentes.length; i++) {
+            json.push(TableRacCorposEstranhosNaoInerentes[i])
+        }
+
+        var retorno = percorrerJson(TableRacCorposEstranhosNaoInerentes[0])
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableRacCorposEstranhosNaoInerentes">
                         {retorno}
                     </DataTable>
                 </div>
@@ -2816,6 +3194,55 @@ function Home() {
     ////
 
     
+    const DataTableNNCEvolucaoMes = () => {
+
+        if (!TableNNCEvolucaoMes) return;
+
+
+        let json = []
+
+        for (let i = 0; i < TableNNCEvolucaoMes.length; i++) {
+            json.push(TableNNCEvolucaoMes[i])
+        }
+
+        var retorno = percorrerJson(TableNNCEvolucaoMes[0])
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableNNCEvolucaoMes">
+                        {retorno}
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
+
+    const DataTableNNCEvolucaoMesTotais = () => {
+
+        if (!TableNNCEvolucaoMesTotais) return;
+
+
+        let json = []
+
+        for (let i = 0; i < TableNNCEvolucaoMesTotais.length; i++) {
+            json.push(TableNNCEvolucaoMesTotais[i])
+        }
+
+        var retorno = percorrerJson(TableNNCEvolucaoMesTotais[0])
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableNNCEvolucaoMesTotais">
+                        {retorno}
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
 
     const DataTableRacRACDetalhesCritica = () => {
 
@@ -2867,6 +3294,312 @@ function Home() {
         
     }
 
+    
+
+    const DataTableRacLarva = () => {
+
+        if (!TableRacLarva) return;
+
+
+        let json = []
+
+        for (let i = 0; i < TableRacLarva.length; i++) {
+            json.push(TableRacLarva[i])
+        }
+
+        var retorno = percorrerJson(TableRacLarva[0])
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableRacLarva">
+                        {retorno}
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
+
+    const DataTableRacIntoxicacao = () => {
+
+        if (!TableRacIntoxicacao) return;
+
+
+        let json = []
+
+        for (let i = 0; i < TableRacIntoxicacao.length; i++) {
+            json.push(TableRacIntoxicacao[i])
+        }
+
+        var retorno = percorrerJson(TableRacIntoxicacao[0])
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableRacIntoxicacao">
+                        {retorno}
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
+
+    const DataTableRacMetal = () => {
+
+        if (!TableRacMetal) return;
+
+
+        let json = []
+
+        for (let i = 0; i < TableRacMetal.length; i++) {
+            json.push(TableRacMetal[i])
+        }
+
+        var retorno = percorrerJson(TableRacMetal[0])
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableRacMetal">
+                        {retorno}
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
+
+    const DataTableNNCCEPlastico = () => {
+
+        if (!TableNNCCEPlastico) return;
+
+
+        let json = []
+
+        for (let i = 0; i < TableNNCCEPlastico.length; i++) {
+            json.push(TableNNCCEPlastico[i])
+        }
+
+        var retorno = percorrerJson(TableNNCCEPlastico[0])
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableNNCCEPlastico">
+                        {retorno}
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
+
+    const DataTableNNCCEMetal = () => {
+
+        if (!TableNNCCEMetal) return;
+
+
+        let json = []
+
+        for (let i = 0; i < TableNNCCEMetal.length; i++) {
+            json.push(TableNNCCEMetal[i])
+        }
+
+        var retorno = percorrerJson(TableNNCCEMetal[0])
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableNNCCEMetal">
+                        {retorno}
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
+
+    const DataTableNNCCEOssos = () => {
+
+        if (!TableNNCCEOssos) return;
+
+
+        let json = []
+
+        for (let i = 0; i < TableNNCCEOssos.length; i++) {
+            json.push(TableNNCCEOssos[i])
+        }
+
+        var retorno = percorrerJson(TableNNCCEOssos[0])
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableNNCCEOssos">
+                        {retorno}
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
+
+    const DataTableNNCCE = () => {
+
+        if (!TableNNCCE) return;
+
+
+        let json = []
+
+        for (let i = 0; i < TableNNCCE.length; i++) {
+            json.push(TableNNCCE[i])
+        }
+
+        var retorno = percorrerJson(TableNNCCE[0])
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableNNCCE">
+                        {retorno}
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
+
+    const DataTableHabilitadorCorposEstranhosNaoInerentes = () => {
+
+        if (!TableHabilitadorCorposEstranhosNaoInerentes) return;
+
+
+        let json = []
+
+        for (let i = 0; i < TableHabilitadorCorposEstranhosNaoInerentes.length; i++) {
+            json.push(TableHabilitadorCorposEstranhosNaoInerentes[i])
+        }
+        
+        
+
+        var retorno = percorrerJsonHabilitador(TableHabilitadorCorposEstranhosNaoInerentes[0])
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableHabilitadorCorposEstranhosNaoInerentes">
+                        {retorno}
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
+
+    const DataTableNNCCEInerenteNaoInerente = () => {
+
+        if (!TableNNCCEInerenteNaoInerente) return;
+
+
+        let json = []
+
+        for (let i = 0; i < TableNNCCEInerenteNaoInerente.length; i++) {
+            json.push(TableNNCCEInerenteNaoInerente[i])
+        }
+
+        
+
+        var retorno = percorrerJson(TableNNCCEInerenteNaoInerente[0])
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableNNCCEInerenteNaoInerente">
+                        {retorno}
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
+
+    const DataTableRacPlastico = () => {
+
+        if (!TableRacPlastico) return;
+
+
+        let json = []
+
+        for (let i = 0; i < TableRacPlastico.length; i++) {
+            json.push(TableRacPlastico[i])
+        }
+
+        var retorno = percorrerJson(TableRacPlastico[0])
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableRacPlastico">
+                        {retorno}
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
+
+    const DataTableRacCabelo = () => {
+
+        if (!TableRacCabelo) return;
+
+
+        let json = []
+
+        for (let i = 0; i < TableRacCabelo.length; i++) {
+            json.push(TableRacCabelo[i])
+        }
+
+        var retorno = percorrerJson(TableRacCabelo[0])
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableRacCabelo">
+                        {retorno}
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
+
+    const DataTableRacInseto = () => {
+
+        if (!TableRacInseto) return;
+
+
+        let json = []
+
+        for (let i = 0; i < TableRacInseto.length; i++) {
+            json.push(TableRacInseto[i])
+        }
+
+        var retorno = percorrerJson(TableRacInseto[0])
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableRacInseto">
+                        {retorno}
+                    </DataTable>
+                </div>
+            </div>
+            );
+        
+    }
+
     const DataTableRacRACDetalhesEvolucaoAves = () => {
 
         if (!TableRacRACDetalhesEvolucaoAves) return;
@@ -2908,7 +3641,7 @@ function Home() {
         return (
             <div>
                 <div className="card">
-                    <DataTable value={json} sortMode="multiple" className="p-datatable">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableRacRACDetalhesEvolucaoPreparados">
                         {retorno}
                     </DataTable>
                 </div>
@@ -2933,7 +3666,7 @@ function Home() {
         return (
             <div>
                 <div className="card">
-                    <DataTable value={json} sortMode="multiple" className="p-datatable">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableRacRACDetalhesEvolucaoFatiados">
                         {retorno}
                     </DataTable>
                 </div>
@@ -2958,7 +3691,7 @@ function Home() {
         return (
             <div>
                 <div className="card">
-                    <DataTable value={json} sortMode="multiple" className="p-datatable">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableRacRACDetalhesEvolucaoPescados">
                         {retorno}
                     </DataTable>
                 </div>
@@ -2983,7 +3716,7 @@ function Home() {
         return (
             <div>
                 <div className="card">
-                    <DataTable value={json} sortMode="multiple" className="p-datatable">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableRacRACDetalhesEvolucaoSuinos">
                         {retorno}
                     </DataTable>
                 </div>
@@ -3168,7 +3901,7 @@ function Home() {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaME(json)
-                setTimeout(arrumaTabela3niveis('clAberturaME'), 3000)
+                setTimeout(arrumaTabela3niveis('clAberturaME'), 13000)
             })
 
 
@@ -3178,21 +3911,21 @@ function Home() {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEOrienteMedio(json)
-                setTimeout(arrumaTabela3niveis('clOrienteMedio'), 3000)
+                setTimeout(arrumaTabela3niveis('clOrienteMedio'), 13000)
             })
 
             api.getSearaBaseRacAberturaME2([whereAberturaME + "  AND Especialista_rac IN ('Igor', 'Rejane')   "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEEuropa(json)
-                setTimeout(arrumaTabela3niveis('clEuropa'), 3000)
+                setTimeout(arrumaTabela3niveis('clEuropa'), 13000)
             })
 
             api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac IN ('Marcela')  "]).then((response) => {
                 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEJapao(json)
-                setTimeout(arrumaTabela3niveis('clJapao'), 3000)
+                setTimeout(arrumaTabela3niveis('clJapao'), 13000)
                           
             })
 
@@ -3200,14 +3933,14 @@ function Home() {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEAsia(json)
-                setTimeout(arrumaTabela3niveis('clAsia'), 3000)
+                setTimeout(arrumaTabela3niveis('clAsia'), 13000)
             })
 
             api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac IN ('Regina')  "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEAmericasAfrica(json)
-                setTimeout(arrumaTabela3niveis('clAmericasAfrica'), 3000)
+                setTimeout(arrumaTabela3niveis('clAmericasAfrica'), 13000)
             })
 
             
@@ -3237,7 +3970,7 @@ function Home() {
             + " DROP TABLE #RESULTADO		"	
 
             api.getSearaBaseSQLNINJA([ sqlTableRacRACDetalhesTerceiro ]).then((response) => {
-                //debugger
+                //
                 let json = JSON.parse(response.data)
 
                 for (var i=0; i<json.length; i++){
@@ -3245,25 +3978,24 @@ function Home() {
                 }
 
                 setTableRacRACDetalhesTerceiro(json)
-                setTimeout(arrumaTabela1nivel('clAberturaTerceiro'), 3000)
+                setTimeout(arrumaTabela1nivel('clAberturaTerceiro'), 13000)
             })
 
             var sqlTableRacRACDetalhesPDV = ""
             + " SELECT																																							"
-            + " Nm_Classe_rac CAMPO1																																			"
+            + " Item CAMPO1																																			"
             + " , Tipo_Problema_rac CAMPO2																																		"
-            + " , Nm_Classe_rac CAMPO3																																			"
+            + " , NULL CAMPO3																																			"
             + " , count(Rac_rac) as NUM																																			"
             + " INTO #RESULTADO 																																				"
             + " FROM [v_base_rac]																																				"
             + " WHERE 1=1																																						"
-            + " AND month(Data_rac) = month((select * from v_maiorData))																										"
-            + " AND year(Data_rac) = year((select * from v_maiorData))																											"
+            + " AND Data_rac = (select * from v_maiorData)																										"
             + " AND [Origem_do_Problema_rac] IN ('ABUSO DE PRODUTO PDV')																										"
             + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR')	"
             + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA')																											"
             + " AND Tipo_rac = 'Real'																																			"
-            + " GROUP BY Nm_Classe_rac, Tipo_Problema_rac, Nm_Classe_rac																										"
+            + " GROUP BY Item, Tipo_Problema_rac																									"
             + "              																																					"			
             + " SELECT																																							"
             + " CAMPO1																																							"
@@ -3293,9 +4025,9 @@ function Home() {
             + " GROUPING(B.CAMPO1) C1																																			"
             + " , GROUPING(B.CAMPO2) C2																																			"
             + " , GROUPING(B.CAMPO3) C3																																			"
-            + " , B.CAMPO1 AS CAMPO1_																																			"
-            + " , B.CAMPO2																																						"
-            + " , B.CAMPO3																																						"
+            + " , CAST(B.CAMPO1 AS VARCHAR) AS CAMPO1_																																			"
+            + " , CAST(B.CAMPO2 AS VARCHAR) AS CAMPO2																																						"
+            + " , CAST(B.CAMPO3 AS VARCHAR) AS CAMPO3																																						"
             + " , SUM(NUM) NUM																																					"
             + " INTO #BASE																																						"
             + " FROM #RESULTADO B																																				"
@@ -3324,7 +4056,7 @@ function Home() {
             + " LEFT JOIN #R1 R1 ON B.CAMPO1_ = R1.CAMPO1																														"
             + " LEFT JOIN #R2 R2 ON B.CAMPO1_ = R2.CAMPO1 AND B.CAMPO2 = R2.CAMPO2																								"
             + " LEFT JOIN #R3 R3 ON B.CAMPO1_ = R3.CAMPO1 AND B.CAMPO2 = R3.CAMPO2 AND B.CAMPO3 = R3.CAMPO3																		"
-            + " 																																								"
+            + " WHERE B.C3 = 1																																								"
             + " 																																								"
             + " ORDER BY 1, 8 DESC, 4, 2 DESC, 9 DESC, 5, 3 DESC, 10 DESC, 6																									"
             + " 																																								"
@@ -3335,10 +4067,10 @@ function Home() {
             + " DROP TABLE #BASE																																				"
 
             api.getSearaBaseSQLNINJA([ sqlTableRacRACDetalhesPDV ]).then((response) => {
-                //debugger
+                //
                 let json = JSON.parse(response.data)                
                 setTableRacRACDetalhesPDV(json)
-                setTimeout(arrumaTabela3niveis('clTableRacRACDetalhesPDV'), 3000)
+                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesPDV'), 13000)
 
             })
 
@@ -3516,7 +4248,7 @@ function Home() {
 
 
             api.getSearaBaseSQLNINJA([ sqlTableRacRACDetalhesCritica ]).then((response) => {
-                //debugger
+                //
                 let json = JSON.parse(response.data)
 
                 for (var i=0; i<json.length; i++){
@@ -3524,7 +4256,7 @@ function Home() {
                 }
                 
                 setTableRacRACDetalhesCritica(json)
-                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesCritica'), 3000)
+                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesCritica'), 13000)
          
             })
 
@@ -3697,7 +4429,481 @@ function Home() {
                 setTableRacRACDetalhesEvolucaoTotal(json)
             })
 
-																																																																																																																		
+			
+            
+
+            var wherePivotdataTableRacLarva = ""
+            + " WHERE 1=1 "
+            + "and year(data_rac) = (select year(data) as data from v_maiorData) "
+            + "and month(data_rac) = (select month(data) as data from v_maiorData) "
+            
+            + "AND [Grupo_rac] IN ('CORPO ESTRANHO') "
+            + "AND [Regional Qual] NOT IN ('FATIADOS','PESCADOS','AVES PR','AVES RS/SC/SP','AVES SP/CO/NE') "
+            + "AND UNIDADE NOT IN ('AGRO ALFA','AMAI','ATI-GEL','CLAREBOUT','GRANO','GRIFFOOD','MASSATAKE','SANTA CRUZ DO SUL','VIGOR','ARTES GRÁFICAS','CAMPINAS-CD','CAMPO VERDE','CD RIBEIRÃO DAS NEVES','CPO','DOC INDUSTRIA','EIRELI EPP','EIRELI ME','EXCELSIOR','GENESEAS AQUACULTURA','GERÊNCIA NACIONA FS','GRANO ALIMENTOS S.A.','GRIFFOOD','ICOFORT','ITAJAI','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','ITAJAI PESCADOS','LABREZZA','M P FOODS','MARBA','MASSAS SANTA ENERSTINA LTDA','NORONHA', 'OUTROS','PINHAIS - CD','QUALIDADE SUPPLY CHAIN','RIBEIRÃO PRETO – CD','SALVADOR – CD','SAO PAULO – CD','SEARA MEATS','SOMAVE','VARZEA GRANDE – CD') "
+            + "AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO','NOTIFICAÇÃO') "
+            + "AND [PROBLEMA] IN ('INSETO','INSETO VIVO') "
+            + "AND [Tipo_Problema] IN ('INSETO','LARVA', 'INSETO VIVO','LARVA VIVA')	 "
+            + "AND [SUB TIPO PROBLEMA] IN ('LARVA','LARVA VIVA') "
+
+
+            api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataTableRacLarva, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
+                
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['Coluna1'];
+                    delete json[i]['Coluna2'];
+                    delete json[i]['Coluna3'];
+                    delete json[i]['Nº RAC'];
+                    delete json[i]['C1__'];
+                    delete json[i]['C2__'];
+                    delete json[i]['C3__'];
+                    delete json[i]['Coluna_'];
+                    delete json[i]['Total'];
+                    delete json[i]['Total2'];
+                }
+                
+                setTableRacLarva(json)
+                setTimeout(arrumaTabela2niveis('clTableRacLarva'), 13000)
+            })
+
+            var wherePivotdataTableRacIntoxicacao = ""
+            + " WHERE 1=1 "
+            + "and year(data_rac) = (select year(data) as data from v_maiorData) "
+            + "and month(data_rac) = (select month(data) as data from v_maiorData) "
+
+            + "AND [REGIONAL QUAL] IN ('PREPARADOS 1','PREPARADOS 2','QUALIDADE','REGULATÓRIO','SUÍNOS','OUTROS','MARKETING E P&D','ITAJAÍ','EXCELSIOR','AVES LEVES') "
+            + "AND UNIDADE NOT IN ('JBS') "
+            + "AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO','NOTIFICAÇÃO') "
+            + "AND [PROBLEMA] IN ('INTOXICAÇÃO ALIMENTAR') "
+
+
+            api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataTableRacIntoxicacao, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
+                
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['Coluna1'];
+                    delete json[i]['Coluna2'];
+                    delete json[i]['Coluna3'];
+                    delete json[i]['Nº RAC'];
+                    delete json[i]['C1__'];
+                    delete json[i]['C2__'];
+                    delete json[i]['C3__'];
+                    delete json[i]['Coluna_'];
+                    delete json[i]['Total'];
+                    delete json[i]['Total2'];
+                }
+                
+                setTableRacIntoxicacao(json)
+                setTimeout(arrumaTabela2niveis('clTableRacIntoxicacao'), 13000)
+            })
+
+            var wherePivotdataTableRacInseto = ""
+            + " WHERE 1=1 "
+            + "and year(data_rac) = (select year(data) as data from v_maiorData) "
+            + "and month(data_rac) = (select month(data) as data from v_maiorData) "
+
+            + "AND [ORIGEM] IN ('FABRICAÇÃO') "
+            + "AND [GRUPO_rac] IN ('CORPO ESTRANHO') "
+            + "AND UNIDADE NOT IN ('MARBA') "
+            + "AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') "
+            + "AND Tipo_Problema IN ('INSETO') "
+            + "AND [SUB TIPO PROBLEMA] NOT IN ('LARVA') "
+
+
+            api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataTableRacInseto, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
+                
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['Coluna1'];
+                    delete json[i]['Coluna2'];
+                    delete json[i]['Coluna3'];
+                    delete json[i]['Nº RAC'];
+                    delete json[i]['C1__'];
+                    delete json[i]['C2__'];
+                    delete json[i]['C3__'];
+                    delete json[i]['Coluna_'];
+                    delete json[i]['Total'];
+                    delete json[i]['Total2'];
+                }
+                
+                setTableRacInseto(json)
+                setTimeout(arrumaTabela2niveis('clTableRacInseto'), 13000)
+            })
+
+            var wherePivotdataTableRacCabelo = ""
+            + " WHERE 1=1 "
+            + "and year(data_rac) = (select year(data) as data from v_maiorData) "
+            + "and month(data_rac) = (select month(data) as data from v_maiorData) "
+            
+            + "AND [Origem_do_problema_rac] IN ('FÁBRICA PRODUÇÃO') "
+            + "AND [GRUPO_rac] IN ('CORPO ESTRANHO') "
+            + "AND UNIDADE NOT IN ('AMAI','DAN VIGOR','MARBA','GRANO','GRIFFOOD','JBS','MASSATAKE','SANTA CRIZ DO SUL','SERYA','VIGOR') "
+            + "AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') "
+            + "AND Tipo_Problema IN ('FIO DE CABELO / PÊLO HUMANO','FIO DE CABELO/PÊLO HUMANO', 'PÊLO/ CABELO') "
+
+
+            api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataTableRacCabelo, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
+                
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['Coluna1'];
+                    delete json[i]['Coluna2'];
+                    delete json[i]['Coluna3'];
+                    delete json[i]['Nº RAC'];
+                    delete json[i]['C1__'];
+                    delete json[i]['C2__'];
+                    delete json[i]['C3__'];
+                    delete json[i]['Coluna_'];
+                    delete json[i]['Total'];
+                    delete json[i]['Total2'];
+                }
+                
+                setTableRacCabelo(json)
+                setTimeout(arrumaTabela2niveis('clTableRacCabelo'), 13000)
+            })
+
+            
+            var wherePivotdataTableRacPlastico = ""
+            + " WHERE 1=1 "
+            + "and year(data_rac) = (select year(data) as data from v_maiorData) "
+            + "and month(data_rac) = (select month(data) as data from v_maiorData) "
+            
+            + "AND [Origem_do_problema_rac] IN ('FÁBRICA PRODUÇÃO') "
+            + "AND UNIDADE NOT IN ('MARBA','SANTA CRUZ DO SUL') "
+            + "AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') "
+            + "AND Tipo_Problema IN ('LUVA','LUVA NITRÍLICA','PLÁSTICO','PLÁSTICO DURO','PLÁSTICO MOLE') "
+
+
+            api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataTableRacPlastico, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
+                
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['Coluna1'];
+                    delete json[i]['Coluna2'];
+                    delete json[i]['Coluna3'];
+                    delete json[i]['Nº RAC'];
+                    delete json[i]['C1__'];
+                    delete json[i]['C2__'];
+                    delete json[i]['C3__'];
+                    delete json[i]['Coluna_'];
+                    delete json[i]['Total'];
+                    delete json[i]['Total2'];
+                }
+                
+                setTableRacPlastico(json)
+                setTimeout(arrumaTabela2niveis('clTableRacPlastico'), 13000)
+            })
+
+            
+            var wherePivotdataTableNNCEvolucaoMes = ""
+            + " WHERE 1=1 "
+            + "and year(data_rac) = (select year(data) as data from v_maiorData) "
+            + "and month(data_rac) = (select month(data) as data from v_maiorData) "
+            
+            + "AND [Origem_do_problema_rac] IN ('FÁBRICA PRODUÇÃO') "
+            + "AND UNIDADE NOT IN ('MARBA','SANTA CRUZ DO SUL') "
+            + "AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') "
+            
+
+
+            api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataTableNNCEvolucaoMes, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
+                
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['Coluna1'];
+                    delete json[i]['Coluna2'];
+                    delete json[i]['Coluna3'];
+                    delete json[i]['Nº RAC'];
+                    delete json[i]['C1__'];
+                    delete json[i]['C2__'];
+                    delete json[i]['C3__'];
+                    delete json[i]['Coluna_'];
+                    delete json[i]['Total'];
+                    delete json[i]['Total2'];
+                }
+                
+                setTableNNCEvolucaoMes(json)
+                setTimeout(arrumaTabela2niveis('clTableNNCEvolucaoMes'), 13000)
+            })
+
+            var wherePivotdataTableNNCEvolucaoMesTotais = ""
+            + " WHERE 1=1 "
+            + "and year(data_rac) = (select year(data) as data from v_maiorData) "
+            + "and month(data_rac) = (select month(data) as data from v_maiorData) "
+            
+            + "AND [Origem_do_problema_rac] IN ('FÁBRICA PRODUÇÃO') "
+            + "AND UNIDADE NOT IN ('MARBA','SANTA CRUZ DO SUL') "
+            + "AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') "
+            + "AND Tipo_Problema IN ('LUVA','LUVA NITRÍLICA','PLÁSTICO','PLÁSTICO DURO','PLÁSTICO MOLE') "
+
+
+            api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataTableNNCEvolucaoMesTotais, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
+                
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['Coluna1'];
+                    delete json[i]['Coluna2'];
+                    delete json[i]['Coluna3'];
+                    delete json[i]['Nº RAC'];
+                    delete json[i]['C1__'];
+                    delete json[i]['C2__'];
+                    delete json[i]['C3__'];
+                    delete json[i]['Coluna_'];
+                    delete json[i]['Total'];
+                    delete json[i]['Total2'];
+                }
+                
+                setTableNNCEvolucaoMesTotais(json)
+                setTimeout(arrumaTabela2niveis('clTableNNCEvolucaoMesTotais'), 13000)
+            })
+
+            var whereTableNNCCEPlastico = ""
+            + " WHERE 1=1 "
+            + "and year([Dt Abertura]) = (select year(data) as data from v_maiorData) "
+            + "and month([Dt Abertura]) = (select month(data) as data from v_maiorData) "
+            + "and [Tipo Problema] like '%pl%stic%' "
+         
+
+            api.getSearaBaseNNC3niveisPIVOTDIA([ whereTableNNCCEPlastico, " [Reg. Qual] as Coluna1, Filial as Coluna2, null as Coluna3 ", "[Reg. Qual], Filial", " [MES-DIA] " , " [MES-DIA] " ]).then((response) => {
+                
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['Coluna1'];
+                    delete json[i]['Coluna2'];
+                    delete json[i]['Coluna3'];
+                    delete json[i]['Nº RAC'];
+                    delete json[i]['C1__'];
+                    delete json[i]['C2__'];
+                    delete json[i]['C3__'];
+                    delete json[i]['Coluna_'];
+                    delete json[i]['Total'];
+                    delete json[i]['Total2'];
+                }
+                
+                setTableNNCCEPlastico(json)
+                setTimeout(arrumaTabela2niveis('clTableNNCCEPlastico'), 13000)
+            })
+
+            var whereTableNNCCEMetal = ""
+            + " WHERE 1=1 "
+            + "and year([Dt Abertura]) = (select year(data) as data from v_maiorData) "
+            + "and month([Dt Abertura]) = (select month(data) as data from v_maiorData) "
+            + "and [Tipo Problema] like '%metal%' "
+
+            api.getSearaBaseNNC3niveisPIVOTDIA([ whereTableNNCCEMetal, " [Reg. Qual] as Coluna1, Filial as Coluna2, null as Coluna3 ", "[Reg. Qual], Filial", " [MES-DIA] ", " [MES-DIA] " ]).then((response) => {
+                
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['Coluna1'];
+                    delete json[i]['Coluna2'];
+                    delete json[i]['Coluna3'];
+                    delete json[i]['Nº RAC'];
+                    delete json[i]['C1__'];
+                    delete json[i]['C2__'];
+                    delete json[i]['C3__'];
+                    delete json[i]['Coluna_'];
+                    delete json[i]['Total'];
+                    delete json[i]['Total2'];
+                }
+                
+                setTableNNCCEMetal(json)
+                setTimeout(arrumaTabela2niveis('clTableNNCCEMetal'), 13000)
+            })
+
+
+            var whereTableNNCCEOssos = ""
+            + " WHERE 1=1 "
+            + "and year([Dt Abertura]) = (select year(data) as data from v_maiorData) "
+            + "and month([Dt Abertura]) = (select month(data) as data from v_maiorData) "
+            + "and [Tipo Problema] like '%osso%' "
+
+            api.getSearaBaseNNC3niveisPIVOTDIA([ whereTableNNCCEOssos, "[Reg. Qual] as Coluna1, Filial as Coluna2, null as Coluna3", "[Reg. Qual], Filial", " [MES-DIA] ", " [MES-DIA] "]).then((response) => {
+                
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['Coluna1'];
+                    delete json[i]['Coluna2'];
+                    delete json[i]['Coluna3'];
+                    delete json[i]['Nº RAC'];
+                    delete json[i]['C1__'];
+                    delete json[i]['C2__'];
+                    delete json[i]['C3__'];
+                    delete json[i]['Coluna_'];
+                    delete json[i]['Total'];
+                    delete json[i]['Total2'];
+                }
+                
+                setTableNNCCEOssos(json)
+                setTimeout(arrumaTabela2niveis('clTableNNCCEOssos'), 13000)
+            })
+
+            var whereTableNNCCE = ""
+            + " WHERE 1=1 "
+            + "and year([Dt Abertura]) = (select year(data) as data from v_maiorData) "
+            + "and month([Dt Abertura]) = (select month(data) as data from v_maiorData) "
+            + "and [Tipo CE] is not null"
+
+            api.getSearaBaseNNC3niveisPIVOTDIA([ whereTableNNCCE, "[Reg. Qual] as Coluna1, Filial as Coluna2, null as Coluna3", "[Reg. Qual], Filial", " [MES-DIA] ", " [MES-DIA] " ]).then((response) => {
+                
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['Coluna1'];
+                    delete json[i]['Coluna2'];
+                    delete json[i]['Coluna3'];
+                    delete json[i]['Nº RAC'];
+                    delete json[i]['C1__'];
+                    delete json[i]['C2__'];
+                    delete json[i]['C3__'];
+                    delete json[i]['Coluna_'];
+                    delete json[i]['Total'];
+                    delete json[i]['Total2'];
+                }
+                
+                setTableNNCCE(json)
+                setTimeout(arrumaTabela2niveis('clTableNNCCE'), 13000)
+            })
+
+
+            var whereTableHabilitadorCorposEstranhosNaoInerentes = ""
+            + " WHERE 1=1 "
+            + "and year([Dt Abertura]) = (select year(data) as data from v_maiorData) "
+            
+         
+
+            api.getSearaBaseNNC3niveisPIVOTmesDesvio([ whereTableHabilitadorCorposEstranhosNaoInerentes, "[Reg. Qual] as Coluna1, Fornecedor as Coluna2, null as Coluna3", "[Reg. Qual], Fornecedor", " '|' + RIGHT('0' + cast(month([Dt Abertura]) as varchar), 2) + '|' ", "Mes" ]).then((response) => {
+                
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['Coluna1'];
+                    delete json[i]['Coluna2'];
+                    delete json[i]['Coluna3'];
+                    delete json[i]['Nº RAC'];
+                    delete json[i]['C1__'];
+                    delete json[i]['C2__'];
+                    delete json[i]['C3__'];
+                    delete json[i]['Coluna_'];
+                    delete json[i]['Total'];
+                    delete json[i]['Total2'];
+                }
+                
+                setTableHabilitadorCorposEstranhosNaoInerentes(json)
+                setTimeout(arrumaTabela2niveis('clTableHabilitadorCorposEstranhosNaoInerentes'), 13000)
+            })
+
+
+            var whereTableNNCCEInerenteNaoInerente = ""
+            + " WHERE 1=1 "
+            + "and year([Dt Abertura]) = (select year(data) as data from v_maiorData) "
+            + "and month([Dt Abertura]) = (select month(data) as data from v_maiorData) "
+            + "and [Tipo CE] is not null "
+
+            api.getSearaBaseNNC3niveisPIVOTDIA([ whereTableNNCCEInerenteNaoInerente, "[Reg. Qual] as Coluna1, Filial as Coluna2, null as Coluna3 ", "[Reg. Qual], Filial", " [TIPO CE] ", " [TIPO CE] "]).then((response) => {
+                
+                
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['Coluna1'];
+                    delete json[i]['Coluna2'];
+                    delete json[i]['Coluna3'];
+                    delete json[i]['Nº RAC'];
+                    delete json[i]['C1__'];
+                    delete json[i]['C2__'];
+                    delete json[i]['C3__'];
+                    delete json[i]['Coluna_'];
+                    delete json[i]['Total'];
+                    delete json[i]['Total2'];
+                }
+                
+                setTableNNCCEInerenteNaoInerente(json)
+                setTimeout(arrumaTabela2niveis('clTableNNCCEInerenteNaoInerente'), 13000)
+            })
+
+            var wherePivotdataTableRacMetal = ""
+            + " WHERE 1=1 "
+            + "and year(data_rac) = (select year(data) as data from v_maiorData) "
+            + "and month(data_rac) = (select month(data) as data from v_maiorData) "
+            
+            + "AND UNIDADE NOT IN ('AGRO ALFA','AMAI','ATI-GEL','CLAREBOUT','GRANO','GRIFFOOD','MASSATAKE','SANTA CRUZ DO SUL','VIGOR','ARTES GRÁFICAS','CAMPINAS-CD','CAMPO VERDE','CD RIBEIRÃO DAS NEVES','CPO','DOC INDUSTRIA','EIRELI EPP','EIRELI ME','EXCELSIOR','GENESEAS AQUACULTURA','GERÊNCIA NACIONA FS','GRANO ALIMENTOS S.A.','GRIFFOOD','ICOFORT','ITAJAI','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','ITAJAI PESCADOS','LABREZZA','M P FOODS','MARBA','MASSAS SANTA ENERSTINA LTDA','NORONHA', 'OUTROS','PINHAIS - CD','QUALIDADE SUPPLY CHAIN','RIBEIRÃO PRETO – CD','SALVADOR – CD','SAO PAULO – CD','SEARA MEATS','SOMAVE','VARZEA GRANDE – CD') "
+            + "AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') "
+            + "AND [PROBLEMA] IN ('METAL','METÁLICO') "
+
+
+            api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataTableRacMetal, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
+                
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['Coluna1'];
+                    delete json[i]['Coluna2'];
+                    delete json[i]['Coluna3'];
+                    delete json[i]['Nº RAC'];
+                    delete json[i]['C1__'];
+                    delete json[i]['C2__'];
+                    delete json[i]['C3__'];
+                    delete json[i]['Coluna_'];
+                    delete json[i]['Total'];
+                    delete json[i]['Total2'];
+                }
+                
+                setTableRacMetal(json)
+                setTimeout(arrumaTabela2niveis('clTableRacMetal'), 13000)
+            })
+
             var wherePivotdataEvolucaoAves = ""
             + " WHERE 1=1 "
             + "and year(data_rac) = (select year(data) as data from v_maiorData) "
@@ -3726,686 +4932,139 @@ function Home() {
                 }
                 
                 setTableRacRACDetalhesEvolucaoAves(json)
-                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesEvolucaoAves'), 3000)
+                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesEvolucaoAves'), 13000)
             })
 
-            var sqlTableRacRACDetalhesEvolucaoPreparados = ""
-            + " SELECT																																																			"
-            + " [Origem_do_Problema_rac] Origem,																																																		"
-            + " sum(Quant_rac) Quant_rac																																														"
-            + " INTO #TOTAL																																																		"
-            + " FROM [v_base_rac]																																																"
-            + " WHERE 1=1																																																		"
-            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
-            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
-            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
-            + " AND Tipo_rac = 'Real' 																																															"
-            + " GROUP BY [Origem_do_Problema_rac]																																																"
-            + " 																																																				"
-            + " SELECT																																																			"
-            + " 'Total' as Origem,																																															"
-            + " sum(Quant_rac) Quant_rac																																														"
-            + " INTO #TOTALFINAL																																																"
-            + " FROM [v_base_rac]																																																"
-            + " WHERE 1=1																																																		"
-            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
-            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
-            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
-            + " AND Tipo_rac = 'Real' 																																															"
-            + " GROUP BY [Origem_do_Problema_rac]																																																"
-            + " 																																																				"
-            + " SELECT																																																			"
-            + " sum(Quant_rac) Quant_rac																																														"
-            + " INTO #TOTALF																																																	"
-            + " FROM [v_base_rac]																																																"
-            + " WHERE 1=1																																																		"
-            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
-            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
-            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
-            + " AND Tipo_rac = 'Real' 																																															"
-            + " 																																																				"
-            + " 																																																				"
-            + " DECLARE @SQLStr VARCHAR(max)																																													"
-            + " SET @SQLStr=''																																																	"
-            + " 																																																				"
-            + " SELECT																																																			"
-            + " [MES-DIA] Descricao																																																"
-            + " INTO #TAB																																																		"
-            + " FROM [v_base_rac]																																																"
-            + " 																																																				"
-            + " WHERE 1=1																																																		"
-            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
-            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
-            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
-            + " AND Tipo_rac = 'Real' 																																															"
-            + " GROUP BY [MES-DIA]																																																"
-            + " 																																																				"
-            + " DECLARE @LINHAS INT 																																															"
-            + " 																																																				"
-            + " SELECT @LINHAS = (SELECT COUNT(1) FROM #TAB)																																									"
-            + " 																																																				"
-            + " DECLARE @Tabela TABLE (																																															"
-            + "     VALOR VARCHAR(MAX)																																															"
-            + " )																																																				"
-            + "  																																																				"
-            + " INSERT @Tabela ( 																																																"
-            + "     VALOR																																																		"
-            + " )																																																				"
-            + " SELECT  																																																		"
-            + "     '||' 																																															"
-            + " FROM																																																			"
-            + "     #TAB																																																		"
-            + " GROUP BY 																																																		"
-            + "     Descricao																																																	"
-            + "  																																																				"
-            + " DECLARE @Descricao VARCHAR(MAX)																																													"
-            + "  																																																				"
-            + " DECLARE c CURSOR LOCAL FAST_FORWARD																																												"
-            + " FOR																																																				"
-            + "  																																																				"
-            + "     SELECT  																																																	"
-            + "         Descricao																																																"
-            + "     FROM																																																		"
-            + "         #TAB																																																	"
-            + "     ORDER BY 																																																	"
-            + "         Descricao ASC																																															"
-            + "  																																																				"
-            + "  																																																				"
-            + " OPEN c																																																			"
-            + "  																																																				"
-            + " FETCH c INTO @Descricao																																															"
-            + "  																																																				"
-            + " WHILE @@FETCH_STATUS = 0																																														"
-            + " BEGIN																																																			"
-            + "  																																																				"
-            + "     UPDATE  @Tabela																																																"
-            + "     SET     VALOR += ', [' + @Descricao + ']'																																									"
-            + "  																																																				"
-            + "     FETCH c INTO @Descricao																																														"
-            + " END																																																				"
-            + "  																																																				"
-            + " CLOSE c																																																			"
-            + " DEALLOCATE c																																																	"
-            + "  																																																				"
-            + " SELECT  																																																		"
-            + "     TOP 1 Descricoes = REPLACE(STUFF(VALOR, 1, 0, ''),'||,','')																																					"
-            + " INTO #TAB2																																																		"
-            + " FROM																																																			"
-            + "     @Tabela																																																		"
-            + " 																																																				"
-            + " SELECT @SQLStr = @SQLStr + (SELECT TOP 1 Descricoes FROM #TAB2)																																					"
-            + " 																																																				"
-            + " DROP TABLE #TAB																																																	"
-            + " DROP TABLE #TAB2																																																"
-            + " 																																																				"
-            + " PRINT @SQLStr																																																	"
-            + " SET @SQLStr = LEFT(@SQLStr,len(@SQLStr))																																										"
-            + " 																																																				"
-            + " SET @SQLStr ='SELECT pt.[Origem],   '																																											"
-            + " + @SQLStr																																																		"
-            + " + ' , T.Quant_rac as Total ' +																																													"
-            + " + ' , 0 as Total2 ' +																																															"
-            + " + ' FROM (SELECT [Origem_do_Problema_rac] Origem, [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																																"
-            + " '         from [v_base_rac] base with (nolock)  ' +																																								"
-            + " 																																																				"
-            + " 		' WHERE 1=1 ' +																																															"
-            + "         ' AND month(Data_rac) = month((select * from v_maiorData))																																	' +			"
-            + " 		' AND year(Data_rac) = year((select * from v_maiorData))																																	' +			"
-            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''MASSATAKE'',''MARBA'',''NORONHA'',''VIGOR'') 		' +			"
-            + " 		' AND Tipo_rac = ''Real'' 																																									' +			"
-            + " 																																																				"
-            + "         ' GROUP BY [Origem_do_Problema_rac], [MES-DIA] '+      																																								"
-            + " '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																						"
-            + " + @SQLStr+')) AS pt ' +																																															"
-            + " ' INNER JOIN #TOTAL T ON T.origem = PT.origem ' +																																								"
-            + " 																																																				"
-            + " ' UNION ALL ' +																																																	"
-            + " ' SELECT pt.[Origem],   '																																														"
-            + " + @SQLStr																																																		"
-            + " + ' , (SELECT SUM(Quant_rac) from #TOTALF) as Total ' +																																							"
-            + " + ' , (SELECT SUM(Quant_rac) from #TOTALF) as Total2 ' +																																						"
-            + " + ' FROM (SELECT ''Total'' as Origem, [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																													"
-            + " '         from [v_base_rac] base with (nolock)  ' +																																								"
-            + " 																																																				"
-            + " 		' WHERE 1=1 ' +																																															"
-            + "         ' AND month(Data_rac) = month((select * from v_maiorData))																																	' +			"
-            + " 		' AND year(Data_rac) = year((select * from v_maiorData))																																	' +			"
-            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''MASSATAKE'',''MARBA'',''NORONHA'',''VIGOR'') 		' +			"
-            + " 		' AND Tipo_rac = ''Real'' 																																									' +			"
-            + " 																																																				"
-            + "         ' GROUP BY [MES-DIA] '+      																																											"
-            + " '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																						"
-            + " + @SQLStr+')) AS pt ' +																																															"
-            + " 																																																				"
-            + " ' ORDER BY  ' + CAST(@LINHAS + 3 AS VARCHAR) + ' ASC, ' + CAST(@LINHAS + 2 AS VARCHAR) + ' DESC ' 																												"
-            + " 																																																				"
-            + " PRINT @SQLStr																																																	"
-            + " EXEC(@SQLStr)																																																	"
-            + " 																																																				"
-            + " DROP TABLE #TOTAL																																																"
-            + " DROP TABLE #TOTALFINAL																																															"
-            + " DROP TABLE #TOTALF																																																"
+            var wherePivotdataEvolucaoPreparados = ""
+            + " WHERE 1=1 "
+            + "and year(data_rac) = (select year(data) as data from v_maiorData) "
+            + "and month(data_rac) = (select month(data) as data from v_maiorData) "
+            + "AND Tipo_rac = 'Real'	AND  [Regional Qual] LIKE '%Prepar%'  "
 
 
-            api.getSearaBaseSQLNINJA([ sqlTableRacRACDetalhesEvolucaoPreparados ]).then((response) => {
+            api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataEvolucaoPreparados, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
                 
                 let json = JSON.parse(response.data)
 
                 for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['Coluna1'];
+                    delete json[i]['Coluna2'];
+                    delete json[i]['Coluna3'];
+                    delete json[i]['Nº RAC'];
+                    delete json[i]['C1__'];
+                    delete json[i]['C2__'];
+                    delete json[i]['C3__'];
+                    delete json[i]['Coluna_'];
+                    delete json[i]['Total'];
                     delete json[i]['Total2'];
                 }
                 
                 setTableRacRACDetalhesEvolucaoPreparados(json)
+                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesEvolucaoPreparados'), 13000)
             })
+                
+                
+            
 
 
-            var sqlTableRacRACDetalhesEvolucaoFatiados = ""
-            + " SELECT																																																			"
-            + " [Origem_do_Problema_rac] Origem,																																																		"
-            + " sum(Quant_rac) Quant_rac																																														"
-            + " INTO #TOTAL																																																		"
-            + " FROM [v_base_rac]																																																"
-            + " WHERE 1=1																																																		"
-            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
-            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
-            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
-            + " AND Tipo_rac = 'Real' 																																															"
-            + " GROUP BY [Origem_do_Problema_rac]																																																"
-            + " 																																																				"
-            + " SELECT																																																			"
-            + " 'Total' as Origem,																																															"
-            + " sum(Quant_rac) Quant_rac																																														"
-            + " INTO #TOTALFINAL																																																"
-            + " FROM [v_base_rac]																																																"
-            + " WHERE 1=1																																																		"
-            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
-            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
-            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
-            + " AND Tipo_rac = 'Real' 																																															"
-            + " GROUP BY [Origem_do_Problema_rac]																																																"
-            + " 																																																				"
-            + " SELECT																																																			"
-            + " sum(Quant_rac) Quant_rac																																														"
-            + " INTO #TOTALF																																																	"
-            + " FROM [v_base_rac]																																																"
-            + " WHERE 1=1																																																		"
-            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
-            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
-            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
-            + " AND Tipo_rac = 'Real' 																																															"
-            + " 																																																				"
-            + " 																																																				"
-            + " DECLARE @SQLStr VARCHAR(max)																																													"
-            + " SET @SQLStr=''																																																	"
-            + " 																																																				"
-            + " SELECT																																																			"
-            + " [MES-DIA] Descricao																																																"
-            + " INTO #TAB																																																		"
-            + " FROM [v_base_rac]																																																"
-            + " 																																																				"
-            + " WHERE 1=1																																																		"
-            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
-            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
-            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
-            + " AND Tipo_rac = 'Real' 																																															"
-            + " GROUP BY [MES-DIA]																																																"
-            + " 																																																				"
-            + " DECLARE @LINHAS INT 																																															"
-            + " 																																																				"
-            + " SELECT @LINHAS = (SELECT COUNT(1) FROM #TAB)																																									"
-            + " 																																																				"
-            + " DECLARE @Tabela TABLE (																																															"
-            + "     VALOR VARCHAR(MAX)																																															"
-            + " )																																																				"
-            + "  																																																				"
-            + " INSERT @Tabela ( 																																																"
-            + "     VALOR																																																		"
-            + " )																																																				"
-            + " SELECT  																																																		"
-            + "     '||' 																																															"
-            + " FROM																																																			"
-            + "     #TAB																																																		"
-            + " GROUP BY 																																																		"
-            + "     Descricao																																																	"
-            + "  																																																				"
-            + " DECLARE @Descricao VARCHAR(MAX)																																													"
-            + "  																																																				"
-            + " DECLARE c CURSOR LOCAL FAST_FORWARD																																												"
-            + " FOR																																																				"
-            + "  																																																				"
-            + "     SELECT  																																																	"
-            + "         Descricao																																																"
-            + "     FROM																																																		"
-            + "         #TAB																																																	"
-            + "     ORDER BY 																																																	"
-            + "         Descricao ASC																																															"
-            + "  																																																				"
-            + "  																																																				"
-            + " OPEN c																																																			"
-            + "  																																																				"
-            + " FETCH c INTO @Descricao																																															"
-            + "  																																																				"
-            + " WHILE @@FETCH_STATUS = 0																																														"
-            + " BEGIN																																																			"
-            + "  																																																				"
-            + "     UPDATE  @Tabela																																																"
-            + "     SET     VALOR += ', [' + @Descricao + ']'																																									"
-            + "  																																																				"
-            + "     FETCH c INTO @Descricao																																														"
-            + " END																																																				"
-            + "  																																																				"
-            + " CLOSE c																																																			"
-            + " DEALLOCATE c																																																	"
-            + "  																																																				"
-            + " SELECT  																																																		"
-            + "     TOP 1 Descricoes = REPLACE(STUFF(VALOR, 1, 0, ''),'||,','')																																					"
-            + " INTO #TAB2																																																		"
-            + " FROM																																																			"
-            + "     @Tabela																																																		"
-            + " 																																																				"
-            + " SELECT @SQLStr = @SQLStr + (SELECT TOP 1 Descricoes FROM #TAB2)																																					"
-            + " 																																																				"
-            + " DROP TABLE #TAB																																																	"
-            + " DROP TABLE #TAB2																																																"
-            + " 																																																				"
-            + " PRINT @SQLStr																																																	"
-            + " SET @SQLStr = LEFT(@SQLStr,len(@SQLStr))																																										"
-            + " 																																																				"
-            + " SET @SQLStr ='SELECT pt.[Origem],   '																																											"
-            + " + @SQLStr																																																		"
-            + " + ' , T.Quant_rac as Total ' +																																													"
-            + " + ' , 0 as Total2 ' +																																															"
-            + " + ' FROM (SELECT [Origem_do_Problema_rac] Origem, [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																																"
-            + " '         from [v_base_rac] base with (nolock)  ' +																																								"
-            + " 																																																				"
-            + " 		' WHERE 1=1 ' +																																															"
-            + "         ' AND month(Data_rac) = month((select * from v_maiorData))																																	' +			"
-            + " 		' AND year(Data_rac) = year((select * from v_maiorData))																																	' +			"
-            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''MASSATAKE'',''MARBA'',''NORONHA'',''VIGOR'') 		' +			"
-            + " 		' AND Tipo_rac = ''Real'' 																																									' +			"
-            + " 																																																				"
-            + "         ' GROUP BY [Origem_do_Problema_rac], [MES-DIA] '+      																																								"
-            + " '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																						"
-            + " + @SQLStr+')) AS pt ' +																																															"
-            + " ' INNER JOIN #TOTAL T ON T.origem = PT.origem ' +																																								"
-            + " 																																																				"
-            + " ' UNION ALL ' +																																																	"
-            + " ' SELECT pt.[Origem],   '																																														"
-            + " + @SQLStr																																																		"
-            + " + ' , (SELECT SUM(Quant_rac) from #TOTALF) as Total ' +																																							"
-            + " + ' , (SELECT SUM(Quant_rac) from #TOTALF) as Total2 ' +																																						"
-            + " + ' FROM (SELECT ''Total'' as Origem, [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																													"
-            + " '         from [v_base_rac] base with (nolock)  ' +																																								"
-            + " 																																																				"
-            + " 		' WHERE 1=1 ' +																																															"
-            + "         ' AND month(Data_rac) = month((select * from v_maiorData))																																	' +			"
-            + " 		' AND year(Data_rac) = year((select * from v_maiorData))																																	' +			"
-            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''MASSATAKE'',''MARBA'',''NORONHA'',''VIGOR'') 		' +			"
-            + " 		' AND Tipo_rac = ''Real'' 																																									' +			"
-            + " 																																																				"
-            + "         ' GROUP BY [MES-DIA] '+      																																											"
-            + " '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																						"
-            + " + @SQLStr+')) AS pt ' +																																															"
-            + " 																																																				"
-            + " ' ORDER BY  ' + CAST(@LINHAS + 3 AS VARCHAR) + ' ASC, ' + CAST(@LINHAS + 2 AS VARCHAR) + ' DESC ' 																												"
-            + " 																																																				"
-            + " PRINT @SQLStr																																																	"
-            + " EXEC(@SQLStr)																																																	"
-            + " 																																																				"
-            + " DROP TABLE #TOTAL																																																"
-            + " DROP TABLE #TOTALFINAL																																															"
-            + " DROP TABLE #TOTALF																																																"
+            var wherePivotdataEvolucaoFatiados = ""
+            + " WHERE 1=1 "
+            + "and year(data_rac) = (select year(data) as data from v_maiorData) "
+            + "and month(data_rac) = (select month(data) as data from v_maiorData) "
+            + "AND Tipo_rac = 'Real'	AND  [Regional Qual] LIKE '%Fatiados%'  "
 
 
-            api.getSearaBaseSQLNINJA([ sqlTableRacRACDetalhesEvolucaoFatiados ]).then((response) => {
+            api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataEvolucaoFatiados, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
                 
                 let json = JSON.parse(response.data)
 
                 for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['Coluna1'];
+                    delete json[i]['Coluna2'];
+                    delete json[i]['Coluna3'];
+                    delete json[i]['Nº RAC'];
+                    delete json[i]['C1__'];
+                    delete json[i]['C2__'];
+                    delete json[i]['C3__'];
+                    delete json[i]['Coluna_'];
+                    delete json[i]['Total'];
                     delete json[i]['Total2'];
                 }
                 
                 setTableRacRACDetalhesEvolucaoFatiados(json)
+                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesEvolucaoFatiados'), 13000)
             })
 
 
-            var sqlTableRacRACDetalhesEvolucaoPescados = ""
-            + " SELECT																																																			"
-            + " [Origem_do_Problema_rac] Origem,																																																		"
-            + " sum(Quant_rac) Quant_rac																																														"
-            + " INTO #TOTAL																																																		"
-            + " FROM [v_base_rac]																																																"
-            + " WHERE 1=1																																																		"
-            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
-            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
-            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
-            + " AND Tipo_rac = 'Real' 																																															"
-            + " GROUP BY [Origem_do_Problema_rac]																																																"
-            + " 																																																				"
-            + " SELECT																																																			"
-            + " 'Total' as Origem,																																															"
-            + " sum(Quant_rac) Quant_rac																																														"
-            + " INTO #TOTALFINAL																																																"
-            + " FROM [v_base_rac]																																																"
-            + " WHERE 1=1																																																		"
-            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
-            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
-            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
-            + " AND Tipo_rac = 'Real' 																																															"
-            + " GROUP BY [Origem_do_Problema_rac]																																																"
-            + " 																																																				"
-            + " SELECT																																																			"
-            + " sum(Quant_rac) Quant_rac																																														"
-            + " INTO #TOTALF																																																	"
-            + " FROM [v_base_rac]																																																"
-            + " WHERE 1=1																																																		"
-            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
-            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
-            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
-            + " AND Tipo_rac = 'Real' 																																															"
-            + " 																																																				"
-            + " 																																																				"
-            + " DECLARE @SQLStr VARCHAR(max)																																													"
-            + " SET @SQLStr=''																																																	"
-            + " 																																																				"
-            + " SELECT																																																			"
-            + " [MES-DIA] Descricao																																																"
-            + " INTO #TAB																																																		"
-            + " FROM [v_base_rac]																																																"
-            + " 																																																				"
-            + " WHERE 1=1																																																		"
-            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
-            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
-            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
-            + " AND Tipo_rac = 'Real' 																																															"
-            + " GROUP BY [MES-DIA]																																																"
-            + " 																																																				"
-            + " DECLARE @LINHAS INT 																																															"
-            + " 																																																				"
-            + " SELECT @LINHAS = (SELECT COUNT(1) FROM #TAB)																																									"
-            + " 																																																				"
-            + " DECLARE @Tabela TABLE (																																															"
-            + "     VALOR VARCHAR(MAX)																																															"
-            + " )																																																				"
-            + "  																																																				"
-            + " INSERT @Tabela ( 																																																"
-            + "     VALOR																																																		"
-            + " )																																																				"
-            + " SELECT  																																																		"
-            + "     '||' 																																															"
-            + " FROM																																																			"
-            + "     #TAB																																																		"
-            + " GROUP BY 																																																		"
-            + "     Descricao																																																	"
-            + "  																																																				"
-            + " DECLARE @Descricao VARCHAR(MAX)																																													"
-            + "  																																																				"
-            + " DECLARE c CURSOR LOCAL FAST_FORWARD																																												"
-            + " FOR																																																				"
-            + "  																																																				"
-            + "     SELECT  																																																	"
-            + "         Descricao																																																"
-            + "     FROM																																																		"
-            + "         #TAB																																																	"
-            + "     ORDER BY 																																																	"
-            + "         Descricao ASC																																															"
-            + "  																																																				"
-            + "  																																																				"
-            + " OPEN c																																																			"
-            + "  																																																				"
-            + " FETCH c INTO @Descricao																																															"
-            + "  																																																				"
-            + " WHILE @@FETCH_STATUS = 0																																														"
-            + " BEGIN																																																			"
-            + "  																																																				"
-            + "     UPDATE  @Tabela																																																"
-            + "     SET     VALOR += ', [' + @Descricao + ']'																																									"
-            + "  																																																				"
-            + "     FETCH c INTO @Descricao																																														"
-            + " END																																																				"
-            + "  																																																				"
-            + " CLOSE c																																																			"
-            + " DEALLOCATE c																																																	"
-            + "  																																																				"
-            + " SELECT  																																																		"
-            + "     TOP 1 Descricoes = REPLACE(STUFF(VALOR, 1, 0, ''),'||,','')																																					"
-            + " INTO #TAB2																																																		"
-            + " FROM																																																			"
-            + "     @Tabela																																																		"
-            + " 																																																				"
-            + " SELECT @SQLStr = @SQLStr + (SELECT TOP 1 Descricoes FROM #TAB2)																																					"
-            + " 																																																				"
-            + " DROP TABLE #TAB																																																	"
-            + " DROP TABLE #TAB2																																																"
-            + " 																																																				"
-            + " PRINT @SQLStr																																																	"
-            + " SET @SQLStr = LEFT(@SQLStr,len(@SQLStr))																																										"
-            + " 																																																				"
-            + " SET @SQLStr ='SELECT pt.[Origem],   '																																											"
-            + " + @SQLStr																																																		"
-            + " + ' , T.Quant_rac as Total ' +																																													"
-            + " + ' , 0 as Total2 ' +																																															"
-            + " + ' FROM (SELECT [Origem_do_Problema_rac] Origem, [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																																"
-            + " '         from [v_base_rac] base with (nolock)  ' +																																								"
-            + " 																																																				"
-            + " 		' WHERE 1=1 ' +																																															"
-            + "         ' AND month(Data_rac) = month((select * from v_maiorData))																																	' +			"
-            + " 		' AND year(Data_rac) = year((select * from v_maiorData))																																	' +			"
-            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''MASSATAKE'',''MARBA'',''NORONHA'',''VIGOR'') 		' +			"
-            + " 		' AND Tipo_rac = ''Real'' 																																									' +			"
-            + " 																																																				"
-            + "         ' GROUP BY [Origem_do_Problema_rac], [MES-DIA] '+      																																								"
-            + " '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																						"
-            + " + @SQLStr+')) AS pt ' +																																															"
-            + " ' INNER JOIN #TOTAL T ON T.origem = PT.origem ' +																																								"
-            + " 																																																				"
-            + " ' UNION ALL ' +																																																	"
-            + " ' SELECT pt.[Origem],   '																																														"
-            + " + @SQLStr																																																		"
-            + " + ' , (SELECT SUM(Quant_rac) from #TOTALF) as Total ' +																																							"
-            + " + ' , (SELECT SUM(Quant_rac) from #TOTALF) as Total2 ' +																																						"
-            + " + ' FROM (SELECT ''Total'' as Origem, [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																													"
-            + " '         from [v_base_rac] base with (nolock)  ' +																																								"
-            + " 																																																				"
-            + " 		' WHERE 1=1 ' +																																															"
-            + "         ' AND month(Data_rac) = month((select * from v_maiorData))																																	' +			"
-            + " 		' AND year(Data_rac) = year((select * from v_maiorData))																																	' +			"
-            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''MASSATAKE'',''MARBA'',''NORONHA'',''VIGOR'') 		' +			"
-            + " 		' AND Tipo_rac = ''Real'' 																																									' +			"
-            + " 																																																				"
-            + "         ' GROUP BY [MES-DIA] '+      																																											"
-            + " '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																						"
-            + " + @SQLStr+')) AS pt ' +																																															"
-            + " 																																																				"
-            + " ' ORDER BY  ' + CAST(@LINHAS + 3 AS VARCHAR) + ' ASC, ' + CAST(@LINHAS + 2 AS VARCHAR) + ' DESC ' 																												"
-            + " 																																																				"
-            + " PRINT @SQLStr																																																	"
-            + " EXEC(@SQLStr)																																																	"
-            + " 																																																				"
-            + " DROP TABLE #TOTAL																																																"
-            + " DROP TABLE #TOTALFINAL																																															"
-            + " DROP TABLE #TOTALF																																																"
 
 
-            api.getSearaBaseSQLNINJA([ sqlTableRacRACDetalhesEvolucaoPescados ]).then((response) => {
+            var wherePivotdataEvolucaoPescados = ""
+            + " WHERE 1=1 "
+            + "and year(data_rac) = (select year(data) as data from v_maiorData) "
+            + "and month(data_rac) = (select month(data) as data from v_maiorData) "
+            + "AND Tipo_rac = 'Real'	AND  [Regional Qual] LIKE '%Pescado%'  "
+
+
+            api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataEvolucaoPescados, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
                 
                 let json = JSON.parse(response.data)
 
                 for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['Coluna1'];
+                    delete json[i]['Coluna2'];
+                    delete json[i]['Coluna3'];
+                    delete json[i]['Nº RAC'];
+                    delete json[i]['C1__'];
+                    delete json[i]['C2__'];
+                    delete json[i]['C3__'];
+                    delete json[i]['Coluna_'];
+                    delete json[i]['Total'];
                     delete json[i]['Total2'];
                 }
                 
                 setTableRacRACDetalhesEvolucaoPescados(json)
+                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesEvolucaoPescados'), 13000)
             })
 
 
-            var sqlTableRacRACDetalhesEvolucaoSuinos = ""
-            + " SELECT																																																			"
-            + " [Origem_do_Problema_rac] Origem,																																																		"
-            + " sum(Quant_rac) Quant_rac																																														"
-            + " INTO #TOTAL																																																		"
-            + " FROM [v_base_rac]																																																"
-            + " WHERE 1=1																																																		"
-            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
-            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
-            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
-            + " AND Tipo_rac = 'Real' 																																															"
-            + " GROUP BY [Origem_do_Problema_rac]																																																"
-            + " 																																																				"
-            + " SELECT																																																			"
-            + " 'Total' as Origem,																																															"
-            + " sum(Quant_rac) Quant_rac																																														"
-            + " INTO #TOTALFINAL																																																"
-            + " FROM [v_base_rac]																																																"
-            + " WHERE 1=1																																																		"
-            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
-            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
-            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
-            + " AND Tipo_rac = 'Real' 																																															"
-            + " GROUP BY [Origem_do_Problema_rac]																																																"
-            + " 																																																				"
-            + " SELECT																																																			"
-            + " sum(Quant_rac) Quant_rac																																														"
-            + " INTO #TOTALF																																																	"
-            + " FROM [v_base_rac]																																																"
-            + " WHERE 1=1																																																		"
-            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
-            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
-            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
-            + " AND Tipo_rac = 'Real' 																																															"
-            + " 																																																				"
-            + " 																																																				"
-            + " DECLARE @SQLStr VARCHAR(max)																																													"
-            + " SET @SQLStr=''																																																	"
-            + " 																																																				"
-            + " SELECT																																																			"
-            + " [MES-DIA] Descricao																																																"
-            + " INTO #TAB																																																		"
-            + " FROM [v_base_rac]																																																"
-            + " 																																																				"
-            + " WHERE 1=1																																																		"
-            + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
-            + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
-            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
-            + " AND Tipo_rac = 'Real' 																																															"
-            + " GROUP BY [MES-DIA]																																																"
-            + " 																																																				"
-            + " DECLARE @LINHAS INT 																																															"
-            + " 																																																				"
-            + " SELECT @LINHAS = (SELECT COUNT(1) FROM #TAB)																																									"
-            + " 																																																				"
-            + " DECLARE @Tabela TABLE (																																															"
-            + "     VALOR VARCHAR(MAX)																																															"
-            + " )																																																				"
-            + "  																																																				"
-            + " INSERT @Tabela ( 																																																"
-            + "     VALOR																																																		"
-            + " )																																																				"
-            + " SELECT  																																																		"
-            + "     '||' 																																															"
-            + " FROM																																																			"
-            + "     #TAB																																																		"
-            + " GROUP BY 																																																		"
-            + "     Descricao																																																	"
-            + "  																																																				"
-            + " DECLARE @Descricao VARCHAR(MAX)																																													"
-            + "  																																																				"
-            + " DECLARE c CURSOR LOCAL FAST_FORWARD																																												"
-            + " FOR																																																				"
-            + "  																																																				"
-            + "     SELECT  																																																	"
-            + "         Descricao																																																"
-            + "     FROM																																																		"
-            + "         #TAB																																																	"
-            + "     ORDER BY 																																																	"
-            + "         Descricao ASC																																															"
-            + "  																																																				"
-            + "  																																																				"
-            + " OPEN c																																																			"
-            + "  																																																				"
-            + " FETCH c INTO @Descricao																																															"
-            + "  																																																				"
-            + " WHILE @@FETCH_STATUS = 0																																														"
-            + " BEGIN																																																			"
-            + "  																																																				"
-            + "     UPDATE  @Tabela																																																"
-            + "     SET     VALOR += ', [' + @Descricao + ']'																																									"
-            + "  																																																				"
-            + "     FETCH c INTO @Descricao																																														"
-            + " END																																																				"
-            + "  																																																				"
-            + " CLOSE c																																																			"
-            + " DEALLOCATE c																																																	"
-            + "  																																																				"
-            + " SELECT  																																																		"
-            + "     TOP 1 Descricoes = REPLACE(STUFF(VALOR, 1, 0, ''),'||,','')																																					"
-            + " INTO #TAB2																																																		"
-            + " FROM																																																			"
-            + "     @Tabela																																																		"
-            + " 																																																				"
-            + " SELECT @SQLStr = @SQLStr + (SELECT TOP 1 Descricoes FROM #TAB2)																																					"
-            + " 																																																				"
-            + " DROP TABLE #TAB																																																	"
-            + " DROP TABLE #TAB2																																																"
-            + " 																																																				"
-            + " PRINT @SQLStr																																																	"
-            + " SET @SQLStr = LEFT(@SQLStr,len(@SQLStr))																																										"
-            + " 																																																				"
-            + " SET @SQLStr ='SELECT pt.[Origem],   '																																											"
-            + " + @SQLStr																																																		"
-            + " + ' , T.Quant_rac as Total ' +																																													"
-            + " + ' , 0 as Total2 ' +																																															"
-            + " + ' FROM (SELECT [Origem_do_Problema_rac] Origem, [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																																"
-            + " '         from [v_base_rac] base with (nolock)  ' +																																								"
-            + " 																																																				"
-            + " 		' WHERE 1=1 ' +																																															"
-            + "         ' AND month(Data_rac) = month((select * from v_maiorData))																																	' +			"
-            + " 		' AND year(Data_rac) = year((select * from v_maiorData))																																	' +			"
-            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''MASSATAKE'',''MARBA'',''NORONHA'',''VIGOR'') 		' +			"
-            + " 		' AND Tipo_rac = ''Real'' 																																									' +			"
-            + " 																																																				"
-            + "         ' GROUP BY [Origem_do_Problema_rac], [MES-DIA] '+      																																								"
-            + " '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																						"
-            + " + @SQLStr+')) AS pt ' +																																															"
-            + " ' INNER JOIN #TOTAL T ON T.origem = PT.origem ' +																																								"
-            + " 																																																				"
-            + " ' UNION ALL ' +																																																	"
-            + " ' SELECT pt.[Origem],   '																																														"
-            + " + @SQLStr																																																		"
-            + " + ' , (SELECT SUM(Quant_rac) from #TOTALF) as Total ' +																																							"
-            + " + ' , (SELECT SUM(Quant_rac) from #TOTALF) as Total2 ' +																																						"
-            + " + ' FROM (SELECT ''Total'' as Origem, [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																													"
-            + " '         from [v_base_rac] base with (nolock)  ' +																																								"
-            + " 																																																				"
-            + " 		' WHERE 1=1 ' +																																															"
-            + "         ' AND month(Data_rac) = month((select * from v_maiorData))																																	' +			"
-            + " 		' AND year(Data_rac) = year((select * from v_maiorData))																																	' +			"
-            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''MASSATAKE'',''MARBA'',''NORONHA'',''VIGOR'') 		' +			"
-            + " 		' AND Tipo_rac = ''Real'' 																																									' +			"
-            + " 																																																				"
-            + "         ' GROUP BY [MES-DIA] '+      																																											"
-            + " '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																						"
-            + " + @SQLStr+')) AS pt ' +																																															"
-            + " 																																																				"
-            + " ' ORDER BY  ' + CAST(@LINHAS + 3 AS VARCHAR) + ' ASC, ' + CAST(@LINHAS + 2 AS VARCHAR) + ' DESC ' 																												"
-            + " 																																																				"
-            + " PRINT @SQLStr																																																	"
-            + " EXEC(@SQLStr)																																																	"
-            + " 																																																				"
-            + " DROP TABLE #TOTAL																																																"
-            + " DROP TABLE #TOTALFINAL																																															"
-            + " DROP TABLE #TOTALF																																																"
+            var wherePivotdataEvolucaoSuinos = ""
+            + " WHERE 1=1 "
+            + "and year(data_rac) = (select year(data) as data from v_maiorData) "
+            + "and month(data_rac) = (select month(data) as data from v_maiorData) "
+            + "AND Tipo_rac = 'Real'	AND  [Regional Qual] LIKE '%Su%no%'  "
 
 
-            api.getSearaBaseSQLNINJA([ sqlTableRacRACDetalhesEvolucaoSuinos ]).then((response) => {
+            api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataEvolucaoSuinos, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
                 
                 let json = JSON.parse(response.data)
 
                 for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['Coluna1'];
+                    delete json[i]['Coluna2'];
+                    delete json[i]['Coluna3'];
+                    delete json[i]['Nº RAC'];
+                    delete json[i]['C1__'];
+                    delete json[i]['C2__'];
+                    delete json[i]['C3__'];
+                    delete json[i]['Coluna_'];
+                    delete json[i]['Total'];
                     delete json[i]['Total2'];
                 }
                 
                 setTableRacRACDetalhesEvolucaoSuinos(json)
+                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesEvolucaoSuinos'), 13000)
             })
 
 
@@ -4413,7 +5072,7 @@ function Home() {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEContasGlobais(json)
-                setTimeout(arrumaTabela3niveis('clContasGlobais'), 3000)
+                setTimeout(arrumaTabela3niveis('clContasGlobais'), 13000)
             })
 
             var whereTableRACAberturaLinhaEspecialFamilia = ""
@@ -4421,14 +5080,93 @@ function Home() {
             + " AND year(Data_rac) = year((select * from v_maiorData)) "
             + " AND [Origem_do_Problema_rac] IN ('ABUSO DE PRODUTO PDV') "																										
             + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR') "	
-            + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "																											
+            + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "
+            + " AND Nm_Marca_rac in ('SEARA GOURMET','SEARA INCRIVEL','SEARA NATURE','SEARA ROTISSERIE') "																											
             + " AND Tipo_rac = 'Real' "
 
-            api.getSearaBaseRAC3niveis([whereTableRACAberturaLinhaEspecialFamilia," Nm_Classe_rac CAMPO1, Tipo_Problema_rac CAMPO2, Nm_Classe_rac CAMPO3 "," Nm_Classe_rac, Tipo_Problema_rac, Nm_Classe_rac "]).then((response) => {
+            api.getSearaBaseRAC3niveis([whereTableRACAberturaLinhaEspecialFamilia," Nm_Marca_rac CAMPO1, Nm_Classe_rac CAMPO2, NULL CAMPO3 "," Nm_Marca_rac, Nm_Classe_rac "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaLinhaEspecialFamilia(json)
-                setTimeout(arrumaTabela3niveis('clTableRACAberturaLinhaEspecialFamilia'), 3000)
+                setTimeout(arrumaTabela2niveis('clTableRACAberturaLinhaEspecialFamilia'), 13000)
+            })
+
+            var whereTableRacRACDetalhesMetaRealAves = ""
+            + " AND Origem_do_Problema_rac = 'Fábrica Produção' "
+            + " AND Tipo_Atendimento_rac IN ('RECLAMAÇÃO FFO', 'RECLAMAÇÃO') "
+            + " AND [Regional Qual] LIKE '%AVES%' "
+
+            api.getSearaBaseRAC3niveisDesvio([whereTableRacRACDetalhesMetaRealAves," [Regional Qual] CAMPO1, [Unidade] CAMPO2, null CAMPO3 "," [Regional Qual], [Unidade] "]).then((response) => {
+
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['CAMPO1_'];
+                    delete json[i]['CAMPO2_'];
+                    delete json[i]['CAMPO3_'];
+                    delete json[i]['NUM'];
+                    delete json[i]['CAMPO1_2'];
+                    delete json[i]['CAMPO2'];
+                    delete json[i]['CAMPO3'];
+                }
+
+                setTableRacRACDetalhesMetaRealAves(json)
+                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesMetaRealAves'), 13000)
+            })
+
+            var whereTableRacRACDetalhesMetaRealPreparados = ""
+            + " AND Origem_do_Problema_rac = 'Fábrica Produção' "
+            + " AND Tipo_Atendimento_rac IN ('RECLAMAÇÃO FFO', 'RECLAMAÇÃO') "
+            + " AND [Regional Qual] LIKE '%prepar%' "
+
+            api.getSearaBaseRAC3niveisDesvio([whereTableRacRACDetalhesMetaRealPreparados," [Regional Qual] CAMPO1, [Unidade] CAMPO2, null CAMPO3 "," [Regional Qual], [Unidade] "]).then((response) => {
+
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['CAMPO1_'];
+                    delete json[i]['CAMPO2_'];
+                    delete json[i]['CAMPO3_'];
+                    delete json[i]['NUM'];
+                    delete json[i]['CAMPO1_2'];
+                    delete json[i]['CAMPO2'];
+                    delete json[i]['CAMPO3'];
+                }
+
+                setTableRacRACDetalhesMetaRealPreparados(json)
+                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesMetaRealPreparados'), 13000)
+            })
+
+            var whereTableRacRACDetalhesMetaRealSuinos = ""
+            + " AND Origem_do_Problema_rac = 'Fábrica Produção' "
+            + " AND Tipo_Atendimento_rac IN ('RECLAMAÇÃO FFO', 'RECLAMAÇÃO') "
+            + " AND [Regional Qual] LIKE '%su%nos%' "
+
+            api.getSearaBaseRAC3niveisDesvio([whereTableRacRACDetalhesMetaRealSuinos," [Regional Qual] CAMPO1, [Unidade] CAMPO2, null CAMPO3 "," [Regional Qual], [Unidade] "]).then((response) => {
+
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['CAMPO1_'];
+                    delete json[i]['CAMPO2_'];
+                    delete json[i]['CAMPO3_'];
+                    delete json[i]['NUM'];
+                    delete json[i]['CAMPO1_2'];
+                    delete json[i]['CAMPO2'];
+                    delete json[i]['CAMPO3'];
+                }
+
+                setTableRacRACDetalhesMetaRealSuinos(json)
+                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesMetaRealSuinos'), 13000)
             })
 
             var whereTableRACAberturaLinhaEspecialAcumulado = ""
@@ -4436,230 +5174,229 @@ function Home() {
             + " AND year(Data_rac) = year((select * from v_maiorData)) "
             + " AND [Origem_do_Problema_rac] IN ('ABUSO DE PRODUTO PDV') "																										
             + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR') "	
-            + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "																											
+            + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "
+            + " AND Nm_Marca_rac in ('SEARA GOURMET','SEARA INCRIVEL','SEARA NATURE','SEARA ROTISSERIE') "																											
             + " AND Tipo_rac = 'Real' "
 
-            api.getSearaBaseRAC3niveis([whereTableRACAberturaLinhaEspecialAcumulado," Nm_Classe_rac CAMPO1, Tipo_Problema_rac CAMPO2, Nm_Classe_rac CAMPO3 "," Nm_Classe_rac, Tipo_Problema_rac, Nm_Classe_rac "]).then((response) => {
+            api.getSearaBaseRAC3niveis([whereTableRACAberturaLinhaEspecialAcumulado," Nm_Marca_rac CAMPO1, Problema CAMPO2, Unidade CAMPO3 "," Nm_Marca_rac, Problema, Unidade "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaLinhaEspecialAcumulado(json)
-                setTimeout(arrumaTabela3niveis('clTableRACAberturaLinhaEspecialAcumulado'), 3000)
+                setTimeout(arrumaTabela3niveis('clTableRACAberturaLinhaEspecialAcumulado'), 13000)
             })
 
             //////
             var whereTableRacRACD3InNatura = ""
-            + " WHERE 1=1	AND month(Data_rac) = month((select * from v_maiorData)) "
-            + " AND year(Data_rac) = year((select * from v_maiorData)) "
-            + " AND [Origem_do_Problema_rac] IN ('ABUSO DE PRODUTO PDV') "																										
-            + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR') "	
-            + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "																											
-            + " AND Tipo_rac = 'Real' "
+            + " WHERE 1=1	AND Data_rac = DATEADD(DD,-2,(select * from v_maiorData)) "   																											
+            + " AND Tipo_rac = 'Real'  "
+            + " AND ([Regional Qual] like '%Ave%' or [Regional Qual] like '%suín%') "
+            + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
+			+ " OR Tipo_Atendimento_rac IS NULL) "
+            + " and (Unidade NOT IN ('Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS') OR Unidade IS NULL) "
+            + " AND (Origem NOT IN ('ABUSO DE PRODUTO HOME') OR Origem IS NULL) "
 
-            api.getSearaBaseRAC3niveis([whereTableRacRACD3InNatura," Nm_Classe_rac CAMPO1, Tipo_Problema_rac CAMPO2, Nm_Classe_rac CAMPO3 "," Nm_Classe_rac, Tipo_Problema_rac, Nm_Classe_rac "]).then((response) => {
+
+            api.getSearaBaseRAC3niveis([whereTableRacRACD3InNatura," Unidade CAMPO1, Nm_Item_RAC CAMPO2, Tipo_Problema_rac CAMPO3 "," Unidade, Nm_Item_RAC, Tipo_Problema_rac "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacRACD3InNatura(json)
-                setTimeout(arrumaTabela3niveis('clTableRacRACD3InNatura'), 3000)
+                setTimeout(arrumaTabela3niveis('clTableRacRACD3InNatura'), 13000)
             })
 
              var whereTableRacRACD0InNatura = ""
-             + " WHERE 1=1	AND month(Data_rac) = month((select * from v_maiorData)) "
-             + " AND year(Data_rac) = year((select * from v_maiorData)) "
-             + " AND [Origem_do_Problema_rac] IN ('ABUSO DE PRODUTO PDV') "																										
-             + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR') "	
-             + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "																											
-             + " AND Tipo_rac = 'Real' "
+             + " WHERE 1=1	AND Data_rac = DATEADD(DD,-0,(select * from v_maiorData)) "   																											
+            + " AND Tipo_rac = 'Real'   "
+            + " AND ([Regional Qual] like '%Ave%' or [Regional Qual] like '%suín%') "
+            + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
+			+ " OR Tipo_Atendimento_rac IS NULL) "
+            + " and (Unidade NOT IN ('Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS') OR Unidade IS NULL) "
+            + " AND (Origem NOT IN ('ABUSO DE PRODUTO HOME') OR Origem IS NULL) "
+
  
-             api.getSearaBaseRAC3niveis([whereTableRacRACD0InNatura," Nm_Classe_rac CAMPO1, Tipo_Problema_rac CAMPO2, Nm_Classe_rac CAMPO3 "," Nm_Classe_rac, Tipo_Problema_rac, Nm_Classe_rac "]).then((response) => {
+             api.getSearaBaseRAC3niveis([whereTableRacRACD0InNatura," Unidade CAMPO1, Nm_Item_RAC CAMPO2, Tipo_Problema_rac CAMPO3 "," Unidade, Nm_Item_RAC, Tipo_Problema_rac "]).then((response) => {
  
                  let json = JSON.parse(response.data)
                  setTableRacRACD0InNatura(json)
-                 setTimeout(arrumaTabela3niveis('clTableRacRACD0InNatura'), 3000)
+                 setTimeout(arrumaTabela3niveis('clTableRacRACD0InNatura'), 13000)
              })
 
              //////
             var whereTableRacRACD3Preparados = ""
-            + " WHERE 1=1	AND month(Data_rac) = month((select * from v_maiorData)) "
-            + " AND year(Data_rac) = year((select * from v_maiorData)) "
-            + " AND [Origem_do_Problema_rac] IN ('ABUSO DE PRODUTO PDV') "																										
-            + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR') "	
-            + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "																											
-            + " AND Tipo_rac = 'Real' "
+            + " WHERE 1=1	AND Data_rac = DATEADD(DD,-2,(select * from v_maiorData)) "   																											
+            + " AND Tipo_rac = 'Real'   "
+            + " AND [Regional Qual] like '%Prepar%' "
+            + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
+			+ " OR Tipo_Atendimento_rac IS NULL) "
+            + " and (Unidade NOT IN ('Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS') OR Unidade IS NULL) "
+            + " AND (Origem NOT IN ('ABUSO DE PRODUTO HOME') OR Origem IS NULL) "
 
-            api.getSearaBaseRAC3niveis([whereTableRacRACD3Preparados," Nm_Classe_rac CAMPO1, Tipo_Problema_rac CAMPO2, Nm_Classe_rac CAMPO3 "," Nm_Classe_rac, Tipo_Problema_rac, Nm_Classe_rac "]).then((response) => {
+            api.getSearaBaseRAC3niveis([whereTableRacRACD3Preparados," Unidade CAMPO1, Nm_Item_RAC CAMPO2, Tipo_Problema_rac CAMPO3 "," Unidade, Nm_Item_RAC, Tipo_Problema_rac "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacRACD3Preparados(json)
-                setTimeout(arrumaTabela3niveis('clTableRacRACD3Preparados'), 3000)
+                setTimeout(arrumaTabela3niveis('clTableRacRACD3Preparados'), 13000)
             })
 
              var whereTableRacRACD0Preparados = ""
-             + " WHERE 1=1	AND month(Data_rac) = month((select * from v_maiorData)) "
-             + " AND year(Data_rac) = year((select * from v_maiorData)) "
-             + " AND [Origem_do_Problema_rac] IN ('ABUSO DE PRODUTO PDV') "																										
-             + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR') "	
-             + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "																											
-             + " AND Tipo_rac = 'Real' "
+             + " WHERE 1=1	AND Data_rac = DATEADD(DD,-0,(select * from v_maiorData)) "   																											
+            + " AND Tipo_rac = 'Real'  "
+            + " AND [Regional Qual] like '%Prepar%' "
+            + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
+			+ " OR Tipo_Atendimento_rac IS NULL) "
+            + " and (Unidade NOT IN ('Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS') OR Unidade IS NULL) "
+            + " AND (Origem NOT IN ('ABUSO DE PRODUTO HOME') OR Origem IS NULL) "
+
  
-             api.getSearaBaseRAC3niveis([whereTableRacRACD0Preparados," Nm_Classe_rac CAMPO1, Tipo_Problema_rac CAMPO2, Nm_Classe_rac CAMPO3 "," Nm_Classe_rac, Tipo_Problema_rac, Nm_Classe_rac "]).then((response) => {
+             api.getSearaBaseRAC3niveis([whereTableRacRACD0Preparados," Unidade CAMPO1, Nm_Item_RAC CAMPO2, Tipo_Problema_rac CAMPO3 "," Unidade, Nm_Item_RAC, Tipo_Problema_rac "]).then((response) => {
  
                  let json = JSON.parse(response.data)
                  setTableRacRACD0Preparados(json)
-                 setTimeout(arrumaTabela3niveis('clTableRacRACD0Preparados'), 3000)
+                 setTimeout(arrumaTabela3niveis('clTableRacRACD0Preparados'), 13000)
              })
 
 
              var whereTableNNCLogD3 = ""
-             + " WHERE 1=1	 "
-             + "  "
-             + "  "																										
-             + "  "	
-             + "  "																											
-             + "  "
+             + " WHERE 1=1 "
+             
+             + " AND [DT ABERTURA] >= DATEADD(DD,-2,(select * from v_maiorData)) "
  
-             api.getSearaBaseNNCLog3niveis([whereTableNNCLogD3," Unidade CAMPO1, [Tipo Problema] CAMPO2, [Regional (Qualidade)] CAMPO3 "," Unidade, [Tipo Problema], [Regional (Qualidade)] "]).then((response) => {
+             api.getSearaBaseNNCLog3niveis([whereTableNNCLogD3," ISNULL(Unidade,'SEM UNIDADE') CAMPO1, [Tipo Problema] CAMPO2, ISNULL([Regional (Qualidade)],'SEM REGIONAL') CAMPO3  "," Unidade, [Tipo Problema], [Regional (Qualidade)] "]).then((response) => {
  
                  let json = JSON.parse(response.data)
                  setTableNNCLogD3(json)
-                 setTimeout(arrumaTabela3niveis('clTableNNCLogD3'), 3000)
+                 setTimeout(arrumaTabela2niveis('clTableNNCLogD3'), 13000)
              })
 
              var whereTableNNCLogD0 = ""
-             + " WHERE 1=1	 "
-             + "  "
-             + "  "																										
-             + "  "	
-             + "  "																											
-             + "  "
+        
+             + " WHERE 1=1 "
+            + " AND [DT ABERTURA] >= DATEADD(DD,-0,(select * from v_maiorData)) "
  
-             api.getSearaBaseNNCLog3niveis([whereTableNNCLogD0," Unidade CAMPO1, [Tipo Problema] CAMPO2, [Regional (Qualidade)] CAMPO3 "," Unidade, [Tipo Problema], [Regional (Qualidade)] "]).then((response) => {
+             api.getSearaBaseNNCLog3niveis([whereTableNNCLogD0," ISNULL(Unidade,'SEM UNIDADE') CAMPO1, [Tipo Problema] CAMPO2, ISNULL([Regional (Qualidade)],'SEM REGIONAL') CAMPO3  "," Unidade, [Tipo Problema], [Regional (Qualidade)] "]).then((response) => {
  
                  let json = JSON.parse(response.data)
                  setTableNNCLogD0(json)
-                 setTimeout(arrumaTabela3niveis('clTableNNCLogD0'), 3000)
+                 setTimeout(arrumaTabela2niveis('clTableNNCLogD0'), 13000)
              })
 
              //////
             var whereTableNNCMPD3InNatura = ""
-            + " WHERE 1=1	 "
-            + "  "
-            + "  "																										
-            + " "	
-            + "  "																											
-            + "  "
+            + " WHERE 1=1 "
+            + " AND [Reg. Qual] NOT IN ('ITAJAÍ','OUTROS') "
+            + " AND ([Reg. Prod.] LIKE '%AVES%' OR [Reg. Prod.] IN ('SUINOS')) "
+            + " AND [GRUPO PROBLEMA] NOT IN ('EMBALAGEM SECUNDÁRIA','DISTR / LOG') "
+            + " AND [Entra para a Meta] IN ('SIM') "
+            + " AND [DT ABERTURA] >= DATEADD(DD,-2,(select * from v_maiorData)) "
 
             api.getSearaBaseNNCMP3niveis([whereTableNNCMPD3InNatura," Filial CAMPO1, [Tipo Problema] CAMPO2, [Reg. Qual] CAMPO3 "," Filial, [Tipo Problema], [Reg. Qual] "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableNNCMPD3InNatura(json)
-                setTimeout(arrumaTabela3niveis('clTableNNCMPD3InNatura'), 3000)
+                setTimeout(arrumaTabela3niveis('clTableNNCMPD3InNatura'), 13000)
             })
 
              var whereTableNNCMPD0InNatura = ""
-             + " WHERE 1=1	 "
-             + "  "
-             + "  "																										
-             + " "	
-             + "  "																											
-             + "  "
+             + " WHERE 1=1 "
+            + " AND [Reg. Qual] NOT IN ('ITAJAÍ','OUTROS') "
+            + " AND ([Reg. Prod.] LIKE '%AVES%' OR [Reg. Prod.] IN ('SUINOS')) "
+            + " AND [GRUPO PROBLEMA] NOT IN ('EMBALAGEM SECUNDÁRIA','DISTR / LOG') "
+            + " AND [Entra para a Meta] IN ('SIM') "
+            + " AND [DT ABERTURA] >= DATEADD(DD,-0,(select * from v_maiorData)) "
  
              api.getSearaBaseNNCMP3niveis([whereTableNNCMPD0InNatura," Filial CAMPO1, [Tipo Problema] CAMPO2, [Reg. Qual] CAMPO3 "," Filial, [Tipo Problema], [Reg. Qual] "]).then((response) => {
  
                  let json = JSON.parse(response.data)
                  setTableNNCMPD0InNatura(json)
-                 setTimeout(arrumaTabela3niveis('clTableNNCMPD0InNatura'), 3000)
+                 setTimeout(arrumaTabela3niveis('clTableNNCMPD0InNatura'), 13000)
              })
 
              //////
             var whereTableNNCMPD3Preparados = ""
-            + " WHERE 1=1	 "
-            + "  "
-            + "  "																										
-            + " "	
-            + "  "																											
-            + "  "
+            + " WHERE 1=1 "
+            + " AND [Reg. Qual] NOT IN ('ITAJAÍ','OUTROS') "
+            + " AND [Reg. Prod.] IN ('PREPARADOS') "
+            + " AND [GRUPO PROBLEMA] NOT IN ('EMBALAGEM SECUNDÁRIA','DISTR / LOG') "
+            + " AND [Entra para a Meta] IN ('SIM') "
+            + " AND [DT ABERTURA] >= DATEADD(DD,-2,(select * from v_maiorData)) "
 
             api.getSearaBaseNNCMP3niveis([whereTableNNCMPD3Preparados," Filial CAMPO1, [Tipo Problema] CAMPO2, [Reg. Qual] CAMPO3 "," Filial, [Tipo Problema], [Reg. Qual] "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableNNCMPD3Preparados(json)
-                setTimeout(arrumaTabela3niveis('clTableNNCMPD3Preparados'), 3000)
+                setTimeout(arrumaTabela3niveis('clTableNNCMPD3Preparados'), 13000)
             })
 
              var whereTableNNCMPD0Preparados = ""
-             + " WHERE 1=1	 "
-             + "  "
-             + "  "																										
-             + " "	
-             + "  "																											
-             + "  "
+             + " WHERE 1=1 "
+            + " AND [Reg. Qual] NOT IN ('ITAJAÍ','OUTROS') "
+            + " AND [Reg. Prod.] IN ('PREPARADOS') "
+            + " AND [GRUPO PROBLEMA] NOT IN ('EMBALAGEM SECUNDÁRIA','DISTR / LOG') "
+            + " AND [Entra para a Meta] IN ('SIM') "
+            + " AND [DT ABERTURA] >= DATEADD(DD,-0,(select * from v_maiorData)) "
  
              api.getSearaBaseNNCMP3niveis([whereTableNNCMPD0Preparados," Filial CAMPO1, [Tipo Problema] CAMPO2, [Reg. Qual] CAMPO3 "," Filial, [Tipo Problema], [Reg. Qual] "]).then((response) => {
  
                  let json = JSON.parse(response.data)
                  setTableNNCMPD0Preparados(json)
-                 setTimeout(arrumaTabela3niveis('clTableNNCMPD0Preparados'), 3000)
+                 setTimeout(arrumaTabela3niveis('clTableNNCMPD0Preparados'), 13000)
              })
 
              var whereTableNNCMPCEOssos = ""
              + " WHERE 1=1	 "
-             + "  "
-             + "  "																										
-             + " "	
-             + "  "																											
-             + "  "
+             + " AND [Reg. Qual] NOT IN ('ITAJAÍ','OUTROS') "
+             + " AND [GRUPO PROBLEMA] NOT IN ('EMBALAGEM SECUNDÁRIA','DISTR / LOG') "
+             + " AND [Entra para a Meta] IN ('SIM') "
+             + " AND [Tipo Problema] IN ('OSSOS') "
+             + " AND month([DT ABERTURA]) = month((select * from v_maiorData)) "
+             + " AND year([DT ABERTURA]) = year((select * from v_maiorData)) "
  
-             api.getSearaBaseNNCMP3niveis([whereTableNNCMPCEOssos," Filial CAMPO1, [Tipo Problema] CAMPO2, [Reg. Qual] CAMPO3 "," Filial, [Tipo Problema], [Reg. Qual] "]).then((response) => {
+             api.getSearaBaseNNCMP3niveis([whereTableNNCMPCEOssos," Cliente CAMPO1, Fornecedor CAMPO2, Produto CAMPO3 "," Cliente, Fornecedor, Produto "]).then((response) => {
  
                  let json = JSON.parse(response.data)
                  setTableNNCMPCEOssos(json)
-                 setTimeout(arrumaTabela3niveis('clTableNNCMPCEOssos'), 3000)
+                 setTimeout(arrumaTabela3niveis('clTableNNCMPCEOssos'), 13000)
              })
 
              var whereTableNNCMPCEOssosFornecedor = ""
              + " WHERE 1=1	 "
-             + "  "
-             + "  "																										
-             + " "	
-             + "  "																											
-             + "  "
+             + " AND [Reg. Qual] NOT IN ('ITAJAÍ','OUTROS') "
+             + " AND [GRUPO PROBLEMA] NOT IN ('EMBALAGEM SECUNDÁRIA','DISTR / LOG') "
+             + " AND [Entra para a Meta] IN ('SIM') "
+             + " AND [Tipo Problema] IN ('OSSOS') "
+             + " AND month([DT ABERTURA]) = month((select * from v_maiorData)) "
+             + " AND year([DT ABERTURA]) = year((select * from v_maiorData)) "
  
-             api.getSearaBaseNNCMP3niveis([whereTableNNCMPCEOssosFornecedor," Filial CAMPO1, [Tipo Problema] CAMPO2, [Reg. Qual] CAMPO3 "," Filial, [Tipo Problema], [Reg. Qual] "]).then((response) => {
+             api.getSearaBaseNNCMP2niveis([whereTableNNCMPCEOssosFornecedor," [Reg. Qual] CAMPO1, Fornecedor CAMPO2, null CAMPO3 "," [Reg. Qual], Fornecedor "]).then((response) => {
  
                  let json = JSON.parse(response.data)
                  setTableNNCMPCEOssosFornecedor(json)
-                 setTimeout(arrumaTabela3niveis('clTableNNCMPCEOssosFornecedor'), 3000)
+                 setTimeout(arrumaTabela2niveis('clTableNNCMPCEOssosFornecedor'), 13000)
              })
 
              var whereTableNNCMPCEOssosUnidadesReclamantes = ""
              + " WHERE 1=1	 "
-             + "  "
-             + "  "																										
-             + " "	
-             + "  "																											
-             + "  "
+             + " AND [Reg. Qual] NOT IN ('ITAJAÍ','OUTROS') "
+             + " AND [GRUPO PROBLEMA] NOT IN ('EMBALAGEM SECUNDÁRIA','DISTR / LOG') "
+             + " AND [Entra para a Meta] IN ('SIM') "
+             + " AND [Tipo Problema] IN ('OSSOS') "
+             + " AND month([DT ABERTURA]) = month((select * from v_maiorData)) "
+             + " AND year([DT ABERTURA]) = year((select * from v_maiorData)) "
  
-             api.getSearaBaseNNCMP3niveis([whereTableNNCMPCEOssosUnidadesReclamantes," Filial CAMPO1, [Tipo Problema] CAMPO2, [Reg. Qual] CAMPO3 "," Filial, [Tipo Problema], [Reg. Qual] "]).then((response) => {
+             api.getSearaBaseNNCMP2niveis([whereTableNNCMPCEOssosUnidadesReclamantes," [Reg. Qual] CAMPO1, [Filial] CAMPO2, null CAMPO3 "," [Reg. Qual], [Filial] "]).then((response) => {
  
                  let json = JSON.parse(response.data)
                  setTableNNCMPCEOssosUnidadesReclamantes(json)
-                 setTimeout(arrumaTabela3niveis('clTableNNCMPCEOssosUnidadesReclamantes'), 3000)
+                 setTimeout(arrumaTabela2niveis('clTableNNCMPCEOssosUnidadesReclamantes'), 13000)
              })
-
-             var whereTableNNCMPCEOssosUnidadesReclamantes = ""
-             + " WHERE 1=1	 "
-             + "  "
-             + "  "																										
-             + " "	
-             + "  "																											
-             + "  "
 
              var whereTableRacCorposEstranhos = ""
              + " WHERE 1=1 "
              + "and year(data_rac) = (select year(data) as data from v_maiorData) "
              + "and month(data_rac) = (select month(data) as data from v_maiorData) "
-             + "AND Tipo_rac = 'Real'	AND  [Regional Qual] LIKE '%AVES%'  "
- 
+             + "AND [Origem] IN ('FABRICAÇÃO','EXPEDIÇÃO FÁBRICA','P&D','PRODUÇÃO EM TERCEIRO') "
+             + "AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') "
+             + "and [Tipo CE] in ('Inerente', 'Não Inerente') "
+
             api.getSearaBaseRAC3niveisPIVOTDIA([ whereTableRacCorposEstranhos, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [Tipo_Problema] " ]).then((response) => {
                 
                 let json = JSON.parse(response.data)
@@ -4682,15 +5419,109 @@ function Home() {
 
              
                  setTableRacCorposEstranhos(json)
-                 setTimeout(arrumaTabela3niveis('clTableRacCorposEstranhos'), 3000)
+                 setTimeout(arrumaTabela2niveis('clTableRacCorposEstranhos'), 13000)
              })
 
+             var whereTableRacCorposEstranhosInerente = ""
+             + " WHERE 1=1 "
+             + "and year(data_rac) = (select year(data) as data from v_maiorData) "
+             + "and month(data_rac) = (select month(data) as data from v_maiorData) "
+             + "AND [Origem] IN ('FABRICAÇÃO','EXPEDIÇÃO FÁBRICA','P&D','PRODUÇÃO EM TERCEIRO') "
+             + "AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') "
+             + "and [Tipo CE] = 'Inerente' "
+
+            api.getSearaBaseRAC3niveisPIVOTDIA([ whereTableRacCorposEstranhosInerente, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [Tipo_Problema] " ]).then((response) => {
+                
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['Coluna1'];
+                    delete json[i]['Coluna2'];
+                    delete json[i]['Coluna3'];
+                    delete json[i]['Nº RAC'];
+                    delete json[i]['C1__'];
+                    delete json[i]['C2__'];
+                    delete json[i]['C3__'];
+                    delete json[i]['Coluna_'];
+                    delete json[i]['Total'];
+                    delete json[i]['Total2'];
+                }
 
              
-             
-             
+                 setTableRacCorposEstranhosInerentes(json)
+                 setTimeout(arrumaTabela2niveis('clTableRacCorposEstranhosInerentes'), 13000)
+             })
 
+             var whereTableRacCorposEstranhosNaoInerente = ""
+             + " WHERE 1=1 "
+             + "and year(data_rac) = (select year(data) as data from v_maiorData) "
+             + "and month(data_rac) = (select month(data) as data from v_maiorData) "
+             + "AND [Origem] IN ('FABRICAÇÃO','EXPEDIÇÃO FÁBRICA','P&D','PRODUÇÃO EM TERCEIRO') "
+             + "AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') "
+             + "and [Tipo CE] = 'Não Inerente' "
+
+            api.getSearaBaseRAC3niveisPIVOTDIA([ whereTableRacCorposEstranhosNaoInerente, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [Tipo_Problema] " ]).then((response) => {
+                
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['Coluna1'];
+                    delete json[i]['Coluna2'];
+                    delete json[i]['Coluna3'];
+                    delete json[i]['Nº RAC'];
+                    delete json[i]['C1__'];
+                    delete json[i]['C2__'];
+                    delete json[i]['C3__'];
+                    delete json[i]['Coluna_'];
+                    delete json[i]['Total'];
+                    delete json[i]['Total2'];
+                }
+
+             
+                 setTableRacCorposEstranhosNaoInerentes(json)
+                 setTimeout(arrumaTabela2niveis('clTableRacCorposEstranhosNaoInerentes'), 13000)
+             })
+
+             var whereTableRacCorposEstranhosInerenteNaoInerente = ""
+             + " WHERE 1=1 "
+             + "and year(data_rac) = (select year(data) as data from v_maiorData) "
+             + "and month(data_rac) = (select month(data) as data from v_maiorData) "
+             + "AND [Origem] IN ('FABRICAÇÃO','EXPEDIÇÃO FÁBRICA','P&D','PRODUÇÃO EM TERCEIRO') "
+             + "AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') "
+             + "and [Tipo CE] in ('Inerente', 'Não Inerente') "
             
+            
+
+             api.getSearaBaseRAC3niveisPIVOTDIA([ whereTableRacCorposEstranhosInerenteNaoInerente, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [Tipo CE] " ]).then((response) => {
+                
+                let json = JSON.parse(response.data)
+
+                for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['Coluna1'];
+                    delete json[i]['Coluna2'];
+                    delete json[i]['Coluna3'];
+                    delete json[i]['Nº RAC'];
+                    delete json[i]['C1__'];
+                    delete json[i]['C2__'];
+                    delete json[i]['C3__'];
+                    delete json[i]['Coluna_'];
+                    delete json[i]['Total'];
+                    delete json[i]['Total2'];
+                }
+
+             
+                 setTableRacCorposEstranhosInerentesNaoInerentes(json)
+                 setTimeout(arrumaTabela2niveis('clTableRacCorposEstranhosInerentesNaoInerentes'), 13000)
+             })
 
             flagTable = true;
 
@@ -5572,7 +6403,7 @@ function Home() {
                                 </Card>
                             )}
                         </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
+                        <Col className="col-lg-3 col-md-3 col-sm-12">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
 
                                 DataTableRACAberturaME()
@@ -5810,7 +6641,7 @@ function Home() {
                                 )}
                             </Col>
                         </Col>
-                        <Col className="col-6">
+                        <Col className="col-3">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
                                 Abertura Terceiro
                                 <hr></hr>
@@ -5876,7 +6707,7 @@ function Home() {
                                 )}
                             </Col>
                         </Col>
-                        <Col className="col-6">
+                        <Col className="col-3">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
                                 
                                 <hr></hr>
@@ -5984,7 +6815,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
 
-                                    DataTableRacRACDetalhesEvolucaoAves()
+                                    DataTableRacRACDetalhesMetaRealAves()
 
                                 )}
                             </Col>
@@ -6068,7 +6899,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
 
-                                    DataTableRacRACDetalhesEvolucaoAves()
+                                    DataTableRacRACDetalhesMetaRealPreparados()
 
                                 )}
                             </Col>
@@ -6110,7 +6941,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
 
-                                    DataTableRacRACDetalhesEvolucaoAves()
+                                    DataTableRacRACDetalhesMetaRealSuinos()
 
                                 )}
                             </Col>
@@ -6136,7 +6967,7 @@ function Home() {
                                 )}
                             </Col>
                         </Col>
-                        <Col className="col-6">
+                        <Col className="col-3">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
                                 Abertura Linhas Especiais - Família
                                 <hr></hr>
@@ -6149,14 +6980,7 @@ function Home() {
                                 )}
                             </Col>
                         </Col>
-                    </Row>
-                    
-                </reg>
-
-                <reg id="region RAC - +17">
-
-                    <Row>
-                        <Col className="col-12">
+                        <Col className="col-3">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
                                 Abertura Linhas Especial Seara (Acumulado Mês)
                                 <hr></hr>
@@ -6169,10 +6993,11 @@ function Home() {
                                 )}
                             </Col>
                         </Col>
-                        
                     </Row>
                     
                 </reg>
+
+                
 
                 <reg id="region RAC - +18">
 
@@ -6264,7 +7089,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
 
-                                    DataTableRacRACDetalhesEvolucaoAves()
+                                    DataTableRacInseto()
 
                                 )}
                             </Col>
@@ -6297,7 +7122,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
 
-                                    DataTableRacRACDetalhesEvolucaoAves()
+                                    DataTableRacCabelo()
 
                                 )}
                             </Col>
@@ -6330,7 +7155,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
 
-                                    DataTableRacRACDetalhesEvolucaoAves()
+                                    DataTableRacPlastico()
 
                                 )}
                             </Col>
@@ -6363,7 +7188,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
 
-                                    DataTableRacRACDetalhesEvolucaoAves()
+                                    DataTableRacMetal()
 
                                 )}
                             </Col>
@@ -6396,7 +7221,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
 
-                                    DataTableRacRACDetalhesEvolucaoAves()
+                                    DataTableRacIntoxicacao()
 
                                 )}
                             </Col>
@@ -6429,7 +7254,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
 
-                                    DataTableRacRACDetalhesEvolucaoAves()
+                                    DataTableRacLarva()
 
                                 )}
                             </Col>
@@ -6470,7 +7295,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
 
-                                    DataTableRacRACDetalhesEvolucaoAves()
+                                    DataTableRacCorposEstranhosInerentes()
 
                                 )}
                             </Col>
@@ -6491,7 +7316,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
 
-                                    DataTableRacRACDetalhesEvolucaoAves()
+                                    DataTableRacCorposEstranhosNaoInerentes()
 
                                 )}
                             </Col>
@@ -6509,10 +7334,10 @@ function Home() {
                                 Corpos Estranhos Inerentes e Não Inerentes
                                 <hr></hr>
                             </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
+                            <Col className="col-lg-6 col-md-6 col-sm-6 align-self-center">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
 
-                                    DataTableRacRACDetalhesEvolucaoAves()
+                                    DataTableRacCorposEstranhosInerentesNaoInerentes()
 
                                 )} 
                             </Col>
@@ -6533,7 +7358,8 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
 
-                                    DataTableRacRACDetalhesEvolucaoAves()
+                                    DataTableHabilitadorCorposEstranhosNaoInerentes()
+                                    //inexistente
 
                                 )}
                             </Col>
@@ -6546,7 +7372,7 @@ function Home() {
                 <reg id="region RAC - +31">
 
                     <Row>
-                        <Col className="col-6">
+                        <Col className="col-3">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
                                 RAC D3 - In Natura
                                 <hr></hr>
@@ -6560,7 +7386,7 @@ function Home() {
                             </Col>
                         </Col>
 
-                        <Col className="col-6">
+                        <Col className="col-3">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
                                 RAC D3 - Preparados
                                 <hr></hr>
@@ -6573,15 +7399,8 @@ function Home() {
                                 )}
                             </Col>
                         </Col>
-                        
-                    </Row>
-                    
-                </reg>
 
-                <reg id="region RAC - +32">
-
-                    <Row>
-                        <Col className="col-6">
+                        <Col className="col-3">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
                                 RAC D0 - In Natura
                                 <hr></hr>
@@ -6595,7 +7414,7 @@ function Home() {
                             </Col>
                         </Col>
 
-                        <Col className="col-6">
+                        <Col className="col-3">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
                                 RAC D0 - Preparados
                                 <hr></hr>
@@ -6613,7 +7432,666 @@ function Home() {
                     
                 </reg>
 
+                
 
+
+
+                
+
+                <reg id="region RAC - +34">
+
+                    <Row>
+                        <Col className="col-6">
+                            <Col className="mt-1 col-12 cssSeara2021_titulo">
+                                NNC Log - Total
+                                <hr></hr>
+                            </Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                        <Chart type="bar" data={responseGraficoNNCLogDetalhesTotal} options={lightOptions} className="divMaior2" />
+                                    </Card>
+                                )}
+                            </Col>
+                        </Col>
+                        <Col className="col-6">
+                            <Col className="mt-1 col-12 cssSeara2021_titulo">
+                                NNC Log - Aves
+                                <hr></hr>
+                            </Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                        <Chart type="bar" data={responseGraficoNNCLogDetalhesAves} options={lightOptions} className="divMaior2" />
+                                    </Card>
+                                )}
+                            </Col>
+                        </Col>
+                    </Row>
+
+                </reg>
+
+                <reg id="region RAC - +35">
+
+                    <Row>
+                        <Col className="col-6">
+                            <Col className="mt-1 col-12 cssSeara2021_titulo">
+                                NNC Log - Preparados
+                                <hr></hr>
+                            </Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                        <Chart type="bar" data={responseGraficoNNCLogDetalhesPreparados} options={lightOptions} className="divMaior2" />
+                                    </Card>
+                                )}
+                            </Col>
+                        </Col>
+                        <Col className="col-6">
+                            <Col className="mt-1 col-12 cssSeara2021_titulo">
+                                NNC Log - Suínos
+                                <hr></hr>
+                            </Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                        <Chart type="bar" data={responseGraficoNNCLogDetalhesSuinos} options={lightOptions} className="divMaior2" />
+                                    </Card>
+                                )}
+                            </Col>
+                        </Col>
+                    </Row>
+
+                </reg>
+
+                <reg id="region RAC - +36">
+
+                    <Row>
+                        <Col className="col-12">
+                            <Col className="mt-1 col-12 cssSeara2021_titulo">
+                                Evolução Mês
+                                <hr></hr>
+                            </Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+
+                                    DataTableNNCEvolucaoMes()
+
+                                )}
+                            </Col>
+                        </Col>
+                    </Row>
+                    
+                </reg>
+
+                <reg id="region RAC - +37">
+
+                    <Row>
+                        <Col className="col-3">
+                            <Col className="mt-1 col-12 cssSeara2021_titulo">
+                                NNC Log D3
+                                <hr></hr>
+                            </Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+
+                                    DataTableNNCLogD3()
+
+                                )}
+                            </Col>
+                        </Col>
+
+                        <Col className="col-3">
+                            <Col className="mt-1 col-12 cssSeara2021_titulo">
+                                NNC Log D0
+                                <hr></hr>
+                            </Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+
+                                    DataTableNNCLogD0()
+
+                                )}
+                            </Col>
+                        </Col>
+                        
+                    </Row>
+
+                
+                    
+                </reg>
+
+                <reg id="region RAC - +38">
+
+                    <Row>
+                        <Col className="col-12">
+                            <Col className="mt-1 col-12 cssSeara2021_titulo">
+                                NNC Totais
+                                <hr></hr>
+                            </Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                        <Chart type="bar" data={responseGraficoNNCLogDetalhesSuinos} options={lightOptions} className="divMaior2" />
+                                    </Card>
+                                )}
+                            </Col>
+                        </Col>
+
+                        
+                    </Row>
+
+                
+                    
+                </reg>
+
+                <reg id="region NNC +39">
+
+                    <Row>
+                        <Col className=" col-12 cssSeara2021_titulo">
+                            NNC - Aves Pesadas
+                        <hr></hr>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="NNC - Aves Pesadas" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoNCCMPAvesPesadas} options={lightOptions} className="divMaior" />
+                                </Card>
+                            )}
+                        </Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12">
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
+                                        <Chart type="bar" data={responseGraficoNNCAvesPesadasUnidades} options={lightOptions} className="divMenor" />
+                                    </Card>
+                                )}
+                            </Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
+                                        <Chart type="bar" data={responseGraficoNNCAvesPesadasProblemas} options={lightOptions} className="divMenor" />
+                                    </Card>
+                                )}
+                            </Col>
+                        </Col>
+
+                    </Row>
+                </reg>
+
+                <reg id="region NNC +40">
+
+                    <Row>
+                        <Col className=" col-12 cssSeara2021_titulo">
+                            NNC - Aves RS/SC/SP
+                        <hr></hr>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="NNC - Aves RS/SC/SP" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoNCCMPAvesPesadasRS} options={lightOptions} className="divMaior" />
+                                </Card>
+                            )}
+                        </Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12">
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
+                                        <Chart type="bar" data={responseGraficoNNCAvesRSUnidades} options={lightOptions} className="divMenor" />
+                                    </Card>
+                                )}
+                            </Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
+                                        <Chart type="bar" data={responseGraficoNNCAvesRSProblemas} options={lightOptions} className="divMenor" />
+                                    </Card>
+                                )}
+                            </Col>
+                        </Col>
+
+                    </Row>
+                </reg>
+
+                <reg id="region NNC +41">
+
+                    <Row>
+                        <Col className=" col-12 cssSeara2021_titulo">
+                            NNC - Aves SP/CO/NE
+                        <hr></hr>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="NNC - Aves SP/CO/NE" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoNCCMPAvesPesadasSP} options={lightOptions} className="divMaior" />
+                                </Card>
+                            )}
+                        </Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12">
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
+                                        <Chart type="bar" data={responseGraficoNNCAvesSPUnidades} options={lightOptions} className="divMenor" />
+                                    </Card>
+                                )}
+                            </Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
+                                        <Chart type="bar" data={responseGraficoNNCAvesSPProblemas} options={lightOptions} className="divMenor" />
+                                    </Card>
+                                )}
+                            </Col>
+                        </Col>
+
+                    </Row>
+                </reg>
+
+                <reg id="region NNC +42">
+
+                    <Row>
+                        <Col className=" col-12 cssSeara2021_titulo">
+                            NNC - Aves PR
+                        <hr></hr>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="NNC - Aves PR" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoNCCMPAvesPesadasPR} options={lightOptions} className="divMaior" />
+                                </Card>
+                            )}
+                        </Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12">
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
+                                        <Chart type="bar" data={responseGraficoNNCAvesPRUnidades} options={lightOptions} className="divMenor" />
+                                    </Card>
+                                )}
+                            </Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
+                                        <Chart type="bar" data={responseGraficoNNCAvesPRProblemas} options={lightOptions} className="divMenor" />
+                                    </Card>
+                                )}
+                            </Col>
+                        </Col>
+
+                    </Row>
+                </reg>
+
+                <reg id="region NNC +42">
+
+                    <Row>
+                        <Col className=" col-12 cssSeara2021_titulo">
+                            NNC - Aves Leves
+                        <hr></hr>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="NNC - Aves Leves" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoNCCMPAvesLeves} options={lightOptions} className="divMaior" />
+                                </Card>
+                            )}
+                        </Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12">
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
+                                        <Chart type="bar" data={responseGraficoNNCAvesLevesUnidades} options={lightOptions} className="divMenor" />
+                                    </Card>
+                                )}
+                            </Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
+                                        <Chart type="bar" data={responseGraficoNNCAvesLevesProblemas} options={lightOptions} className="divMenor" />
+                                    </Card>
+                                )}
+                            </Col>
+                        </Col>
+
+                    </Row>
+                </reg>
+
+                <reg id="region NNC +43">
+
+                    <Row>
+                        <Col className=" col-12 cssSeara2021_titulo">
+                            NNC - Suínos
+                        <hr></hr>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="NNC - Suínos" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoNCCMPSuinos} options={lightOptions} className="divMaior" />
+                                </Card>
+                            )}
+                        </Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12">
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
+                                        <Chart type="bar" data={responseGraficoNNCSuinosUnidades} options={lightOptions} className="divMenor" />
+                                    </Card>
+                                )}
+                            </Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
+                                        <Chart type="bar" data={responseGraficoNNCSuinosProblemas} options={lightOptions} className="divMenor" />
+                                    </Card>
+                                )}
+                            </Col>
+                        </Col>
+
+                    </Row>
+
+                </reg>
+
+                <reg id="region NNC +44">
+
+                    <Row>
+                        <Col className=" col-12 cssSeara2021_titulo">
+                            NNC - Preparados
+                        <hr></hr>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="NNC - Preparados" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoNCCMPPreparados} options={lightOptions} className="divMaior" />
+                                </Card>
+                            )}
+                        </Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12">
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
+                                        <Chart type="bar" data={responseGraficoNNCPreparadosUnidades} options={lightOptions} className="divMenor" />
+                                    </Card>
+                                )}
+                            </Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
+                                        <Chart type="bar" data={responseGraficoNNCPreparadosProblemas} options={lightOptions} className="divMenor" />
+                                    </Card>
+                                )}
+                            </Col>
+                        </Col>
+
+                    </Row>
+
+                </reg>
+
+                <reg id="region NNC +45">
+
+                    
+                    <Row>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="NNC - Corpos Estranhos Totais" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoNNCCETotal} options={lightOptions} className="divMaior" />
+                                </Card>
+                            )}
+                        </Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="NNC - Corpos Estranhos Inerente" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoNNCCEInerente} options={lightOptions} className="divMaior" />
+                                </Card>
+                            )}
+                        </Col>
+
+                    </Row>
+
+                    <Row>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="NNC - Corpos Estranhos Não Inerente" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoNNCCENaoInerente} options={lightOptions} className="divMaior" />
+                                </Card>
+                            )}
+                        </Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="NNC - Corpos Estranhos Ossos" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoNNCCEOssos} options={lightOptions} className="divMaior" />
+                                </Card>
+                            )}
+                        </Col>
+
+                    </Row>
+
+                    
+
+                </reg>
+
+                <reg id="region NNC +46">                
+                    <Row>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="NNC - Corpos Estranhos Plástico" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoNNCCEPlastico} options={lightOptions} className="divMaior" />
+                                </Card>
+                            )}
+                        </Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                 DataTableNNCCEPlastico()
+                                
+                            )}
+                        </Col>
+
+                    </Row>
+                </reg>
+
+                <reg id="region NNC +47">                
+                    <Row>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="NNC - Corpos Estranhos Metal" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoNNCCEMetal} options={lightOptions} className="divMaior" />
+                                </Card>
+                            )}
+                        </Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                 DataTableNNCCEMetal()
+                                
+                            )}
+                        </Col>
+
+                    </Row>
+                </reg>
+
+                <reg id="region NNC +48">                
+                    <Row>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                <Card title="NNC - Corpos Estranhos Ossos" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                    <Chart type="bar" data={responseGraficoNNCCEOssos} options={lightOptions} className="divMaior" />
+                                </Card>
+                            )}
+                        </Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                 DataTableNNCCEOssos()
+                                
+                            )}
+                        </Col>
+
+                    </Row>
+                </reg>
+
+                <reg id="region NNC +49">    
+                    <Row>
+                        <Col className=" col-12 cssSeara2021_titulo">
+                            NNC MP Corpos Estranhos
+                        <hr></hr>
+                        </Col>
+                    </Row>
+                    <Row>
+
+                        <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                 DataTableNNCCE()
+                                
+                            )}
+                        </Col>
+
+                    </Row>
+                </reg>
+
+                <reg id="region NNC +50">
+                    <Row>   
+                <Col className="col-3"> 
+                    <Row>
+                        <Col className=" col-12 cssSeara2021_titulo">
+                            NNC MP Corpos Estranhos Inerentes e Não Inerentes
+                        <hr></hr>
+                        </Col>
+                    </Row>
+                    <Row>
+
+                        <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                 DataTableNNCCEInerenteNaoInerente()
+                                
+                            )}
+                        </Col>
+                    </Row>
+                </Col>
+                <Col className="col-3">   
+                    <Row>
+                        <Col className=" col-12 cssSeara2021_titulo">
+                            NNC MP Corpos Estranhos - Ossos - Unidade Reclamante / Fornecedor / Produto
+                        <hr></hr>
+                        </Col>
+                    </Row>
+                    <Row>
+
+                        <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                 DataTableNNCMPCEOssos()
+                                
+                            )}
+                        </Col>
+
+                    </Row>
+                </Col>
+                <Col className="col-3">    
+                    <Row>
+                        <Col className=" col-12 cssSeara2021_titulo">
+                            NNC MP Corpos Estranhos - Ossos - Fornecedor
+                        <hr></hr>
+                        </Col>
+                    </Row>
+                    <Row>
+
+                        <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                 DataTableNNCMPCEOssosFornecedor()
+                                
+                            )}
+                        </Col>
+
+                    </Row>
+                </Col>
+                <Col className="col-3">    
+                    <Row>
+                        <Col className=" col-12 cssSeara2021_titulo">
+                            NNC MP Corpos Estranhos - Unidades reclamantes
+                        <hr></hr>
+                        </Col>
+                    </Row>
+                    <Row>
+
+                        <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                 DataTableNNCMPCEOssosUnidadesReclamantes()
+                                
+                            )}
+                        </Col>
+
+                    </Row>
+                </Col>
+                </Row>
+                </reg>
+
+                <reg id="region NNC +48"> 
+                <Row>
+                <Col className="col-6"> 
+                    <Row>
+                        <Col className=" col-6 cssSeara2021_titulo">
+                            NNC MP D-3 - In natura
+                        <hr></hr>
+                        </Col>
+                        <Col className=" col-6 cssSeara2021_titulo">
+                            NNC MP D-3 - Preparados
+                        <hr></hr>
+                        </Col>
+                    </Row>             
+                    <Row>
+                        <Col className="col-lg-6 col-md-6 col-sm-12">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                 DataTableNNCMPD3INNATURA()
+                                
+                            )}
+                        </Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                 DataTableNNCMPD3Preparados()
+                                
+                            )}
+                        </Col>
+
+                    </Row>
+                </Col>
+                <Col className="col-6">   
+                    <Row>
+                        <Col className=" col-6 cssSeara2021_titulo">
+                            NNC MP D-0 - In natura
+                        <hr></hr>
+                        </Col>
+                        <Col className=" col-6 cssSeara2021_titulo">
+                            NNC MP D-0 - Preparados
+                        <hr></hr>
+                        </Col>
+                    </Row>              
+                    <Row>
+                        <Col className="col-lg-6 col-md-6 col-sm-12">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                 DataTableNNCMPD0INNATURA()
+                                
+                            )}
+                        </Col>
+                        <Col className="col-lg-6 col-md-6 col-sm-12">
+                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                 DataTableNNCMPD0Preparados()
+                                
+                            )}
+                        </Col>
+
+                    </Row>
+                </Col>
+                </Row>
+                </reg>
 
                 {/* ///////////////////////////////////////////////////////// */}
 
@@ -6724,638 +8202,6 @@ function Home() {
                             )}
 
                         </Col>
-                    </Row>
-                </reg>
-
-                <reg id="region RAC - +34">
-
-                    <Row>
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                NNC Log - Total
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                        <Chart type="bar" data={responseGraficoNNCLogDetalhesTotal} options={lightOptions} className="divMaior2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                NNC Log - Aves
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                        <Chart type="bar" data={responseGraficoNNCLogDetalhesAves} options={lightOptions} className="divMaior2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-                    </Row>
-
-                </reg>
-
-                <reg id="region RAC - +35">
-
-                    <Row>
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                NNC Log - Preparados
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                        <Chart type="bar" data={responseGraficoNNCLogDetalhesPreparados} options={lightOptions} className="divMaior2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                NNC Log - Suínos
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                        <Chart type="bar" data={responseGraficoNNCLogDetalhesSuinos} options={lightOptions} className="divMaior2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-                    </Row>
-
-                </reg>
-
-                <reg id="region RAC - +36">
-
-                    <Row>
-                        <Col className="col-12">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                Evolução Mês
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRacRACDetalhesEvolucaoAves()
-
-                                )}
-                            </Col>
-                        </Col>
-                    </Row>
-                    
-                </reg>
-
-                <reg id="region RAC - +37">
-
-                    <Row>
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                NNC Log D3
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableNNCLogD3()
-
-                                )}
-                            </Col>
-                        </Col>
-
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                NNC Log D0
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableNNCLogD0()
-
-                                )}
-                            </Col>
-                        </Col>
-                        
-                    </Row>
-
-                
-                    
-                </reg>
-
-                <reg id="region RAC - +38">
-
-                    <Row>
-                        <Col className="col-12">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                NNC Totais
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRacRACDetalhesEvolucaoAves()
-
-                                )}
-                            </Col>
-                        </Col>
-
-                        
-                    </Row>
-
-                
-                    
-                </reg>
-
-                <reg id="region NNC +39">
-
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC - Aves Pesadas
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Aves Pesadas" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNNCAvesPesadas} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesPesadasUnidades} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesPesadasProblemas} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-                </reg>
-
-                <reg id="region NNC +40">
-
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC - Aves RS/SC/SP
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Aves RS/SC/SP" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNNCAvesRS} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesRSUnidades} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesRSProblemas} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-                </reg>
-
-                <reg id="region NNC +41">
-
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC - Aves SP/CO/NE
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Aves SP/CO/NE" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNNCAvesSP} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesSPUnidades} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesSPProblemas} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-                </reg>
-
-                <reg id="region NNC +42">
-
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC - Aves PR
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Aves PR" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNNCAvesPR} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesPRUnidades} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesPRProblemas} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-                </reg>
-
-                <reg id="region NNC +42">
-
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC - Aves Leves
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Aves Leves" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNNCAvesLeves} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesLevesUnidades} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesLevesProblemas} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-                </reg>
-
-                <reg id="region NNC +43">
-
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC - Suínos
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Suínos" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNNCSuinos} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCSuinosUnidades} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCSuinosProblemas} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-
-                </reg>
-
-                <reg id="region NNC +44">
-
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC - Preparados
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Preparados" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNNCPreparados} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCPreparadosUnidades} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCPreparadosProblemas} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-
-                </reg>
-
-                <reg id="region NNC +45">
-
-                    
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Corpos Estranhos Totais" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNNCCETotal} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Corpos Estranhos Inerente" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNNCCEInerente} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-
-                    </Row>
-
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Corpos Estranhos Não Inerente" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNNCCENaoInerente} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Corpos Estranhos Ossos" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNNCCEOssos} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-
-                    </Row>
-
-                    
-
-                </reg>
-
-                <reg id="region NNC +46">                
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Corpos Estranhos Plástico" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNNCCEPlastico} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                 DataTableRacRACDetalhesEvolucaoAves()
-                                
-                            )}
-                        </Col>
-
-                    </Row>
-                </reg>
-
-                <reg id="region NNC +47">                
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Corpos Estranhos Metal" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNNCCEMetal} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                 DataTableRacRACDetalhesEvolucaoAves()
-                                
-                            )}
-                        </Col>
-
-                    </Row>
-                </reg>
-
-                <reg id="region NNC +48">                
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Corpos Estranhos Ossos" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNNCCEOssos} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                 DataTableRacRACDetalhesEvolucaoAves()
-                                
-                            )}
-                        </Col>
-
-                    </Row>
-                </reg>
-
-                <reg id="region NNC +49">    
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC MP Corpos Estranhos
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-
-                        <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                 DataTableRacRACDetalhesEvolucaoAves()
-                                
-                            )}
-                        </Col>
-
-                    </Row>
-                </reg>
-
-                <reg id="region NNC +50">    
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC MP Corpos Estranhos Inerentes e Não Inerentes
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-
-                        <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                 DataTableRacRACDetalhesEvolucaoAves()
-                                
-                            )}
-                        </Col>
-
-                    </Row>
-                </reg>
-
-                <reg id="region NNC +51">    
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC MP Corpos Estranhos - Ossos - Unidade Reclamante / Fornecedor / Produto
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-
-                        <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                 DataTableNNCMPCEOssos()
-                                
-                            )}
-                        </Col>
-
-                    </Row>
-                </reg>
-
-                <reg id="region NNC +52">    
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC MP Corpos Estranhos - Ossos - Fornecedor
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-
-                        <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                 DataTableNNCMPCEOssosFornecedor()
-                                
-                            )}
-                        </Col>
-
-                    </Row>
-                </reg>
-
-                <reg id="region NNC +53">    
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC MP Corpos Estranhos - Unidades reclamantes
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-
-                        <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                 DataTableNNCMPCEOssosUnidadesReclamantes()
-                                
-                            )}
-                        </Col>
-
-                    </Row>
-                </reg>
-
-                <reg id="region NNC +48">                
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                 DataTableNNCMPD3INNATURA()
-                                
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                 DataTableNNCMPD3Preparados()
-                                
-                            )}
-                        </Col>
-
-                    </Row>
-                </reg>
-
-                <reg id="region NNC +48">                
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                 DataTableNNCMPD0INNATURA()
-                                
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                 DataTableNNCMPD0Preparados()
-                                
-                            )}
-                        </Col>
-
                     </Row>
                 </reg>
                 

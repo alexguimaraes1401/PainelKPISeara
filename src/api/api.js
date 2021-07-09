@@ -304,10 +304,55 @@ export default {
             ]
         }),
 
+        getSearaBaseRAC3niveisDesvio: (p) =>
+        instance({
+            method: "POST",
+            url: `/RAC3niveisDesvio`, 
+            data: {'where': p[0], 'campos': p[1], 'groupBy': p[2]},
+            params: {
+                datatype: "json"
+            },
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
+        }),
+
         getSearaBaseNNCLog3niveis: (p) =>
         instance({
             method: "POST",
             url: `/NNCLog3niveis`, 
+            data: {'where': p[0], 'campos': p[1], 'groupBy': p[2]},
+            params: {
+                datatype: "json"
+            },
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
+        }),
+
+        getSearaBaseNNCLog2niveis: (p) =>
+        instance({
+            method: "POST",
+            url: `/NNCLog2niveis`, 
+            data: {'where': p[0], 'campos': p[1], 'groupBy': p[2]},
+            params: {
+                datatype: "json"
+            },
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
+        }),
+
+        getSearaBaseNNCMP2niveis: (p) =>
+        instance({
+            method: "POST",
+            url: `/NNCMP2niveis`, 
             data: {'where': p[0], 'campos': p[1], 'groupBy': p[2]},
             params: {
                 datatype: "json"
@@ -348,6 +393,38 @@ export default {
                 }
             ]
         }),
+
+        getSearaBaseNNC3niveisPIVOTDIA: (p) =>
+        instance({
+            method: "POST",
+            url: `/NNC3niveisPIVOTDIA`, 
+            data: {'where': p[0], 'campos': p[1], 'groupBy': p[2], 'campoPivot': p[3], 'campoPivotAlias': p[4]}, 
+            params: {
+                datatype: "json"
+            },
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
+        }),
+
+        getSearaBaseNNC3niveisPIVOTmesDesvio: (p) =>
+        instance({
+            method: "POST",
+            url: `/NNC3niveisPIVOTmesDesvio`, 
+            data: {'where': p[0], 'campos': p[1], 'groupBy': p[2], 'campoPivot': p[3], 'campoPivotAlias': p[4]}, 
+            params: {
+                datatype: "json"
+            },
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
+        }),
+
+        
 
 
 
