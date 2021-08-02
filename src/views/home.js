@@ -285,7 +285,10 @@ function Home() {
     let [TableRacAberturaMEContasGlobais, setTableRacAberturaMEContasGlobais] = React.useState()
 
     let [TableRacAberturaLinhaEspecialFamilia, setTableRacAberturaLinhaEspecialFamilia] = React.useState()
-    let [TableRacAberturaLinhaEspecialAcumulado, setTableRacAberturaLinhaEspecialAcumulado] = React.useState()
+    let [TableRacAberturaLinhaEspecialAcumuladoGourmet, setTableRacAberturaLinhaEspecialAcumuladoGourmet] = React.useState()
+    let [TableRacAberturaLinhaEspecialAcumuladoIncrivel, setTableRacAberturaLinhaEspecialAcumuladoIncrivel] = React.useState()
+    let [TableRacAberturaLinhaEspecialAcumuladoNature, setTableRacAberturaLinhaEspecialAcumuladoNature] = React.useState()
+    let [TableRacAberturaLinhaEspecialAcumuladoRotisserie, setTableRacAberturaLinhaEspecialAcumuladoRotisserie] = React.useState()
 
     let [responseTable, setresponseTable] = React.useState({})
     let [TableRacME, setTableRacME] = React.useState()
@@ -602,32 +605,32 @@ function Home() {
     
 
 
-    let whereRACPreparados = "WHERE ([Regional (Qualidade)] like 'Preparados%' or [Regional (Qualidade)] in ('Outros', 'Itajaí')) "
-    whereRACPreparados += " AND ([ORIGEM DO PROBLEMA] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','FABRICAÇÃO')"
-    whereRACPreparados += "                                 OR [ORIGEM DO PROBLEMA] IS NULL) "
+    let whereRACPreparados = "WHERE ([Regional (Qualidade)] in ('Outros', 'Preparados 1', 'Preparados 2', 'Itajaí') AND [Regional (Produção)] in ('Itajaí - Indus/Sui', 'Outros', 'Preparados', 'Itajaí - Indus', 'Itajaí') ) "
+    whereRACPreparados += " AND ([Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','FABRICAÇÃO')"
+    whereRACPreparados += "                                 OR [Origem da RAC] IS NULL) "
     whereRACPreparados += " and unidade in ( "
+    whereRACPreparados += " 'Bom Retiro', "
     whereRACPreparados += " 'Brasília',  "
+    whereRACPreparados += " 'Carambeí',  "
+    whereRACPreparados += " 'Caxias do Sul - Ana Rech',  "
     whereRACPreparados += " 'Dourados',  "
     whereRACPreparados += " 'Duque de Caxias',  "
+    whereRACPreparados += " 'ITAJAI INDUSTRIALIZADOS',  "
+    whereRACPreparados += " 'Itapiranga',  "
     whereRACPreparados += " 'Jaguariúna',  "
+    whereRACPreparados += " 'Jundiaí', "
     whereRACPreparados += " 'Lages',  "
     whereRACPreparados += " 'Montenegro',  "
+    whereRACPreparados += " 'Osasco',  "
     whereRACPreparados += " 'Rio Grande da Serra',  "
     whereRACPreparados += " 'Roca Sales',  "
     whereRACPreparados += " 'Salto Veloso',  "
-    whereRACPreparados += "  'São Gonçalo',  "
+    whereRACPreparados += " 'São Gonçalo',  "
     whereRACPreparados += " 'São Miguel do Oeste',  "
-    whereRACPreparados += " 'Três Passos',  "
-    whereRACPreparados += " 'Bom Retiro', "
-    whereRACPreparados += " 'Carambeí',  "
-    whereRACPreparados += " 'Osasco',  "
-    whereRACPreparados += " 'Jundiaí', "
-    whereRACPreparados += " 'Caxias do Sul - Ana Rech',  "
-    whereRACPreparados += " 'Itapiranga',  "
     whereRACPreparados += " 'Seara',  "
-    whereRACPreparados += " 'Jaragua do Sul',  "
-    whereRACPreparados += " 'ITAJAI INDUSTRIALIZADOS',  "
-    whereRACPreparados += " 'ITAJAI SUINOS')"
+    whereRACPreparados += " 'Três Passos',  "
+    whereRACPreparados += " 'Jaragua do Sul')  "
+    whereRACPreparados += " "
 
     let whereRACCE = " WHERE Tipo = 'REAL'  "
     whereRACCE += " AND Grupo = 'CORPO ESTRANHO' "
@@ -848,179 +851,183 @@ function Home() {
         chamarAPI("CETotal", GraficoCETotalAvesPesadas, "GraficoCETotalAvesPesadas", [" where [Regional Qualidade] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR')  "], setGraficoCETotalAvesPesadas, setresponseGraficoCETotalAvesPesadas, 5)     // 6
         chamarAPI("CETotal", GraficoNNCMPTotalCEAvesPesadas, "GraficoNNCMPTotalCEAvesPesadas", [" where tipo = 'NNC MP' AND [Regional Qualidade] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR') "], setGraficoNNCMPTotalCEAvesPesadas, setresponseGraficoNNCMPTotalCEAvesPesadas, 6)       // 7
         chamarAPI("CETotal", GraficoRACTotalCEAvesPesadas, "GraficoRACTotalCEAvesPesadas", [" where TIPO = 'RAC' AND [Regional Qualidade] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR')  "], setGraficoRACTotalCEAvesPesadas, setresponseGraficoRACTotalCEAvesPesadas, 7)     // 8
-        chamarAPI("RACIndicadores", GraficoRACAvesPesadas, "GraficoRACAvesPesadas", [" where [Regional (Qualidade)] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR')  AND [ORIGEM DO PROBLEMA] NOT IN (\'ABUSO DE PRODUTO PDV\') "], setGraficoRACAvesPesadas, setresponseGraficoRACAvesPesadas, 8)    // 9
+        chamarAPI("RACIndicadores", GraficoRACAvesPesadas, "GraficoRACAvesPesadas", [" where [Regional (Qualidade)] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR')  AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "], setGraficoRACAvesPesadas, setresponseGraficoRACAvesPesadas, 8)    // 9
         chamarAPI("NCCMP", GraficoNCCMPAvesPesadas, "GraficoNCCMPAvesPesadas", [whereNNCMP + " and [Reg. Qual] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR')  "], setGraficoNCCMPAvesPesadas, setresponseGraficoNCCMPAvesPesadas, 9)    // 10
 
         chamarAPI("CETotal", GraficoCETotalAvesPesadasPR, "GraficoCETotalAvesPesadasPR", [' where [Regional Qualidade] = \'Aves Pesadas PR\' '], setGraficoCETotalAvesPesadasPR, setresponseGraficoCETotalAvesPesadasPR, 10)     // 11
         chamarAPI("CETotal", GraficoNNCMPTotalCEAvesPesadasPR, "GraficoNNCMPTotalCEAvesPesadasPR", ["  where tipo = 'NNC MP' AND [Regional Qualidade] = 'Aves Pesadas PR'  "], setGraficoNNCMPTotalCEAvesPesadasPR, setresponseGraficoNNCMPTotalCEAvesPesadasPR, 11)       // 12
         chamarAPI("CETotal", GraficoRACTotalCEAvesPesadasPR, "GraficoRACTotalCEAvesPesadasPR", ["  WHERE tipo = 'RAC' AND [Regional Qualidade] in ('Aves Pesadas PR')   "], setGraficoRACTotalCEAvesPesadasPR, setresponseGraficoRACTotalCEAvesPesadasPR, 12)     // 13
-        chamarAPI("RACIndicadores", GraficoRACAvesPesadasPR, "GraficoRACAvesPesadasPR", [' WHERE [Regional (Qualidade)] in (\'Aves Pesadas PR\') AND [ORIGEM DO PROBLEMA] NOT IN (\'ABUSO DE PRODUTO PDV\')            '], setGraficoRACAvesPesadasPR, setresponseGraficoRACAvesPesadasPR, 13)    // 14
+        chamarAPI("RACIndicadores", GraficoRACAvesPesadasPR, "GraficoRACAvesPesadasPR", [" WHERE [Regional (Qualidade)] in ('Aves Pesadas PR') AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO')             "], setGraficoRACAvesPesadasPR, setresponseGraficoRACAvesPesadasPR, 13)    // 14
         chamarAPI("NCCMP", GraficoNCCMPAvesPesadasPR, "GraficoNCCMPAvesPesadasPR", [whereNNCMP + ' and [Reg. Qual] = \'Aves Pesadas PR\'  '], setGraficoNCCMPAvesPesadasPR, setresponseGraficoNCCMPAvesPesadasPR, 14)    // 15
 
         chamarAPI("CETotal", GraficoCETotalAvesPesadasSP, "GraficoCETotalAvesPesadasSP", [" where [Regional Qualidade] = 'Aves Pesadas SP/CO/NE' "], setGraficoCETotalAvesPesadasSP, setresponseGraficoCETotalAvesPesadasSP, 42)     // 11
         chamarAPI("CETotal", GraficoNNCMPTotalCEAvesPesadasSP, "GraficoNNCMPTotalCEAvesPesadasSP", ["  where tipo = 'NNC MP' AND [Regional Qualidade] = 'Aves Pesadas SP/CO/NE'  "], setGraficoNNCMPTotalCEAvesPesadasSP, setresponseGraficoNNCMPTotalCEAvesPesadasSP, 43)       // 12
         chamarAPI("CETotal", GraficoRACTotalCEAvesPesadasSP, "GraficoRACTotalCEAvesPesadasSP", ["  WHERE tipo = 'RAC' AND [Regional Qualidade] in ('Aves Pesadas SP/CO/NE')   "], setGraficoRACTotalCEAvesPesadasSP, setresponseGraficoRACTotalCEAvesPesadasSP, 44)     // 13
-        chamarAPI("RACIndicadores", GraficoRACAvesPesadasSP, "GraficoRACAvesPesadasSP", [' WHERE [Regional (Qualidade)] in (\'Aves Pesadas SP/CO/NE\')  AND [ORIGEM DO PROBLEMA] NOT IN (\'ABUSO DE PRODUTO PDV\') '], setGraficoRACAvesPesadasSP, setresponseGraficoRACAvesPesadasSP, 45)    // 14
+        chamarAPI("RACIndicadores", GraficoRACAvesPesadasSP, "GraficoRACAvesPesadasSP", [" WHERE [Regional (Qualidade)] in ('Aves Pesadas SP/CO/NE') AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "], setGraficoRACAvesPesadasSP, setresponseGraficoRACAvesPesadasSP, 45)    // 14
         chamarAPI("NCCMP", GraficoNCCMPAvesPesadasSP, "GraficoNCCMPAvesPesadasSP", [whereNNCMP + ' and [Reg. Qual] = \'Aves Pesadas SP/CO/NE\'  '], setGraficoNCCMPAvesPesadasSP, setresponseGraficoNCCMPAvesPesadasSP, 46)    // 15
 
         chamarAPI("CETotal", GraficoCETotalAvesPesadasRS, "GraficoCETotalAvesPesadasRS", [" where [Regional Qualidade] = 'Aves Pesadas RS/SC/SP' "], setGraficoCETotalAvesPesadasRS, setresponseGraficoCETotalAvesPesadasRS, 47)     // 11
         chamarAPI("CETotal", GraficoNNCMPTotalCEAvesPesadasRS, "GraficoNNCMPTotalCEAvesPesadasRS", ["  where tipo = 'NNC MP' AND [Regional Qualidade] = 'Aves Pesadas RS/SC/SP'  "], setGraficoNNCMPTotalCEAvesPesadasRS, setresponseGraficoNNCMPTotalCEAvesPesadasRS, 48)       // 12
         chamarAPI("CETotal", GraficoRACTotalCEAvesPesadasRS, "GraficoRACTotalCEAvesPesadasRS", ["  WHERE tipo = 'RAC' AND [Regional Qualidade] in ('Aves Pesadas RS/SC/SP')   "], setGraficoRACTotalCEAvesPesadasRS, setresponseGraficoRACTotalCEAvesPesadasRS, 49)     // 13
-        chamarAPI("RACIndicadores", GraficoRACAvesPesadasRS, "GraficoRACAvesPesadasRS", [' WHERE [Regional (Qualidade)] in (\'Aves Pesadas RS/SC/SP\' ) AND [ORIGEM DO PROBLEMA] NOT IN (\'ABUSO DE PRODUTO PDV\')  '], setGraficoRACAvesPesadasRS, setresponseGraficoRACAvesPesadasRS, 50)    // 14
+        chamarAPI("RACIndicadores", GraficoRACAvesPesadasRS, "GraficoRACAvesPesadasRS", [" WHERE [Regional (Qualidade)] in ('Aves Pesadas RS/SC/SP' )  AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "], setGraficoRACAvesPesadasRS, setresponseGraficoRACAvesPesadasRS, 50)    // 14
         chamarAPI("NCCMP", GraficoNCCMPAvesPesadasRS, "GraficoNCCMPAvesPesadasRS", [whereNNCMP + ' and [Reg. Qual] = \'Aves Pesadas RS/SC/SP\'  '], setGraficoNCCMPAvesPesadasRS, setresponseGraficoNCCMPAvesPesadasRS, 51)    // 15
 
         chamarAPI("CETotal", GraficoCETotalAvesLeves, "GraficoCETotalAvesLeves", [' where [Regional Qualidade]  = \'Aves Leves\' '], setGraficoCETotalAvesLeves, setresponseGraficoCETotalAvesLeves, 15)     // 11
-        chamarAPI("NNCMPTotalCE", GraficoNNCMPTotalCEAvesLeves, "GraficoNNCMPTotalCEAvesLeves", [' where [Regional (Qualidade)] = \'Aves Leves\' '], setGraficoNNCMPTotalCEAvesLeves, setresponseGraficoNNCMPTotalCEAvesLeves, 16)       // 12
-        chamarAPI("RACTotalCE", GraficoRACTotalCEAvesLeves, "GraficoRACTotalCEAvesLeves", ['  WHERE [Negócio (Qualidade)] = \'Aves Leves\'   '], setGraficoRACTotalCEAvesLeves, setresponseGraficoRACTotalCEAvesLeves, 17)     // 13
-        chamarAPI("RACIndicadores", GraficoRACAvesLeves, "GraficoRACAvesLeves", [' WHERE [Regional (Qualidade)] = \'Aves Leves\'  AND [ORIGEM DO PROBLEMA] NOT IN (\'ABUSO DE PRODUTO PDV\') '], setGraficoRACAvesLeves, setresponseGraficoRACAvesLeves, 18)    // 14
+        chamarAPI("CETotal", GraficoNNCMPTotalCEAvesLeves, "GraficoNNCMPTotalCEAvesLeves", [" where tipo = 'NNC MP' AND [Regional Qualidade] = \'Aves Leves\' "], setGraficoNNCMPTotalCEAvesLeves, setresponseGraficoNNCMPTotalCEAvesLeves, 16)       // 12
+        chamarAPI("CETotal", GraficoRACTotalCEAvesLeves, "GraficoRACTotalCEAvesLeves", ["  where tipo = 'RAC' AND [Regional Qualidade] = \'Aves Leves\'   "], setGraficoRACTotalCEAvesLeves, setresponseGraficoRACTotalCEAvesLeves, 17)     // 13
+        chamarAPI("RACIndicadores", GraficoRACAvesLeves, "GraficoRACAvesLeves", [" WHERE [Regional (Qualidade)] = 'Aves Leves'   AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO')  "], setGraficoRACAvesLeves, setresponseGraficoRACAvesLeves, 18)    // 14
         chamarAPI("NCCMP", GraficoNCCMPAvesLeves, "GraficoNCCMPAvesLeves", [whereNNCMP + ' and [Reg. Qual] = \'Aves Leves\'  '], setGraficoNCCMPAvesLeves, setresponseGraficoNCCMPAvesLeves, 19)    // 15
 
         chamarAPI("CETotal", GraficoCETotalSuinos, "GraficoCETotalSuinos", [' where [Regional Qualidade]  in (\'Suínos\',\'Suíno\') '], setGraficoCETotalSuinos, setresponseGraficoCETotalSuinos, 20)     // 11
-        chamarAPI("NNCMPTotalCE", GraficoNNCMPTotalCESuinos, "GraficoNNCMPTotalCESuinos", [' where [Regional (Qualidade)] = \'Suínos\' '], setGraficoNNCMPTotalCESuinos, setresponseGraficoNNCMPTotalCESuinos, 21)       // 12
-        chamarAPI("RACTotalCE", GraficoRACTotalCESuinos, "GraficoRACTotalCESuinos", ['  WHERE [Negócio (Qualidade)] = \'Suínos\'   '], setGraficoRACTotalCESuinos, setresponseGraficoRACTotalCESuinos, 22)     // 13
-        chamarAPI("RACIndicadores", GraficoRACSuinos, "GraficoRACSuinos", [' WHERE [Regional (Qualidade)] = \'Suínos\'  AND [ORIGEM DO PROBLEMA] NOT IN (\'ABUSO DE PRODUTO PDV\') '], setGraficoRACSuinos, setresponseGraficoRACSuinos, 23)    // 14
+        chamarAPI("CETotal", GraficoNNCMPTotalCESuinos, "GraficoNNCMPTotalCESuinos", [" where tipo = 'NNC MP' AND [Regional Qualidade] = \'Suínos\' "], setGraficoNNCMPTotalCESuinos, setresponseGraficoNNCMPTotalCESuinos, 21)       // 12
+        chamarAPI("CETotal", GraficoRACTotalCESuinos, "GraficoRACTotalCESuinos", ["  where tipo = 'RAC' AND [Regional Qualidade] = \'Suínos\'   "], setGraficoRACTotalCESuinos, setresponseGraficoRACTotalCESuinos, 22)     // 13
+        chamarAPI("RACIndicadores", GraficoRACSuinos, "GraficoRACSuinos", [" WHERE [Regional (Qualidade)] in ('Suínos', 'Outros') and [Regional (Produção)] in ('Itajaí - Indus/Sui', 'SUINOS') AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "], setGraficoRACSuinos, setresponseGraficoRACSuinos, 23)    // 14
         chamarAPI("NCCMP", GraficoNCCMPSuinos, "GraficoNCCMPSuinos", [whereNNCMP + ' and [Reg. Qual] = \'Suínos\'  '], setGraficoNCCMPSuinos, setresponseGraficoNCCMPSuinos, 24)    // 15
 
 
 
-        chamarAPI("CETotal", GraficoCETotalPreparados, "GraficoCETotalPreparados", [' where [Regional Qualidade] in (\'Preparados\',\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\',\'Itajaí\') '], setGraficoCETotalPreparados, setresponseGraficoCETotalPreparados, 25)     // 11
-        chamarAPI("NNCMPTotalCE", GraficoNNCMPTotalCEPreparados, "GraficoNNCMPTotalCEPreparados", [' where [Regional (Qualidade)] in (\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\',\'Itajaí\') '], setGraficoNNCMPTotalCEPreparados, setresponseGraficoNNCMPTotalCEPreparados, 26)       // 12
-        chamarAPI("RACTotalCE", GraficoRACTotalCEPreparados, "GraficoRACTotalCEPreparados", ['  WHERE [Negócio (Qualidade)] in (\'Preparados\',\'Itajaí\')   '], setGraficoRACTotalCEPreparados, setresponseGraficoRACTotalCEPreparados, 27)     // 13
+        chamarAPI("CETotal", GraficoCETotalPreparados, "GraficoCETotalPreparados", [' where [Regional Qualidade] in (\'Preparados\',\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\',\'Itajaí\') and Negócio in (\'Preparados\',\'Outros\', \'INDUSTRIALIZADOS\', \'Fatiados\') '], setGraficoCETotalPreparados, setresponseGraficoCETotalPreparados, 25)     // 11
+        chamarAPI("CETotal", GraficoNNCMPTotalCEPreparados, "GraficoNNCMPTotalCEPreparados", [" where tipo = 'NNC MP' AND [Regional Qualidade]  in (\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\',\'Itajaí\') and Negócio in (\'Preparados\',\'Outros\', \'INDUSTRIALIZADOS\', \'Fatiados\')  "], setGraficoNNCMPTotalCEPreparados, setresponseGraficoNNCMPTotalCEPreparados, 26)       // 12
+        chamarAPI("CETotal", GraficoRACTotalCEPreparados, "GraficoRACTotalCEPreparados", ["  where tipo = 'RAC' AND [Regional Qualidade]  in (\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\',\'Itajaí\') and Negócio in (\'Preparados\',\'Outros\', \'INDUSTRIALIZADOS\', \'Fatiados\')   "], setGraficoRACTotalCEPreparados, setresponseGraficoRACTotalCEPreparados, 27)     // 13
         chamarAPI("RACIndicadores", GraficoRACPreparados, "GraficoRACPreparados", [whereRACPreparados] , setGraficoRACPreparados, setresponseGraficoRACPreparados, 28)    // 14
         chamarAPI("NCCMP", GraficoNCCMPPreparados, "GraficoNCCMPPreparados", [whereNNCMP + ' and [Reg. Qual] in (\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\')  '], setGraficoNCCMPPreparados, setresponseGraficoNCCMPPreparados, 29)    // 15
 
-        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesPesadas, "GraficoRACUnidadesAvesPesadas", [" where Tipo = 'REAL' and [Negócio (Qualidade)] IN ('Aves Pesadas','Aves Pesadas PR') and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))          and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') "], setGraficoRACUnidadesAvesPesadas, setresponseGraficoRACUnidadesAvesPesadas, 30)                                                                    // 6
-        chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesPesadas, "GraficoRACProblemasAvesPesadas", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] IN (\'Aves Pesadas\',\'Aves Pesadas PR\') and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACProblemasAvesPesadas, setresponseGraficoRACProblemasAvesPesadas, 31)
+        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesPesadas, "GraficoRACUnidadesAvesPesadas", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR')  AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO')  "], setGraficoRACUnidadesAvesPesadas, setresponseGraficoRACUnidadesAvesPesadas, 30)                                                                    // 6
+        chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesPesadas, "GraficoRACProblemasAvesPesadas", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR')  AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "], setGraficoRACProblemasAvesPesadas, setresponseGraficoRACProblemasAvesPesadas, 31)
 
-        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesPesadasPR, "GraficoRACUnidadesAvesPesadasPR", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Pesadas PR\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACUnidadesAvesPesadasPR, setresponseGraficoRACUnidadesAvesPesadasPR, 32)                                                                    // 6
-        chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesPesadasPR, "GraficoRACProblemasAvesPesadasPR", [" where Tipo = \'REAL\' and [Negócio (Qualidade)] = 'Aves Pesadas PR' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in ('DOCUMENTAÇÃO UNIDADE', 'EXPEDIÇÃO FÁBRICA', 'FÁBRICA PRODUÇÃO', 'Fabricação/ Produção', 'FABRICACAO/FABRICA', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\')"], setGraficoRACProblemasAvesPesadasPR, setresponseGraficoRACProblemasAvesPesadasPR, 33)
+        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesPesadasPR, "GraficoRACUnidadesAvesPesadasPR", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas PR')  AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "], setGraficoRACUnidadesAvesPesadasPR, setresponseGraficoRACUnidadesAvesPesadasPR, 32)                                                                    // 6
+        chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesPesadasPR, "GraficoRACProblemasAvesPesadasPR", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas PR')  AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "], setGraficoRACProblemasAvesPesadasPR, setresponseGraficoRACProblemasAvesPesadasPR, 33)
 
-        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesPesadasSP, "GraficoRACUnidadesAvesPesadasSP", [' where Tipo = \'REAL\' and [Regional (Qualidade)] = \'Aves Pesadas SP/CO/NE\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACUnidadesAvesPesadasSP, setresponseGraficoRACUnidadesAvesPesadasSP, 52)                                                                    // 6
-        chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesPesadasSP, "GraficoRACProblemasAvesPesadasSP", [" where Tipo = \'REAL\' and [Regional (Qualidade)] = 'Aves Pesadas SP/CO/NE' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in ('DOCUMENTAÇÃO UNIDADE', 'EXPEDIÇÃO FÁBRICA', 'FÁBRICA PRODUÇÃO', 'Fabricação/ Produção', 'FABRICACAO/FABRICA', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\')"], setGraficoRACProblemasAvesPesadasSP, setresponseGraficoRACProblemasAvesPesadasSP, 53)
+        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesPesadasSP, "GraficoRACUnidadesAvesPesadasSP", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas SP/CO/NE')  AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "], setGraficoRACUnidadesAvesPesadasSP, setresponseGraficoRACUnidadesAvesPesadasSP, 52)                                                                    // 6
+        chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesPesadasSP, "GraficoRACProblemasAvesPesadasSP", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas SP/CO/NE')  AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "], setGraficoRACProblemasAvesPesadasSP, setresponseGraficoRACProblemasAvesPesadasSP, 53)
 
-        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesPesadasRS, "GraficoRACUnidadesAvesPesadasRS", [' where Tipo = \'REAL\' and [Regional (Qualidade)] = \'Aves Pesadas RS/SC/SP\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACUnidadesAvesPesadasRS, setresponseGraficoRACUnidadesAvesPesadasRS, 54)                                                                    // 6
-        chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesPesadasRS, "GraficoRACProblemasAvesPesadasRS", [" where Tipo = \'REAL\' and [Regional (Qualidade)] = 'Aves Pesadas RS/SC/SP' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in ('DOCUMENTAÇÃO UNIDADE', 'EXPEDIÇÃO FÁBRICA', 'FÁBRICA PRODUÇÃO', 'Fabricação/ Produção', 'FABRICACAO/FABRICA', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\')"], setGraficoRACProblemasAvesPesadasRS, setresponseGraficoRACProblemasAvesPesadasRS, 55)
+        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesPesadasRS, "GraficoRACUnidadesAvesPesadasRS", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas RS/SC/SP')  AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "], setGraficoRACUnidadesAvesPesadasRS, setresponseGraficoRACUnidadesAvesPesadasRS, 54)                                                                    // 6
+        chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesPesadasRS, "GraficoRACProblemasAvesPesadasRS", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas RS/SC/SP')  AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "], setGraficoRACProblemasAvesPesadasRS, setresponseGraficoRACProblemasAvesPesadasRS, 55)
 
-        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesLeves, "GraficoRACUnidadesAvesLeves", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Leves\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACUnidadesAvesLeves, setresponseGraficoRACUnidadesAvesLeves, 34)                                                                    // 6
-        chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesLeves, "GraficoRACProblemasAvesLeves", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Aves Leves\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACProblemasAvesLeves, setresponseGraficoRACProblemasAvesLeves, 35)
+        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesLeves, "GraficoRACUnidadesAvesLeves", [' where Tipo = \'REAL\' and [Regional (Qualidade)] like \'%Aves Leves%\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACUnidadesAvesLeves, setresponseGraficoRACUnidadesAvesLeves, 34)                                                                    // 6
+        chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesLeves, "GraficoRACProblemasAvesLeves", [' where Tipo = \'REAL\' and [Regional (Qualidade)] like \'%Aves Leves%\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACProblemasAvesLeves, setresponseGraficoRACProblemasAvesLeves, 35)
 
-        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesSuinos, "GraficoRACUnidadesSuinos", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Suínos\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACUnidadesSuinos, setresponseGraficoRACUnidadesSuinos, 36)                                                                    // 6
-        chamarAPI("RACUnicoProblema", GraficoRACProblemasSuinos, "GraficoRACProblemasSuinos", [' where Tipo = \'REAL\' and [Negócio (Qualidade)] = \'Suínos\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACProblemasSuinos, setresponseGraficoRACProblemasSuinos, 37)
+        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesSuinos, "GraficoRACUnidadesSuinos", [' where Tipo = \'REAL\' and [Regional (Qualidade)] like \'%Su%nos%\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACUnidadesSuinos, setresponseGraficoRACUnidadesSuinos, 36)                                                                    // 6
+        chamarAPI("RACUnicoProblema", GraficoRACProblemasSuinos, "GraficoRACProblemasSuinos", [' where Tipo = \'REAL\' and [Regional (Qualidade)] like \'%Su%nos%\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACProblemasSuinos, setresponseGraficoRACProblemasSuinos, 37)
 
-        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesPreparados, "GraficoRACUnidadesPreparados", [' where Tipo = \'REAL\' AND UNIDADE NOT IN (\'ITAJAI AVES PESADAS\') AND [Regional (Produção)] in (\'ITAJAÍ\', \'OUTROS\', \'PREPARADOS\', \'ITAJAÍ - INDUS\') and [Regional (Qualidade)] in (\'ITAJAÍ\', \'OUTROS\', \'PREPARADOS 1\', \'PREPARADOS 2\', \'ITAJAÍ\') and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACUnidadesPreparados, setresponseGraficoRACUnidadesPreparados, 38)                                                                    // 6
-        chamarAPI("RACUnicoProblema", GraficoRACProblemasPreparados, "GraficoRACProblemasPreparados", [' where Tipo = \'REAL\' AND UNIDADE NOT IN (\'ITAJAI AVES PESADAS\') AND [Regional (Produção)] in (\'ITAJAÍ\', \'OUTROS\', \'PREPARADOS\', \'ITAJAÍ - INDUS\') and [Regional (Qualidade)] in (\'ITAJAÍ\', \'OUTROS\', \'PREPARADOS 1\', \'PREPARADOS 2\', \'ITAJAÍ\') and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACProblemasPreparados, setresponseGraficoRACProblemasPreparados, 39)
+        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesPreparados, "GraficoRACUnidadesPreparados", [whereRACPreparados + " and Tipo = \'REAL\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoRACUnidadesPreparados, setresponseGraficoRACUnidadesPreparados, 38)                                                                    // 6
+        chamarAPI("RACUnicoProblema", GraficoRACProblemasPreparados, "GraficoRACProblemasPreparados", [whereRACPreparados + " and Tipo = \'REAL\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoRACProblemasPreparados, setresponseGraficoRACProblemasPreparados, 39)
 
         chamarAPI("RACIndicadores", GraficoRACME, "GraficoRACME", [" where mercado_rac = 'ME' "], setGraficoRACME, setresponseGraficoRACME, 40)
-        chamarAPI("RACIndicadores", GraficoRACMI, "GraficoRACMI", [" where mercado_rac IN ('MI', 'INTERNO')  "], setGraficoRACMI, setresponseGraficoRACMI, 41)
+        chamarAPI("RACIndicadores", GraficoRACMI, "GraficoRACMI", [" where mercado_rac IN ('MI', 'INTERNO') and Unidade not in ('AVANTI','Dan Vigor', 'EIRELI ME', 'ITAJAI ÓLEO COMENSTÍVEL','Marba','Massatake','Santa Cruz do Sul','Vigor')  "], setGraficoRACMI, setresponseGraficoRACMI, 41)
 
 
         /////////////////////
 
         //FFO
-        chamarAPI("RACIndicadores", GraficoRACDetalhesFFO, "GraficoRACDetalhesFFO", [" where 1=1 AND [ORIGEM DO PROBLEMA]  IN ('EXPEDIÇÃO FÁBRICA','FABRICAÇÃO','PRODUÇÃO EM TERCEIRO') AND [TIPO_ATENDIMENTO_RAC] IN ('RECLAMAÇÃO FFO') "] , setGraficoRACDetalhesFFO, setresponseGraficoRACDetalhesFFO, 52) 
+        chamarAPI("RACIndicadores", GraficoRACDetalhesFFO, "GraficoRACDetalhesFFO", [" where 1=1 AND [Origem da RAC]  IN ('Documentação Unidade', 'EXPEDIÇÃO FÁBRICA','FABRICAÇÃO','PRODUÇÃO EM TERCEIRO') AND [TIPO_ATENDIMENTO_RAC] IN ('RECLAMAÇÃO FFO') "] , setGraficoRACDetalhesFFO, setresponseGraficoRACDetalhesFFO, 52) 
 
         //Atendimento Comercial
-        chamarAPI("RACIndicadores", GraficoRACDetalhesAC, "GraficoRACDetalhesAC", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA]  IN ('ATENDIMENTO COMERCIAL') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRÍTICA', 'NEGOCIAÇÃO COMERCIAL', 'OBRIGAÇÃO', 'RAC CAIXA', 'RAC COMPLEMENTAR') "] , setGraficoRACDetalhesAC, setresponseGraficoRACDetalhesAC, 53)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesAC, "GraficoRACDetalhesAC", [" WHERE 1=1 AND [Origem da RAC]  IN ('ATENDIMENTO COMERCIAL') AND ( [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRÍTICA', 'NEGOCIAÇÃO COMERCIAL', 'OBRIGAÇÃO', 'RAC CAIXA', 'RAC COMPLEMENTAR') OR [TIPO_ATENDIMENTO_RAC] IS NULL)"] , setGraficoRACDetalhesAC, setresponseGraficoRACDetalhesAC, 53)
 
         //Logística Exportação
-        chamarAPI("RACIndicadores", GraficoRACDetalhesLogME, "GraficoRACDetalhesLogME", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA]  IN ('LOGÍSTICA EXPORTAÇÃO') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRÍTICA', 'NEGOCIAÇÃO COMERCIAL', 'OBRIGAÇÃO', 'RAC CAIXA', 'RAC COMPLEMENTAR') "] , setGraficoRACDetalhesLogME, setresponseGraficoRACDetalhesLogME, 54)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesLogME, "GraficoRACDetalhesLogME", [" WHERE 1=1 AND [Origem da RAC]  IN ('LOGÍSTICA EXPORTAÇÃO') AND ( [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRÍTICA', 'NEGOCIAÇÃO COMERCIAL', 'OBRIGAÇÃO', 'RAC CAIXA', 'RAC COMPLEMENTAR') OR [TIPO_ATENDIMENTO_RAC] IS NULL) "] , setGraficoRACDetalhesLogME, setresponseGraficoRACDetalhesLogME, 54)
 
         //Logística Importação
-        chamarAPI("RACIndicadores", GraficoRACDetalhesLogMI, "GraficoRACDetalhesLogMI", [" WHERE 1=1  AND [ORIGEM DO PROBLEMA]  IN ('LOGÍSTICA MI')  AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "] , setGraficoRACDetalhesLogMI, setresponseGraficoRACDetalhesLogMI, 55)
+        chamarAPI("RACIndicadoresSemFiltro2", GraficoRACDetalhesLogMI, "GraficoRACDetalhesLogMI", [" WHERE 1=1  AND [Origem]  IN ('LOGÍSTICA MI', 'LOGÍSTICA CD')  and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') OR Tipo_Atendimento_rac IS NULL) and (Unidade NOT IN ('Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','AVANTI','Serviços','Shipping') OR Unidade IS NULL) "] , setGraficoRACDetalhesLogMI, setresponseGraficoRACDetalhesLogMI, 55)
 
         //Documentação
-        chamarAPI("RACIndicadores", GraficoRACDetalhesDoc, "GraficoRACDetalhesDoc", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA]  IN ('DOCUMENTAÇÃO CORPORATIVO') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('NEGOCIAÇÃO COMERCIAL', 'OBRIGAÇÃO','RAC COMPLEMENTAR') "] , setGraficoRACDetalhesDoc, setresponseGraficoRACDetalhesDoc, 56)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesDoc, "GraficoRACDetalhesDoc", [" WHERE 1=1 AND [Origem da RAC]  IN ('DOCUMENTAÇÃO CORPORATIVO') AND ( [TIPO_ATENDIMENTO_RAC] NOT IN ('NEGOCIAÇÃO COMERCIAL', 'OBRIGAÇÃO','RAC COMPLEMENTAR') OR [TIPO_ATENDIMENTO_RAC] IS NULL) "] , setGraficoRACDetalhesDoc, setresponseGraficoRACDetalhesDoc, 56)
 
         //Transporte Terrestre
-        chamarAPI("RACIndicadores", GraficoRACDetalhesTT, "GraficoRACDetalhesTT", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA]  IN ('TRANSPORTE TERRESTRE') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') "] , setGraficoRACDetalhesTT, setresponseGraficoRACDetalhesTT, 57)
+        chamarAPI("RACIndicadoresSemFiltro2", GraficoRACDetalhesTT, "GraficoRACDetalhesTT", [" WHERE 1=1  AND [Origem]  IN ('TRANSPORTE TERRESTRE')  and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') OR Tipo_Atendimento_rac IS NULL)  "] , setGraficoRACDetalhesTT, setresponseGraficoRACDetalhesTT, 57)
 
         //Produção em Terceiro (ex. Massatake)
-        chamarAPI("RACIndicadores", GraficoRACDetalhesTerceiro, "GraficoRACDetalhesTerceiro", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA]  IN ('PRODUÇÃO EM TERCEIRO') AND UNIDADE NOT IN ('ITAJAI ÓLEO COMESTÍVEIS','MASSATAKE','VIGOR') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "] , setGraficoRACDetalhesTerceiro, setresponseGraficoRACDetalhesTerceiro, 58)
+        chamarAPI("RACIndicadoresSemFiltro2", GraficoRACDetalhesTerceiro, "GraficoRACDetalhesTerceiro", [" WHERE 1=1  AND [Origem]  IN ('PRODUÇÃO EM TERCEIRO')  and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') OR Tipo_Atendimento_rac IS NULL) and (Unidade NOT IN ('Dan Vigor','Massatake','Vigor','ITAJAI ÓLEO COMESTÍVEIS') )  "] , setGraficoRACDetalhesTerceiro, setresponseGraficoRACDetalhesTerceiro, 58)
 
         //Massatake
-        chamarAPI("RACIndicadoresSemFiltro", GraficoRACDetalhesMassatake, "GraficoRACDetalhesMassatake", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA]  IN ('PRODUÇÃO EM TERCEIRO') AND UNIDADE IN ('MASSATAKE') AND  [TIPO_ATENDIMENTO_RAC] IN ('RECLAMAÇÃO') "] , setGraficoRACDetalhesMassatake, setresponseGraficoRACDetalhesMassatake, 59)
+        chamarAPI("RACIndicadoresSemFiltro", GraficoRACDetalhesMassatake, "GraficoRACDetalhesMassatake", [" WHERE 1=1 AND [Origem da RAC]  IN ('PRODUÇÃO EM TERCEIRO') AND UNIDADE IN ('MASSATAKE') AND  [TIPO_ATENDIMENTO_RAC] IN ('RECLAMAÇÃO') "] , setGraficoRACDetalhesMassatake, setresponseGraficoRACDetalhesMassatake, 59)
 
         //PDV
-        chamarAPI("RACIndicadores", GraficoRACDetalhesPDV, "GraficoRACDetalhesPDV", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA]  IN ('ABUSO DE PRODUTO PDV') AND UNIDADE NOT IN ('DAN VIGOR','GRAND ALIMENTOS S.A.','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR') AND  [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "] , setGraficoRACDetalhesPDV, setresponseGraficoRACDetalhesPDV, 60)
-        chamarAPI("RACIndicadores", GraficoRACDetalhesAberturaPDV, "GraficoRACDetalhesAberturaPDV", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA] IN ('ABUSO DE PRODUTO PDV') AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR')  AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "] , setGraficoRACDetalhesAberturaPDV, setresponseGraficoRACDetalhesAberturaPDV, 61)
-
+        chamarAPI("RACIndicadoresSemFiltro2", GraficoRACDetalhesPDV, "GraficoRACDetalhesPDV", [" WHERE 1=1 AND [Origem]  IN ('ABUSO DE PRODUTO PDV') and (Tipo_Atendimento_rac NOT IN ('ALERTA',  'Crítica') OR Tipo_Atendimento_rac IS NULL)  and (Unidade NOT IN ('ITAJAI ÓLEO COMESTÍVEIS','ITAJAI AVES PESADAS', 'Massatake', 'Dan Vigor','GRANO ALIMENTOS S.A.','Marba','Santa Cruz do Sul','Vigor', 'VARZEA GRANDE - CD'	) )         "] , setGraficoRACDetalhesPDV, setresponseGraficoRACDetalhesPDV, 60)
+        chamarAPI("RACUnicoProblema", GraficoRACDetalhesAberturaPDV, "GraficoRACDetalhesAberturaPDV", [" WHERE 1=1 AND [Origem da RAC] IN ('ABUSO DE PRODUTO PDV') AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR')  AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') AND Mês = month((select * from v_maiorData)) AND Ano = year((select * from v_maiorData)) "] , setGraficoRACDetalhesAberturaPDV, setresponseGraficoRACDetalhesAberturaPDV, 61)
+       
         //RAC Crítica RACIndicadoresSemFiltro
-        chamarAPI("RACIndicadoresSemFiltro", GraficoRACDetalhesCritica, "GraficoRACDetalhesCritica", [" WHERE 1=1 AND [ORIGEM DO PROBLEMA] NOT IN ('ABUSO DE PRODUTO HOME','LOGÍSTICA MI','SERVICO') AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  AND [TIPO_ATENDIMENTO_RAC] IN ('CRÍTICA') "] , setGraficoRACDetalhesCritica, setresponseGraficoRACDetalhesCritica, 62)
+        chamarAPI("RACIndicadoresSemFiltro2", GraficoRACDetalhesCritica, "GraficoRACDetalhesCritica", [" WHERE 1=1 AND [Origem] NOT IN ('ABUSO DE PRODUTO HOME','LOGÍSTICA MI','SERVICO') AND  (Unidade NOT IN ('ITAJAI ÓLEO COMESTÍVEIS','ITAJAI PESCADOS', 'Massatake', 'Dan Vigor','Marba','Vigor', 'NORONHA', 'RIBEIRÃO PRETO - CD', 'Serviços', 'Shipping'	) )  AND [TIPO_ATENDIMENTO_RAC] IN ('CRÍTICA') "] , setGraficoRACDetalhesCritica, setresponseGraficoRACDetalhesCritica, 62)
+
+        
+        var whereLinhaEspecial = " where 1 = 1 "
+                 + " and [Marca] IN ('SEARA GOURMET', 'SEARA NATURE', 'SEARA INCRIVEL', 'SEARA ROTISSERIE') 		"
 
         //RAC Linhas Especiais (Seara Nature, Gourmet, Incrível)
-        chamarAPI("RACIndicadores", GraficoRACDetalhesEspeciais, "GraficoRACDetalhesEspeciais", [" where 99=99 "] , setGraficoRACDetalhesEspeciais, setresponseGraficoRACDetalhesEspeciais, 63)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesEspeciais, "GraficoRACDetalhesEspeciais", [whereLinhaEspecial] , setGraficoRACDetalhesEspeciais, setresponseGraficoRACDetalhesEspeciais, 63)
 
         //RAC Corpo Estanho - [Totais]
-        chamarAPI("RACIndicadores", GraficoRACDetalhesCE, "GraficoRACDetalhesCE", [" WHERE 1=1 AND [TIPO CE] IN ('INERENTE','NÃO INERENTE') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') "] , setGraficoRACDetalhesCE, setresponseGraficoRACDetalhesCE, 64)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesCE, "GraficoRACDetalhesCE", [" WHERE 1=1 AND [Origem da RAC] IN ('EXPEDIÇÃO FÁBRICA','FABRICAÇÃO') AND  [TIPO CE] IN ('INERENTE','NÃO INERENTE') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') "] , setGraficoRACDetalhesCE, setresponseGraficoRACDetalhesCE, 64)
 
         //RAC Corpo Estanho - [Inerente]
-        chamarAPI("RACIndicadores", GraficoRACDetalhesCEInerente, "GraficoRACDetalhesCEInerente", [" WHERE 1=1 AND [TIPO CE] IN ('INERENTE') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO','MORRO GRANDE') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') "] , setGraficoRACDetalhesCEInerente, setresponseGraficoRACDetalhesCEInerente, 65)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesCEInerente, "GraficoRACDetalhesCEInerente", [" WHERE 1=1 AND [Origem da RAC] IN ('EXPEDIÇÃO FÁBRICA','FABRICAÇÃO') AND [TIPO CE] IN ('INERENTE') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO','MORRO GRANDE') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') "] , setGraficoRACDetalhesCEInerente, setresponseGraficoRACDetalhesCEInerente, 65)
 
         //RAC Corpo Estanho - [Não Inerente]
-        chamarAPI("RACIndicadores", GraficoRACDetalhesCENaoInerente, "GraficoRACDetalhesCENaoInerente", [" WHERE 1=1 AND [TIPO CE] IN ('NÃO INERENTE') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA','VERÍSSIMO','MORRO GRANDE') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') "] , setGraficoRACDetalhesCENaoInerente, setresponseGraficoRACDetalhesCENaoInerente, 66)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesCENaoInerente, "GraficoRACDetalhesCENaoInerente", [" WHERE 1=1 AND [Origem da RAC] IN ('EXPEDIÇÃO FÁBRICA','FABRICAÇÃO') AND [TIPO CE] IN ('NÃO INERENTE') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA','VERÍSSIMO','MORRO GRANDE') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') "] , setGraficoRACDetalhesCENaoInerente, setresponseGraficoRACDetalhesCENaoInerente, 66)
 
         //RAC Corpo Estanho - [Plástico]
-        chamarAPI("RACIndicadores", GraficoRACDetalhesCEPlastico, "GraficoRACDetalhesCEPlastico", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA','SANTA CRUZ DO SUL') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') AND [TIPO DO PROBLEMA] IN ('LUVA','LUVA NITRÍLICA','PLÁSTICO','PLÁSTICO DURO','PLÁSTICO MOLE') "] , setGraficoRACDetalhesCEPlastico, setresponseGraficoRACDetalhesCEPlastico, 67)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesCEPlastico, "GraficoRACDetalhesCEPlastico", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA','SANTA CRUZ DO SUL') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') AND [TIPO DO PROBLEMA] IN ('LUVA','LUVA NITRÍLICA','PLÁSTICO','PLÁSTICO DURO','PLÁSTICO MOLE') AND ([Origem da RAC] IN ('FABRICAÇÃO')) "] , setGraficoRACDetalhesCEPlastico, setresponseGraficoRACDetalhesCEPlastico, 67)
 
         //RAC Inseto
-        chamarAPI("RACIndicadores", GraficoRACDetalhesInseto, "GraficoRACDetalhesInseto", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') AND [TIPO DO PROBLEMA] IN ('INSETO') AND [SUB TIPO PROBLEMA] NOT IN ('LARVA') "] , setGraficoRACDetalhesInseto, setresponseGraficoRACDetalhesInseto, 68)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesInseto, "GraficoRACDetalhesInseto", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('AMAI','DAN VIGOR','MARBA','GRANO','GRIFFOOD','JBS','MASSATAKE','SANTA CRIZ DO SUL','SERYA','VIGOR','ITAJAI AVES PESADAS') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') AND [TIPO DO PROBLEMA] IN ('INSETO') AND [SUB TIPO PROBLEMA] NOT IN ('LARVA') AND ([Origem da RAC] IN ('FABRICAÇÃO')) "] , setGraficoRACDetalhesInseto, setresponseGraficoRACDetalhesInseto, 68)
 
         //RAC Cabelo
-        chamarAPI("RACIndicadores", GraficoRACDetalhesCabelo, "GraficoRACDetalhesCabelo", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('AMAI','DAN VIGOR','MARBA','GRANO','GRIFFOOD','JBS','MASSATAKE','SANTA CRIZ DO SUL','SERYA','VIGOR') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') AND [TIPO DO PROBLEMA] LIKE '%CABELO%' "] , setGraficoRACDetalhesCabelo, setresponseGraficoRACDetalhesCabelo, 69)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesCabelo, "GraficoRACDetalhesCabelo", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('AMAI','DAN VIGOR','MARBA','GRANO','GRIFFOOD','JBS','MASSATAKE','SANTA CRIZ DO SUL','SERYA','VIGOR') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') AND [TIPO DO PROBLEMA] LIKE '%CABELO%' AND ([Origem da RAC] IN ('FABRICAÇÃO')) "] , setGraficoRACDetalhesCabelo, setresponseGraficoRACDetalhesCabelo, 69)
 
         //RAC Plastico
-        chamarAPI("RACIndicadores", GraficoRACDetalhesPlastico, "GraficoRACDetalhesPlastico", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA','SANTA CRUZ DO SUL') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') AND [TIPO DO PROBLEMA] IN ('LUVA','LUVA NITRÍLICA','PLÁSTICO','PLÁSTICO DURO','PLÁSTICO MOLE') "] , setGraficoRACDetalhesPlastico, setresponseGraficoRACDetalhesPlastico,70)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesPlastico, "GraficoRACDetalhesPlastico", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA','SANTA CRUZ DO SUL') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') AND [TIPO DO PROBLEMA] IN ('LUVA','LUVA NITRÍLICA','PLÁSTICO','PLÁSTICO DURO','PLÁSTICO MOLE') AND ([Origem da RAC] IN ('FABRICAÇÃO')) "] , setGraficoRACDetalhesPlastico, setresponseGraficoRACDetalhesPlastico,70)
 
         //RAC Metal
-        chamarAPI("RACIndicadores", GraficoRACDetalhesMetal, "GraficoRACDetalhesMetal", [" WHERE 1=1 AND UNIDADE NOT IN ('AGRO ALFA','AMAI','ATI-GEL','CLAREBOUT','GRANO','GRIFFOOD','MASSATAKE','SANTA CRUZ DO SUL','VIGOR')  AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') AND [PROBLEMA] IN ('METAL','METÁLICO') "] , setGraficoRACDetalhesMetal, setresponseGraficoRACDetalhesMetal,71)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesMetal, "GraficoRACDetalhesMetal", [" WHERE 1=1 AND UNIDADE NOT IN ('AGRO ALFA','AMAI','ATI-GEL','CLAREBOUT','GRANO','GRIFFOOD','MASSATAKE','SANTA CRUZ DO SUL','VIGOR')  AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') AND [PROBLEMA] IN ('METAL','METÁLICO') AND ([Origem da RAC] IN ('FABRICAÇÃO')) "] , setGraficoRACDetalhesMetal, setresponseGraficoRACDetalhesMetal,71)
 
         //RAC Intoxicação
-        chamarAPI("RACIndicadores", GraficoRACDetalhesIntoxicacao, "GraficoRACDetalhesIntoxicacao", [" WHERE 1=1 AND UNIDADE NOT IN ('HORTUS','JBS','MASSATAKE','VIGOR') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') AND [PROBLEMA] IN ('INTOXICAÇÃO ALIMENTAR') "] , setGraficoRACDetalhesIntoxicacao, setresponseGraficoRACDetalhesIntoxicacao,72)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesIntoxicacao, "GraficoRACDetalhesIntoxicacao", [" WHERE 1=1 AND UNIDADE NOT IN ('HORTUS','JBS','MASSATAKE','VIGOR') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') AND [PROBLEMA] IN ('INTOXICAÇÃO ALIMENTAR') AND ([Origem da RAC] IN ('FABRICAÇÃO')) "] , setGraficoRACDetalhesIntoxicacao, setresponseGraficoRACDetalhesIntoxicacao,72)
 
         //RAC Larva
-        chamarAPI("RACIndicadores", GraficoRACDetalhesLarva, "GraficoRACDetalhesLarva", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND [REGIONAL (Qualidade)] NOT IN ('FATIADOS','PESCADOS','AVES PR','AVES RS/SC/SP','AVES SP/CO/NE') AND UNIDADE NOT IN ('AGRO ALFA','AMAI','ATI-GEL','CLAREBOUT','GRANO','GRIFFOOD','MASSATAKE','SANTA CRUZ DO SUL','VIGOR','ARTES GRÁFICAS','CAMPINAS-CD','CAMPO VERDE','CD RIBEIRÃO DAS NEVES','CPO','DOC INDUSTRIA','EIRELI EPP','EIRELI ME','EXCELSIOR','GENESEAS AQUACULTURA','GERÊNCIA NACIONA FS','GRANO ALIMENTOS S.A.','GRIFFOOD','ICOFORT','ITAJAI','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','ITAJAI PESCADOS','LABREZZA','M P FOODS','MARBA','MASSAS SANTA ENERSTINA LTDA','NORONHA', 'OUTROS','PINHAIS - CD','QUALIDADE SUPPLY CHAIN','RIBEIRÃO PRETO – CD','SALVADOR – CD','SAO PAULO – CD','SEARA MEATS','SOMAVE','VARZEA GRANDE – CD') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO','NOTIFICAÇÃO') AND [PROBLEMA] IN ('INSETO','INSETO VIVO') AND [TIPO DO PROBLEMA] IN ('INSETO','LARVA', 'INSETO VIVO','LARVA VIVA')	 AND [SUB TIPO PROBLEMA] IN ('LARVA','LARVA VIVA') "] , setGraficoRACDetalhesLarva, setresponseGraficoRACDetalhesLarva,73)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesLarva, "GraficoRACDetalhesLarva", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND [REGIONAL (Qualidade)] NOT IN ('FATIADOS','PESCADOS','AVES PR','AVES RS/SC/SP','AVES SP/CO/NE') AND UNIDADE NOT IN ('AGRO ALFA','AMAI','ATI-GEL','CLAREBOUT','GRANO','GRIFFOOD','MASSATAKE','SANTA CRUZ DO SUL','VIGOR','ARTES GRÁFICAS','CAMPINAS-CD','CAMPO VERDE','CD RIBEIRÃO DAS NEVES','CPO','DOC INDUSTRIA','EIRELI EPP','EIRELI ME','EXCELSIOR','GENESEAS AQUACULTURA','GERÊNCIA NACIONA FS','GRANO ALIMENTOS S.A.','GRIFFOOD','ICOFORT','ITAJAI','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','ITAJAI PESCADOS','LABREZZA','M P FOODS','MARBA','MASSAS SANTA ENERSTINA LTDA','NORONHA', 'OUTROS','PINHAIS - CD','QUALIDADE SUPPLY CHAIN','RIBEIRÃO PRETO – CD','SALVADOR – CD','SAO PAULO – CD','SEARA MEATS','SOMAVE','VARZEA GRANDE – CD') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO','NOTIFICAÇÃO') AND [PROBLEMA] IN ('INSETO','INSETO VIVO') AND [TIPO DO PROBLEMA] IN ('INSETO','LARVA', 'INSETO VIVO','LARVA VIVA')	 AND [SUB TIPO PROBLEMA] IN ('LARVA','LARVA VIVA') AND ([Origem da RAC] IN ('FABRICAÇÃO')) "] , setGraficoRACDetalhesLarva, setresponseGraficoRACDetalhesLarva,73)
 
         //NNC Log
-        chamarAPI("NCCLOG", GraficoNNCLogDetalhesTotal, "GraficoNNCLogDetalhesTotal", [" where 1=1 "] , setGraficoNNCLogDetalhesTotal, setresponseGraficoNNCLogDetalhesTotal,74)
-        chamarAPI("NCCLOG", GraficoNNCLogDetalhesAves, "GraficoNNCLogDetalhesAves", [" where [Regional (Qualidade)] like '%aves%' "] , setGraficoNNCLogDetalhesAves, setresponseGraficoNNCLogDetalhesAves,75)
-        chamarAPI("NCCLOG", GraficoNNCLogDetalhesPreparados, "GraficoNNCLogDetalhesPreparados", [" where [Regional (Qualidade)] like '%prepa%' "] , setGraficoNNCLogDetalhesPreparados, setresponseGraficoNNCLogDetalhesPreparados,76)
-        chamarAPI("NCCLOG", GraficoNNCLogDetalhesSuinos, "GraficoNNCLogDetalhesSuinos", [" where [Regional (Qualidade)] like '%su%no%' "] , setGraficoNNCLogDetalhesSuinos, setresponseGraficoNNCLogDetalhesSuinos,77)
+        chamarAPI("NCCLOG", GraficoNNCLogDetalhesTotal, "GraficoNNCLogDetalhesTotal", [" where 1=1 and [Regional (Qualidade)] not in ('Logística','Outros','Terceiro') and ([Área Responsável] not in ('RASTREABILIDADE HUB') OR [Área Responsável] IS NULL) "] , setGraficoNNCLogDetalhesTotal, setresponseGraficoNNCLogDetalhesTotal,74)
+        chamarAPI("NCCLOG", GraficoNNCLogDetalhesAves, "GraficoNNCLogDetalhesAves", [" where [Regional (Qualidade)] not in ('Logística','Outros','Terceiro') and ([Área Responsável] not in ('RASTREABILIDADE HUB') OR [Área Responsável] IS NULL) AND FORNECEDOR IN ('AMPARO AVES',			'BRASILIA',	'CAARAPO AVES',	'CAMPO MOURAO AVES',	'CAXIAS DO SUL',			'FORQUILHINHA AVES',	'GARIBALDI AVES',	'GUAPIACU AVES',	'IPUMIRIM AVES',	'ITAIOPOLIS AVES',	'ITAPETININGA AVES',	'ITAPIRANGA AVES',		'JACAREZINHO AVES',	'JAGUAPITA AVES',				'LAPA AVES',	'MONTENEGRO',	'NOVA VENEZA AVES',	'NUPORANGA - SP ',	'NUPORANGA AVES',		'PASSO FUNDO',	'PASSOS AVES',			'ROLANDIA',		'SANTA FE AVES',	'SANTO INACIO AVES',	'SAO JOSE AVES',		'SEARA AVES',	'SEARA SUI/ IND',		'SIDROLANDIA AVES',	'TANGARA DA SERRA',		'TRINDADE DO SUL',	'UBERABA AVES', 'SAO GONCALO DOS CAMPOS AVES')"] , setGraficoNNCLogDetalhesAves, setresponseGraficoNNCLogDetalhesAves,75)
+        chamarAPI("NCCLOG", GraficoNNCLogDetalhesPreparados, "GraficoNNCLogDetalhesPreparados", [" where [Regional (Qualidade)] not in ('Logística','Outros','Terceiro') and ([Área Responsável] not in ('RASTREABILIDADE HUB') OR [Área Responsável] IS NULL) AND FORNECEDOR IN ('ANA RECH',	'BOM RETIRO DO SUL SUI/ IND',	'BRASILIA',			'DOURADOS SUI/ IND',	'DUQUE DE CAXIAS SUI/ IND',						'ITAPIRANGA AVES',				'JAGUARIUNA SUI/ IND',	'JUNDIAI SUI/ IND',	'LAGES SUI/ IND',		'MONTENEGRO',				'OSASCO SUI/ IND',			'RIO GRANDE DA SERRA',	'ROCA SALES',		'SALTO VELOSO AVES',					'SEARA AVES',	'SEARA SUI/ IND',	'TRES PASSOS SUI/ IND',        'SAO GONCALO DOS CAMPOS AVES', 'ITAPIRANGA') "] , setGraficoNNCLogDetalhesPreparados, setresponseGraficoNNCLogDetalhesPreparados,76)
+        chamarAPI("NCCLOG", GraficoNNCLogDetalhesSuinos, "GraficoNNCLogDetalhesSuinos", [" where [Regional (Qualidade)] not in ('Logística','Outros','Terceiro') and ([Área Responsável] not in ('RASTREABILIDADE HUB') OR [Área Responsável] IS NULL) AND FORNECEDOR IN ('ANA RECH',	'CARAMBEI',	'DOURADOS SUI/ IND',	'ITAPIRANGA SUI/ IND',	'SAO MIGUEL DO OESTE',	'SEARA AVES',	'SEARA SUI/ IND',	'SEBERI',	'TRES PASSOS SUI/ IND', 'FREDERICO WESTPHALEN')"] , setGraficoNNCLogDetalhesSuinos, setresponseGraficoNNCLogDetalhesSuinos,77)
 
         //NNC MP
         chamarAPI("NCCMP", GraficoNNCAvesPesadas, "GraficoNNCAvesPesadas", [" where [Reg. Qual] like '%Aves%Pe%' "], setGraficoNNCAvesPesadas, setresponseGraficoNNCAvesPesadas, 78)
-        chamarAPI("NCCMPUnidade", GraficoNNCAvesPesadasUnidades, "GraficoNNCAvesPesadasUnidades", [ " where [Reg. Qual] like '%Aves%Pe%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCAvesPesadasUnidades, setresponseGraficoNNCAvesPesadasUnidades, 79)
-        chamarAPI("NCCMPProblema", GraficoNNCAvesPesadasProblemas, "GraficoNNCAvesPesadasProblemas", [ " where [Reg. Qual] like '%Aves%Pe%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCAvesPesadasProblemas, setresponseGraficoNNCAvesPesadasProblemas, 80)
+        chamarAPI("NCCMPUnidade", GraficoNNCAvesPesadasUnidades, "GraficoNNCAvesPesadasUnidades", [ " where [Reg. Qual] like '%Aves%Pe%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesPesadasUnidades, setresponseGraficoNNCAvesPesadasUnidades, 79)
+        chamarAPI("NCCMPProblema", GraficoNNCAvesPesadasProblemas, "GraficoNNCAvesPesadasProblemas", [ " where [Reg. Qual] like '%Aves%Pe%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesPesadasProblemas, setresponseGraficoNNCAvesPesadasProblemas, 80)
 
         chamarAPI("NCCMP", GraficoNNCAvesRS, "GraficoNNCAvesRS", [" where [Reg. Qual] like '%Aves Pesadas RS/SC/SP%' "], setGraficoNNCAvesRS, setresponseGraficoNNCAvesRS, 81)
-        chamarAPI("NCCMPUnidade", GraficoNNCAvesRSUnidades, "GraficoNNCAvesRSUnidades", [" where [Reg. Qual] like '%Aves Pesadas RS/SC/SP%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCAvesRSUnidades, setresponseGraficoNNCAvesRSUnidades, 82)
-        chamarAPI("NCCMPProblema", GraficoNNCAvesRSProblemas, "GraficoNNCAvesRSProblemas", [" where [Reg. Qual] like '%Aves Pesadas RS/SC/SP%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCAvesRSProblemas, setresponseGraficoNNCAvesRSProblemas, 83)
+        chamarAPI("NCCMPUnidade", GraficoNNCAvesRSUnidades, "GraficoNNCAvesRSUnidades", [" where [Reg. Qual] like '%Aves Pesadas RS/SC/SP%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesRSUnidades, setresponseGraficoNNCAvesRSUnidades, 82)
+        chamarAPI("NCCMPProblema", GraficoNNCAvesRSProblemas, "GraficoNNCAvesRSProblemas", [" where [Reg. Qual] like '%Aves Pesadas RS/SC/SP%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesRSProblemas, setresponseGraficoNNCAvesRSProblemas, 83)
 
         chamarAPI("NCCMP", GraficoNNCAvesSP, "GraficoNNCAvesSP", [" where [Reg. Qual] like '%Aves Pesadas SP/CO/NE%' "], setGraficoNNCAvesSP, setresponseGraficoNNCAvesSP, 84)
-        chamarAPI("NCCMPUnidade", GraficoNNCAvesSPUnidades, "GraficoNNCAvesSPUnidades", [" where [Reg. Qual] like '%Aves Pesadas SP/CO/NE%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCAvesSPUnidades, setresponseGraficoNNCAvesSPUnidades, 85)
-        chamarAPI("NCCMPProblema", GraficoNNCAvesSPProblemas, "GraficoNNCAvesSPProblemas", [" where [Reg. Qual] like '%Aves Pesadas SP/CO/NE%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCAvesSPProblemas, setresponseGraficoNNCAvesSPProblemas, 86)
+        chamarAPI("NCCMPUnidade", GraficoNNCAvesSPUnidades, "GraficoNNCAvesSPUnidades", [" where [Reg. Qual] like '%Aves Pesadas SP/CO/NE%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesSPUnidades, setresponseGraficoNNCAvesSPUnidades, 85)
+        chamarAPI("NCCMPProblema", GraficoNNCAvesSPProblemas, "GraficoNNCAvesSPProblemas", [" where [Reg. Qual] like '%Aves Pesadas SP/CO/NE%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesSPProblemas, setresponseGraficoNNCAvesSPProblemas, 86)
 
         chamarAPI("NCCMP", GraficoNNCAvesPR, "GraficoNNCAvesPR", [" where [Reg. Qual] like '%Aves Pesadas PR%' "], setGraficoNNCAvesPR, setresponseGraficoNNCAvesPR, 87)
-        chamarAPI("NCCMPUnidade", GraficoNNCAvesPRUnidades, "GraficoNNCAvesPRUnidades", [" where [Reg. Qual] like '%Aves Pesadas PR%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCAvesPRUnidades, setresponseGraficoNNCAvesPRUnidades, 88)
-        chamarAPI("NCCMPProblema", GraficoNNCAvesPRProblemas, "GraficoNNCAvesPRProblemas", [" where [Reg. Qual] like '%Aves Pesadas PR%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCAvesPRProblemas, setresponseGraficoNNCAvesPRProblemas, 89)
+        chamarAPI("NCCMPUnidade", GraficoNNCAvesPRUnidades, "GraficoNNCAvesPRUnidades", [" where [Reg. Qual] like '%Aves Pesadas PR%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesPRUnidades, setresponseGraficoNNCAvesPRUnidades, 88)
+        chamarAPI("NCCMPProblema", GraficoNNCAvesPRProblemas, "GraficoNNCAvesPRProblemas", [" where [Reg. Qual] like '%Aves Pesadas PR%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesPRProblemas, setresponseGraficoNNCAvesPRProblemas, 89)
 
         chamarAPI("NCCMP", GraficoNNCAvesLeves, "GraficoNNCAvesLeves", [" where [Reg. Qual] like '%Aves Leves%' "], setGraficoNNCAvesLeves, setresponseGraficoNNCAvesLeves, 90)
-        chamarAPI("NCCMPUnidade", GraficoNNCAvesLevesUnidades, "GraficoNNCAvesLevesUnidades", [" where [Reg. Qual] like '%Aves Leves%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCAvesLevesUnidades, setresponseGraficoNNCAvesLevesUnidades, 91)
-        chamarAPI("NCCMPProblema", GraficoNNCAvesLevesProblemas, "GraficoNNCAvesLevesProblemas", [" where [Reg. Qual] like '%Aves Leves%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCAvesLevesProblemas, setresponseGraficoNNCAvesLevesProblemas, 92)
+        chamarAPI("NCCMPUnidade", GraficoNNCAvesLevesUnidades, "GraficoNNCAvesLevesUnidades", [" where [Reg. Qual] like '%Aves Leves%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesLevesUnidades, setresponseGraficoNNCAvesLevesUnidades, 91)
+        chamarAPI("NCCMPProblema", GraficoNNCAvesLevesProblemas, "GraficoNNCAvesLevesProblemas", [" where [Reg. Qual] like '%Aves Leves%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesLevesProblemas, setresponseGraficoNNCAvesLevesProblemas, 92)
 
         chamarAPI("NCCMP", GraficoNNCSuinos, "GraficoNNCSuinos", [" where [Reg. Qual] like '%Suínos%' "], setGraficoNNCSuinos, setresponseGraficoNNCSuinos, 93)
-        chamarAPI("NCCMPUnidade", GraficoNNCSuinosUnidades, "GraficoNNCSuinosUnidades", [" where [Reg. Qual] like '%Suínos%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCSuinosUnidades, setresponseGraficoNNCSuinosUnidades, 94)
-        chamarAPI("NCCMPProblema", GraficoNNCSuinosProblemas, "GraficoNNCSuinosProblemas", [" where [Reg. Qual] like '%Suínos%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCSuinosProblemas, setresponseGraficoNNCSuinosProblemas, 95)
+        chamarAPI("NCCMPUnidade", GraficoNNCSuinosUnidades, "GraficoNNCSuinosUnidades", [" where [Reg. Qual] like '%Suínos%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCSuinosUnidades, setresponseGraficoNNCSuinosUnidades, 94)
+        chamarAPI("NCCMPProblema", GraficoNNCSuinosProblemas, "GraficoNNCSuinosProblemas", [" where [Reg. Qual] like '%Suínos%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCSuinosProblemas, setresponseGraficoNNCSuinosProblemas, 95)
 
         chamarAPI("NCCMP", GraficoNNCPreparados, "GraficoNNCPreparados", [" where [Reg. Qual] like '%Preparados%' "], setGraficoNNCPreparados, setresponseGraficoNNCPreparados, 96)
-        chamarAPI("NCCMPUnidade", GraficoNNCPreparadosUnidades, "GraficoNNCPreparadosUnidades", [" where [Reg. Qual] like '%Preparados%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCPreparadosUnidades, setresponseGraficoNNCPreparadosUnidades, 97)
-        chamarAPI("NCCMPProblema", GraficoNNCPreparadosProblemas, "GraficoNNCPreparadosProblemas", [" where [Reg. Qual] like '%Preparados%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoNNCPreparadosProblemas, setresponseGraficoNNCPreparadosProblemas, 98)
+        chamarAPI("NCCMPUnidade", GraficoNNCPreparadosUnidades, "GraficoNNCPreparadosUnidades", [" where [Reg. Qual] like '%Preparados%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCPreparadosUnidades, setresponseGraficoNNCPreparadosUnidades, 97)
+        chamarAPI("NCCMPProblema", GraficoNNCPreparadosProblemas, "GraficoNNCPreparadosProblemas", [" where [Reg. Qual] like '%Preparados%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCPreparadosProblemas, setresponseGraficoNNCPreparadosProblemas, 98)
         
-        chamarAPI("NCCMP", GraficoNNCCETotal, "GraficoNNCCETotal", [" WHERE [Grupo Problema] = 'Corpo Estranho' "], setGraficoNNCCETotal, setresponseGraficoNNCCETotal, 99)
-        chamarAPI("NCCMP", GraficoNNCCEInerente, "GraficoNNCCEInerente", [" WHERE [Grupo Problema] = 'Corpo Estranho' AND [Tipo CE] = 'Inerente' "], setGraficoNNCCEInerente, setresponseGraficoNNCCEInerente, 100)
-        chamarAPI("NCCMP", GraficoNNCCENaoInerente, "GraficoNNCCENaoInerente", [" WHERE [Grupo Problema] = 'Corpo Estranho' AND [Tipo CE] = 'Não Inerente' "], setGraficoNNCCENaoInerente, setresponseGraficoNNCCENaoInerente, 101)
-        chamarAPI("NCCMP", GraficoNNCCEOssos, "GraficoNNCCEOssos", [" WHERE [Grupo Problema] = 'Corpo Estranho' AND [Tipo Problema] = 'Ossos' "], setGraficoNNCCEOssos, setresponseGraficoNNCCEOssos, 102)
-        chamarAPI("NCCMP", GraficoNNCCEPlastico, "GraficoNNCCEPlastico", [" WHERE [Grupo Problema] = 'Corpo Estranho' AND [Tipo Problema] like '%Plás%' "], setGraficoNNCCEPlastico, setresponseGraficoNNCCEPlastico, 103)
-        chamarAPI("NCCMP", GraficoNNCCEMetal, "GraficoNNCCEMetal", [" WHERE [Grupo Problema] = 'Corpo Estranho' AND [Tipo Problema] like '%Metal%' "], setGraficoNNCCEMetal, setresponseGraficoNNCCEMetal, 104)
+        chamarAPI("NCCMP", GraficoNNCCETotal, "GraficoNNCCETotal", [" WHERE [Grupo Problema] = 'Corpo Estranho' and [Reg. Qual] NOT IN ('Itajaí','Outros') and [Entra para a Meta] = 'Sim' "], setGraficoNNCCETotal, setresponseGraficoNNCCETotal, 99)
+        chamarAPI("NCCMP", GraficoNNCCEInerente, "GraficoNNCCEInerente", ["  WHERE [Grupo Problema] = 'Corpo Estranho' and [Reg. Qual] NOT IN ('Itajaí','Outros') and [Entra para a Meta] = 'Sim' AND [Tipo CE] = 'Inerente' "], setGraficoNNCCEInerente, setresponseGraficoNNCCEInerente, 100)
+        chamarAPI("NCCMP", GraficoNNCCENaoInerente, "GraficoNNCCENaoInerente", ["  WHERE [Grupo Problema] = 'Corpo Estranho' and [Reg. Qual] NOT IN ('Itajaí','Outros') and [Entra para a Meta] = 'Sim' AND [Tipo CE] = 'Não Inerente' "], setGraficoNNCCENaoInerente, setresponseGraficoNNCCENaoInerente, 101)
+        chamarAPI("NCCMP", GraficoNNCCEOssos, "GraficoNNCCEOssos", ["  WHERE [Grupo Problema] = 'Corpo Estranho' and [Reg. Qual] NOT IN ('Itajaí','Outros') and [Entra para a Meta] = 'Sim' AND [Tipo Problema] = 'Ossos' "], setGraficoNNCCEOssos, setresponseGraficoNNCCEOssos, 102)
+        chamarAPI("NCCMP", GraficoNNCCEPlastico, "GraficoNNCCEPlastico", ["  WHERE [Grupo Problema] = 'Corpo Estranho' and [Reg. Qual] NOT IN ('Itajaí','Outros') and [Entra para a Meta] = 'Sim' AND [Tipo Problema] in ('Borracha','Luva Latex','Luva Nitrilica','Plástico duro','Plástico mole - Resíduo') "], setGraficoNNCCEPlastico, setresponseGraficoNNCCEPlastico, 103)
+        chamarAPI("NCCMP", GraficoNNCCEMetal, "GraficoNNCCEMetal", ["  WHERE [Grupo Problema] = 'Corpo Estranho' and [Reg. Qual] NOT IN ('Itajaí','Outros') and [Entra para a Meta] = 'Sim' and ( [Grupo Problema.] = 'Corpo Estranho_ Metalico' or [Tipo Problema] in ('Luva anti corte') ) "], setGraficoNNCCEMetal, setresponseGraficoNNCCEMetal, 104)
         
             
         /////////////////////
@@ -1121,6 +1128,18 @@ function Home() {
                 });
                 break
 
+                case 'RACIndicadoresSemFiltro2':
+
+                    api.getSearaBaseRacIndicadoresSemFiltro2(parametros).then((response) => {
+                        buscarDados(response, funcao, objeto, funcaoRetorno)
+                        numeroChamados[numeroChamado] = true;
+                        callbackChamarAPI(apiNome)
+                        return response
+                    }).catch(err => {
+                        console.log(err);
+                    });
+                    break
+
             case 'RACIndicadoresSemFiltro':
 
                 api.getSearaBaseRacIndicadores_(parametros).then((response) => {
@@ -1218,53 +1237,53 @@ function Home() {
             console.log("aplicar")
             setEstaRodandoAplicar(true);
             
-            GerarGraficoHistorico(GraficoCETotal, setresponseGraficoCETotal, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCE, setresponseGraficoNNCMPTotalCE, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoRACTotalCE, setresponseGraficoRACTotalCE, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnterior(GraficoCETotal, setresponseGraficoCETotal, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnteriorSemMeta(GraficoNNCMPTotalCE, setresponseGraficoNNCMPTotalCE, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnteriorSemMeta(GraficoRACTotalCE, setresponseGraficoRACTotalCE, backgroundGradient, backgroundGradientCinza)
             GerarGraficoHistorico(GraficoRAC, setresponseGraficoRAC, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoNCCMP, setresponseGraficoNCCMP, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnterior(GraficoNCCMP, setresponseGraficoNCCMP, backgroundGradient, backgroundGradientCinza)
 
-            GerarGraficoHistorico(GraficoCETotalAvesPesadas, setresponseGraficoCETotalAvesPesadas, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEAvesPesadas, setresponseGraficoNNCMPTotalCEAvesPesadas, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoRACTotalCEAvesPesadas, setresponseGraficoRACTotalCEAvesPesadas, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnterior(GraficoCETotalAvesPesadas, setresponseGraficoCETotalAvesPesadas, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnteriorSemMeta(GraficoNNCMPTotalCEAvesPesadas, setresponseGraficoNNCMPTotalCEAvesPesadas, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnteriorSemMeta(GraficoRACTotalCEAvesPesadas, setresponseGraficoRACTotalCEAvesPesadas, backgroundGradient, backgroundGradientCinza)
             GerarGraficoHistorico(GraficoRACAvesPesadas, setresponseGraficoRACAvesPesadas, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoNCCMPAvesPesadas, setresponseGraficoNCCMPAvesPesadas, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnterior(GraficoNCCMPAvesPesadas, setresponseGraficoNCCMPAvesPesadas, backgroundGradient, backgroundGradientCinza)
 
-            GerarGraficoHistorico(GraficoCETotalAvesPesadasPR, setresponseGraficoCETotalAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEAvesPesadasPR, setresponseGraficoNNCMPTotalCEAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoRACTotalCEAvesPesadasPR, setresponseGraficoRACTotalCEAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnterior(GraficoCETotalAvesPesadasPR, setresponseGraficoCETotalAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnteriorSemMeta(GraficoNNCMPTotalCEAvesPesadasPR, setresponseGraficoNNCMPTotalCEAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnteriorSemMeta(GraficoRACTotalCEAvesPesadasPR, setresponseGraficoRACTotalCEAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
             GerarGraficoHistorico(GraficoRACAvesPesadasPR, setresponseGraficoRACAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoNCCMPAvesPesadasPR, setresponseGraficoNCCMPAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnterior(GraficoNCCMPAvesPesadasPR, setresponseGraficoNCCMPAvesPesadasPR, backgroundGradient, backgroundGradientCinza)
 
-            GerarGraficoHistorico(GraficoCETotalAvesPesadasSP, setresponseGraficoCETotalAvesPesadasSP, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEAvesPesadasSP, setresponseGraficoNNCMPTotalCEAvesPesadasSP, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoRACTotalCEAvesPesadasSP, setresponseGraficoRACTotalCEAvesPesadasSP, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnterior(GraficoCETotalAvesPesadasSP, setresponseGraficoCETotalAvesPesadasSP, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnteriorSemMeta(GraficoNNCMPTotalCEAvesPesadasSP, setresponseGraficoNNCMPTotalCEAvesPesadasSP, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnteriorSemMeta(GraficoRACTotalCEAvesPesadasSP, setresponseGraficoRACTotalCEAvesPesadasSP, backgroundGradient, backgroundGradientCinza)
             GerarGraficoHistorico(GraficoRACAvesPesadasSP, setresponseGraficoRACAvesPesadasSP, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoNCCMPAvesPesadasSP, setresponseGraficoNCCMPAvesPesadasSP, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnterior(GraficoNCCMPAvesPesadasSP, setresponseGraficoNCCMPAvesPesadasSP, backgroundGradient, backgroundGradientCinza)
 
-            GerarGraficoHistorico(GraficoCETotalAvesPesadasRS, setresponseGraficoCETotalAvesPesadasRS, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEAvesPesadasRS, setresponseGraficoNNCMPTotalCEAvesPesadasRS, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoRACTotalCEAvesPesadasRS, setresponseGraficoRACTotalCEAvesPesadasRS, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnterior(GraficoCETotalAvesPesadasRS, setresponseGraficoCETotalAvesPesadasRS, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnteriorSemMeta(GraficoNNCMPTotalCEAvesPesadasRS, setresponseGraficoNNCMPTotalCEAvesPesadasRS, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnteriorSemMeta(GraficoRACTotalCEAvesPesadasRS, setresponseGraficoRACTotalCEAvesPesadasRS, backgroundGradient, backgroundGradientCinza)
             GerarGraficoHistorico(GraficoRACAvesPesadasRS, setresponseGraficoRACAvesPesadasRS, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoNCCMPAvesPesadasRS, setresponseGraficoNCCMPAvesPesadasRS, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnterior(GraficoNCCMPAvesPesadasRS, setresponseGraficoNCCMPAvesPesadasRS, backgroundGradient, backgroundGradientCinza)
 
-            GerarGraficoHistorico(GraficoCETotalAvesLeves, setresponseGraficoCETotalAvesLeves, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEAvesLeves, setresponseGraficoNNCMPTotalCEAvesLeves, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoRACTotalCEAvesLeves, setresponseGraficoRACTotalCEAvesLeves, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnterior(GraficoCETotalAvesLeves, setresponseGraficoCETotalAvesLeves, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnteriorSemMeta(GraficoNNCMPTotalCEAvesLeves, setresponseGraficoNNCMPTotalCEAvesLeves, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnteriorSemMeta(GraficoRACTotalCEAvesLeves, setresponseGraficoRACTotalCEAvesLeves, backgroundGradient, backgroundGradientCinza)
             GerarGraficoHistorico(GraficoRACAvesLeves, setresponseGraficoRACAvesLeves, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoNCCMPAvesLeves, setresponseGraficoNCCMPAvesLeves, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnterior(GraficoNCCMPAvesLeves, setresponseGraficoNCCMPAvesLeves, backgroundGradient, backgroundGradientCinza)
 
-            GerarGraficoHistorico(GraficoCETotalSuinos, setresponseGraficoCETotalSuinos, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoNNCMPTotalCESuinos, setresponseGraficoNNCMPTotalCESuinos, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoRACTotalCESuinos, setresponseGraficoRACTotalCESuinos, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnterior(GraficoCETotalSuinos, setresponseGraficoCETotalSuinos, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnteriorSemMeta(GraficoNNCMPTotalCESuinos, setresponseGraficoNNCMPTotalCESuinos, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnteriorSemMeta(GraficoRACTotalCESuinos, setresponseGraficoRACTotalCESuinos, backgroundGradient, backgroundGradientCinza)
             GerarGraficoHistorico(GraficoRACSuinos, setresponseGraficoRACSuinos, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoNCCMPSuinos, setresponseGraficoNCCMPSuinos, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnterior(GraficoNCCMPSuinos, setresponseGraficoNCCMPSuinos, backgroundGradient, backgroundGradientCinza)
 
-            GerarGraficoHistorico(GraficoCETotalPreparados, setresponseGraficoCETotalPreparados, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoNNCMPTotalCEPreparados, setresponseGraficoNNCMPTotalCEPreparados, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistoricoSemMeta(GraficoRACTotalCEPreparados, setresponseGraficoRACTotalCEPreparados, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnterior(GraficoCETotalPreparados, setresponseGraficoCETotalPreparados, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnteriorSemMeta(GraficoNNCMPTotalCEPreparados, setresponseGraficoNNCMPTotalCEPreparados, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnteriorSemMeta(GraficoRACTotalCEPreparados, setresponseGraficoRACTotalCEPreparados, backgroundGradient, backgroundGradientCinza)
             GerarGraficoHistorico(GraficoRACPreparados, setresponseGraficoRACPreparados, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoNCCMPPreparados, setresponseGraficoNCCMPPreparados, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnterior(GraficoNCCMPPreparados, setresponseGraficoNCCMPPreparados, backgroundGradient, backgroundGradientCinza)
 
             GerarGraficoBarras(GraficoRACUnidadesAvesPesadas, setresponseGraficoRACUnidadesAvesPesadas, backgroundGradientCinza)
             GerarGraficoBarras(GraficoRACProblemasAvesPesadas, setresponseGraficoRACProblemasAvesPesadas, backgroundGradientCinza)
@@ -1291,7 +1310,7 @@ function Home() {
             GerarGraficoHistoricoSemMeta(GraficoRACME, setresponseGraficoRACME, backgroundGradient, backgroundGradientCinza)
 
             //FFO
-            GerarGraficoHistorico(GraficoRACDetalhesFFO, setresponseGraficoRACDetalhesFFO, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACDetalhesFFO, setresponseGraficoRACDetalhesFFO, backgroundGradient, backgroundGradientCinza)
             
             //ATENDIMENTO COMERCIAL
             GerarGraficoHistorico(GraficoRACDetalhesAC, setresponseGraficoRACDetalhesAC, backgroundGradient, backgroundGradientCinza)
@@ -1312,48 +1331,48 @@ function Home() {
             GerarGraficoHistorico(GraficoRACDetalhesTerceiro, setresponseGraficoRACDetalhesTerceiro, backgroundGradient, backgroundGradientCinza)
 
             //Massatake
-            GerarGraficoHistorico(GraficoRACDetalhesMassatake, setresponseGraficoRACDetalhesMassatake, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACDetalhesMassatake, setresponseGraficoRACDetalhesMassatake, backgroundGradient, backgroundGradientCinza)
             
             //PDV
             GerarGraficoHistorico(GraficoRACDetalhesPDV, setresponseGraficoRACDetalhesPDV, backgroundGradient, backgroundGradientCinza)
             //Abertura PDV
-            GerarGraficoHistorico(GraficoRACDetalhesAberturaPDV, setresponseGraficoRACDetalhesAberturaPDV, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoBarras(GraficoRACDetalhesAberturaPDV, setresponseGraficoRACDetalhesAberturaPDV, backgroundGradientCinza, backgroundGradientCinza)
  
             //RAC Crítica
-            GerarGraficoHistorico(GraficoRACDetalhesCritica, setresponseGraficoRACDetalhesCritica, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACDetalhesCritica, setresponseGraficoRACDetalhesCritica, backgroundGradient, backgroundGradientCinza)
 
             //RAC Linhas Especiais (Seara Nature, Gourmet, Incrível)
             GerarGraficoHistorico(GraficoRACDetalhesEspeciais, setresponseGraficoRACDetalhesEspeciais, backgroundGradient, backgroundGradientCinza)
 
             //RAC Corpo Estanho - [Totais]
-            GerarGraficoHistorico(GraficoRACDetalhesCE, setresponseGraficoRACDetalhesCE, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACDetalhesCE, setresponseGraficoRACDetalhesCE, backgroundGradient, backgroundGradientCinza)
             
             //RAC Corpo Estanho - [Inerente]
-            GerarGraficoHistorico(GraficoRACDetalhesCEInerente, setresponseGraficoRACDetalhesCEInerente, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACDetalhesCEInerente, setresponseGraficoRACDetalhesCEInerente, backgroundGradient, backgroundGradientCinza)
 
             //RAC Corpo Estanho - [Não Inerente]
-            GerarGraficoHistorico(GraficoRACDetalhesCENaoInerente, setresponseGraficoRACDetalhesCENaoInerente, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACDetalhesCENaoInerente, setresponseGraficoRACDetalhesCENaoInerente, backgroundGradient, backgroundGradientCinza)
 
             //RAC Corpo Estanho - [Plástico]
-            GerarGraficoHistorico(GraficoRACDetalhesCEPlastico, setresponseGraficoRACDetalhesCEPlastico, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACDetalhesCEPlastico, setresponseGraficoRACDetalhesCEPlastico, backgroundGradient, backgroundGradientCinza)
 
             //RAC Inseto
-            GerarGraficoHistorico(GraficoRACDetalhesInseto, setresponseGraficoRACDetalhesInseto, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACDetalhesInseto, setresponseGraficoRACDetalhesInseto, backgroundGradient, backgroundGradientCinza)
 
             //RAC Cabelo
-            GerarGraficoHistorico(GraficoRACDetalhesCabelo, setresponseGraficoRACDetalhesCabelo, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACDetalhesCabelo, setresponseGraficoRACDetalhesCabelo, backgroundGradient, backgroundGradientCinza)
 
             //RAC Plastico
-            GerarGraficoHistorico(GraficoRACDetalhesPlastico, setresponseGraficoRACDetalhesPlastico, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACDetalhesPlastico, setresponseGraficoRACDetalhesPlastico, backgroundGradient, backgroundGradientCinza)
 
             //RAC Metal
-            GerarGraficoHistorico(GraficoRACDetalhesMetal, setresponseGraficoRACDetalhesMetal, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACDetalhesMetal, setresponseGraficoRACDetalhesMetal, backgroundGradient, backgroundGradientCinza)
             
             //RAC Intoxicação
-            GerarGraficoHistorico(GraficoRACDetalhesIntoxicacao, setresponseGraficoRACDetalhesIntoxicacao, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACDetalhesIntoxicacao, setresponseGraficoRACDetalhesIntoxicacao, backgroundGradient, backgroundGradientCinza)
 
             //RAC Larva
-            GerarGraficoHistorico(GraficoRACDetalhesLarva, setresponseGraficoRACDetalhesLarva, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoSemMeta(GraficoRACDetalhesLarva, setresponseGraficoRACDetalhesLarva, backgroundGradient, backgroundGradientCinza)
 
             // //NNC Log
             GerarGraficoHistorico(GraficoNNCLogDetalhesTotal, setresponseGraficoNNCLogDetalhesTotal, backgroundGradient, backgroundGradientCinza)
@@ -1362,40 +1381,40 @@ function Home() {
             GerarGraficoHistorico(GraficoNNCLogDetalhesSuinos, setresponseGraficoNNCLogDetalhesSuinos, backgroundGradient, backgroundGradientCinza)
 
             // //NNC
-            GerarGraficoHistorico(GraficoNNCAvesPesadas, setresponseGraficoNNCAvesPesadas, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnterior(GraficoNNCAvesPesadas, setresponseGraficoNNCAvesPesadas, backgroundGradient, backgroundGradientCinza)
             GerarGraficoBarras(GraficoNNCAvesPesadasUnidades, setresponseGraficoNNCAvesPesadasUnidades, backgroundGradientCinza)
             GerarGraficoBarras(GraficoNNCAvesPesadasProblemas, setresponseGraficoNNCAvesPesadasProblemas, backgroundGradientCinza)
 
-            GerarGraficoHistorico(GraficoNNCAvesRS, setresponseGraficoNNCAvesRS, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnterior(GraficoNNCAvesRS, setresponseGraficoNNCAvesRS, backgroundGradient, backgroundGradientCinza)
             GerarGraficoBarras(GraficoNNCAvesRSUnidades, setresponseGraficoNNCAvesRSUnidades, backgroundGradientCinza)
             GerarGraficoBarras(GraficoNNCAvesRSProblemas, setresponseGraficoNNCAvesRSProblemas, backgroundGradientCinza)
 
-            GerarGraficoHistorico(GraficoNNCAvesSP, setresponseGraficoNNCAvesSP, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnterior(GraficoNNCAvesSP, setresponseGraficoNNCAvesSP, backgroundGradient, backgroundGradientCinza)
             GerarGraficoBarras(GraficoNNCAvesSPUnidades, setresponseGraficoNNCAvesSPUnidades, backgroundGradientCinza)
             GerarGraficoBarras(GraficoNNCAvesSPProblemas, setresponseGraficoNNCAvesSPProblemas, backgroundGradientCinza)
 
-            GerarGraficoHistorico(GraficoNNCAvesPR, setresponseGraficoNNCAvesPR, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnterior(GraficoNNCAvesPR, setresponseGraficoNNCAvesPR, backgroundGradient, backgroundGradientCinza)
             GerarGraficoBarras(GraficoNNCAvesPRUnidades, setresponseGraficoNNCAvesPRUnidades, backgroundGradientCinza)
             GerarGraficoBarras(GraficoNNCAvesPRProblemas, setresponseGraficoNNCAvesPRProblemas, backgroundGradientCinza)
 
-            GerarGraficoHistorico(GraficoNNCAvesLeves, setresponseGraficoNNCAvesLeves, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnterior(GraficoNNCAvesLeves, setresponseGraficoNNCAvesLeves, backgroundGradient, backgroundGradientCinza)
             GerarGraficoBarras(GraficoNNCAvesLevesUnidades, setresponseGraficoNNCAvesLevesUnidades, backgroundGradientCinza)
             GerarGraficoBarras(GraficoNNCAvesLevesProblemas, setresponseGraficoNNCAvesLevesProblemas, backgroundGradientCinza)
 
-            GerarGraficoHistorico(GraficoNNCSuinos, setresponseGraficoNNCSuinos, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnterior(GraficoNNCSuinos, setresponseGraficoNNCSuinos, backgroundGradient, backgroundGradientCinza)
             GerarGraficoBarras(GraficoNNCSuinosUnidades, setresponseGraficoNNCSuinosUnidades, backgroundGradientCinza)
             GerarGraficoBarras(GraficoNNCSuinosProblemas, setresponseGraficoNNCSuinosProblemas, backgroundGradientCinza)
 
-            GerarGraficoHistorico(GraficoNNCPreparados, setresponseGraficoNNCPreparados, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnterior(GraficoNNCPreparados, setresponseGraficoNNCPreparados, backgroundGradient, backgroundGradientCinza)
             GerarGraficoBarras(GraficoNNCPreparadosUnidades, setresponseGraficoNNCPreparadosUnidades, backgroundGradientCinza)
             GerarGraficoBarras(GraficoNNCPreparadosProblemas, setresponseGraficoNNCPreparadosProblemas, backgroundGradientCinza)
 
-            GerarGraficoHistorico(GraficoNNCCETotal, setresponseGraficoNNCCETotal, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoNNCCEInerente, setresponseGraficoNNCCEInerente, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoNNCCENaoInerente, setresponseGraficoNNCCENaoInerente, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoNNCCEOssos, setresponseGraficoNNCCEOssos, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoNNCCEPlastico, setresponseGraficoNNCCEPlastico, backgroundGradient, backgroundGradientCinza)
-            GerarGraficoHistorico(GraficoNNCCEMetal, setresponseGraficoNNCCEMetal, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnteriorSemMeta(GraficoNNCCETotal, setresponseGraficoNNCCETotal, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnteriorSemMeta(GraficoNNCCEInerente, setresponseGraficoNNCCEInerente, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnteriorSemMeta(GraficoNNCCENaoInerente, setresponseGraficoNNCCENaoInerente, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnteriorSemMeta(GraficoNNCCEOssos, setresponseGraficoNNCCEOssos, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnteriorSemMeta(GraficoNNCCEPlastico, setresponseGraficoNNCCEPlastico, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistoricoAnoAnteriorSemMeta(GraficoNNCCEMetal, setresponseGraficoNNCCEMetal, backgroundGradient, backgroundGradientCinza)
 
 
             
@@ -1455,7 +1474,7 @@ function Home() {
 
         let series = []
         let maiorValorSerie = 0
-        let menorValorSerie = 130000
+        let menorValorSerie = 200000
 
         yaxis.forEach((y, index) => {
             let dataset = xaxis.map(xx => {
@@ -1649,6 +1668,511 @@ function Home() {
         setIsUpdatingData(false)
     }
 
+    const GerarGraficoHistoricoAnoAnterior = (objeto, funcao, gradient, gradient2) => {
+
+        if (!objeto) return
+
+        setIsUpdatingData(true)
+        let json = objeto;
+
+
+
+        let indicators = Object.keys(json[0]).map(key => key);
+
+        let groupBy = function groupBy(list, keyGetter) {
+            const map = new Map();
+            list.forEach((item) => {
+                const key = keyGetter(item);
+                const collection = map.get(key);
+                if (!collection) {
+                    map.set(key, [item]);
+                } else {
+                    collection.push(item);
+                }
+            });
+            return map;
+        }
+
+        let xaxis = Array.from(groupBy(json, x => x["Periodo"]), ([name, value]) => ({ name, value }));
+        //debugger
+        xaxis.splice(0, 1) //tira 2019
+        let yaxis = [{ name: 'Evolutivo 2020' }, { name: 'Evolutivo 2021' }, { name: 'Evolutivo Meta' }, { name: 'Meta' }, { name: '2020' }, { name: '2021' }, { name: 'forcast' }, { name: 'Média Diária' }];
+
+        xaxis.forEach(x => {
+            if (x.name == "2019") {
+                x['yaxis'] = [{ name: "2019", value: x.value[0].Valor == "" ? null : x.value[0].Valor }]
+            } else if (x.name == "2020") {
+                x['yaxis'] = [{ name: "2020", value: x.value[0].Valor == "" ? null : x.value[0].Valor }]
+            } else if (x.name == "Meta") {
+                x['yaxis'] = [{ name: "Meta", value: x.value[0].Valor == "" ? null : x.value[0].Valor }]
+            } else if (x.name == "2021") {
+                x['yaxis'] = [{ name: "2021", value: x.value[0].Valor == "" ? null : x.value[0].Valor }]
+            } else {
+                x['yaxis'] = [
+                    { name: "Evolutivo 2020", value: x.value[0].a2020 },
+                    { name: "Evolutivo Meta", value: x.value[0].aMeta },
+                    { name: "Evolutivo 2021", value: x.value[0].a2021 },
+                    { name: "forcast", value: x.value[0].forcast.replace(",", ".") },
+                    { name: "Média Diária", value: x.value[0].mediaDiaria.replace(",", ".") },
+                ]
+            }
+        })
+
+        let series = []
+        let maiorValorSerie = 0
+        let menorValorSerie = 200000
+
+        yaxis.forEach((y, index) => {
+            let dataset = xaxis.map(xx => {
+                let yaxysvalue = xx.yaxis.filter(r => r.name === y.name);
+                if (yaxysvalue.length)
+                    return yaxysvalue[0].value
+
+                return null
+            })
+
+            let tipo = 'line'
+            let cor = '#bfbfbf'
+            let corLabel = '#bfbfbf'
+            let yAx = "B"
+            let varborderDash = [0, 0]
+            let fontWeight = 'bold'
+            let lineSize = 2
+            let fontSize = "12"
+
+            switch (y.name) {
+
+                case "2019":
+                    tipo = "bar"
+                    cor = gradient2 ?? "#bfbfbf"
+                    corLabel = "#bfbfbf"
+                    yAx = "A"
+                    break
+                case "2020":
+                    tipo = "bar"
+                    cor = gradient2 ?? "#bfbfbf"
+                    corLabel = "#bfbfbf"
+                    yAx = "A"
+                    break
+                case "Meta":
+                    tipo = "bar"
+                    cor = gradient ?? "rgb(204,0,0)" //"rgb(245,156,0)"
+                    corLabel = "rgb(245,156,0)"
+                    yAx = "A"
+                    break
+                case "2021":
+                    tipo = "bar"
+                    cor = "#cccccc"
+                    corLabel = "#cccccc"
+                    yAx = "A"
+                    break
+                case "Evolutivo 2020":
+                    tipo = "line"
+                    cor = "rgb(166, 166, 166)"
+                    corLabel = "rgb(166, 166, 166)"
+                    varborderDash = [10, 5]
+                    yAx = "B"
+                    break
+                case "Evolutivo Meta":
+                    tipo = "line"
+                    cor = "rgb(245,156,0)"
+                    corLabel = "rgb(245,156,0)"
+                    yAx = "B"
+                    break
+                case "Evolutivo 2021":
+                    tipo = "line"
+                    cor = "rgb(89,89,89)"
+                    corLabel = "rgb(89,89,89)"
+                    yAx = "B"
+                    break
+                case "forcast":
+                    tipo = "line"
+                    cor = "#000000" //"rgb(245,156,0)"
+                    corLabel = "#000000"
+                    yAx = "B"
+
+                    break
+                case "Média Diária":
+                    tipo = "bar"
+                    cor = "#000000" //"rgb(204,0,0)"
+                    corLabel = "#000000"
+                    yAx = "B"
+                    fontSize = "14"
+
+                    break
+
+                default:
+                    break
+
+
+            }
+
+            for (var i = 0; i < dataset.length; i++) {
+                if (dataset[i] == "") dataset[i] = null
+                if (parseFloat(dataset[i]) > maiorValorSerie && yAx == "B") maiorValorSerie = parseFloat(dataset[i])
+                if (parseFloat(dataset[i]) < menorValorSerie && yAx == "B") menorValorSerie = parseFloat(dataset[i])
+            }
+
+
+            let serie = {
+                type: tipo,
+                yAxisID: yAx,
+                label: y.name,
+                backgroundColor: cor,
+                fill: false,
+                borderColor: cor,
+                borderWidth: lineSize,
+                pointRadius: 5,
+                pointBackgroundColor: "transparent",
+                pointBorderColor: "transparent",
+                borderDash: varborderDash,
+                data: dataset,
+                datalabels: {
+
+                    align: "top",
+                    anchor: "end",
+                    offset: 10,
+                    padding: -2,
+                    color: corLabel,
+                    //clip: true,
+                    font: {
+                        size: fontSize,
+                        weight: fontWeight
+                    },
+
+                }
+
+            }
+
+            if (y.name == "2019") {
+                console.log("Não entra neste relatório por ser 2019")
+            } else {
+                series.push(serie)
+            }
+            //series.push(serie)
+        })
+
+        //
+        maiorValorSerie = parseFloat(maiorValorSerie)
+        menorValorSerie = parseFloat(menorValorSerie)
+        let maxYB = maiorValorSerie * (menorValorSerie / maiorValorSerie + 1.2)
+
+        let tipo = 'line'
+        let cor = 'transparent'
+        let corLabel = 'transparent'
+        let yAx = "B"
+        let varborderDash = [0, 0]
+
+        let serieEixo = {
+            type: tipo,
+            yAxisID: yAx,
+            label: '',
+            backgroundColor: cor,
+            fill: false,
+            borderColor: cor,
+            borderWidth: 1,
+            pointRadius: 5,
+            pointBackgroundColor: "transparent",
+            pointBorderColor: "transparent",
+            borderDash: varborderDash,
+            data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, maxYB],
+            datalabels: {
+
+                align: "top",
+                anchor: "end",
+                offset: 10,
+                padding: -2,
+                color: corLabel,
+                //clip: true,
+                font: {
+                    size: "12",
+                },
+
+            }
+
+        }
+
+        series.push(serieEixo)
+
+        let seriesAdd = []
+
+        series.filter(s => s.label != null).forEach(element => {
+            seriesAdd.push(element)
+        });
+
+
+        //setoptionRelativaresponseGraficoCETotal = f_optionRelativa (2000, 500);
+
+        const dashboardData = {
+            labels: xaxis.map(r => r.name),
+            datasets: seriesAdd,
+            indicators
+
+        };
+
+
+
+
+        if (typeof (funcao) == "function") {
+            funcao(dashboardData);
+        }
+
+        setIsUpdatingData(false)
+    }
+
+    const GerarGraficoHistoricoAnoAnteriorSemMeta = (objeto, funcao, gradient, gradient2) => {
+
+        if (!objeto) return
+
+        setIsUpdatingData(true)
+        let json = objeto;
+
+
+
+        let indicators = Object.keys(json[0]).map(key => key);
+
+        let groupBy = function groupBy(list, keyGetter) {
+            const map = new Map();
+            list.forEach((item) => {
+                const key = keyGetter(item);
+                const collection = map.get(key);
+                if (!collection) {
+                    map.set(key, [item]);
+                } else {
+                    collection.push(item);
+                }
+            });
+            return map;
+        }
+
+        let xaxis = Array.from(groupBy(json, x => x["Periodo"]), ([name, value]) => ({ name, value }));
+        //debugger
+        xaxis.splice(0, 1) //tira 2019
+        xaxis.splice(1, 1) //tira Meta
+        let yaxis = [{ name: 'Evolutivo 2020' }, { name: 'Evolutivo 2021' }, { name: 'Evolutivo Meta' }, { name: 'Meta' }, { name: '2020' }, { name: '2021' }, { name: 'forcast' }, { name: 'Média Diária' }];
+
+        xaxis.forEach(x => {
+            if (x.name == "2019") {
+                x['yaxis'] = [{ name: "2019", value: x.value[0].Valor == "" ? null : x.value[0].Valor }]
+            } else if (x.name == "2020") {
+                x['yaxis'] = [{ name: "2020", value: x.value[0].Valor == "" ? null : x.value[0].Valor }]
+            } else if (x.name == "Meta") {
+                x['yaxis'] = [{ name: "Meta", value: x.value[0].Valor == "" ? null : x.value[0].Valor }]
+            } else if (x.name == "2021") {
+                x['yaxis'] = [{ name: "2021", value: x.value[0].Valor == "" ? null : x.value[0].Valor }]
+            } else {
+                x['yaxis'] = [
+                    { name: "Evolutivo 2020", value: x.value[0].a2020 },
+                    { name: "Evolutivo Meta", value: x.value[0].aMeta },
+                    { name: "Evolutivo 2021", value: x.value[0].a2021 },
+                    { name: "forcast", value: x.value[0].forcast.replace(",", ".") },
+                    { name: "Média Diária", value: x.value[0].mediaDiaria.replace(",", ".") },
+                ]
+            }
+        })
+
+        let series = []
+        let maiorValorSerie = 0
+        let menorValorSerie = 200000
+
+        yaxis.forEach((y, index) => {
+            let dataset = xaxis.map(xx => {
+                let yaxysvalue = xx.yaxis.filter(r => r.name === y.name);
+                if (yaxysvalue.length)
+                    return yaxysvalue[0].value
+
+                return null
+            })
+
+            let tipo = 'line'
+            let cor = '#bfbfbf'
+            let corLabel = '#bfbfbf'
+            let yAx = "B"
+            let varborderDash = [0, 0]
+            let fontWeight = 'bold'
+            let lineSize = 2
+            let fontSize = "12"
+
+            switch (y.name) {
+
+                case "2019":
+                    tipo = "bar"
+                    cor = gradient2 ?? "#bfbfbf"
+                    corLabel = "#bfbfbf"
+                    yAx = "A"
+                    break
+                case "2020":
+                    tipo = "bar"
+                    cor = gradient2 ?? "#bfbfbf"
+                    corLabel = "#bfbfbf"
+                    yAx = "A"
+                    break
+                case "Meta":
+                    tipo = "bar"
+                    cor = gradient ?? "rgb(204,0,0)" //"rgb(245,156,0)"
+                    corLabel = "rgb(245,156,0)"
+                    yAx = "A"
+                    break
+                case "2021":
+                    tipo = "bar"
+                    cor = "#cccccc"
+                    corLabel = "#cccccc"
+                    yAx = "A"
+                    break
+                case "Evolutivo 2020":
+                    tipo = "line"
+                    cor = "rgb(166, 166, 166)"
+                    corLabel = "rgb(166, 166, 166)"
+                    varborderDash = [10, 5]
+                    yAx = "B"
+                    break
+                case "Evolutivo Meta":
+                    tipo = "line"
+                    cor = "rgb(245,156,0)"
+                    corLabel = "rgb(245,156,0)"
+                    yAx = "B"
+                    break
+                case "Evolutivo 2021":
+                    tipo = "line"
+                    cor = "rgb(89,89,89)"
+                    corLabel = "rgb(89,89,89)"
+                    yAx = "B"
+                    break
+                case "forcast":
+                    tipo = "line"
+                    cor = "#000000" //"rgb(245,156,0)"
+                    corLabel = "#000000"
+                    yAx = "B"
+
+                    break
+                case "Média Diária":
+                    tipo = "bar"
+                    cor = "#000000" //"rgb(204,0,0)"
+                    corLabel = "#000000"
+                    yAx = "B"
+                    fontSize = "14"
+
+                    break
+
+                default:
+                    break
+
+
+            }
+
+            for (var i = 0; i < dataset.length; i++) {
+                if (dataset[i] == "") dataset[i] = null
+                if (parseFloat(dataset[i]) > maiorValorSerie && yAx == "B") maiorValorSerie = parseFloat(dataset[i])
+                if (parseFloat(dataset[i]) < menorValorSerie && yAx == "B") menorValorSerie = parseFloat(dataset[i])
+            }
+
+
+            let serie = {
+                type: tipo,
+                yAxisID: yAx,
+                label: y.name,
+                backgroundColor: cor,
+                fill: false,
+                borderColor: cor,
+                borderWidth: lineSize,
+                pointRadius: 5,
+                pointBackgroundColor: "transparent",
+                pointBorderColor: "transparent",
+                borderDash: varborderDash,
+                data: dataset,
+                datalabels: {
+
+                    align: "top",
+                    anchor: "end",
+                    offset: 10,
+                    padding: -2,
+                    color: corLabel,
+                    //clip: true,
+                    font: {
+                        size: fontSize,
+                        weight: fontWeight
+                    },
+
+                }
+
+            }
+
+            if (y.name == "2019" || y.name == "Evolutivo Meta" || y.name == "Meta") {
+                console.log("Não entra neste relatório por ser 2019 e Meta")
+            } else {
+                series.push(serie)
+            }
+            //series.push(serie)
+        })
+
+        //
+        maiorValorSerie = parseFloat(maiorValorSerie)
+        menorValorSerie = parseFloat(menorValorSerie)
+        let maxYB = maiorValorSerie * (menorValorSerie / maiorValorSerie + 1.2)
+
+        let tipo = 'line'
+        let cor = 'transparent'
+        let corLabel = 'transparent'
+        let yAx = "B"
+        let varborderDash = [0, 0]
+
+        let serieEixo = {
+            type: tipo,
+            yAxisID: yAx,
+            label: '',
+            backgroundColor: cor,
+            fill: false,
+            borderColor: cor,
+            borderWidth: 1,
+            pointRadius: 5,
+            pointBackgroundColor: "transparent",
+            pointBorderColor: "transparent",
+            borderDash: varborderDash,
+            data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, maxYB],
+            datalabels: {
+
+                align: "top",
+                anchor: "end",
+                offset: 10,
+                padding: -2,
+                color: corLabel,
+                //clip: true,
+                font: {
+                    size: "12",
+                },
+
+            }
+
+        }
+
+        series.push(serieEixo)
+
+        let seriesAdd = []
+
+        series.filter(s => s.label != null).forEach(element => {
+            seriesAdd.push(element)
+        });
+
+
+        //setoptionRelativaresponseGraficoCETotal = f_optionRelativa (2000, 500);
+
+        const dashboardData = {
+            labels: xaxis.map(r => r.name),
+            datasets: seriesAdd,
+            indicators
+
+        };
+
+
+
+
+        if (typeof (funcao) == "function") {
+            funcao(dashboardData);
+        }
+
+        setIsUpdatingData(false)
+    }
+
     const GerarGraficoHistoricoSemMeta = (objeto, funcao, gradient, gradient2) => {
 
         if (!objeto) return
@@ -1699,7 +2223,7 @@ function Home() {
 
         let series = []
         let maiorValorSerie = 0
-        let menorValorSerie = 130000
+        let menorValorSerie = 200000
 
         yaxis.forEach((y, index) => {
             let dataset = xaxis.map(xx => {
@@ -1892,6 +2416,9 @@ function Home() {
 
         setIsUpdatingData(false)
     }
+
+
+    
 
     const GerarGraficoBarras = (objeto, funcao, gradient) => {
 
@@ -2444,22 +2971,22 @@ function Home() {
 
     }
 
-    const DataTableRACAberturaLinhaEspecialAcumulado = () => {
+    const DataTableRACAberturaLinhaEspecialAcumuladoGourmet = () => {
 
-        if (!TableRacAberturaLinhaEspecialAcumulado) return;
+        if (!TableRacAberturaLinhaEspecialAcumuladoGourmet) return;
 
         ////
 
         let json = []
 
-        for (let i = 0; i < TableRacAberturaLinhaEspecialAcumulado.length; i++) {
-            json.push(TableRacAberturaLinhaEspecialAcumulado[i])
+        for (let i = 0; i < TableRacAberturaLinhaEspecialAcumuladoGourmet.length; i++) {
+            json.push(TableRacAberturaLinhaEspecialAcumuladoGourmet[i])
         }
 
         return (
             <div>
                 <div className="card">
-                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableRACAberturaLinhaEspecialAcumulado">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableRACAberturaLinhaEspecialAcumuladoGourmet">
                         <Column field="CAMPO1" header="Linhas especiais" headerStyle={{ width: '70%' }}></Column>
                         <Column field="NUM" header="Nº RAC"></Column>
                     </DataTable>
@@ -2469,6 +2996,86 @@ function Home() {
 
 
     }
+
+    const DataTableRACAberturaLinhaEspecialAcumuladoIncrivel = () => {
+
+        if (!TableRacAberturaLinhaEspecialAcumuladoIncrivel) return;
+
+        ////
+
+        let json = []
+
+        for (let i = 0; i < TableRacAberturaLinhaEspecialAcumuladoIncrivel.length; i++) {
+            json.push(TableRacAberturaLinhaEspecialAcumuladoIncrivel[i])
+        }
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableRACAberturaLinhaEspecialAcumuladoIncrivel">
+                        <Column field="CAMPO1" header="Linhas especiais" headerStyle={{ width: '70%' }}></Column>
+                        <Column field="NUM" header="Nº RAC"></Column>
+                    </DataTable>
+                </div>
+            </div>
+        );
+
+
+    }
+
+    const DataTableRACAberturaLinhaEspecialAcumuladoNature = () => {
+
+        if (!TableRacAberturaLinhaEspecialAcumuladoNature) return;
+
+        ////
+
+        let json = []
+
+        for (let i = 0; i < TableRacAberturaLinhaEspecialAcumuladoNature.length; i++) {
+            json.push(TableRacAberturaLinhaEspecialAcumuladoNature[i])
+        }
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableRACAberturaLinhaEspecialAcumuladoNature">
+                        <Column field="CAMPO1" header="Linhas especiais" headerStyle={{ width: '70%' }}></Column>
+                        <Column field="NUM" header="Nº RAC"></Column>
+                    </DataTable>
+                </div>
+            </div>
+        );
+
+
+    }
+
+    const DataTableRACAberturaLinhaEspecialAcumuladoRotisserie = () => {
+
+        if (!TableRacAberturaLinhaEspecialAcumuladoRotisserie) return;
+
+        ////
+
+        let json = []
+
+        for (let i = 0; i < TableRacAberturaLinhaEspecialAcumuladoRotisserie.length; i++) {
+            json.push(TableRacAberturaLinhaEspecialAcumuladoRotisserie[i])
+        }
+
+        return (
+            <div>
+                <div className="card">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableRACAberturaLinhaEspecialAcumuladoRotisserie">
+                        <Column field="CAMPO1" header="Linhas especiais" headerStyle={{ width: '70%' }}></Column>
+                        <Column field="NUM" header="Nº RAC"></Column>
+                    </DataTable>
+                </div>
+            </div>
+        );
+
+
+    }
+
+    
 
     const DataTableNNCMPCEOssos = () => {
 
@@ -2482,12 +3089,13 @@ function Home() {
             json.push(TableNNCMPCEOssos[i])
         }
 
+        var retorno = percorrerJson(TableNNCMPCEOssos[0])
+
         return (
             <div>
                 <div className="card">
                     <DataTable value={json} sortMode="multiple" className="p-datatable clTableNNCMPCEOssos">
-                        <Column field="CAMPO1" header="Corpo Estranho Ossos" headerStyle={{ width: '70%' }}></Column>
-                        <Column field="NUM" header="Nº NNC MP"></Column>
+                        {retorno}
                     </DataTable>
                 </div>
             </div>
@@ -3285,7 +3893,7 @@ function Home() {
         return (
             <div>
                 <div className="card">
-                    <DataTable value={json} sortMode="multiple" className="p-datatable">
+                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableRacRACDetalhesEvolucaoTotal">
                         {retorno}
                     </DataTable>
                 </div>
@@ -3901,46 +4509,46 @@ function Home() {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaME(json)
-                setTimeout(arrumaTabela3niveis('clAberturaME'), 13000)
+                setTimeout(arrumaTabela3niveis('clAberturaME'), 20000)
             })
 
 
 
 
-            api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac = 'YARA' "]).then((response) => {
+            api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac = 'YARA' AND Unidade NOT IN ('Serviços') "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEOrienteMedio(json)
-                setTimeout(arrumaTabela3niveis('clOrienteMedio'), 13000)
+                setTimeout(arrumaTabela3niveis('clOrienteMedio'), 20000)
             })
 
-            api.getSearaBaseRacAberturaME2([whereAberturaME + "  AND Especialista_rac IN ('Igor', 'Rejane')   "]).then((response) => {
+            api.getSearaBaseRacAberturaME2([whereAberturaME + "  AND Especialista_rac IN ('Igor', 'Rejane') AND Unidade NOT IN ('Serviços')   "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEEuropa(json)
-                setTimeout(arrumaTabela3niveis('clEuropa'), 13000)
+                setTimeout(arrumaTabela3niveis('clEuropa'), 20000)
             })
 
-            api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac IN ('Marcela')  "]).then((response) => {
+            api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac IN ('Marcela') AND Unidade NOT IN ('Serviços')  "]).then((response) => {
                 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEJapao(json)
-                setTimeout(arrumaTabela3niveis('clJapao'), 13000)
+                setTimeout(arrumaTabela3niveis('clJapao'), 20000)
                           
             })
 
-            api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac IN ('Amanda')  "]).then((response) => {
+            api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac IN ('Amanda') AND Unidade NOT IN ('Serviços')  "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEAsia(json)
-                setTimeout(arrumaTabela3niveis('clAsia'), 13000)
+                setTimeout(arrumaTabela3niveis('clAsia'), 20000)
             })
 
-            api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac IN ('Regina')  "]).then((response) => {
+            api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac IN ('Regina') AND Unidade NOT IN ('Serviços')  "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEAmericasAfrica(json)
-                setTimeout(arrumaTabela3niveis('clAmericasAfrica'), 13000)
+                setTimeout(arrumaTabela3niveis('clAmericasAfrica'), 20000)
             })
 
             
@@ -3955,7 +4563,7 @@ function Home() {
             + " AND [Origem_do_Problema_rac] IN ('Produção em Terceiro')	"																																					 
             + " AND  [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRÍTICA','REINCIDÊNCIA','NEGOCIAÇÃO COMERCIAL','RECOLHIMENTO','OBRIGAÇÃO','RECOLHIMENTO VOLUNTÁRIO','RAC COMPLEMENTAR','CONCESSÃO','RAC CAIXA','ELOGIO')	"		 
             + " AND Filial_rac NOT IN ('FORNECEDOR - IND COM MASSAS ALI MASSATAK TANAK LT EPP')		"																															 
-            + " AND UNIDADE NOT IN ('VIGOR','DAN VIGOR')		"																																								 
+            + " AND UNIDADE NOT IN ('VIGOR','DAN VIGOR','AVANTI')		"																																								 
             + " AND Tipo_rac = 'Real'		"																																													 																																																			 
             + " SELECT		"
             + " GROUPING(Unidade) grupo,	"
@@ -3978,24 +4586,24 @@ function Home() {
                 }
 
                 setTableRacRACDetalhesTerceiro(json)
-                setTimeout(arrumaTabela1nivel('clAberturaTerceiro'), 13000)
+                setTimeout(arrumaTabela1nivel('clAberturaTerceiro'), 20000)
             })
 
             var sqlTableRacRACDetalhesPDV = ""
             + " SELECT																																							"
-            + " Item CAMPO1																																			"
+            + " Nm_Classe_rac CAMPO1																																			"
             + " , Tipo_Problema_rac CAMPO2																																		"
             + " , NULL CAMPO3																																			"
             + " , count(Rac_rac) as NUM																																			"
             + " INTO #RESULTADO 																																				"
             + " FROM [v_base_rac]																																				"
             + " WHERE 1=1																																						"
-            + " AND Data_rac = (select * from v_maiorData)																										"
+            + " AND month(Data_rac) = month((select * from v_maiorData)) AND year(Data_rac) = year((select * from v_maiorData))																									"
             + " AND [Origem_do_Problema_rac] IN ('ABUSO DE PRODUTO PDV')																										"
             + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR')	"
             + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA')																											"
             + " AND Tipo_rac = 'Real'																																			"
-            + " GROUP BY Item, Tipo_Problema_rac																									"
+            + " GROUP BY Nm_Classe_rac, Tipo_Problema_rac																									"
             + "              																																					"			
             + " SELECT																																							"
             + " CAMPO1																																							"
@@ -4036,9 +4644,9 @@ function Home() {
             + " 																																								"
             + " 																																								"
             + " SELECT DISTINCT B.*																																				"
-            + " , R1.CAMPO1																																						"
-            + " , R2.CAMPO2																																						"
-            + " , R3.CAMPO3																																						"
+            + " , R1.NUM AS NUM1																																						"
+            + " , R2.NUM AS NUM2																																						"
+            + " , R3.NUM AS NUM3																																						"
             + " , CASE																																							"
             + " 	WHEN B.CAMPO3 IS NULL THEN																																	"
             + " 		CASE																																					"
@@ -4070,7 +4678,7 @@ function Home() {
                 //
                 let json = JSON.parse(response.data)                
                 setTableRacRACDetalhesPDV(json)
-                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesPDV'), 13000)
+                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesPDV'), 20000)
 
             })
 
@@ -4256,22 +4864,24 @@ function Home() {
                 }
                 
                 setTableRacRACDetalhesCritica(json)
-                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesCritica'), 13000)
+                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesCritica'), 20000)
          
             })
 
             var sqlTableRacRACDetalhesEvolucaoTotal = ""
             + " SELECT																																																			"
-            + " [Origem_do_Problema_rac] Origem,																																																		"
+            + " Origem Origem,																																																		"
             + " sum(Quant_rac) Quant_rac																																														"
             + " INTO #TOTAL																																																		"
             + " FROM [v_base_rac]																																																"
             + " WHERE 1=1																																																		"
             + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
             + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
-            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR','AVANTI','Santa Cruz do Sul','Serviços', 'Shipping', 'ITAJAÍ ÓLEO COMESTÍVEIS')             "
+            + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO','NOTIFICAÇÃO')            "
+            + " AND Origem_do_Problema_rac NOT IN ('Abuso de Produto HOME') "
             + " AND Tipo_rac = 'Real' 																																															"
-            + " GROUP BY [Origem_do_Problema_rac]																																																"
+            + " GROUP BY Origem																																																"
             + " 																																																				"
             + " SELECT																																																			"
             + " 'Total' as Origem,																																															"
@@ -4281,9 +4891,10 @@ function Home() {
             + " WHERE 1=1																																																		"
             + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
             + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
-            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
-            + " AND Tipo_rac = 'Real' 																																															"
-            + " GROUP BY [Origem_do_Problema_rac]																																																"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR','AVANTI','Santa Cruz do Sul','Serviços', 'Shipping', 'ITAJAÍ ÓLEO COMESTÍVEIS')             "
+            + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO','NOTIFICAÇÃO')            "
+            + " AND Origem_do_Problema_rac NOT IN ('Abuso de Produto HOME')  																																															"
+            + " GROUP BY Origem																																																"
             + " 																																																				"
             + " SELECT																																																			"
             + " sum(Quant_rac) Quant_rac																																														"
@@ -4292,8 +4903,10 @@ function Home() {
             + " WHERE 1=1																																																		"
             + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
             + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
-            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
-            + " AND Tipo_rac = 'Real' 																																															"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR','AVANTI','Santa Cruz do Sul','Serviços', 'Shipping', 'ITAJAÍ ÓLEO COMESTÍVEIS')             "
+            + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO','NOTIFICAÇÃO')            "
+            + " AND Origem_do_Problema_rac NOT IN ('Abuso de Produto HOME')  																																															"
+             																																															
             + " 																																																				"
             + " 																																																				"
             + " DECLARE @SQLStr VARCHAR(max)																																													"
@@ -4307,8 +4920,9 @@ function Home() {
             + " WHERE 1=1																																																		"
             + " AND month(Data_rac) = month((select * from v_maiorData))																																						"
             + " AND year(Data_rac) = year((select * from v_maiorData))																																							"
-            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR')  													"
-            + " AND Tipo_rac = 'Real' 																																															"
+            + " AND UNIDADE NOT IN ('DAN VIGOR','MASSATAKE','MARBA','NORONHA','VIGOR','AVANTI','Santa Cruz do Sul','Serviços', 'Shipping', 'ITAJAÍ ÓLEO COMESTÍVEIS')             "
+            + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO','NOTIFICAÇÃO')            "
+            + " AND Origem_do_Problema_rac NOT IN ('Abuso de Produto HOME')  																																															"
             + " GROUP BY [MES-DIA]																																																"
             + " 																																																				"
             + " DECLARE @LINHAS INT 																																															"
@@ -4376,16 +4990,16 @@ function Home() {
             + " + @SQLStr																																																		"
             + " + ' , T.Quant_rac as Total ' +																																													"
             + " + ' , 0 as Total2 ' +																																															"
-            + " + ' FROM (SELECT [Origem_do_Problema_rac] Origem, [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																																"
+            + " + ' FROM (SELECT Origem Origem, [MES-DIA] as [MES-DIA], sum(Quant_rac) Quant_rac  ' +																																"
             + " '         from [v_base_rac] base with (nolock)  ' +																																								"
             + " 																																																				"
             + " 		' WHERE 1=1 ' +																																															"
             + "         ' AND month(Data_rac) = month((select * from v_maiorData))																																	' +			"
             + " 		' AND year(Data_rac) = year((select * from v_maiorData))																																	' +			"
-            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''MASSATAKE'',''MARBA'',''NORONHA'',''VIGOR'') 		' +			"
+            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''MASSATAKE'',''MARBA'',''NORONHA'',''VIGOR'') AND [TIPO_ATENDIMENTO_RAC] NOT IN (''ALERTA'',''CONCESSÃO'', ''CRITICA'',''CRÍTICA'',''ELOGIO'',''NEGOCIAÇÃO COMERCIAL'',''OBRIGAÇÃO'',''RAC CAIXA'',''RAC COMPLEMENTAR'',''RECOLHIMENTO'',''RECOLHIMENTO VOLUNTÁRIO'',''NOTIFICAÇÃO'') AND Origem_do_Problema_rac NOT IN (''Abuso de Produto HOME'')		' +			"
             + " 		' AND Tipo_rac = ''Real'' 																																									' +			"
             + " 																																																				"
-            + "         ' GROUP BY [Origem_do_Problema_rac], [MES-DIA] '+      																																								"
+            + "         ' GROUP BY Origem, [MES-DIA] '+      																																								"
             + " '         ) sq PIVOT (sum(Quant_rac) FOR [MES-DIA] IN ('																																						"
             + " + @SQLStr+')) AS pt ' +																																															"
             + " ' INNER JOIN #TOTAL T ON T.origem = PT.origem ' +																																								"
@@ -4401,7 +5015,7 @@ function Home() {
             + " 		' WHERE 1=1 ' +																																															"
             + "         ' AND month(Data_rac) = month((select * from v_maiorData))																																	' +			"
             + " 		' AND year(Data_rac) = year((select * from v_maiorData))																																	' +			"
-            + " 		' AND UNIDADE NOT IN (''DAN VIGOR'',''MASSATAKE'',''MARBA'',''NORONHA'',''VIGOR'') 		' +			"
+            + " 		'  AND UNIDADE NOT IN (''DAN VIGOR'',''MASSATAKE'',''MARBA'',''NORONHA'',''VIGOR'') AND [TIPO_ATENDIMENTO_RAC] NOT IN (''ALERTA'',''CONCESSÃO'', ''CRITICA'',''CRÍTICA'',''ELOGIO'',''NEGOCIAÇÃO COMERCIAL'',''OBRIGAÇÃO'',''RAC CAIXA'',''RAC COMPLEMENTAR'',''RECOLHIMENTO'',''RECOLHIMENTO VOLUNTÁRIO'',''NOTIFICAÇÃO'') AND Origem_do_Problema_rac NOT IN (''Abuso de Produto HOME'')				' +			"
             + " 		' AND Tipo_rac = ''Real'' 																																									' +			"
             + " 																																																				"
             + "         ' GROUP BY [MES-DIA] '+      																																											"
@@ -4427,6 +5041,9 @@ function Home() {
                 }
                 
                 setTableRacRACDetalhesEvolucaoTotal(json)
+                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesEvolucaoTotal'), 20000)
+
+                
             })
 
 			
@@ -4444,9 +5061,10 @@ function Home() {
             + "AND [PROBLEMA] IN ('INSETO','INSETO VIVO') "
             + "AND [Tipo_Problema] IN ('INSETO','LARVA', 'INSETO VIVO','LARVA VIVA')	 "
             + "AND [SUB TIPO PROBLEMA] IN ('LARVA','LARVA VIVA') "
+            + " AND ([Origem] IN ('FABRICAÇÃO')) "
 
 
-            api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataTableRacLarva, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
+            api.getSearaBaseRAC1niveisPIVOTDIA([ wherePivotdataTableRacLarva, " Unidade as Coluna1, null as Coluna2, null as Coluna3", "Unidade", " [MES-DIA] " ]).then((response) => {
                 
                 let json = JSON.parse(response.data)
 
@@ -4467,7 +5085,7 @@ function Home() {
                 }
                 
                 setTableRacLarva(json)
-                setTimeout(arrumaTabela2niveis('clTableRacLarva'), 13000)
+                setTimeout(arrumaTabela1nivel('clTableRacLarva'), 20000)
             })
 
             var wherePivotdataTableRacIntoxicacao = ""
@@ -4481,7 +5099,7 @@ function Home() {
             + "AND [PROBLEMA] IN ('INTOXICAÇÃO ALIMENTAR') "
 
 
-            api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataTableRacIntoxicacao, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
+            api.getSearaBaseRAC1niveisPIVOTDIA([ wherePivotdataTableRacIntoxicacao, " Unidade as Coluna1, null as Coluna2, null as Coluna3", "Unidade", " [MES-DIA] " ]).then((response) => {
                 
                 let json = JSON.parse(response.data)
 
@@ -4502,7 +5120,7 @@ function Home() {
                 }
                 
                 setTableRacIntoxicacao(json)
-                setTimeout(arrumaTabela2niveis('clTableRacIntoxicacao'), 13000)
+                setTimeout(arrumaTabela1nivel('clTableRacIntoxicacao'), 20000)
             })
 
             var wherePivotdataTableRacInseto = ""
@@ -4512,13 +5130,14 @@ function Home() {
 
             + "AND [ORIGEM] IN ('FABRICAÇÃO') "
             + "AND [GRUPO_rac] IN ('CORPO ESTRANHO') "
-            + "AND UNIDADE NOT IN ('MARBA') "
+            + "AND UNIDADE NOT IN ('AMAI','DAN VIGOR','MARBA','GRANO','GRIFFOOD','JBS','MASSATAKE','SANTA CRIZ DO SUL','SERYA','VIGOR','ITAJAI AVES PESADAS') "
             + "AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') "
             + "AND Tipo_Problema IN ('INSETO') "
             + "AND [SUB TIPO PROBLEMA] NOT IN ('LARVA') "
+            + " AND ([Origem] IN ('FABRICAÇÃO')) "
 
 
-            api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataTableRacInseto, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
+            api.getSearaBaseRAC1niveisPIVOTDIA([ wherePivotdataTableRacInseto, " Unidade as Coluna1, null as Coluna2, null as Coluna3", "Unidade", " [MES-DIA] " ]).then((response) => {
                 
                 let json = JSON.parse(response.data)
 
@@ -4539,7 +5158,7 @@ function Home() {
                 }
                 
                 setTableRacInseto(json)
-                setTimeout(arrumaTabela2niveis('clTableRacInseto'), 13000)
+                setTimeout(arrumaTabela1nivel('clTableRacInseto'), 20000)
             })
 
             var wherePivotdataTableRacCabelo = ""
@@ -4549,12 +5168,12 @@ function Home() {
             
             + "AND [Origem_do_problema_rac] IN ('FÁBRICA PRODUÇÃO') "
             + "AND [GRUPO_rac] IN ('CORPO ESTRANHO') "
-            + "AND UNIDADE NOT IN ('AMAI','DAN VIGOR','MARBA','GRANO','GRIFFOOD','JBS','MASSATAKE','SANTA CRIZ DO SUL','SERYA','VIGOR') "
+            + "AND UNIDADE NOT IN ('AMAI','DAN VIGOR','MARBA','GRANO','GRIFFOOD','JBS','MASSATAKE','SANTA CRIZ DO SUL','SERYA','VIGOR','ITAJAI AVES PESADAS') "
             + "AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') "
             + "AND Tipo_Problema IN ('FIO DE CABELO / PÊLO HUMANO','FIO DE CABELO/PÊLO HUMANO', 'PÊLO/ CABELO') "
 
 
-            api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataTableRacCabelo, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
+            api.getSearaBaseRAC1niveisPIVOTDIA([ wherePivotdataTableRacCabelo, " Unidade as Coluna1, null as Coluna2, null as Coluna3", "Unidade", " [MES-DIA] " ]).then((response) => {
                 
                 let json = JSON.parse(response.data)
 
@@ -4575,7 +5194,7 @@ function Home() {
                 }
                 
                 setTableRacCabelo(json)
-                setTimeout(arrumaTabela2niveis('clTableRacCabelo'), 13000)
+                setTimeout(arrumaTabela1nivel('clTableRacCabelo'), 20000)
             })
 
             
@@ -4584,13 +5203,12 @@ function Home() {
             + "and year(data_rac) = (select year(data) as data from v_maiorData) "
             + "and month(data_rac) = (select month(data) as data from v_maiorData) "
             
-            + "AND [Origem_do_problema_rac] IN ('FÁBRICA PRODUÇÃO') "
-            + "AND UNIDADE NOT IN ('MARBA','SANTA CRUZ DO SUL') "
-            + "AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') "
-            + "AND Tipo_Problema IN ('LUVA','LUVA NITRÍLICA','PLÁSTICO','PLÁSTICO DURO','PLÁSTICO MOLE') "
+            + " AND UNIDADE NOT IN ('MARBA','SANTA CRUZ DO SUL') "
+            + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR') "
+            + " AND [Tipo_Problema_rac] IN ('LUVA','LUVA NITRÍLICA','PLÁSTICO','PLÁSTICO DURO','PLÁSTICO MOLE') "
+            + " AND ([Origem] IN ('FABRICAÇÃO')) "
 
-
-            api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataTableRacPlastico, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
+            api.getSearaBaseRAC1niveisPIVOTDIA([ wherePivotdataTableRacPlastico, " Unidade as Coluna1, null as Coluna2, null as Coluna3", "Unidade", " [MES-DIA] " ]).then((response) => {
                 
                 let json = JSON.parse(response.data)
 
@@ -4611,22 +5229,18 @@ function Home() {
                 }
                 
                 setTableRacPlastico(json)
-                setTimeout(arrumaTabela2niveis('clTableRacPlastico'), 13000)
+                setTimeout(arrumaTabela1nivel('clTableRacPlastico'), 20000)
             })
 
             
             var wherePivotdataTableNNCEvolucaoMes = ""
             + " WHERE 1=1 "
-            + "and year(data_rac) = (select year(data) as data from v_maiorData) "
-            + "and month(data_rac) = (select month(data) as data from v_maiorData) "
-            
-            + "AND [Origem_do_problema_rac] IN ('FÁBRICA PRODUÇÃO') "
-            + "AND UNIDADE NOT IN ('MARBA','SANTA CRUZ DO SUL') "
-            + "AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') "
-            
-
-
-            api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataTableNNCEvolucaoMes, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
+            + " and Tipo = 'REAL' "
+            + " and year([Dt Abertura]) = (select year(data) as data from v_maiorData) "
+            + " and month([Dt Abertura]) = (select month(data) as data from v_maiorData) " 
+            + " and [Regional (Qualidade)] not in ('Logística','Outros','Terceiro') and ([Área Responsável] not in ('RASTREABILIDADE HUB') OR [Área Responsável] IS NULL)"
+ 
+            api.getSearaBaseNNCLog1nivelPIVOTDIA([ wherePivotdataTableNNCEvolucaoMes, "Fornecedor as Coluna1, NULL as Coluna2, null as Coluna3", "Fornecedor", " [MES-DIA] ", " [MES-DIA] " ]).then((response) => {
                 
                 let json = JSON.parse(response.data)
 
@@ -4647,7 +5261,7 @@ function Home() {
                 }
                 
                 setTableNNCEvolucaoMes(json)
-                setTimeout(arrumaTabela2niveis('clTableNNCEvolucaoMes'), 13000)
+                setTimeout(arrumaTabela1nivel('clTableNNCEvolucaoMes'), 20000)
             })
 
             var wherePivotdataTableNNCEvolucaoMesTotais = ""
@@ -4682,17 +5296,17 @@ function Home() {
                 }
                 
                 setTableNNCEvolucaoMesTotais(json)
-                setTimeout(arrumaTabela2niveis('clTableNNCEvolucaoMesTotais'), 13000)
+                setTimeout(arrumaTabela2niveis('clTableNNCEvolucaoMesTotais'), 20000)
             })
 
             var whereTableNNCCEPlastico = ""
             + " WHERE 1=1 "
             + "and year([Dt Abertura]) = (select year(data) as data from v_maiorData) "
             + "and month([Dt Abertura]) = (select month(data) as data from v_maiorData) "
-            + "and [Tipo Problema] like '%pl%stic%' "
+            + " AND [Grupo Problema] = 'Corpo Estranho' and [Reg. Qual] NOT IN ('Itajaí','Outros') and [Entra para a Meta] = 'Sim' AND [Tipo Problema] in ('Borracha','Luva Latex','Luva Nitrilica','Plástico duro','Plástico mole - Resíduo') "
          
 
-            api.getSearaBaseNNC3niveisPIVOTDIA([ whereTableNNCCEPlastico, " [Reg. Qual] as Coluna1, Filial as Coluna2, null as Coluna3 ", "[Reg. Qual], Filial", " [MES-DIA] " , " [MES-DIA] " ]).then((response) => {
+            api.getSearaBaseNNC1nivelPIVOTDIA([ whereTableNNCCEPlastico, " Filial  as Coluna1, null as Coluna2, null as Coluna3 ", "Filial", " [MES-DIA] " , " [MES-DIA] " ]).then((response) => {
                 
                 let json = JSON.parse(response.data)
 
@@ -4713,16 +5327,16 @@ function Home() {
                 }
                 
                 setTableNNCCEPlastico(json)
-                setTimeout(arrumaTabela2niveis('clTableNNCCEPlastico'), 13000)
+                setTimeout(arrumaTabela1nivel('clTableNNCCEPlastico'), 20000)
             })
 
             var whereTableNNCCEMetal = ""
             + " WHERE 1=1 "
             + "and year([Dt Abertura]) = (select year(data) as data from v_maiorData) "
             + "and month([Dt Abertura]) = (select month(data) as data from v_maiorData) "
-            + "and [Tipo Problema] like '%metal%' "
+            + " AND [Grupo Problema] = 'Corpo Estranho' and [Reg. Qual] NOT IN ('Itajaí','Outros') and [Entra para a Meta] = 'Sim' and ( [Grupo Problema.] = 'Corpo Estranho_ Metalico' or [Tipo Problema] in ('Luva anti corte') ) "
 
-            api.getSearaBaseNNC3niveisPIVOTDIA([ whereTableNNCCEMetal, " [Reg. Qual] as Coluna1, Filial as Coluna2, null as Coluna3 ", "[Reg. Qual], Filial", " [MES-DIA] ", " [MES-DIA] " ]).then((response) => {
+            api.getSearaBaseNNC1nivelPIVOTDIA([ whereTableNNCCEMetal, " Filial  as Coluna1, null as Coluna2, null as Coluna3 ", "Filial", " [MES-DIA] ", " [MES-DIA] " ]).then((response) => {
                 
                 let json = JSON.parse(response.data)
 
@@ -4743,7 +5357,7 @@ function Home() {
                 }
                 
                 setTableNNCCEMetal(json)
-                setTimeout(arrumaTabela2niveis('clTableNNCCEMetal'), 13000)
+                setTimeout(arrumaTabela1nivel('clTableNNCCEMetal'), 20000)
             })
 
 
@@ -4751,10 +5365,10 @@ function Home() {
             + " WHERE 1=1 "
             + "and year([Dt Abertura]) = (select year(data) as data from v_maiorData) "
             + "and month([Dt Abertura]) = (select month(data) as data from v_maiorData) "
-            + "and [Tipo Problema] like '%osso%' "
+            + " AND [Grupo Problema] = 'Corpo Estranho' and [Reg. Qual] NOT IN ('Itajaí','Outros') and [Entra para a Meta] = 'Sim' AND [Tipo Problema] = 'Ossos'  "
 
-            api.getSearaBaseNNC3niveisPIVOTDIA([ whereTableNNCCEOssos, "[Reg. Qual] as Coluna1, Filial as Coluna2, null as Coluna3", "[Reg. Qual], Filial", " [MES-DIA] ", " [MES-DIA] "]).then((response) => {
-                
+            
+            api.getSearaBaseNNC1nivelPIVOTDIA([ whereTableNNCCEOssos, " Filial  as Coluna1, null as Coluna2, null as Coluna3 ", "Filial", " [MES-DIA] ", " [MES-DIA] " ]).then((response) => {    
                 let json = JSON.parse(response.data)
 
                 for (var i=0; i<json.length; i++){
@@ -4774,16 +5388,16 @@ function Home() {
                 }
                 
                 setTableNNCCEOssos(json)
-                setTimeout(arrumaTabela2niveis('clTableNNCCEOssos'), 13000)
+                setTimeout(arrumaTabela1nivel('clTableNNCCEOssos'), 20000)
             })
 
             var whereTableNNCCE = ""
             + " WHERE 1=1 "
             + "and year([Dt Abertura]) = (select year(data) as data from v_maiorData) "
             + "and month([Dt Abertura]) = (select month(data) as data from v_maiorData) "
-            + "and [Tipo CE] is not null"
+            + "and [Grupo Problema] in ('Corpo Estranho') and [Reg. Qual] NOT IN ('OUTROS', 'ITAJAÍ') and [Entra para a Meta] = 'Sim' "
 
-            api.getSearaBaseNNC3niveisPIVOTDIA([ whereTableNNCCE, "[Reg. Qual] as Coluna1, Filial as Coluna2, null as Coluna3", "[Reg. Qual], Filial", " [MES-DIA] ", " [MES-DIA] " ]).then((response) => {
+            api.getSearaBaseNNC2niveisPIVOTDIA([ whereTableNNCCE, "[Reg. Prod.] as Coluna1, fornecedor as Coluna2, null as Coluna3", "[Reg. Prod.], fornecedor", " [MES-DIA] ", " [MES-DIA] " ]).then((response) => {
                 
                 let json = JSON.parse(response.data)
 
@@ -4804,17 +5418,17 @@ function Home() {
                 }
                 
                 setTableNNCCE(json)
-                setTimeout(arrumaTabela2niveis('clTableNNCCE'), 13000)
+                setTimeout(arrumaTabela2niveis('clTableNNCCE'), 20000)
             })
 
 
             var whereTableHabilitadorCorposEstranhosNaoInerentes = ""
             + " WHERE 1=1 "
-            + "and year([Dt Abertura]) = (select year(data) as data from v_maiorData) "
+            + "and ANO = (select year(data) as data from v_maiorData) "
             
-         
+           
 
-            api.getSearaBaseNNC3niveisPIVOTmesDesvio([ whereTableHabilitadorCorposEstranhosNaoInerentes, "[Reg. Qual] as Coluna1, Fornecedor as Coluna2, null as Coluna3", "[Reg. Qual], Fornecedor", " '|' + RIGHT('0' + cast(month([Dt Abertura]) as varchar), 2) + '|' ", "Mes" ]).then((response) => {
+            api.getSearaBaseCE2niveisPIVOTmesDesvio([ whereTableHabilitadorCorposEstranhosNaoInerentes, "[Negócio] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Negócio], Unidade", " '|' + MES + '|' ", "Mes" ]).then((response) => {
                 
                 let json = JSON.parse(response.data)
 
@@ -4835,17 +5449,17 @@ function Home() {
                 }
                 
                 setTableHabilitadorCorposEstranhosNaoInerentes(json)
-                setTimeout(arrumaTabela2niveis('clTableHabilitadorCorposEstranhosNaoInerentes'), 13000)
+                setTimeout(arrumaTabela2niveis('clTableHabilitadorCorposEstranhosNaoInerentes'), 20000)
             })
 
 
             var whereTableNNCCEInerenteNaoInerente = ""
             + " WHERE 1=1 "
-            + "and year([Dt Abertura]) = (select year(data) as data from v_maiorData) "
-            + "and month([Dt Abertura]) = (select month(data) as data from v_maiorData) "
-            + "and [Tipo CE] is not null "
+            + " and year([Dt Abertura]) = (select year(data) as data from v_maiorData) "
+            + " and month([Dt Abertura]) = (select month(data) as data from v_maiorData) "
+            + " and [Grupo Problema] in ('Corpo Estranho') and [Reg. Qual] NOT IN ('OUTROS', 'ITAJAÍ') and [Entra para a Meta] = 'Sim' "
 
-            api.getSearaBaseNNC3niveisPIVOTDIA([ whereTableNNCCEInerenteNaoInerente, "[Reg. Qual] as Coluna1, Filial as Coluna2, null as Coluna3 ", "[Reg. Qual], Filial", " [TIPO CE] ", " [TIPO CE] "]).then((response) => {
+            api.getSearaBaseNNC2niveisPIVOTDIA([ whereTableNNCCEInerenteNaoInerente, "[Reg. Prod.]  as Coluna1, Fornecedor as Coluna2, null as Coluna3 ", "[Reg. Prod.], Fornecedor", " [TIPO CE] ", " [TIPO CE] "]).then((response) => {
                 
                 
                 let json = JSON.parse(response.data)
@@ -4867,7 +5481,7 @@ function Home() {
                 }
                 
                 setTableNNCCEInerenteNaoInerente(json)
-                setTimeout(arrumaTabela2niveis('clTableNNCCEInerenteNaoInerente'), 13000)
+                setTimeout(arrumaTabela2niveis('clTableNNCCEInerenteNaoInerente'), 20000)
             })
 
             var wherePivotdataTableRacMetal = ""
@@ -4880,7 +5494,7 @@ function Home() {
             + "AND [PROBLEMA] IN ('METAL','METÁLICO') "
 
 
-            api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataTableRacMetal, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
+            api.getSearaBaseRAC1niveisPIVOTDIA([ wherePivotdataTableRacMetal, " Unidade as Coluna1, null as Coluna2, null as Coluna3", "Unidade", " [MES-DIA] " ]).then((response) => {
                 
                 let json = JSON.parse(response.data)
 
@@ -4901,7 +5515,7 @@ function Home() {
                 }
                 
                 setTableRacMetal(json)
-                setTimeout(arrumaTabela2niveis('clTableRacMetal'), 13000)
+                setTimeout(arrumaTabela1nivel('clTableRacMetal'), 20000)
             })
 
             var wherePivotdataEvolucaoAves = ""
@@ -4909,6 +5523,11 @@ function Home() {
             + "and year(data_rac) = (select year(data) as data from v_maiorData) "
             + "and month(data_rac) = (select month(data) as data from v_maiorData) "
             + "AND Tipo_rac = 'Real'	AND  [Regional Qual] LIKE '%AVES%'  "
+            + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
+			+ " OR Tipo_Atendimento_rac IS NULL) "
+            + " and (Unidade NOT IN ('Fatiados','Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS') OR Unidade IS NULL) "
+            + " AND (Origem  IN ('EXPEDIÇÃO FÁBRICA','FABRICAÇÃO','Documentação Unidade') ) "
+
 
 
             api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataEvolucaoAves, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
@@ -4932,14 +5551,21 @@ function Home() {
                 }
                 
                 setTableRacRACDetalhesEvolucaoAves(json)
-                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesEvolucaoAves'), 13000)
+                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesEvolucaoAves'), 20000)
             })
 
             var wherePivotdataEvolucaoPreparados = ""
             + " WHERE 1=1 "
             + "and year(data_rac) = (select year(data) as data from v_maiorData) "
             + "and month(data_rac) = (select month(data) as data from v_maiorData) "
-            + "AND Tipo_rac = 'Real'	AND  [Regional Qual] LIKE '%Prepar%'  "
+            + "AND Tipo_rac = 'Real' "
+            
+            + "AND Origem IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "
+            + "AND (([Regional Qual] LIKE '%Prepar%' or [Regional Qual] IN ('Outros', 'Itajaí')) AND ([Regional Prod] IN ('Outros','Preparados', 'Fatiados') ) OR UNIDADE = 'ITAJAI INDUSTRIALIZADOS') "
+            + "AND (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') OR Tipo_Atendimento_rac IS NULL) "
+
+
+
 
 
             api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataEvolucaoPreparados, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
@@ -4963,7 +5589,7 @@ function Home() {
                 }
                 
                 setTableRacRACDetalhesEvolucaoPreparados(json)
-                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesEvolucaoPreparados'), 13000)
+                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesEvolucaoPreparados'), 20000)
             })
                 
                 
@@ -4975,6 +5601,11 @@ function Home() {
             + "and year(data_rac) = (select year(data) as data from v_maiorData) "
             + "and month(data_rac) = (select month(data) as data from v_maiorData) "
             + "AND Tipo_rac = 'Real'	AND  [Regional Qual] LIKE '%Fatiados%'  "
+            + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
+			+ " OR Tipo_Atendimento_rac IS NULL) "
+            + " and (Unidade NOT IN ('Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS') OR Unidade IS NULL) "
+            + " AND (Origem  IN ('EXPEDIÇÃO FÁBRICA','FABRICAÇÃO','Documentação Unidade') ) "
+
 
 
             api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataEvolucaoFatiados, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
@@ -4998,7 +5629,7 @@ function Home() {
                 }
                 
                 setTableRacRACDetalhesEvolucaoFatiados(json)
-                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesEvolucaoFatiados'), 13000)
+                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesEvolucaoFatiados'), 20000)
             })
 
 
@@ -5009,6 +5640,10 @@ function Home() {
             + "and year(data_rac) = (select year(data) as data from v_maiorData) "
             + "and month(data_rac) = (select month(data) as data from v_maiorData) "
             + "AND Tipo_rac = 'Real'	AND  [Regional Qual] LIKE '%Pescado%'  "
+            + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
+			+ " OR Tipo_Atendimento_rac IS NULL) "
+            + " and (Unidade NOT IN ('Fatiados','Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS') OR Unidade IS NULL) "
+            
 
 
             api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataEvolucaoPescados, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
@@ -5032,7 +5667,7 @@ function Home() {
                 }
                 
                 setTableRacRACDetalhesEvolucaoPescados(json)
-                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesEvolucaoPescados'), 13000)
+                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesEvolucaoPescados'), 20000)
             })
 
 
@@ -5041,6 +5676,11 @@ function Home() {
             + "and year(data_rac) = (select year(data) as data from v_maiorData) "
             + "and month(data_rac) = (select month(data) as data from v_maiorData) "
             + "AND Tipo_rac = 'Real'	AND  [Regional Qual] LIKE '%Su%no%'  "
+            + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
+			+ " OR Tipo_Atendimento_rac IS NULL) "
+            + " and (Unidade NOT IN ('Fatiados','Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS') OR Unidade IS NULL) "
+            + " AND (Origem  IN ('EXPEDIÇÃO FÁBRICA','FABRICAÇÃO','Documentação Unidade') ) "
+
 
 
             api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataEvolucaoSuinos, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
@@ -5064,39 +5704,40 @@ function Home() {
                 }
                 
                 setTableRacRACDetalhesEvolucaoSuinos(json)
-                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesEvolucaoSuinos'), 13000)
+                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesEvolucaoSuinos'), 20000)
             })
 
 
-            api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac IN ('Jéssica') "]).then((response) => {
+            api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac IN ('Jéssica') AND Unidade NOT IN ('Serviços') "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEContasGlobais(json)
-                setTimeout(arrumaTabela3niveis('clContasGlobais'), 13000)
+                setTimeout(arrumaTabela3niveis('clContasGlobais'), 20000)
             })
 
             var whereTableRACAberturaLinhaEspecialFamilia = ""
             + " WHERE 1=1	AND month(Data_rac) = month((select * from v_maiorData)) "
             + " AND year(Data_rac) = year((select * from v_maiorData)) "
-            + " AND [Origem_do_Problema_rac] IN ('ABUSO DE PRODUTO PDV') "																										
-            + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR') "	
-            + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "
             + " AND Nm_Marca_rac in ('SEARA GOURMET','SEARA INCRIVEL','SEARA NATURE','SEARA ROTISSERIE') "																											
             + " AND Tipo_rac = 'Real' "
+            + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
+			+ " OR Tipo_Atendimento_rac IS NULL) "
+            + "  and (Unidade NOT IN ('Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS','AVANTI','Serviços','Shipping') OR Unidade IS NULL) "
+            + " AND (Origem NOT IN ('ABUSO DE PRODUTO HOME') OR Origem IS NULL) "
 
-            api.getSearaBaseRAC3niveis([whereTableRACAberturaLinhaEspecialFamilia," Nm_Marca_rac CAMPO1, Nm_Classe_rac CAMPO2, NULL CAMPO3 "," Nm_Marca_rac, Nm_Classe_rac "]).then((response) => {
+            api.getSearaBaseRAC2niveis([whereTableRACAberturaLinhaEspecialFamilia," Nm_Marca_rac CAMPO1, Nm_Classe_rac CAMPO2, NULL CAMPO3 "," Nm_Marca_rac, Nm_Classe_rac "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaLinhaEspecialFamilia(json)
-                setTimeout(arrumaTabela2niveis('clTableRACAberturaLinhaEspecialFamilia'), 13000)
+                setTimeout(arrumaTabela2niveis('clTableRACAberturaLinhaEspecialFamilia'), 20000)
             })
 
             var whereTableRacRACDetalhesMetaRealAves = ""
-            + " AND Origem_do_Problema_rac = 'Fábrica Produção' "
-            + " AND Tipo_Atendimento_rac IN ('RECLAMAÇÃO FFO', 'RECLAMAÇÃO') "
-            + " AND [Regional Qual] LIKE '%AVES%' "
+            + " AND Origem IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "
+            + " AND ([Regional Qual] LIKE '%AVES%' or [Regional Qual] IN ('Outros','Itajaí')) AND ([Regional Prod] LIKE '%AVES%' or [Regional Prod] IN ('Itajaí - Aves')) "
+            + " AND (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') OR Tipo_Atendimento_rac IS NULL) "
 
-            api.getSearaBaseRAC3niveisDesvio([whereTableRacRACDetalhesMetaRealAves," [Regional Qual] CAMPO1, [Unidade] CAMPO2, null CAMPO3 "," [Regional Qual], [Unidade] "]).then((response) => {
+            api.getSearaBaseRAC3niveisDesvio([whereTableRacRACDetalhesMetaRealAves," [Negócio Qualidade] CAMPO1, [Unidade] CAMPO2, null CAMPO3 "," [Negócio Qualidade], [Unidade] "]).then((response) => {
 
                 let json = JSON.parse(response.data)
 
@@ -5114,15 +5755,16 @@ function Home() {
                 }
 
                 setTableRacRACDetalhesMetaRealAves(json)
-                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesMetaRealAves'), 13000)
+                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesMetaRealAves'), 20000)
             })
 
             var whereTableRacRACDetalhesMetaRealPreparados = ""
-            + " AND Origem_do_Problema_rac = 'Fábrica Produção' "
-            + " AND Tipo_Atendimento_rac IN ('RECLAMAÇÃO FFO', 'RECLAMAÇÃO') "
-            + " AND [Regional Qual] LIKE '%prepar%' "
+            + " AND Origem IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "
+            
+            + " AND (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') OR Tipo_Atendimento_rac IS NULL) "
+            + " AND (([Regional Qual] LIKE '%Prepar%' or [Regional Qual] IN ('Outros', 'Itajaí')) AND ([Regional Prod] IN ('Outros','Preparados', 'Fatiados') ) OR UNIDADE = 'ITAJAI INDUSTRIALIZADOS') "
 
-            api.getSearaBaseRAC3niveisDesvio([whereTableRacRACDetalhesMetaRealPreparados," [Regional Qual] CAMPO1, [Unidade] CAMPO2, null CAMPO3 "," [Regional Qual], [Unidade] "]).then((response) => {
+            api.getSearaBaseRAC3niveisDesvio([whereTableRacRACDetalhesMetaRealPreparados," [Negócio Qualidade] CAMPO1, [Unidade] CAMPO2, null CAMPO3 "," [Negócio Qualidade], [Unidade] "]).then((response) => {
 
                 let json = JSON.parse(response.data)
 
@@ -5140,15 +5782,16 @@ function Home() {
                 }
 
                 setTableRacRACDetalhesMetaRealPreparados(json)
-                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesMetaRealPreparados'), 13000)
+                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesMetaRealPreparados'), 20000)
             })
 
             var whereTableRacRACDetalhesMetaRealSuinos = ""
-            + " AND Origem_do_Problema_rac = 'Fábrica Produção' "
-            + " AND Tipo_Atendimento_rac IN ('RECLAMAÇÃO FFO', 'RECLAMAÇÃO') "
-            + " AND [Regional Qual] LIKE '%su%nos%' "
+            + " AND Origem IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "
+            
+            + " AND (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') OR Tipo_Atendimento_rac IS NULL) "
+            + " AND (([Regional Qual] LIKE '%Su%no%' or [Regional Qual] IN ('Outros')) AND ([Regional Prod] LIKE '%Su%no%' ) OR UNIDADE = 'ITAJAI SUINOS') "
 
-            api.getSearaBaseRAC3niveisDesvio([whereTableRacRACDetalhesMetaRealSuinos," [Regional Qual] CAMPO1, [Unidade] CAMPO2, null CAMPO3 "," [Regional Qual], [Unidade] "]).then((response) => {
+            api.getSearaBaseRAC3niveisDesvio([whereTableRacRACDetalhesMetaRealSuinos," [Negócio Qualidade] CAMPO1, [Unidade] CAMPO2, null CAMPO3 "," [Negócio Qualidade], [Unidade] "]).then((response) => {
 
                 let json = JSON.parse(response.data)
 
@@ -5166,28 +5809,77 @@ function Home() {
                 }
 
                 setTableRacRACDetalhesMetaRealSuinos(json)
-                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesMetaRealSuinos'), 13000)
+                setTimeout(arrumaTabela2niveis('clTableRacRACDetalhesMetaRealSuinos'), 20000)
             })
 
-            var whereTableRACAberturaLinhaEspecialAcumulado = ""
+            var whereTableRACAberturaLinhaEspecialAcumuladoGourmet = ""
             + " WHERE 1=1	AND month(Data_rac) = month((select * from v_maiorData)) "
             + " AND year(Data_rac) = year((select * from v_maiorData)) "
-            + " AND [Origem_do_Problema_rac] IN ('ABUSO DE PRODUTO PDV') "																										
+            + " AND [Origem_do_Problema_rac] NOT IN ('ABUSO DE PRODUTO HOME', 'Marketing') "																										
             + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR') "	
             + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "
-            + " AND Nm_Marca_rac in ('SEARA GOURMET','SEARA INCRIVEL','SEARA NATURE','SEARA ROTISSERIE') "																											
+            + " AND Nm_Marca_rac in ('SEARA GOURMET') "																											
             + " AND Tipo_rac = 'Real' "
 
-            api.getSearaBaseRAC3niveis([whereTableRACAberturaLinhaEspecialAcumulado," Nm_Marca_rac CAMPO1, Problema CAMPO2, Unidade CAMPO3 "," Nm_Marca_rac, Problema, Unidade "]).then((response) => {
+            api.getSearaBaseRAC3niveis([whereTableRACAberturaLinhaEspecialAcumuladoGourmet," Tipo_Problema_rac CAMPO1, Unidade CAMPO2, Nm_item_rac CAMPO3 "," Tipo_Problema_rac, Unidade, Nm_item_rac "]).then((response) => {
 
                 let json = JSON.parse(response.data)
-                setTableRacAberturaLinhaEspecialAcumulado(json)
-                setTimeout(arrumaTabela3niveis('clTableRACAberturaLinhaEspecialAcumulado'), 13000)
+                setTableRacAberturaLinhaEspecialAcumuladoGourmet(json)
+                setTimeout(arrumaTabela3niveis('clTableRACAberturaLinhaEspecialAcumuladoGourmet'), 20000)
+            })
+
+            var whereTableRACAberturaLinhaEspecialAcumuladoIncrivel = ""
+            + " WHERE 1=1	AND month(Data_rac) = month((select * from v_maiorData)) "
+            + " AND year(Data_rac) = year((select * from v_maiorData)) "
+            + " AND [Origem_do_Problema_rac] NOT IN ('ABUSO DE PRODUTO HOME', 'Marketing') "																										
+            + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR') "	
+            + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "
+            + " AND Nm_Marca_rac in ('SEARA INCRIVEL') "																											
+            + " AND Tipo_rac = 'Real' "
+
+            api.getSearaBaseRAC3niveis([whereTableRACAberturaLinhaEspecialAcumuladoIncrivel," Tipo_Problema_rac CAMPO1, Unidade CAMPO2, Nm_item_rac CAMPO3 "," Tipo_Problema_rac, Unidade, Nm_item_rac  "]).then((response) => {
+
+                let json = JSON.parse(response.data)
+                setTableRacAberturaLinhaEspecialAcumuladoIncrivel(json)
+                setTimeout(arrumaTabela3niveis('clTableRACAberturaLinhaEspecialAcumuladoIncrivel'), 20000)
+            })
+
+            var whereTableRACAberturaLinhaEspecialAcumuladoNature = ""
+            + " WHERE 1=1	AND month(Data_rac) = month((select * from v_maiorData)) "
+            + " AND year(Data_rac) = year((select * from v_maiorData)) "
+            + " AND [Origem_do_Problema_rac] NOT IN ('ABUSO DE PRODUTO HOME', 'Marketing') "																										
+            + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR') "	
+            + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "
+            + " AND Nm_Marca_rac in ('SEARA NATURE') "																											
+            + " AND Tipo_rac = 'Real' "
+
+            api.getSearaBaseRAC3niveis([whereTableRACAberturaLinhaEspecialAcumuladoNature," Tipo_Problema_rac CAMPO1, Unidade CAMPO2, Nm_item_rac CAMPO3 "," Tipo_Problema_rac, Unidade, Nm_item_rac  "]).then((response) => {
+
+                let json = JSON.parse(response.data)
+                setTableRacAberturaLinhaEspecialAcumuladoNature(json)
+                setTimeout(arrumaTabela3niveis('clTableRACAberturaLinhaEspecialAcumuladoNature'), 20000)
+            })
+
+            var whereTableRACAberturaLinhaEspecialAcumuladoRotisserie = ""
+            + " WHERE 1=1	AND month(Data_rac) = month((select * from v_maiorData)) "
+            + " AND year(Data_rac) = year((select * from v_maiorData)) "
+            + " AND [Origem_do_Problema_rac] NOT IN ('ABUSO DE PRODUTO HOME', 'Marketing') "																										
+            + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR') "	
+            + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "
+            + " AND Nm_Marca_rac in ('SEARA ROTISSERIE') "																											
+            + " AND Tipo_rac = 'Real' "
+
+            api.getSearaBaseRAC3niveis([whereTableRACAberturaLinhaEspecialAcumuladoRotisserie," Tipo_Problema_rac CAMPO1, Unidade CAMPO2, Nm_item_rac CAMPO3 "," Tipo_Problema_rac, Unidade, Nm_item_rac  "]).then((response) => {
+
+                let json = JSON.parse(response.data)
+                setTableRacAberturaLinhaEspecialAcumuladoRotisserie(json)
+                setTimeout(arrumaTabela3niveis('clTableRACAberturaLinhaEspecialAcumuladoRotisserie'), 20000)
             })
 
             //////
             var whereTableRacRACD3InNatura = ""
-            + " WHERE 1=1	AND Data_rac = DATEADD(DD,-2,(select * from v_maiorData)) "   																											
+            + " WHERE 1=1	AND Data_rac =  "  
+            + " case when DATEPART(WEEKDAY,DATEADD(DD,-2,(select * from v_maiorData))) = 1 then DATEADD(DD,-4,(select * from v_maiorData)) when DATEPART(WEEKDAY,DATEADD(DD,-2,(select * from v_maiorData))) = 7 then DATEADD(DD,-3,(select * from v_maiorData)) else DATEADD(DD,-2,(select * from v_maiorData)) end " 																											
             + " AND Tipo_rac = 'Real'  "
             + " AND ([Regional Qual] like '%Ave%' or [Regional Qual] like '%suín%') "
             + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
@@ -5200,11 +5892,12 @@ function Home() {
 
                 let json = JSON.parse(response.data)
                 setTableRacRACD3InNatura(json)
-                setTimeout(arrumaTabela3niveis('clTableRacRACD3InNatura'), 13000)
+                setTimeout(arrumaTabela3niveis('clTableRacRACD3InNatura'), 20000)
             })
 
              var whereTableRacRACD0InNatura = ""
-             + " WHERE 1=1	AND Data_rac = DATEADD(DD,-0,(select * from v_maiorData)) "   																											
+             + " WHERE 1=1	AND Data_rac =  "   	
+             + " case when DATEPART(WEEKDAY,DATEADD(DD,-0,(select * from v_maiorData))) = 1 then DATEADD(DD,-2,(select * from v_maiorData)) when DATEPART(WEEKDAY,DATEADD(DD,-0,(select * from v_maiorData))) = 7 then DATEADD(DD,-1,(select * from v_maiorData)) else DATEADD(DD,-0,(select * from v_maiorData)) end "																										
             + " AND Tipo_rac = 'Real'   "
             + " AND ([Regional Qual] like '%Ave%' or [Regional Qual] like '%suín%') "
             + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
@@ -5217,97 +5910,105 @@ function Home() {
  
                  let json = JSON.parse(response.data)
                  setTableRacRACD0InNatura(json)
-                 setTimeout(arrumaTabela3niveis('clTableRacRACD0InNatura'), 13000)
+                 setTimeout(arrumaTabela3niveis('clTableRacRACD0InNatura'), 20000)
              })
 
              //////
             var whereTableRacRACD3Preparados = ""
-            + " WHERE 1=1	AND Data_rac = DATEADD(DD,-2,(select * from v_maiorData)) "   																											
+            + " WHERE 1=1	AND Data_rac =  "  
+            + " case when DATEPART(WEEKDAY,DATEADD(DD,-2,(select * from v_maiorData))) = 1 then DATEADD(DD,-4,(select * from v_maiorData)) when DATEPART(WEEKDAY,DATEADD(DD,-2,(select * from v_maiorData))) = 7 then DATEADD(DD,-3,(select * from v_maiorData)) else DATEADD(DD,-2,(select * from v_maiorData)) end" 																											
             + " AND Tipo_rac = 'Real'   "
-            + " AND [Regional Qual] like '%Prepar%' "
+            + " AND Negocio = 'preparados'"
             + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
 			+ " OR Tipo_Atendimento_rac IS NULL) "
-            + " and (Unidade NOT IN ('Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS') OR Unidade IS NULL) "
-            + " AND (Origem NOT IN ('ABUSO DE PRODUTO HOME') OR Origem IS NULL) "
+            + " and (Unidade NOT IN ('Fatiados','Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS') OR Unidade IS NULL) "
+            + " AND (Origem  IN ('EXPEDIÇÃO FÁBRICA','FABRICAÇÃO','Documentação Unidade') ) "
 
             api.getSearaBaseRAC3niveis([whereTableRacRACD3Preparados," Unidade CAMPO1, Nm_Item_RAC CAMPO2, Tipo_Problema_rac CAMPO3 "," Unidade, Nm_Item_RAC, Tipo_Problema_rac "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacRACD3Preparados(json)
-                setTimeout(arrumaTabela3niveis('clTableRacRACD3Preparados'), 13000)
+                setTimeout(arrumaTabela3niveis('clTableRacRACD3Preparados'), 20000)
             })
 
              var whereTableRacRACD0Preparados = ""
-             + " WHERE 1=1	AND Data_rac = DATEADD(DD,-0,(select * from v_maiorData)) "   																											
-            + " AND Tipo_rac = 'Real'  "
-            + " AND [Regional Qual] like '%Prepar%' "
-            + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
-			+ " OR Tipo_Atendimento_rac IS NULL) "
-            + " and (Unidade NOT IN ('Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS') OR Unidade IS NULL) "
-            + " AND (Origem NOT IN ('ABUSO DE PRODUTO HOME') OR Origem IS NULL) "
-
+             + " WHERE 1=1	AND Data_rac = "   	
+             + " case when DATEPART(WEEKDAY,DATEADD(DD,-0,(select * from v_maiorData))) = 1 then DATEADD(DD,-2,(select * from v_maiorData)) when DATEPART(WEEKDAY,DATEADD(DD,-0,(select * from v_maiorData))) = 7 then DATEADD(DD,-1,(select * from v_maiorData)) else DATEADD(DD,-0,(select * from v_maiorData)) end"																										
+             + " AND Tipo_rac = 'Real'   "
+             + " AND Negocio = 'preparados'"
+             + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
+             + " OR Tipo_Atendimento_rac IS NULL) "
+             + " and (Unidade NOT IN ('Fatiados','Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS') OR Unidade IS NULL) "
+             + " AND (Origem  IN ('EXPEDIÇÃO FÁBRICA','FABRICAÇÃO','Documentação Unidade') ) "
+ 
  
              api.getSearaBaseRAC3niveis([whereTableRacRACD0Preparados," Unidade CAMPO1, Nm_Item_RAC CAMPO2, Tipo_Problema_rac CAMPO3 "," Unidade, Nm_Item_RAC, Tipo_Problema_rac "]).then((response) => {
  
                  let json = JSON.parse(response.data)
                  setTableRacRACD0Preparados(json)
-                 setTimeout(arrumaTabela3niveis('clTableRacRACD0Preparados'), 13000)
+                 setTimeout(arrumaTabela3niveis('clTableRacRACD0Preparados'), 20000)
              })
 
 
              var whereTableNNCLogD3 = ""
              + " WHERE 1=1 "
              
-             + " AND [DT ABERTURA] >= DATEADD(DD,-2,(select * from v_maiorData)) "
+             + " AND [DT ABERTURA] = case when DATEPART(WEEKDAY,DATEADD(DD,-2,(select * from v_maiorData))) = 1 then DATEADD(DD,-4,(select * from v_maiorData)) when DATEPART(WEEKDAY,DATEADD(DD,-2,(select * from v_maiorData))) = 7 then DATEADD(DD,-3,(select * from v_maiorData)) else DATEADD(DD,-2,(select * from v_maiorData)) end" 
+             + " and [Regional (Qualidade)] not in ('Logística', 'Terceiro', 'Outros') and [Área Responsável] not in ('WRAP PIZZA', 'RASTREABILIDADE HUB', 'NNC OCORRÊNCIA PRODUTO; PROCESSO NAS FILIAIS') "
  
-             api.getSearaBaseNNCLog3niveis([whereTableNNCLogD3," ISNULL(Unidade,'SEM UNIDADE') CAMPO1, [Tipo Problema] CAMPO2, ISNULL([Regional (Qualidade)],'SEM REGIONAL') CAMPO3  "," Unidade, [Tipo Problema], [Regional (Qualidade)] "]).then((response) => {
+             api.getSearaBaseNNCLog3niveis([whereTableNNCLogD3," Fornecedor CAMPO1, [Grupo Problema] CAMPO2, [Tipo Problema] CAMPO3  "," Fornecedor, [Tipo Problema], [Grupo Problema] "]).then((response) => {
  
                  let json = JSON.parse(response.data)
                  setTableNNCLogD3(json)
-                 setTimeout(arrumaTabela2niveis('clTableNNCLogD3'), 13000)
+                 setTimeout(arrumaTabela2niveis('clTableNNCLogD3'), 20000)
              })
 
              var whereTableNNCLogD0 = ""
         
              + " WHERE 1=1 "
-            + " AND [DT ABERTURA] >= DATEADD(DD,-0,(select * from v_maiorData)) "
+             + " AND [DT ABERTURA] =  "
+             + " case when DATEPART(WEEKDAY,DATEADD(DD,-0,(select * from v_maiorData))) = 1 then DATEADD(DD,-2,(select * from v_maiorData)) when DATEPART(WEEKDAY,DATEADD(DD,-0,(select * from v_maiorData))) = 7 then DATEADD(DD,-1,(select * from v_maiorData)) else DATEADD(DD,-0,(select * from v_maiorData)) end"
+             + " and [Regional (Qualidade)] not in ('Logística', 'Terceiro', 'Outros') and [Área Responsável] not in ('WRAP PIZZA', 'RASTREABILIDADE HUB', 'NNC OCORRÊNCIA PRODUTO; PROCESSO NAS FILIAIS') "
  
-             api.getSearaBaseNNCLog3niveis([whereTableNNCLogD0," ISNULL(Unidade,'SEM UNIDADE') CAMPO1, [Tipo Problema] CAMPO2, ISNULL([Regional (Qualidade)],'SEM REGIONAL') CAMPO3  "," Unidade, [Tipo Problema], [Regional (Qualidade)] "]).then((response) => {
+ 
+             api.getSearaBaseNNCLog3niveis([whereTableNNCLogD0,"  Fornecedor CAMPO1, [Grupo Problema] CAMPO2, [Tipo Problema] CAMPO3  "," Fornecedor, [Tipo Problema], [Grupo Problema] "]).then((response) => {
  
                  let json = JSON.parse(response.data)
                  setTableNNCLogD0(json)
-                 setTimeout(arrumaTabela2niveis('clTableNNCLogD0'), 13000)
+                 setTimeout(arrumaTabela2niveis('clTableNNCLogD0'), 20000)
              })
 
              //////
             var whereTableNNCMPD3InNatura = ""
             + " WHERE 1=1 "
             + " AND [Reg. Qual] NOT IN ('ITAJAÍ','OUTROS') "
-            + " AND ([Reg. Prod.] LIKE '%AVES%' OR [Reg. Prod.] IN ('SUINOS')) "
+            + " AND ([Reg. Qual] LIKE '%AVES%' OR [Reg. Qual] like '%suí%') "
             + " AND [GRUPO PROBLEMA] NOT IN ('EMBALAGEM SECUNDÁRIA','DISTR / LOG') "
             + " AND [Entra para a Meta] IN ('SIM') "
-            + " AND [DT ABERTURA] >= DATEADD(DD,-2,(select * from v_maiorData)) "
+            + " AND [DT ABERTURA] = "
+            + " case when DATEPART(WEEKDAY,DATEADD(DD,-2,(select * from v_maiorData))) = 1 then DATEADD(DD,-4,(select * from v_maiorData)) when DATEPART(WEEKDAY,DATEADD(DD,-2,(select * from v_maiorData))) = 7 then DATEADD(DD,-3,(select * from v_maiorData)) else DATEADD(DD,-2,(select * from v_maiorData)) end"
 
-            api.getSearaBaseNNCMP3niveis([whereTableNNCMPD3InNatura," Filial CAMPO1, [Tipo Problema] CAMPO2, [Reg. Qual] CAMPO3 "," Filial, [Tipo Problema], [Reg. Qual] "]).then((response) => {
+            api.getSearaBaseNNCMP3niveis([whereTableNNCMPD3InNatura," Fornecedor CAMPO1, [Tipo Problema] CAMPO2, Produto CAMPO3 "," Fornecedor, [Tipo Problema], Produto "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableNNCMPD3InNatura(json)
-                setTimeout(arrumaTabela3niveis('clTableNNCMPD3InNatura'), 13000)
+                setTimeout(arrumaTabela3niveis('clTableNNCMPD3InNatura'), 20000)
             })
 
              var whereTableNNCMPD0InNatura = ""
              + " WHERE 1=1 "
             + " AND [Reg. Qual] NOT IN ('ITAJAÍ','OUTROS') "
-            + " AND ([Reg. Prod.] LIKE '%AVES%' OR [Reg. Prod.] IN ('SUINOS')) "
+            + " AND ([Reg. Qual] LIKE '%AVES%' OR [Reg. Qual] like '%suí%') "
             + " AND [GRUPO PROBLEMA] NOT IN ('EMBALAGEM SECUNDÁRIA','DISTR / LOG') "
             + " AND [Entra para a Meta] IN ('SIM') "
-            + " AND [DT ABERTURA] >= DATEADD(DD,-0,(select * from v_maiorData)) "
+            + " AND [DT ABERTURA] =  "
+            + " case when DATEPART(WEEKDAY,DATEADD(DD,-0,(select * from v_maiorData))) = 1 then DATEADD(DD,-2,(select * from v_maiorData)) when DATEPART(WEEKDAY,DATEADD(DD,-0,(select * from v_maiorData))) = 7 then DATEADD(DD,-1,(select * from v_maiorData)) else DATEADD(DD,-0,(select * from v_maiorData)) end"
  
-             api.getSearaBaseNNCMP3niveis([whereTableNNCMPD0InNatura," Filial CAMPO1, [Tipo Problema] CAMPO2, [Reg. Qual] CAMPO3 "," Filial, [Tipo Problema], [Reg. Qual] "]).then((response) => {
+             api.getSearaBaseNNCMP3niveis([whereTableNNCMPD0InNatura," Fornecedor CAMPO1, [Tipo Problema] CAMPO2, Produto CAMPO3 "," Fornecedor, [Tipo Problema], Produto "]).then((response) => {
  
                  let json = JSON.parse(response.data)
                  setTableNNCMPD0InNatura(json)
-                 setTimeout(arrumaTabela3niveis('clTableNNCMPD0InNatura'), 13000)
+                 setTimeout(arrumaTabela3niveis('clTableNNCMPD0InNatura'), 20000)
              })
 
              //////
@@ -5317,13 +6018,14 @@ function Home() {
             + " AND [Reg. Prod.] IN ('PREPARADOS') "
             + " AND [GRUPO PROBLEMA] NOT IN ('EMBALAGEM SECUNDÁRIA','DISTR / LOG') "
             + " AND [Entra para a Meta] IN ('SIM') "
-            + " AND [DT ABERTURA] >= DATEADD(DD,-2,(select * from v_maiorData)) "
+            + " AND [DT ABERTURA] =  "
+            + " case when DATEPART(WEEKDAY,DATEADD(DD,-2,(select * from v_maiorData))) = 1 then DATEADD(DD,-4,(select * from v_maiorData)) when DATEPART(WEEKDAY,DATEADD(DD,-2,(select * from v_maiorData))) = 7 then DATEADD(DD,-3,(select * from v_maiorData)) else DATEADD(DD,-2,(select * from v_maiorData)) end"
 
-            api.getSearaBaseNNCMP3niveis([whereTableNNCMPD3Preparados," Filial CAMPO1, [Tipo Problema] CAMPO2, [Reg. Qual] CAMPO3 "," Filial, [Tipo Problema], [Reg. Qual] "]).then((response) => {
+            api.getSearaBaseNNCMP3niveis([whereTableNNCMPD3Preparados," Fornecedor CAMPO1, [Tipo Problema] CAMPO2, Produto CAMPO3 "," Fornecedor, [Tipo Problema], Produto "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableNNCMPD3Preparados(json)
-                setTimeout(arrumaTabela3niveis('clTableNNCMPD3Preparados'), 13000)
+                setTimeout(arrumaTabela3niveis('clTableNNCMPD3Preparados'), 20000)
             })
 
              var whereTableNNCMPD0Preparados = ""
@@ -5332,13 +6034,14 @@ function Home() {
             + " AND [Reg. Prod.] IN ('PREPARADOS') "
             + " AND [GRUPO PROBLEMA] NOT IN ('EMBALAGEM SECUNDÁRIA','DISTR / LOG') "
             + " AND [Entra para a Meta] IN ('SIM') "
-            + " AND [DT ABERTURA] >= DATEADD(DD,-0,(select * from v_maiorData)) "
+            + " AND [DT ABERTURA] = DATEADD(DD,-0,(select * from v_maiorData)) "
+            + " case when DATEPART(WEEKDAY,DATEADD(DD,-0,(select * from v_maiorData))) = 1 then DATEADD(DD,-2,(select * from v_maiorData)) when DATEPART(WEEKDAY,DATEADD(DD,-0,(select * from v_maiorData))) = 7 then DATEADD(DD,-1,(select * from v_maiorData)) else DATEADD(DD,-0,(select * from v_maiorData)) end"
  
-             api.getSearaBaseNNCMP3niveis([whereTableNNCMPD0Preparados," Filial CAMPO1, [Tipo Problema] CAMPO2, [Reg. Qual] CAMPO3 "," Filial, [Tipo Problema], [Reg. Qual] "]).then((response) => {
+             api.getSearaBaseNNCMP3niveis([whereTableNNCMPD0Preparados," Fornecedor CAMPO1, [Tipo Problema] CAMPO2, Produto CAMPO3 "," Fornecedor, [Tipo Problema], Produto "]).then((response) => {
  
                  let json = JSON.parse(response.data)
                  setTableNNCMPD0Preparados(json)
-                 setTimeout(arrumaTabela3niveis('clTableNNCMPD0Preparados'), 13000)
+                 setTimeout(arrumaTabela3niveis('clTableNNCMPD0Preparados'), 20000)
              })
 
              var whereTableNNCMPCEOssos = ""
@@ -5350,11 +6053,28 @@ function Home() {
              + " AND month([DT ABERTURA]) = month((select * from v_maiorData)) "
              + " AND year([DT ABERTURA]) = year((select * from v_maiorData)) "
  
-             api.getSearaBaseNNCMP3niveis([whereTableNNCMPCEOssos," Cliente CAMPO1, Fornecedor CAMPO2, Produto CAMPO3 "," Cliente, Fornecedor, Produto "]).then((response) => {
+             api.getSearaBaseNNC3niveisPIVOTDIA([whereTableNNCMPCEOssos," Cliente Coluna1, Fornecedor Coluna2, Produto Coluna3 "," Cliente, Fornecedor, Produto ", " [MES-DIA] ", " [MES-DIA] "]).then((response) => {
  
                  let json = JSON.parse(response.data)
+                 
+                 for (var i=0; i<json.length; i++){
+                    delete json[i]['C1'];
+                    delete json[i]['C2'];
+                    delete json[i]['C3'];
+                    delete json[i]['Coluna1'];
+                    delete json[i]['Coluna2'];
+                    delete json[i]['Coluna3'];
+                    delete json[i]['Nº RAC'];
+                    delete json[i]['C1__'];
+                    delete json[i]['C2__'];
+                    delete json[i]['C3__'];
+                    delete json[i]['Coluna_'];
+                    delete json[i]['Total'];
+                    delete json[i]['Total2'];
+                }
+
                  setTableNNCMPCEOssos(json)
-                 setTimeout(arrumaTabela3niveis('clTableNNCMPCEOssos'), 13000)
+                 setTimeout(arrumaTabela3niveis('clTableNNCMPCEOssos'), 20000)
              })
 
              var whereTableNNCMPCEOssosFornecedor = ""
@@ -5366,11 +6086,11 @@ function Home() {
              + " AND month([DT ABERTURA]) = month((select * from v_maiorData)) "
              + " AND year([DT ABERTURA]) = year((select * from v_maiorData)) "
  
-             api.getSearaBaseNNCMP2niveis([whereTableNNCMPCEOssosFornecedor," [Reg. Qual] CAMPO1, Fornecedor CAMPO2, null CAMPO3 "," [Reg. Qual], Fornecedor "]).then((response) => {
+             api.getSearaBaseNNCMP3niveis([whereTableNNCMPCEOssosFornecedor," [Negócio] CAMPO1, Fornecedor CAMPO2, null CAMPO3 "," [Negócio], Fornecedor "]).then((response) => {
  
                  let json = JSON.parse(response.data)
                  setTableNNCMPCEOssosFornecedor(json)
-                 setTimeout(arrumaTabela2niveis('clTableNNCMPCEOssosFornecedor'), 13000)
+                 setTimeout(arrumaTabela2niveis('clTableNNCMPCEOssosFornecedor'), 20000)
              })
 
              var whereTableNNCMPCEOssosUnidadesReclamantes = ""
@@ -5382,11 +6102,11 @@ function Home() {
              + " AND month([DT ABERTURA]) = month((select * from v_maiorData)) "
              + " AND year([DT ABERTURA]) = year((select * from v_maiorData)) "
  
-             api.getSearaBaseNNCMP2niveis([whereTableNNCMPCEOssosUnidadesReclamantes," [Reg. Qual] CAMPO1, [Filial] CAMPO2, null CAMPO3 "," [Reg. Qual], [Filial] "]).then((response) => {
+             api.getSearaBaseNNCMP2niveis([whereTableNNCMPCEOssosUnidadesReclamantes," [Negócio] CAMPO1, [Filial] CAMPO2, null CAMPO3 "," [Negócio], [Filial] "]).then((response) => {
  
                  let json = JSON.parse(response.data)
                  setTableNNCMPCEOssosUnidadesReclamantes(json)
-                 setTimeout(arrumaTabela2niveis('clTableNNCMPCEOssosUnidadesReclamantes'), 13000)
+                 setTimeout(arrumaTabela2niveis('clTableNNCMPCEOssosUnidadesReclamantes'), 20000)
              })
 
              var whereTableRacCorposEstranhos = ""
@@ -5394,10 +6114,11 @@ function Home() {
              + "and year(data_rac) = (select year(data) as data from v_maiorData) "
              + "and month(data_rac) = (select month(data) as data from v_maiorData) "
              + "AND [Origem] IN ('FABRICAÇÃO','EXPEDIÇÃO FÁBRICA','P&D','PRODUÇÃO EM TERCEIRO') "
+             + "AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO', 'Santa Cruz do Sul', 'Noronha', 'Amai', 'Grano', 'GRANO ALIMENTOS S.A.') "
              + "AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') "
              + "and [Tipo CE] in ('Inerente', 'Não Inerente') "
 
-            api.getSearaBaseRAC3niveisPIVOTDIA([ whereTableRacCorposEstranhos, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [Tipo_Problema] " ]).then((response) => {
+            api.getSearaBaseRAC3niveisPIVOTDIA([ whereTableRacCorposEstranhos, "[Negócio Qualidade] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Negócio Qualidade], Unidade", " [Tipo_Problema_rac] " ]).then((response) => {
                 
                 let json = JSON.parse(response.data)
 
@@ -5419,18 +6140,20 @@ function Home() {
 
              
                  setTableRacCorposEstranhos(json)
-                 setTimeout(arrumaTabela2niveis('clTableRacCorposEstranhos'), 13000)
+                 setTimeout(arrumaTabela2niveis('clTableRacCorposEstranhos'), 20000)
              })
 
              var whereTableRacCorposEstranhosInerente = ""
              + " WHERE 1=1 "
              + "and year(data_rac) = (select year(data) as data from v_maiorData) "
              + "and month(data_rac) = (select month(data) as data from v_maiorData) "
+             + "AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO', 'Santa Cruz do Sul', 'Noronha', 'Amai', 'Grano', 'GRANO ALIMENTOS S.A.') "
+             
              + "AND [Origem] IN ('FABRICAÇÃO','EXPEDIÇÃO FÁBRICA','P&D','PRODUÇÃO EM TERCEIRO') "
              + "AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') "
              + "and [Tipo CE] = 'Inerente' "
 
-            api.getSearaBaseRAC3niveisPIVOTDIA([ whereTableRacCorposEstranhosInerente, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [Tipo_Problema] " ]).then((response) => {
+            api.getSearaBaseRAC3niveisPIVOTDIA([ whereTableRacCorposEstranhosInerente, "[Negócio Qualidade]  as Coluna1, Unidade as Coluna2, null as Coluna3", "[Negócio Qualidade] , Unidade", " [Tipo_Problema_rac] " ]).then((response) => {
                 
                 let json = JSON.parse(response.data)
 
@@ -5452,7 +6175,7 @@ function Home() {
 
              
                  setTableRacCorposEstranhosInerentes(json)
-                 setTimeout(arrumaTabela2niveis('clTableRacCorposEstranhosInerentes'), 13000)
+                 setTimeout(arrumaTabela2niveis('clTableRacCorposEstranhosInerentes'), 20000)
              })
 
              var whereTableRacCorposEstranhosNaoInerente = ""
@@ -5460,10 +6183,12 @@ function Home() {
              + "and year(data_rac) = (select year(data) as data from v_maiorData) "
              + "and month(data_rac) = (select month(data) as data from v_maiorData) "
              + "AND [Origem] IN ('FABRICAÇÃO','EXPEDIÇÃO FÁBRICA','P&D','PRODUÇÃO EM TERCEIRO') "
+             + "AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO', 'Santa Cruz do Sul', 'Noronha', 'Amai', 'Grano', 'GRANO ALIMENTOS S.A.') "
+             
              + "AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') "
              + "and [Tipo CE] = 'Não Inerente' "
 
-            api.getSearaBaseRAC3niveisPIVOTDIA([ whereTableRacCorposEstranhosNaoInerente, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [Tipo_Problema] " ]).then((response) => {
+            api.getSearaBaseRAC3niveisPIVOTDIA([ whereTableRacCorposEstranhosNaoInerente, "[Negócio Qualidade]  as Coluna1, Unidade as Coluna2, null as Coluna3", "[Negócio Qualidade] , Unidade", " [Tipo_Problema_rac] " ]).then((response) => {
                 
                 let json = JSON.parse(response.data)
 
@@ -5485,20 +6210,22 @@ function Home() {
 
              
                  setTableRacCorposEstranhosNaoInerentes(json)
-                 setTimeout(arrumaTabela2niveis('clTableRacCorposEstranhosNaoInerentes'), 13000)
+                 setTimeout(arrumaTabela2niveis('clTableRacCorposEstranhosNaoInerentes'), 20000)
              })
 
              var whereTableRacCorposEstranhosInerenteNaoInerente = ""
              + " WHERE 1=1 "
              + "and year(data_rac) = (select year(data) as data from v_maiorData) "
              + "and month(data_rac) = (select month(data) as data from v_maiorData) "
+             + "AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO', 'Santa Cruz do Sul', 'Noronha', 'Amai', 'Grano', 'GRANO ALIMENTOS S.A.') "
+             
              + "AND [Origem] IN ('FABRICAÇÃO','EXPEDIÇÃO FÁBRICA','P&D','PRODUÇÃO EM TERCEIRO') "
              + "AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') "
              + "and [Tipo CE] in ('Inerente', 'Não Inerente') "
             
             
 
-             api.getSearaBaseRAC3niveisPIVOTDIA([ whereTableRacCorposEstranhosInerenteNaoInerente, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [Tipo CE] " ]).then((response) => {
+             api.getSearaBaseRAC3niveisPIVOTDIA([ whereTableRacCorposEstranhosInerenteNaoInerente, "[Negócio Qualidade]  as Coluna1, Unidade as Coluna2, null as Coluna3", " [Negócio Qualidade] , Unidade", " [Tipo CE] " ]).then((response) => {
                 
                 let json = JSON.parse(response.data)
 
@@ -5520,7 +6247,7 @@ function Home() {
 
              
                  setTableRacCorposEstranhosInerentesNaoInerentes(json)
-                 setTimeout(arrumaTabela2niveis('clTableRacCorposEstranhosInerentesNaoInerentes'), 13000)
+                 setTimeout(arrumaTabela2niveis('clTableRacCorposEstranhosInerentesNaoInerentes'), 20000)
              })
 
             flagTable = true;
@@ -5565,7 +6292,7 @@ function Home() {
                 <h1 className={'h2'}>
                     Atualizando a base
                     <br />
-                    <small>Puxando dados da RAC</small>
+                    <small>Carrengando dados</small>
                     <br />
                 </h1>
                 <ProgressBar mode="indeterminate" style={{ height: '16px' }}></ProgressBar>
@@ -5622,7 +6349,7 @@ function Home() {
             <div className="pad10" ref={ref}  >
                 <Row>
                     <Col className="mt-1 col-12 cssSeara2021">
-                        <h1>Relatório de Atendimento ao Consumidor (RAC)</h1>
+                        <h1></h1>
                     </Col>
 
                 </Row>
@@ -5747,11 +6474,11 @@ function Home() {
 
                 </reg>
 
-                <reg id="region RAC - Aves Pesadas PR">
+                <reg id="region RAC - Aves Pesadas RS/SC/SP">
 
                     <Row>
                         <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Aves Pesadas PR
+                            Aves Pesadas RS/SC/SP
                         <hr></hr>
                         </Col>
                     </Row>
@@ -5759,7 +6486,7 @@ function Home() {
                         <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoCETotalAvesPesadasPR} options={lightOptions} className="divMaior" />
+                                    <Chart type="bar" data={responseGraficoCETotalAvesPesadasRS} options={lightOptions} className="divMaior" />
                                 </Card>
                             )}
                         </Col>
@@ -5767,14 +6494,14 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoRACTotalCEAvesPesadasPR} options={lightOptions} className="divMenor" />
+                                        <Chart type="bar" data={responseGraficoRACTotalCEAvesPesadasRS} options={lightOptions} className="divMenor" />
                                     </Card>
                                 )}
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCEAvesPesadasPR} options={lightOptions} className="divMenor" />
+                                        <Chart type="bar" data={responseGraficoNNCMPTotalCEAvesPesadasRS} options={lightOptions} className="divMenor" />
                                     </Card>
                                 )}
                             </Col>
@@ -5791,14 +6518,14 @@ function Home() {
                         <Col>
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoRACAvesPesadasPR} options={lightOptions} className="divMedia" />
+                                    <Chart type="bar" data={responseGraficoRACAvesPesadasRS} options={lightOptions} className="divMedia" />
                                 </Card>
                             )}
                         </Col>
                         <Col>
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoNCCMPAvesPesadasPR} options={lightOptions} className="divMedia" />
+                                    <Chart type="bar" data={responseGraficoNCCMPAvesPesadasRS} options={lightOptions} className="divMedia" />
                                 </Card>
                             )}
                         </Col>
@@ -5806,6 +6533,8 @@ function Home() {
                     </Row>
 
                 </reg>
+
+                
 
                 <reg id="region RAC - Aves Pesadas SP/CO/NE">
 
@@ -5867,11 +6596,13 @@ function Home() {
 
                 </reg>
 
-                <reg id="region RAC - Aves Pesadas RS/SC/SP">
+                
+
+                <reg id="region RAC - Aves Pesadas PR">
 
                     <Row>
                         <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Aves Pesadas RS/SC/SP
+                            Aves Pesadas PR
                         <hr></hr>
                         </Col>
                     </Row>
@@ -5879,7 +6610,7 @@ function Home() {
                         <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoCETotalAvesPesadasRS} options={lightOptions} className="divMaior" />
+                                    <Chart type="bar" data={responseGraficoCETotalAvesPesadasPR} options={lightOptions} className="divMaior" />
                                 </Card>
                             )}
                         </Col>
@@ -5887,14 +6618,14 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoRACTotalCEAvesPesadasRS} options={lightOptions} className="divMenor" />
+                                        <Chart type="bar" data={responseGraficoRACTotalCEAvesPesadasPR} options={lightOptions} className="divMenor" />
                                     </Card>
                                 )}
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCEAvesPesadasRS} options={lightOptions} className="divMenor" />
+                                        <Chart type="bar" data={responseGraficoNNCMPTotalCEAvesPesadasPR} options={lightOptions} className="divMenor" />
                                     </Card>
                                 )}
                             </Col>
@@ -5911,14 +6642,14 @@ function Home() {
                         <Col>
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoRACAvesPesadasRS} options={lightOptions} className="divMedia" />
+                                    <Chart type="bar" data={responseGraficoRACAvesPesadasPR} options={lightOptions} className="divMedia" />
                                 </Card>
                             )}
                         </Col>
                         <Col>
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                 <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoNCCMPAvesPesadasRS} options={lightOptions} className="divMedia" />
+                                    <Chart type="bar" data={responseGraficoNCCMPAvesPesadasPR} options={lightOptions} className="divMedia" />
                                 </Card>
                             )}
                         </Col>
@@ -6702,7 +7433,7 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                        <Chart type="bar" data={responseGraficoRACDetalhesAberturaPDV} options={lightOptions} className="divMaior2" />
+                                        <Chart type="bar" data={responseGraficoRACDetalhesAberturaPDV} options={optionsComparativo} className="divMaior2" />
                                     </Card>
                                 )}
                             </Col>
@@ -6807,7 +7538,7 @@ function Home() {
                 <reg id="region RAC - +9">
 
                     <Row>
-                        <Col className="col-12">
+                        <Col className="col-6">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
                                 RAC's Meta x Real - Aves
                                 <hr></hr>
@@ -6847,7 +7578,8 @@ function Home() {
                 </reg>
 
                 <reg id="region RAC - +11">
-
+                <Row>
+                <Col className="col-6">
                     <Row>
                         <Col className="col-12">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
@@ -6864,10 +7596,9 @@ function Home() {
                         </Col>
                         
                     </Row>
+                </Col>
                     
-                </reg>
-
-                <reg id="region RAC - +12">
+                <Col className="col-6">
 
                     <Row>
                         <Col className="col-12">
@@ -6885,13 +7616,14 @@ function Home() {
                         </Col>
                         
                     </Row>
-                    
+                </Col> 
+                </Row>   
                 </reg>
 
                 <reg id="region RAC - +13">
 
                     <Row>
-                        <Col className="col-12">
+                        <Col className="col-6">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
                                 RAC's Meta x Real - Preparados
                                 <hr></hr>
@@ -6933,7 +7665,7 @@ function Home() {
                 <reg id="region RAC - +15">
 
                     <Row>
-                        <Col className="col-12">
+                        <Col className="col-6">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
                                 RAC's Meta x Real - Suínos
                                 <hr></hr>
@@ -6980,19 +7712,69 @@ function Home() {
                                 )}
                             </Col>
                         </Col>
+                        
+                    </Row>
+                    
+                </reg>
+
+                <reg id="region RAC - +16">
+
+                    <Row>
+                        
                         <Col className="col-3">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                Abertura Linhas Especial Seara (Acumulado Mês)
+                                Abertura Gourmet
                                 <hr></hr>
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
 
-                                    DataTableRACAberturaLinhaEspecialAcumulado()
+                                    DataTableRACAberturaLinhaEspecialAcumuladoGourmet()
 
                                 )}
                             </Col>
                         </Col>
+                        <Col className="col-3">
+                            <Col className="mt-1 col-12 cssSeara2021_titulo">
+                                Abertura Incrível
+                                <hr></hr>
+                            </Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+
+                                    DataTableRACAberturaLinhaEspecialAcumuladoIncrivel()
+
+                                )}
+                            </Col>
+                        </Col>
+                        <Col className="col-3">
+                            <Col className="mt-1 col-12 cssSeara2021_titulo">
+                                Abertura Nature 
+                                <hr></hr>
+                            </Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+
+                                    DataTableRACAberturaLinhaEspecialAcumuladoNature()
+
+                                )}
+                            </Col>
+                        </Col>
+                        <Col className="col-3">
+                            <Col className="mt-1 col-12 cssSeara2021_titulo">
+                                Abertura Rotisserie
+                                <hr></hr>
+                            </Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+
+                                    DataTableRACAberturaLinhaEspecialAcumuladoRotisserie()
+
+                                )}
+                            </Col>
+                        </Col>
+
+                        
                     </Row>
                     
                 </reg>
@@ -7083,7 +7865,7 @@ function Home() {
                         </Col>
                         <Col className="col-6">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                
+                                &nbsp;
                                 <hr></hr>
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
@@ -7116,7 +7898,7 @@ function Home() {
                         </Col>
                         <Col className="col-6">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                
+                            &nbsp;
                                 <hr></hr>
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
@@ -7149,7 +7931,7 @@ function Home() {
                         </Col>
                         <Col className="col-6">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                
+                            &nbsp;
                                 <hr></hr>
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
@@ -7182,7 +7964,7 @@ function Home() {
                         </Col>
                         <Col className="col-6">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                
+                                &nbsp;
                                 <hr></hr>
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
@@ -7215,7 +7997,7 @@ function Home() {
                         </Col>
                         <Col className="col-6">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                
+                                &nbsp;
                                 <hr></hr>
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
@@ -7248,7 +8030,7 @@ function Home() {
                         </Col>
                         <Col className="col-6">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                
+                                &nbsp;
                                 <hr></hr>
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
@@ -7509,7 +8291,7 @@ function Home() {
                     <Row>
                         <Col className="col-12">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                Evolução Mês
+                                Evolução Mês - NNC Log
                                 <hr></hr>
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
@@ -7565,17 +8347,23 @@ function Home() {
 
                     <Row>
                         <Col className="col-12">
+                            <Row>
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
                                 NNC Totais
                                 <hr></hr>
                             </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
+                            </Row>
+                            <Row>
+                            <Col className="col-lg-3 col-md-3 col-sm-12">&nbsp;</Col>
+                            <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                        <Chart type="bar" data={responseGraficoNNCLogDetalhesSuinos} options={lightOptions} className="divMaior2" />
+                                        <Chart type="bar" data={responseGraficoNCCMP} options={lightOptions} className="divMaior2" />
                                     </Card>
                                 )}
                             </Col>
+                            <Col className="col-lg-3 col-md-3 col-sm-12 ">&nbsp;</Col>
+                            </Row>
                         </Col>
 
                         
@@ -7605,14 +8393,14 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesPesadasUnidades} options={lightOptions} className="divMenor" />
+                                        <Chart type="bar" data={responseGraficoNNCAvesPesadasUnidades} options={optionsComparativo} className="divMenor" />
                                     </Card>
                                 )}
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesPesadasProblemas} options={lightOptions} className="divMenor" />
+                                        <Chart type="bar" data={responseGraficoNNCAvesPesadasProblemas} options={optionsComparativo} className="divMenor" />
                                     </Card>
                                 )}
                             </Col>
@@ -7641,14 +8429,14 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesRSUnidades} options={lightOptions} className="divMenor" />
+                                        <Chart type="bar" data={responseGraficoNNCAvesRSUnidades} options={optionsComparativo} className="divMenor" />
                                     </Card>
                                 )}
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesRSProblemas} options={lightOptions} className="divMenor" />
+                                        <Chart type="bar" data={responseGraficoNNCAvesRSProblemas} options={optionsComparativo} className="divMenor" />
                                     </Card>
                                 )}
                             </Col>
@@ -7677,14 +8465,14 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesSPUnidades} options={lightOptions} className="divMenor" />
+                                        <Chart type="bar" data={responseGraficoNNCAvesSPUnidades} options={optionsComparativo} className="divMenor" />
                                     </Card>
                                 )}
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesSPProblemas} options={lightOptions} className="divMenor" />
+                                        <Chart type="bar" data={responseGraficoNNCAvesSPProblemas} options={optionsComparativo} className="divMenor" />
                                     </Card>
                                 )}
                             </Col>
@@ -7713,14 +8501,14 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesPRUnidades} options={lightOptions} className="divMenor" />
+                                        <Chart type="bar" data={responseGraficoNNCAvesPRUnidades} options={optionsComparativo} className="divMenor" />
                                     </Card>
                                 )}
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesPRProblemas} options={lightOptions} className="divMenor" />
+                                        <Chart type="bar" data={responseGraficoNNCAvesPRProblemas} options={optionsComparativo} className="divMenor" />
                                     </Card>
                                 )}
                             </Col>
@@ -7749,14 +8537,14 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesLevesUnidades} options={lightOptions} className="divMenor" />
+                                        <Chart type="bar" data={responseGraficoNNCAvesLevesUnidades} options={optionsComparativo} className="divMenor" />
                                     </Card>
                                 )}
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesLevesProblemas} options={lightOptions} className="divMenor" />
+                                        <Chart type="bar" data={responseGraficoNNCAvesLevesProblemas} options={optionsComparativo} className="divMenor" />
                                     </Card>
                                 )}
                             </Col>
@@ -7785,14 +8573,14 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCSuinosUnidades} options={lightOptions} className="divMenor" />
+                                        <Chart type="bar" data={responseGraficoNNCSuinosUnidades} options={optionsComparativo} className="divMenor" />
                                     </Card>
                                 )}
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCSuinosProblemas} options={lightOptions} className="divMenor" />
+                                        <Chart type="bar" data={responseGraficoNNCSuinosProblemas} options={optionsComparativo} className="divMenor" />
                                     </Card>
                                 )}
                             </Col>
@@ -7822,14 +8610,14 @@ function Home() {
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCPreparadosUnidades} options={lightOptions} className="divMenor" />
+                                        <Chart type="bar" data={responseGraficoNNCPreparadosUnidades} options={optionsComparativo} className="divMenor" />
                                     </Card>
                                 )}
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12">
                                 {isUpdatingData ? (<LoadingSkeletonCard />) : (
                                     <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCPreparadosProblemas} options={lightOptions} className="divMenor" />
+                                        <Chart type="bar" data={responseGraficoNNCPreparadosProblemas} options={optionsComparativo} className="divMenor" />
                                     </Card>
                                 )}
                             </Col>
@@ -7959,78 +8747,82 @@ function Home() {
                 </reg>
 
                 <reg id="region NNC +50">
-                    <Row>   
-                <Col className="col-3"> 
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC MP Corpos Estranhos Inerentes e Não Inerentes
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
+                <Row>   
+                    <Col className="col-6"> 
+                        <Row>
+                            <Col className=" col-12 cssSeara2021_titulo">
+                                NNC MP Corpos Estranhos Inerentes e Não Inerentes
+                            <hr></hr>
+                            </Col>
+                        </Row>
+                        <Row>
 
-                        <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                 DataTableNNCCEInerenteNaoInerente()
-                                
-                            )}
-                        </Col>
-                    </Row>
-                </Col>
-                <Col className="col-3">   
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC MP Corpos Estranhos - Ossos - Unidade Reclamante / Fornecedor / Produto
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
+                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    DataTableNNCCEInerenteNaoInerente()
+                                    
+                                )}
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className="col-12">   
+                        <Row>
+                            <Col className=" col-12 cssSeara2021_titulo">
+                                NNC MP Corpos Estranhos - Ossos - Unidade Reclamante / Fornecedor / Produto
+                            <hr></hr>
+                            </Col>
+                        </Row>
+                        <Row>
 
-                        <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                 DataTableNNCMPCEOssos()
-                                
-                            )}
-                        </Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    DataTableNNCMPCEOssos()
+                                    
+                                )}
+                            </Col>
 
-                    </Row>
-                </Col>
-                <Col className="col-3">    
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC MP Corpos Estranhos - Ossos - Fornecedor
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
+                        </Row>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className="col-3">    
+                        <Row>
+                            <Col className=" col-12 cssSeara2021_titulo">
+                                NNC MP Corpos Estranhos - Ossos - Fornecedor
+                            <hr></hr>
+                            </Col>
+                        </Row>
+                        <Row>
 
-                        <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                 DataTableNNCMPCEOssosFornecedor()
-                                
-                            )}
-                        </Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    DataTableNNCMPCEOssosFornecedor()
+                                    
+                                )}
+                            </Col>
 
-                    </Row>
-                </Col>
-                <Col className="col-3">    
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC MP Corpos Estranhos - Unidades reclamantes
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
+                        </Row>
+                    </Col>
+                    <Col className="col-3">    
+                        <Row>
+                            <Col className=" col-12 cssSeara2021_titulo">
+                                NNC MP Corpos Estranhos - Unidades reclamantes
+                            <hr></hr>
+                            </Col>
+                        </Row>
+                        <Row>
 
-                        <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                 DataTableNNCMPCEOssosUnidadesReclamantes()
-                                
-                            )}
-                        </Col>
+                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
+                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
+                                    DataTableNNCMPCEOssosUnidadesReclamantes()
+                                    
+                                )}
+                            </Col>
 
-                    </Row>
-                </Col>
+                        </Row>
+                    </Col>
                 </Row>
                 </reg>
 
