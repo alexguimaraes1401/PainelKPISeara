@@ -6034,7 +6034,7 @@ function Home() {
             + " AND [Reg. Prod.] IN ('PREPARADOS') "
             + " AND [GRUPO PROBLEMA] NOT IN ('EMBALAGEM SECUNDÁRIA','DISTR / LOG') "
             + " AND [Entra para a Meta] IN ('SIM') "
-            + " AND [DT ABERTURA] = DATEADD(DD,-0,(select * from v_maiorData)) "
+            + " AND [DT ABERTURA] =  "
             + " case when DATEPART(WEEKDAY,DATEADD(DD,-0,(select * from v_maiorData))) = 1 then DATEADD(DD,-2,(select * from v_maiorData)) when DATEPART(WEEKDAY,DATEADD(DD,-0,(select * from v_maiorData))) = 7 then DATEADD(DD,-1,(select * from v_maiorData)) else DATEADD(DD,-0,(select * from v_maiorData)) end"
  
              api.getSearaBaseNNCMP3niveis([whereTableNNCMPD0Preparados," Fornecedor CAMPO1, [Tipo Problema] CAMPO2, Produto CAMPO3 "," Fornecedor, [Tipo Problema], Produto "]).then((response) => {
@@ -6292,7 +6292,7 @@ function Home() {
                 <h1 className={'h2'}>
                     Atualizando a base
                     <br />
-                    <small>Carrengando dados</small>
+                    <small>Carregando dados</small>
                     <br />
                 </h1>
                 <ProgressBar mode="indeterminate" style={{ height: '16px' }}></ProgressBar>
