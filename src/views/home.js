@@ -605,7 +605,7 @@ function Home() {
     
 
 
-    let whereRACPreparados = "WHERE ([Regional (Qualidade)] in ('Outros', 'Preparados 1', 'Preparados 2', 'Itajaí') AND [Regional (Produção)] in ('Itajaí - Indus/Sui', 'Outros', 'Preparados', 'Itajaí - Indus', 'Itajaí') ) "
+    let whereRACPreparados = "WHERE ([Regional (Qualidade)] in ('Preparados', 'Preparados 1', 'Preparados 2', 'Itajaí', 'Fatiados') AND [Regional (Produção)] in ('Itajaí - Indus/Sui', 'Outros', 'Preparados', 'Itajaí - Indus', 'Itajaí', 'Fatiados') ) "
     whereRACPreparados += " AND ([Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','FABRICAÇÃO')"
     whereRACPreparados += "                                 OR [Origem da RAC] IS NULL) "
     whereRACPreparados += " and unidade in ( "
@@ -615,7 +615,7 @@ function Home() {
     whereRACPreparados += " 'Caxias do Sul - Ana Rech',  "
     whereRACPreparados += " 'Dourados',  "
     whereRACPreparados += " 'Duque de Caxias',  "
-    whereRACPreparados += " 'ITAJAI INDUSTRIALIZADOS',  "
+    whereRACPreparados += " 'ITAJAI INDUSTRIALIZADOS',  'ITAJAI Preparados',"
     whereRACPreparados += " 'Itapiranga',  "
     whereRACPreparados += " 'Jaguariúna',  "
     whereRACPreparados += " 'Jundiaí', "
@@ -629,6 +629,7 @@ function Home() {
     whereRACPreparados += " 'São Miguel do Oeste',  "
     whereRACPreparados += " 'Seara',  "
     whereRACPreparados += " 'Três Passos',  "
+    whereRACPreparados += " 'Fatiados',  "
     whereRACPreparados += " 'Jaragua do Sul')  "
     whereRACPreparados += " "
 
@@ -881,14 +882,14 @@ function Home() {
         chamarAPI("CETotal", GraficoCETotalSuinos, "GraficoCETotalSuinos", [' where [Regional Qualidade]  in (\'Suínos\',\'Suíno\') '], setGraficoCETotalSuinos, setresponseGraficoCETotalSuinos, 20)     // 11
         chamarAPI("CETotal", GraficoNNCMPTotalCESuinos, "GraficoNNCMPTotalCESuinos", [" where tipo = 'NNC MP' AND [Regional Qualidade] = \'Suínos\' "], setGraficoNNCMPTotalCESuinos, setresponseGraficoNNCMPTotalCESuinos, 21)       // 12
         chamarAPI("CETotal", GraficoRACTotalCESuinos, "GraficoRACTotalCESuinos", ["  where tipo = 'RAC' AND [Regional Qualidade] = \'Suínos\'   "], setGraficoRACTotalCESuinos, setresponseGraficoRACTotalCESuinos, 22)     // 13
-        chamarAPI("RACIndicadores", GraficoRACSuinos, "GraficoRACSuinos", [" WHERE [Regional (Qualidade)] in ('Suínos', 'Outros') and [Regional (Produção)] in ('Itajaí - Indus/Sui', 'SUINOS') AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "], setGraficoRACSuinos, setresponseGraficoRACSuinos, 23)    // 14
+        chamarAPI("RACIndicadores", GraficoRACSuinos, "GraficoRACSuinos", [" WHERE [Regional (Qualidade)] in ('Suínos', 'Outros') and [Regional (Produção)] in ('Itajaí - Indus/Sui', 'SUINOS', 'Suínos') AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "], setGraficoRACSuinos, setresponseGraficoRACSuinos, 23)    // 14
         chamarAPI("NCCMP", GraficoNCCMPSuinos, "GraficoNCCMPSuinos", [whereNNCMP + ' and [Reg. Qual] = \'Suínos\'  '], setGraficoNCCMPSuinos, setresponseGraficoNCCMPSuinos, 24)    // 15
 
 
 
-        chamarAPI("CETotal", GraficoCETotalPreparados, "GraficoCETotalPreparados", [' where [Regional Qualidade] in (\'Preparados\',\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\',\'Itajaí\') and Negócio in (\'Preparados\',\'Outros\', \'INDUSTRIALIZADOS\', \'Fatiados\') '], setGraficoCETotalPreparados, setresponseGraficoCETotalPreparados, 25)     // 11
-        chamarAPI("CETotal", GraficoNNCMPTotalCEPreparados, "GraficoNNCMPTotalCEPreparados", [" where tipo = 'NNC MP' AND [Regional Qualidade]  in (\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\',\'Itajaí\') and Negócio in (\'Preparados\',\'Outros\', \'INDUSTRIALIZADOS\', \'Fatiados\')  "], setGraficoNNCMPTotalCEPreparados, setresponseGraficoNNCMPTotalCEPreparados, 26)       // 12
-        chamarAPI("CETotal", GraficoRACTotalCEPreparados, "GraficoRACTotalCEPreparados", ["  where tipo = 'RAC' AND [Regional Qualidade]  in (\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\',\'Itajaí\') and Negócio in (\'Preparados\',\'Outros\', \'INDUSTRIALIZADOS\', \'Fatiados\')   "], setGraficoRACTotalCEPreparados, setresponseGraficoRACTotalCEPreparados, 27)     // 13
+        chamarAPI("CETotal", GraficoCETotalPreparados, "GraficoCETotalPreparados", [' where                               [Regional Qualidade]  in (\'Preparados\',\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\',\'Itajaí\', \'Fatiados\') and Negócio in (\'Preparados\',\'Outros\', \'INDUSTRIALIZADOS\', \'Fatiados\') '], setGraficoCETotalPreparados, setresponseGraficoCETotalPreparados, 25)     // 11
+        chamarAPI("CETotal", GraficoNNCMPTotalCEPreparados, "GraficoNNCMPTotalCEPreparados", [" where tipo = 'NNC MP' AND [Regional Qualidade]  in (\'Preparados\',\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\',\'Itajaí\', \'Fatiados\') and Negócio in (\'Preparados\',\'Outros\', \'INDUSTRIALIZADOS\', \'Fatiados\')  "], setGraficoNNCMPTotalCEPreparados, setresponseGraficoNNCMPTotalCEPreparados, 26)       // 12
+        chamarAPI("CETotal", GraficoRACTotalCEPreparados, "GraficoRACTotalCEPreparados", ["  where tipo = 'RAC' AND       [Regional Qualidade]  in (\'Preparados\',\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\',\'Itajaí\', \'Fatiados\') and Negócio in (\'Preparados\',\'Outros\', \'INDUSTRIALIZADOS\', \'Fatiados\')   "], setGraficoRACTotalCEPreparados, setresponseGraficoRACTotalCEPreparados, 27)     // 13
         chamarAPI("RACIndicadores", GraficoRACPreparados, "GraficoRACPreparados", [whereRACPreparados] , setGraficoRACPreparados, setresponseGraficoRACPreparados, 28)    // 14
         chamarAPI("NCCMP", GraficoNCCMPPreparados, "GraficoNCCMPPreparados", [whereNNCMP + ' and [Reg. Qual] in (\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\')  '], setGraficoNCCMPPreparados, setresponseGraficoNCCMPPreparados, 29)    // 15
 
@@ -907,14 +908,14 @@ function Home() {
         chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesLeves, "GraficoRACUnidadesAvesLeves", [' where Tipo = \'REAL\' and [Regional (Qualidade)] like \'%Aves Leves%\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACUnidadesAvesLeves, setresponseGraficoRACUnidadesAvesLeves, 34)                                                                    // 6
         chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesLeves, "GraficoRACProblemasAvesLeves", [' where Tipo = \'REAL\' and [Regional (Qualidade)] like \'%Aves Leves%\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACProblemasAvesLeves, setresponseGraficoRACProblemasAvesLeves, 35)
 
-        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesSuinos, "GraficoRACUnidadesSuinos", [' where Tipo = \'REAL\' and [Regional (Qualidade)] like \'%Su%nos%\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACUnidadesSuinos, setresponseGraficoRACUnidadesSuinos, 36)                                                                    // 6
-        chamarAPI("RACUnicoProblema", GraficoRACProblemasSuinos, "GraficoRACProblemasSuinos", [' where Tipo = \'REAL\' and [Regional (Qualidade)] like \'%Su%nos%\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACProblemasSuinos, setresponseGraficoRACProblemasSuinos, 37)
+        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesSuinos, "GraficoRACUnidadesSuinos", [' where Tipo = \'REAL\' and [Regional (Qualidade)] in (\'Suínos\', \'Outros\') and [Regional (Produção)] in (\'Itajaí - Indus/Sui\', \'SUINOS\', \'Suínos\') AND Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACUnidadesSuinos, setresponseGraficoRACUnidadesSuinos, 36)                                                                    // 6
+        chamarAPI("RACUnicoProblema", GraficoRACProblemasSuinos, "GraficoRACProblemasSuinos", [' where Tipo = \'REAL\' and [Regional (Qualidade)] in (\'Suínos\', \'Outros\') and [Regional (Produção)] in (\'Itajaí - Indus/Sui\', \'SUINOS\', \'Suínos\') AND Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACProblemasSuinos, setresponseGraficoRACProblemasSuinos, 37)
 
         chamarAPI("RACUnicoUnidade", GraficoRACUnidadesPreparados, "GraficoRACUnidadesPreparados", [whereRACPreparados + " and Tipo = \'REAL\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoRACUnidadesPreparados, setresponseGraficoRACUnidadesPreparados, 38)                                                                    // 6
         chamarAPI("RACUnicoProblema", GraficoRACProblemasPreparados, "GraficoRACProblemasPreparados", [whereRACPreparados + " and Tipo = \'REAL\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoRACProblemasPreparados, setresponseGraficoRACProblemasPreparados, 39)
 
         chamarAPI("RACIndicadores", GraficoRACME, "GraficoRACME", [" where mercado_rac = 'ME' "], setGraficoRACME, setresponseGraficoRACME, 40)
-        chamarAPI("RACIndicadores", GraficoRACMI, "GraficoRACMI", [" where mercado_rac IN ('MI', 'INTERNO') and Unidade not in ('AVANTI','Dan Vigor', 'EIRELI ME', 'ITAJAI ÓLEO COMENSTÍVEL','Marba','Massatake','Santa Cruz do Sul','Vigor')  "], setGraficoRACMI, setresponseGraficoRACMI, 41)
+        chamarAPI("RACIndicadores", GraficoRACMI, "GraficoRACMI", [" where mercado_rac IN ('MI', 'INTERNO') and (Unidade NOT IN ('Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS','Serviços','Shipping','SAO BERNARDO DO CAMPO','CD SAO BERNARDO DO CAMPO', 'GASPAR - FAB. MARGARINA','MKT - KIT FESTA') OR Unidade IS NULL)  "], setGraficoRACMI, setresponseGraficoRACMI, 41)
 
 
         /////////////////////
