@@ -59,7 +59,7 @@ const ref = React.createRef();
 const options = {
     orientation: 'retrait',
     unit: 'px',
-    format: [1200, 16000]
+    format: [1200, 36000]
 };
 
 var cors = require('cors'); // Already done “npm i cors --save-dev”
@@ -4516,21 +4516,21 @@ function Home() {
 
 
 
-            api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac = 'YARA' AND Unidade NOT IN ('Serviços') "]).then((response) => {
+            api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac = 'YARA' AND Unidade NOT IN ('Serviços', 'Shipping') "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEOrienteMedio(json)
                 setTimeout(arrumaTabela3niveis('clOrienteMedio'), 20000)
             })
 
-            api.getSearaBaseRacAberturaME2([whereAberturaME + "  AND Especialista_rac IN ('Igor', 'Rejane') AND Unidade NOT IN ('Serviços')   "]).then((response) => {
+            api.getSearaBaseRacAberturaME2([whereAberturaME + "  AND Especialista_rac IN ('Igor', 'Rejane') AND Unidade NOT IN ('Serviços', 'Shipping')   "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEEuropa(json)
                 setTimeout(arrumaTabela3niveis('clEuropa'), 20000)
             })
 
-            api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac IN ('Marcela') AND Unidade NOT IN ('Serviços')  "]).then((response) => {
+            api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac IN ('Marcela') AND Unidade NOT IN ('Serviços', 'Shipping')  "]).then((response) => {
                 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEJapao(json)
@@ -4538,14 +4538,14 @@ function Home() {
                           
             })
 
-            api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac IN ('Amanda') AND Unidade NOT IN ('Serviços')  "]).then((response) => {
+            api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac IN ('Amanda') AND Unidade NOT IN ('Serviços', 'Shipping')  "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEAsia(json)
                 setTimeout(arrumaTabela3niveis('clAsia'), 20000)
             })
 
-            api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac IN ('Regina') AND Unidade NOT IN ('Serviços')  "]).then((response) => {
+            api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac IN ('Regina') AND Unidade NOT IN ('Serviços', 'Shipping')  "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEAmericasAfrica(json)
@@ -5709,7 +5709,7 @@ function Home() {
             })
 
 
-            api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac IN ('Jéssica') AND Unidade NOT IN ('Serviços') "]).then((response) => {
+            api.getSearaBaseRacAberturaME2([whereAberturaME + " AND Especialista_rac IN ('Jéssica') AND Unidade NOT IN ('Serviços', 'Shipping') "]).then((response) => {
 
                 let json = JSON.parse(response.data)
                 setTableRacAberturaMEContasGlobais(json)
