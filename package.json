@@ -17,6 +17,7 @@
     "chart.js": "^2.9.4",
     "chartjs-plugin-datalabels": "^0.7.0",
     "cors": "^2.8.5",
+    "html-to-image": "^1.7.0",
     "jquery": "^3.6.0",
     "primeflex": "^2.0.0",
     "primeicons": "^4.1.0",

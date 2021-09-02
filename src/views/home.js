@@ -55,11 +55,14 @@ import { LineWeight } from '@material-ui/icons';
 
 import Funcao from "./funcoes"
 
+import * as htmlToImage from 'html-to-image';
+import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
+
 const ref = React.createRef();
 const options = {
     orientation: 'retrait',
     unit: 'px',
-    format: [1200, 36000]
+    format: [1200, 58000]
 };
 
 var cors = require('cors'); // Already done “npm i cors --save-dev”
@@ -6301,6 +6304,30 @@ function Home() {
         )
     }
 
+    const GenerateFile = () => {
+        return (
+            <div>
+                <h1 className={'h2'}>
+                    Gerando Arquivo
+                    <br />
+                    <small>Gerando arquivo para download</small>
+                    <br />
+                </h1>
+                <ProgressBar mode="indeterminate" style={{ height: '16px' }}></ProgressBar>
+            </div>
+        )
+    }
+
+    function geraImagem() {
+        htmlToImage.toJpeg(document.getElementById('pad10'), { quality: 1 })
+        .then(function (dataUrl) {
+          var link = document.createElement('a');
+          link.download = 'KPI.jpeg';
+          link.href = dataUrl;
+          link.click();
+        });
+    }
+
     // Se esta logado exibe tela do dashboard:
     return (
         // <div style="width: 1220px !important;">
@@ -6321,9 +6348,10 @@ function Home() {
                                     <button className="btn btn-sm btn-outline-secondary" onClick={buscarDados}>Atualizar</button>
                                 </div>   */}
 
-                                <Pdf targetRef={ref} filename="KPI.pdf" options={options} x={1} scale={0.8}>
+                                <Pdf targetRef={ref} filename="KPI.pdf" options={options} x={0} scale={.8}>
                                     {({ toPdf }) => (
-                                        <button className="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={toPdf} id="btnPDF">Gerar PDF</button>
+                                        // <button className="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={toPdf} id="btnPDF">Gerar PDF</button>
+                                        <button className="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={geraImagem} id="btnPDF">Gerar Imagem</button>
                                     )}
                                 </Pdf>
 
@@ -6336,7 +6364,6 @@ function Home() {
             </Row>
 
             <hr></hr>
-
             {/* Botão aplicar */}
             {/* {isUpdatingData ? (<div> </div>) : ( */}
                 <Row style={{ paddingRight: '15px', paddingLeft: '15px', display: "none" }}>
@@ -6347,7 +6374,7 @@ function Home() {
 
 
             {/* Graficos */}
-            <div className="pad10" ref={ref}  >
+            <div className="pad10" id="pad10" ref={ref}  >
                 <Row>
                     <Col className="mt-1 col-12 cssSeara2021">
                         <h1></h1>
@@ -9001,8 +9028,8 @@ function Home() {
                
 
             </div>
-
         </div>
+        
     )
 }
 
