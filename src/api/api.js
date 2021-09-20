@@ -514,6 +514,21 @@ export default {
             ]
         }),
 
+        getSearaBaseICBarras: (p) =>
+        instance({
+            method: "POST",
+            url: `/ICBarras`, 
+            data: {'where': p[0], 'campos': p[1], 'groupBy': p[2]},
+            params: {
+                datatype: "json"
+            },
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
+        }),
+
         
 
         
