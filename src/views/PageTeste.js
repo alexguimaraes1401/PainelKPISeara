@@ -55,16 +55,11 @@ import { LineWeight } from '@material-ui/icons';
 
 import Funcao from "./funcoes"
 
-import * as htmlToImage from 'html-to-image';
-import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
-
 const ref = React.createRef();
 const options = {
     orientation: 'retrait',
     unit: 'px',
-
-    format: [1200, 58000]
-
+    format: [1200, 56000]
 };
 
 var cors = require('cors'); // Already done “npm i cors --save-dev”
@@ -81,17 +76,7 @@ function Home() {
     const canvasRef = React.useRef();
  
     
-    var numeroChamados = [false,false,false,false,false,false,false,false,false,false,
-        false,false,false,false,false,false,false,false,false,false,
-        false,false,false,false,false,false,false,false,false,false,
-        false,false,false,false,false,false,false,false,false,false,
-        false,false,false,false,false,false,false,false,false,false,
-        false,false,false,false,false,false,false,false,false,false,
-        false,false,false,false,false,false,false,false,false,false,
-        false,false,false,false,false,false,false,false,false,false,
-        false,false,false,false,false,false,false,false,false,false,
-        false,false,false,false,false,false,false,false,false,false,
-        false,false]  
+    var numeroChamados = [false,false,false,false]  
         
         
     const percorreNumeroChamados = () => {
@@ -100,6 +85,8 @@ function Home() {
         for (var i = 0; i < numeroChamados.length; i++) {
             if (numeroChamados[i] == false) {
                 return false
+            }else{
+                console.log("Terminou!")
             }
         }
 
@@ -157,7 +144,7 @@ function Home() {
     let [responseGraficoNCCMPAvesPesadasPR, setresponseGraficoNCCMPAvesPesadasPR] = React.useState({})
     let [GraficoNCCMPAvesPesadasPR, setGraficoNCCMPAvesPesadasPR] = React.useState()
 
-    //Aves Pesadas SP RAC
+    //Aves pesadas SP/CO/NE RAC
     let [responseGraficoCETotalAvesPesadasSP, setresponseGraficoCETotalAvesPesadasSP] = React.useState({})
     let [GraficoCETotalAvesPesadasSP, setGraficoCETotalAvesPesadasSP] = React.useState()
 
@@ -173,7 +160,7 @@ function Home() {
     let [responseGraficoNCCMPAvesPesadasSP, setresponseGraficoNCCMPAvesPesadasSP] = React.useState({})
     let [GraficoNCCMPAvesPesadasSP, setGraficoNCCMPAvesPesadasSP] = React.useState()
 
-    //Aves Pesadas Sul RAC
+    //Aves pesadas RS/SC/SP RAC
     let [responseGraficoCETotalAvesPesadasRS, setresponseGraficoCETotalAvesPesadasRS] = React.useState({})
     let [GraficoCETotalAvesPesadasRS, setGraficoCETotalAvesPesadasRS] = React.useState()
 
@@ -464,14 +451,12 @@ function Home() {
 
     //tabela RAC D-3 In Natura
     let [TableRacRACD3InNatura, setTableRacRACD3InNatura] = React.useState() //ABERTURA D-3 InNatura
-    let [TableRacRACD3InNaturaSuinos, setTableRacRACD3InNaturaSuinos] = React.useState() //ABERTURA D-3 InNatura
 
     //tabela RAC D-3 Preparados
     let [TableRacRACD3Preparados, setTableRacRACD3Preparados] = React.useState() //ABERTURA D-3 Preparados
 
     //tabela RAC D-0 In Natura
     let [TableRacRACD0InNatura, setTableRacRACD0InNatura] = React.useState() //ABERTURA D-0 InNatura
-    let [TableRacRACD0InNaturaSuinos, setTableRacRACD0InNaturaSuinos] = React.useState() //ABERTURA D-0 InNatura
 
     //tabela RAC D-0 Preparados
     let [TableRacRACD0Preparados, setTableRacRACD0Preparados] = React.useState() //ABERTURA D-0 Preparados
@@ -501,7 +486,7 @@ function Home() {
     let [TableNNCLogD0, setTableNNCLogD0] = React.useState()
 
     //tabela NNC Totais 
-    let [TableNNCTotal, setTableNNCTotal] = React.useState()
+    let [TableNNCTotais, setTableNNCTotais] = React.useState()
 
     //tabela NNC Evolução dia 
     let [TableNNCEvolucaoDia, setTableNNCEvolucaoDia] = React.useState()
@@ -632,32 +617,33 @@ function Home() {
     
 
 
-    let whereRACPreparados = "WHERE ([Regional (Qualidade)] in ('Preparados', 'Preparados 1', 'Preparados 2') ) AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "
-   
-    // whereRACPreparados += " and unidade in ( "
-    // whereRACPreparados += " 'Bom Retiro', "
-    // whereRACPreparados += " 'Brasília',  "
-    // whereRACPreparados += " 'Carambeí',  "
-    // whereRACPreparados += " 'Caxias do Sul - Ana Rech',  "
-    // whereRACPreparados += " 'Dourados',  "
-    // whereRACPreparados += " 'Duque de Caxias',  "
-    // whereRACPreparados += " 'ITAJAI INDUSTRIALIZADOS',  'ITAJAI Preparados',"
-    // whereRACPreparados += " 'Itapiranga',  "
-    // whereRACPreparados += " 'Jaguariúna',  "
-    // whereRACPreparados += " 'Jundiaí', "
-    // whereRACPreparados += " 'Lages',  "
-    // whereRACPreparados += " 'Montenegro',  "
-    // whereRACPreparados += " 'Osasco',  "
-    // whereRACPreparados += " 'Rio Grande da Serra',  "
-    // whereRACPreparados += " 'Roca Sales',  "
-    // whereRACPreparados += " 'Salto Veloso',  "
-    // whereRACPreparados += " 'São Gonçalo',  "
-    // whereRACPreparados += " 'São Miguel do Oeste',  "
-    // whereRACPreparados += " 'Seara',  "
-    // whereRACPreparados += " 'Três Passos',  "
-    // whereRACPreparados += " 'Fatiados',  "
-    // whereRACPreparados += " 'Jaragua do Sul')  "
-    // whereRACPreparados += " "
+    let whereRACPreparados = "WHERE ([Regional (Qualidade)] in ('Preparados', 'Preparados 1', 'Preparados 2', 'Itajaí', 'Fatiados') AND [Regional (Produção)] in ('Itajaí - Indus/Sui', 'Outros', 'Preparados', 'Itajaí - Indus', 'Itajaí', 'Fatiados') ) "
+    whereRACPreparados += " AND ([Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','FABRICAÇÃO')"
+    whereRACPreparados += "                                 OR [Origem da RAC] IS NULL) "
+    whereRACPreparados += " and unidade in ( "
+    whereRACPreparados += " 'Bom Retiro', "
+    whereRACPreparados += " 'Brasília',  "
+    whereRACPreparados += " 'Carambeí',  "
+    whereRACPreparados += " 'Caxias do Sul - Ana Rech',  "
+    whereRACPreparados += " 'Dourados',  "
+    whereRACPreparados += " 'Duque de Caxias',  "
+    whereRACPreparados += " 'ITAJAI INDUSTRIALIZADOS',  'ITAJAI Preparados',"
+    whereRACPreparados += " 'Itapiranga',  "
+    whereRACPreparados += " 'Jaguariúna',  "
+    whereRACPreparados += " 'Jundiaí', "
+    whereRACPreparados += " 'Lages',  "
+    whereRACPreparados += " 'Montenegro',  "
+    whereRACPreparados += " 'Osasco',  "
+    whereRACPreparados += " 'Rio Grande da Serra',  "
+    whereRACPreparados += " 'Roca Sales',  "
+    whereRACPreparados += " 'Salto Veloso',  "
+    whereRACPreparados += " 'São Gonçalo',  "
+    whereRACPreparados += " 'São Miguel do Oeste',  "
+    whereRACPreparados += " 'Seara',  "
+    whereRACPreparados += " 'Três Passos',  "
+    whereRACPreparados += " 'Fatiados',  "
+    whereRACPreparados += " 'Jaragua do Sul')  "
+    whereRACPreparados += " "
 
     let whereRACCE = " WHERE Tipo = 'REAL'  "
     whereRACCE += " AND Grupo = 'CORPO ESTRANHO' "
@@ -675,7 +661,11 @@ function Home() {
     whereRACCE += " 'RECLAMAÇÃO FAB. NÃO IDENTIF.',  "
     whereRACCE += " 'RECLAMAÇÃO HANS',  "
     whereRACCE += " 'RECLAMAÇÃO VOSSKO')  "
-    whereRACCE += " AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "
+    whereRACCE += " AND [Origem_do_Problema_rac] IN ( "
+    whereRACCE += " 'Documentação Unidade',  "
+    whereRACCE += " 'EXPEDIÇÃO FÁBRICA',  "
+    whereRACCE += " 'FABRICAÇÃO',  "
+    whereRACCE += " 'P-D') "
 
     let whereNNCMP = " WHERE ([Reg. Qual] NOT IN ('Itajaí', 'Outros')) "
     whereNNCMP += " AND ([Grupo Problema] NOT IN ('Distr / Log', 'Embalagem Secundária') or [Grupo Problema] is null) "
@@ -827,10 +817,6 @@ function Home() {
                     //alert($('.'+classTable+' table').rows[i].cells[0].innerText)
                     table.rows[i].style.background = '#cccccc'
                 }
-                if (table.rows[i].cells[0].innerText.match(/.*@#.*/)) {
-                    //alert($('.'+classTable+' table').rows[i].cells[0].innerText)
-                    table.rows[i].style.background = '#eeeeee'
-                }
             }
 
             for(var i = 0; i<table.rows.length; i++){
@@ -854,7 +840,6 @@ function Home() {
             var classtable_ = $('.' + classTable + '')[0];
             classtable_.innerHTML = classtable_.innerHTML.replaceAll(".....", "&nbsp;&nbsp;&nbsp;&nbsp;")
             classtable_.innerHTML = classtable_.innerHTML.replaceAll("@@", "")
-            classtable_.innerHTML = classtable_.innerHTML.replaceAll("@#", "")
             classtable_.innerHTML = classtable_.innerHTML.replaceAll("&lt;b&gt;", "<b>")
             classtable_.innerHTML = classtable_.innerHTML.replaceAll("&lt;/b&gt;", "</b>")
             
@@ -869,47 +854,48 @@ function Home() {
     React.useEffect(() => {
         setIsUpdatingData(true);
 
+/*      
         chamarAPI("CETotal", GraficoCETotal, "GraficoCETotal", [' where 1=1 '], setGraficoCETotal, setresponseGraficoCETotal, 0)     // 1
         chamarAPI("CETotal", GraficoNNCMPTotalCE, "GraficoNNCMPTotalCE", [" where tipo = 'NNC MP' "], setGraficoNNCMPTotalCE, setresponseGraficoNNCMPTotalCE, 1)       // 2
         chamarAPI("CETotal", GraficoRACTotalCE, "GraficoRACTotalCE", [" where TIPO = 'RAC' "], setGraficoRACTotalCE, setresponseGraficoRACTotalCE, 2)     // 3
-        chamarAPI("RAC", GraficoRAC, "GraficoRAC", [" where 1=1  "], setGraficoRAC, setresponseGraficoRAC, 3)    // 4
+        chamarAPI("RAC", GraficoRAC, "GraficoRAC", [' where 1=1 '], setGraficoRAC, setresponseGraficoRAC, 3)    // 4
         chamarAPI("NCCMP", GraficoNCCMP, "GraficoNCCMP", [whereNNCMP], setGraficoNCCMP, setresponseGraficoNCCMP, 4)    // 5 
         
 
-        chamarAPI("CETotal", GraficoCETotalAvesPesadas, "GraficoCETotalAvesPesadas", [" where [Regional Qualidade] in ('Aves Pesadas SP','Aves Pesadas Sul', 'Aves Pesadas PR', 'Aves Pesadas')  "], setGraficoCETotalAvesPesadas, setresponseGraficoCETotalAvesPesadas, 5)     // 6
-        chamarAPI("CETotal", GraficoNNCMPTotalCEAvesPesadas, "GraficoNNCMPTotalCEAvesPesadas", [" where tipo = 'NNC MP' AND [Regional Qualidade] in ('Aves Pesadas SP','Aves Pesadas Sul', 'Aves Pesadas PR', 'Aves Pesadas') "], setGraficoNNCMPTotalCEAvesPesadas, setresponseGraficoNNCMPTotalCEAvesPesadas, 6)       // 7
-        chamarAPI("CETotal", GraficoRACTotalCEAvesPesadas, "GraficoRACTotalCEAvesPesadas", [" where TIPO = 'RAC' AND [Regional Qualidade] in ('Aves Pesadas SP','Aves Pesadas Sul', 'Aves Pesadas PR', 'Aves Pesadas')  "], setGraficoRACTotalCEAvesPesadas, setresponseGraficoRACTotalCEAvesPesadas, 7)     // 8
-        chamarAPI("RACIndicadores", GraficoRACAvesPesadas, "GraficoRACAvesPesadas", [" where [Regional (Qualidade)] in ('Aves Pesadas SP','Aves Pesadas Sul', 'Aves Pesadas PR', 'Aves Pesadas')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO'))"], setGraficoRACAvesPesadas, setresponseGraficoRACAvesPesadas, 8)    // 9
-        chamarAPI("NCCMP", GraficoNCCMPAvesPesadas, "GraficoNCCMPAvesPesadas", [whereNNCMP + " and [Reg. Qual] in ('Aves Pesadas SP','Aves Pesadas Sul', 'Aves Pesadas PR')  "], setGraficoNCCMPAvesPesadas, setresponseGraficoNCCMPAvesPesadas, 9)    // 10
+        chamarAPI("CETotal", GraficoCETotalAvesPesadas, "GraficoCETotalAvesPesadas", [" where [Regional Qualidade] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR')  "], setGraficoCETotalAvesPesadas, setresponseGraficoCETotalAvesPesadas, 5)     // 6
+        chamarAPI("CETotal", GraficoNNCMPTotalCEAvesPesadas, "GraficoNNCMPTotalCEAvesPesadas", [" where tipo = 'NNC MP' AND [Regional Qualidade] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR') "], setGraficoNNCMPTotalCEAvesPesadas, setresponseGraficoNNCMPTotalCEAvesPesadas, 6)       // 7
+        chamarAPI("CETotal", GraficoRACTotalCEAvesPesadas, "GraficoRACTotalCEAvesPesadas", [" where TIPO = 'RAC' AND [Regional Qualidade] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR')  "], setGraficoRACTotalCEAvesPesadas, setresponseGraficoRACTotalCEAvesPesadas, 7)     // 8
+        chamarAPI("RACIndicadores", GraficoRACAvesPesadas, "GraficoRACAvesPesadas", [" where [Regional (Qualidade)] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR')  AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "], setGraficoRACAvesPesadas, setresponseGraficoRACAvesPesadas, 8)    // 9
+        chamarAPI("NCCMP", GraficoNCCMPAvesPesadas, "GraficoNCCMPAvesPesadas", [whereNNCMP + " and [Reg. Qual] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR')  "], setGraficoNCCMPAvesPesadas, setresponseGraficoNCCMPAvesPesadas, 9)    // 10
 
         chamarAPI("CETotal", GraficoCETotalAvesPesadasPR, "GraficoCETotalAvesPesadasPR", [' where [Regional Qualidade] = \'Aves Pesadas PR\' '], setGraficoCETotalAvesPesadasPR, setresponseGraficoCETotalAvesPesadasPR, 10)     // 11
         chamarAPI("CETotal", GraficoNNCMPTotalCEAvesPesadasPR, "GraficoNNCMPTotalCEAvesPesadasPR", ["  where tipo = 'NNC MP' AND [Regional Qualidade] = 'Aves Pesadas PR'  "], setGraficoNNCMPTotalCEAvesPesadasPR, setresponseGraficoNNCMPTotalCEAvesPesadasPR, 11)       // 12
         chamarAPI("CETotal", GraficoRACTotalCEAvesPesadasPR, "GraficoRACTotalCEAvesPesadasPR", ["  WHERE tipo = 'RAC' AND [Regional Qualidade] in ('Aves Pesadas PR')   "], setGraficoRACTotalCEAvesPesadasPR, setresponseGraficoRACTotalCEAvesPesadasPR, 12)     // 13
-        chamarAPI("RACIndicadores", GraficoRACAvesPesadasPR, "GraficoRACAvesPesadasPR", [" WHERE [Regional (Qualidade)] in ('Aves Pesadas PR') AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO'))            "], setGraficoRACAvesPesadasPR, setresponseGraficoRACAvesPesadasPR, 13)    // 14
+        chamarAPI("RACIndicadores", GraficoRACAvesPesadasPR, "GraficoRACAvesPesadasPR", [" WHERE [Regional (Qualidade)] in ('Aves Pesadas PR') AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO')             "], setGraficoRACAvesPesadasPR, setresponseGraficoRACAvesPesadasPR, 13)    // 14
         chamarAPI("NCCMP", GraficoNCCMPAvesPesadasPR, "GraficoNCCMPAvesPesadasPR", [whereNNCMP + ' and [Reg. Qual] = \'Aves Pesadas PR\'  '], setGraficoNCCMPAvesPesadasPR, setresponseGraficoNCCMPAvesPesadasPR, 14)    // 15
 
-        chamarAPI("CETotal", GraficoCETotalAvesPesadasSP, "GraficoCETotalAvesPesadasSP", [" where [Regional Qualidade] = 'Aves Pesadas SP' "], setGraficoCETotalAvesPesadasSP, setresponseGraficoCETotalAvesPesadasSP, 42)     // 11
-        chamarAPI("CETotal", GraficoNNCMPTotalCEAvesPesadasSP, "GraficoNNCMPTotalCEAvesPesadasSP", ["  where tipo = 'NNC MP' AND [Regional Qualidade] = 'Aves Pesadas SP'  "], setGraficoNNCMPTotalCEAvesPesadasSP, setresponseGraficoNNCMPTotalCEAvesPesadasSP, 43)       // 12
-        chamarAPI("CETotal", GraficoRACTotalCEAvesPesadasSP, "GraficoRACTotalCEAvesPesadasSP", ["  WHERE tipo = 'RAC' AND [Regional Qualidade] in ('Aves Pesadas SP')   "], setGraficoRACTotalCEAvesPesadasSP, setresponseGraficoRACTotalCEAvesPesadasSP, 44)     // 13
-        chamarAPI("RACIndicadores", GraficoRACAvesPesadasSP, "GraficoRACAvesPesadasSP", [" WHERE [Regional (Qualidade)] in ('Aves Pesadas SP') AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACAvesPesadasSP, setresponseGraficoRACAvesPesadasSP, 45)    // 14
-        chamarAPI("NCCMP", GraficoNCCMPAvesPesadasSP, "GraficoNCCMPAvesPesadasSP", [whereNNCMP + ' and [Reg. Qual] = \'Aves Pesadas SP\'  '], setGraficoNCCMPAvesPesadasSP, setresponseGraficoNCCMPAvesPesadasSP, 46)    // 15
+        chamarAPI("CETotal", GraficoCETotalAvesPesadasSP, "GraficoCETotalAvesPesadasSP", [" where [Regional Qualidade] = 'Aves Pesadas SP/CO/NE' "], setGraficoCETotalAvesPesadasSP, setresponseGraficoCETotalAvesPesadasSP, 42)     // 11
+        chamarAPI("CETotal", GraficoNNCMPTotalCEAvesPesadasSP, "GraficoNNCMPTotalCEAvesPesadasSP", ["  where tipo = 'NNC MP' AND [Regional Qualidade] = 'Aves Pesadas SP/CO/NE'  "], setGraficoNNCMPTotalCEAvesPesadasSP, setresponseGraficoNNCMPTotalCEAvesPesadasSP, 43)       // 12
+        chamarAPI("CETotal", GraficoRACTotalCEAvesPesadasSP, "GraficoRACTotalCEAvesPesadasSP", ["  WHERE tipo = 'RAC' AND [Regional Qualidade] in ('Aves Pesadas SP/CO/NE')   "], setGraficoRACTotalCEAvesPesadasSP, setresponseGraficoRACTotalCEAvesPesadasSP, 44)     // 13
+        chamarAPI("RACIndicadores", GraficoRACAvesPesadasSP, "GraficoRACAvesPesadasSP", [" WHERE [Regional (Qualidade)] in ('Aves Pesadas SP/CO/NE') AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "], setGraficoRACAvesPesadasSP, setresponseGraficoRACAvesPesadasSP, 45)    // 14
+        chamarAPI("NCCMP", GraficoNCCMPAvesPesadasSP, "GraficoNCCMPAvesPesadasSP", [whereNNCMP + ' and [Reg. Qual] = \'Aves Pesadas SP/CO/NE\'  '], setGraficoNCCMPAvesPesadasSP, setresponseGraficoNCCMPAvesPesadasSP, 46)    // 15
 
-        chamarAPI("CETotal", GraficoCETotalAvesPesadasRS, "GraficoCETotalAvesPesadasRS", [" where [Regional Qualidade] = 'Aves Pesadas Sul' "], setGraficoCETotalAvesPesadasRS, setresponseGraficoCETotalAvesPesadasRS, 47)     // 11
-        chamarAPI("CETotal", GraficoNNCMPTotalCEAvesPesadasRS, "GraficoNNCMPTotalCEAvesPesadasRS", ["  where tipo = 'NNC MP' AND [Regional Qualidade] = 'Aves Pesadas Sul'  "], setGraficoNNCMPTotalCEAvesPesadasRS, setresponseGraficoNNCMPTotalCEAvesPesadasRS, 48)       // 12
-        chamarAPI("CETotal", GraficoRACTotalCEAvesPesadasRS, "GraficoRACTotalCEAvesPesadasRS", ["  WHERE tipo = 'RAC' AND [Regional Qualidade] in ('Aves Pesadas Sul')   "], setGraficoRACTotalCEAvesPesadasRS, setresponseGraficoRACTotalCEAvesPesadasRS, 49)     // 13
-        chamarAPI("RACIndicadores", GraficoRACAvesPesadasRS, "GraficoRACAvesPesadasRS", [" WHERE [Regional (Qualidade)] in ('Aves Pesadas Sul' )  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACAvesPesadasRS, setresponseGraficoRACAvesPesadasRS, 50)    // 14
-        chamarAPI("NCCMP", GraficoNCCMPAvesPesadasRS, "GraficoNCCMPAvesPesadasRS", [whereNNCMP + ' and [Reg. Qual] = \'Aves Pesadas Sul\'  '], setGraficoNCCMPAvesPesadasRS, setresponseGraficoNCCMPAvesPesadasRS, 51)    // 15
+        chamarAPI("CETotal", GraficoCETotalAvesPesadasRS, "GraficoCETotalAvesPesadasRS", [" where [Regional Qualidade] = 'Aves Pesadas RS/SC/SP' "], setGraficoCETotalAvesPesadasRS, setresponseGraficoCETotalAvesPesadasRS, 47)     // 11
+        chamarAPI("CETotal", GraficoNNCMPTotalCEAvesPesadasRS, "GraficoNNCMPTotalCEAvesPesadasRS", ["  where tipo = 'NNC MP' AND [Regional Qualidade] = 'Aves Pesadas RS/SC/SP'  "], setGraficoNNCMPTotalCEAvesPesadasRS, setresponseGraficoNNCMPTotalCEAvesPesadasRS, 48)       // 12
+        chamarAPI("CETotal", GraficoRACTotalCEAvesPesadasRS, "GraficoRACTotalCEAvesPesadasRS", ["  WHERE tipo = 'RAC' AND [Regional Qualidade] in ('Aves Pesadas RS/SC/SP')   "], setGraficoRACTotalCEAvesPesadasRS, setresponseGraficoRACTotalCEAvesPesadasRS, 49)     // 13
+        chamarAPI("RACIndicadores", GraficoRACAvesPesadasRS, "GraficoRACAvesPesadasRS", [" WHERE [Regional (Qualidade)] in ('Aves Pesadas RS/SC/SP' )  AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "], setGraficoRACAvesPesadasRS, setresponseGraficoRACAvesPesadasRS, 50)    // 14
+        chamarAPI("NCCMP", GraficoNCCMPAvesPesadasRS, "GraficoNCCMPAvesPesadasRS", [whereNNCMP + ' and [Reg. Qual] = \'Aves Pesadas RS/SC/SP\'  '], setGraficoNCCMPAvesPesadasRS, setresponseGraficoNCCMPAvesPesadasRS, 51)    // 15
 
         chamarAPI("CETotal", GraficoCETotalAvesLeves, "GraficoCETotalAvesLeves", [' where [Regional Qualidade]  = \'Aves Leves\' '], setGraficoCETotalAvesLeves, setresponseGraficoCETotalAvesLeves, 15)     // 11
         chamarAPI("CETotal", GraficoNNCMPTotalCEAvesLeves, "GraficoNNCMPTotalCEAvesLeves", [" where tipo = 'NNC MP' AND [Regional Qualidade] = \'Aves Leves\' "], setGraficoNNCMPTotalCEAvesLeves, setresponseGraficoNNCMPTotalCEAvesLeves, 16)       // 12
         chamarAPI("CETotal", GraficoRACTotalCEAvesLeves, "GraficoRACTotalCEAvesLeves", ["  where tipo = 'RAC' AND [Regional Qualidade] = \'Aves Leves\'   "], setGraficoRACTotalCEAvesLeves, setresponseGraficoRACTotalCEAvesLeves, 17)     // 13
-        chamarAPI("RACIndicadores", GraficoRACAvesLeves, "GraficoRACAvesLeves", [" WHERE [Regional (Qualidade)] = 'Aves Leves'   AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACAvesLeves, setresponseGraficoRACAvesLeves, 18)    // 14
+        chamarAPI("RACIndicadores", GraficoRACAvesLeves, "GraficoRACAvesLeves", [" WHERE [Regional (Qualidade)] = 'Aves Leves'   AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO')  "], setGraficoRACAvesLeves, setresponseGraficoRACAvesLeves, 18)    // 14
         chamarAPI("NCCMP", GraficoNCCMPAvesLeves, "GraficoNCCMPAvesLeves", [whereNNCMP + ' and [Reg. Qual] = \'Aves Leves\'  '], setGraficoNCCMPAvesLeves, setresponseGraficoNCCMPAvesLeves, 19)    // 15
 
         chamarAPI("CETotal", GraficoCETotalSuinos, "GraficoCETotalSuinos", [' where [Regional Qualidade]  in (\'Suínos\',\'Suíno\') '], setGraficoCETotalSuinos, setresponseGraficoCETotalSuinos, 20)     // 11
         chamarAPI("CETotal", GraficoNNCMPTotalCESuinos, "GraficoNNCMPTotalCESuinos", [" where tipo = 'NNC MP' AND [Regional Qualidade] = \'Suínos\' "], setGraficoNNCMPTotalCESuinos, setresponseGraficoNNCMPTotalCESuinos, 21)       // 12
         chamarAPI("CETotal", GraficoRACTotalCESuinos, "GraficoRACTotalCESuinos", ["  where tipo = 'RAC' AND [Regional Qualidade] = \'Suínos\'   "], setGraficoRACTotalCESuinos, setresponseGraficoRACTotalCESuinos, 22)     // 13
-        chamarAPI("RACIndicadores", GraficoRACSuinos, "GraficoRACSuinos", [" WHERE [Regional (Qualidade)] in ('Suínos', 'Outros') and [Regional (Produção)] in ('Itajaí - Indus/Sui', 'SUINOS', 'Suínos') AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACSuinos, setresponseGraficoRACSuinos, 23)    // 14
+        chamarAPI("RACIndicadores", GraficoRACSuinos, "GraficoRACSuinos", [" WHERE [Regional (Qualidade)] in ('Suínos', 'Outros') and [Regional (Produção)] in ('Itajaí - Indus/Sui', 'SUINOS', 'Suínos') AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "], setGraficoRACSuinos, setresponseGraficoRACSuinos, 23)    // 14
         chamarAPI("NCCMP", GraficoNCCMPSuinos, "GraficoNCCMPSuinos", [whereNNCMP + ' and [Reg. Qual] = \'Suínos\'  '], setGraficoNCCMPSuinos, setresponseGraficoNCCMPSuinos, 24)    // 15
 
 
@@ -918,25 +904,25 @@ function Home() {
         chamarAPI("CETotal", GraficoNNCMPTotalCEPreparados, "GraficoNNCMPTotalCEPreparados", [" where tipo = 'NNC MP' AND [Regional Qualidade]  in (\'Preparados\',\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\',\'Itajaí\', \'Fatiados\') and Negócio in (\'Preparados\',\'Outros\', \'INDUSTRIALIZADOS\', \'Fatiados\')  "], setGraficoNNCMPTotalCEPreparados, setresponseGraficoNNCMPTotalCEPreparados, 26)       // 12
         chamarAPI("CETotal", GraficoRACTotalCEPreparados, "GraficoRACTotalCEPreparados", ["  where tipo = 'RAC' AND       [Regional Qualidade]  in (\'Preparados\',\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\',\'Itajaí\', \'Fatiados\') and Negócio in (\'Preparados\',\'Outros\', \'INDUSTRIALIZADOS\', \'Fatiados\')   "], setGraficoRACTotalCEPreparados, setresponseGraficoRACTotalCEPreparados, 27)     // 13
         chamarAPI("RACIndicadores", GraficoRACPreparados, "GraficoRACPreparados", [whereRACPreparados] , setGraficoRACPreparados, setresponseGraficoRACPreparados, 28)    // 14
-        chamarAPI("NCCMP", GraficoNCCMPPreparados, "GraficoNCCMPPreparados", [whereNNCMP + ' and [Reg. Qual] in (\'Preparados 1\',\'Preparados 2\')  '], setGraficoNCCMPPreparados, setresponseGraficoNCCMPPreparados, 29)    // 15
+        chamarAPI("NCCMP", GraficoNCCMPPreparados, "GraficoNCCMPPreparados", [whereNNCMP + ' and [Reg. Qual] in (\'Preparados 1\',\'Preparados 2\',\'Preparados 3\', \'Outros\')  '], setGraficoNCCMPPreparados, setresponseGraficoNCCMPPreparados, 29)    // 15
 
-        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesPesadas, "GraficoRACUnidadesAvesPesadas", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas SP','Aves Pesadas Sul', 'Aves Pesadas PR', 'Aves Pesadas')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO'))  "], setGraficoRACUnidadesAvesPesadas, setresponseGraficoRACUnidadesAvesPesadas, 30)                                                                    // 6
-        chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesPesadas, "GraficoRACProblemasAvesPesadas", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas SP','Aves Pesadas Sul', 'Aves Pesadas PR', 'Aves Pesadas')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACProblemasAvesPesadas, setresponseGraficoRACProblemasAvesPesadas, 31)
+        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesPesadas, "GraficoRACUnidadesAvesPesadas", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR')  AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO')  "], setGraficoRACUnidadesAvesPesadas, setresponseGraficoRACUnidadesAvesPesadas, 30)                                                                    // 6
+        chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesPesadas, "GraficoRACProblemasAvesPesadas", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR')  AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "], setGraficoRACProblemasAvesPesadas, setresponseGraficoRACProblemasAvesPesadas, 31)
 
-        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesPesadasPR, "GraficoRACUnidadesAvesPesadasPR", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas PR')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACUnidadesAvesPesadasPR, setresponseGraficoRACUnidadesAvesPesadasPR, 32)                                                                    // 6
-        chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesPesadasPR, "GraficoRACProblemasAvesPesadasPR", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas PR')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACProblemasAvesPesadasPR, setresponseGraficoRACProblemasAvesPesadasPR, 33)
+        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesPesadasPR, "GraficoRACUnidadesAvesPesadasPR", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas PR')  AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "], setGraficoRACUnidadesAvesPesadasPR, setresponseGraficoRACUnidadesAvesPesadasPR, 32)                                                                    // 6
+        chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesPesadasPR, "GraficoRACProblemasAvesPesadasPR", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas PR')  AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "], setGraficoRACProblemasAvesPesadasPR, setresponseGraficoRACProblemasAvesPesadasPR, 33)
 
-        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesPesadasSP, "GraficoRACUnidadesAvesPesadasSP", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas SP')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACUnidadesAvesPesadasSP, setresponseGraficoRACUnidadesAvesPesadasSP, 52)                                                                    // 6
-        chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesPesadasSP, "GraficoRACProblemasAvesPesadasSP", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas SP')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACProblemasAvesPesadasSP, setresponseGraficoRACProblemasAvesPesadasSP, 53)
+        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesPesadasSP, "GraficoRACUnidadesAvesPesadasSP", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas SP/CO/NE')  AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "], setGraficoRACUnidadesAvesPesadasSP, setresponseGraficoRACUnidadesAvesPesadasSP, 52)                                                                    // 6
+        chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesPesadasSP, "GraficoRACProblemasAvesPesadasSP", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas SP/CO/NE')  AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "], setGraficoRACProblemasAvesPesadasSP, setresponseGraficoRACProblemasAvesPesadasSP, 53)
 
-        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesPesadasRS, "GraficoRACUnidadesAvesPesadasRS", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas Sul')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACUnidadesAvesPesadasRS, setresponseGraficoRACUnidadesAvesPesadasRS, 54)                                                                    // 6
-        chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesPesadasRS, "GraficoRACProblemasAvesPesadasRS", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas Sul')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACProblemasAvesPesadasRS, setresponseGraficoRACProblemasAvesPesadasRS, 55)
+        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesPesadasRS, "GraficoRACUnidadesAvesPesadasRS", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas RS/SC/SP')  AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "], setGraficoRACUnidadesAvesPesadasRS, setresponseGraficoRACUnidadesAvesPesadasRS, 54)                                                                    // 6
+        chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesPesadasRS, "GraficoRACProblemasAvesPesadasRS", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas RS/SC/SP')  AND [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO') "], setGraficoRACProblemasAvesPesadasRS, setresponseGraficoRACProblemasAvesPesadasRS, 55)
 
         chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesLeves, "GraficoRACUnidadesAvesLeves", [' where Tipo = \'REAL\' and [Regional (Qualidade)] like \'%Aves Leves%\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACUnidadesAvesLeves, setresponseGraficoRACUnidadesAvesLeves, 34)                                                                    // 6
         chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesLeves, "GraficoRACProblemasAvesLeves", [' where Tipo = \'REAL\' and [Regional (Qualidade)] like \'%Aves Leves%\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACProblemasAvesLeves, setresponseGraficoRACProblemasAvesLeves, 35)
 
-        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesSuinos, "GraficoRACUnidadesSuinos", [" where Tipo = \'REAL\' and [Regional (Qualidade)] in (\'Suínos\', \'Outros\') and [Regional (Produção)] in (\'Itajaí - Indus/Sui\', \'SUINOS\', \'Suínos\') AND Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO'))"], setGraficoRACUnidadesSuinos, setresponseGraficoRACUnidadesSuinos, 36)                                                                    // 6
-        chamarAPI("RACUnicoProblema", GraficoRACProblemasSuinos, "GraficoRACProblemasSuinos", [" where Tipo = \'REAL\' and [Regional (Qualidade)] in (\'Suínos\', \'Outros\') and [Regional (Produção)] in (\'Itajaí - Indus/Sui\', \'SUINOS\', \'Suínos\') AND Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACProblemasSuinos, setresponseGraficoRACProblemasSuinos, 37)
+        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesSuinos, "GraficoRACUnidadesSuinos", [' where Tipo = \'REAL\' and [Regional (Qualidade)] in (\'Suínos\', \'Outros\') and [Regional (Produção)] in (\'Itajaí - Indus/Sui\', \'SUINOS\', \'Suínos\') AND Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACUnidadesSuinos, setresponseGraficoRACUnidadesSuinos, 36)                                                                    // 6
+        chamarAPI("RACUnicoProblema", GraficoRACProblemasSuinos, "GraficoRACProblemasSuinos", [' where Tipo = \'REAL\' and [Regional (Qualidade)] in (\'Suínos\', \'Outros\') and [Regional (Produção)] in (\'Itajaí - Indus/Sui\', \'SUINOS\', \'Suínos\') AND Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACProblemasSuinos, setresponseGraficoRACProblemasSuinos, 37)
 
         chamarAPI("RACUnicoUnidade", GraficoRACUnidadesPreparados, "GraficoRACUnidadesPreparados", [whereRACPreparados + " and Tipo = \'REAL\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoRACUnidadesPreparados, setresponseGraficoRACUnidadesPreparados, 38)                                                                    // 6
         chamarAPI("RACUnicoProblema", GraficoRACProblemasPreparados, "GraficoRACProblemasPreparados", [whereRACPreparados + " and Tipo = \'REAL\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) "], setGraficoRACProblemasPreparados, setresponseGraficoRACProblemasPreparados, 39)
@@ -966,17 +952,17 @@ function Home() {
         chamarAPI("RACIndicadoresSemFiltro2", GraficoRACDetalhesTT, "GraficoRACDetalhesTT", [" WHERE 1=1  AND [Origem]  IN ('TRANSPORTE TERRESTRE')  and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') OR Tipo_Atendimento_rac IS NULL)  "] , setGraficoRACDetalhesTT, setresponseGraficoRACDetalhesTT, 57)
 
         //Produção em Terceiro (ex. Massatake)
-        chamarAPI("RACIndicadoresSemFiltro2", GraficoRACDetalhesTerceiro, "GraficoRACDetalhesTerceiro", [" WHERE 1=1  AND [Origem]  IN ('PRODUÇÃO EM TERCEIRO')  and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') OR Tipo_Atendimento_rac IS NULL) and (Unidade NOT IN ('Dan Vigor','Massatake','Vigor','ITAJAI ÓLEO COMESTÍVEIS') ) AND [Regional Qual] NOT IN ('NÃO INFORMADO')  "] , setGraficoRACDetalhesTerceiro, setresponseGraficoRACDetalhesTerceiro, 58)
+        chamarAPI("RACIndicadoresSemFiltro2", GraficoRACDetalhesTerceiro, "GraficoRACDetalhesTerceiro", [" WHERE 1=1  AND [Origem]  IN ('PRODUÇÃO EM TERCEIRO')  and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') OR Tipo_Atendimento_rac IS NULL) and (Unidade NOT IN ('Dan Vigor','Massatake','Vigor','ITAJAI ÓLEO COMESTÍVEIS') )  "] , setGraficoRACDetalhesTerceiro, setresponseGraficoRACDetalhesTerceiro, 58)
 
         //Massatake
         chamarAPI("RACIndicadoresSemFiltro", GraficoRACDetalhesMassatake, "GraficoRACDetalhesMassatake", [" WHERE 1=1 AND [Origem da RAC]  IN ('PRODUÇÃO EM TERCEIRO') AND UNIDADE IN ('MASSATAKE') AND  [TIPO_ATENDIMENTO_RAC] IN ('RECLAMAÇÃO') "] , setGraficoRACDetalhesMassatake, setresponseGraficoRACDetalhesMassatake, 59)
 
         //PDV
-        chamarAPI("RACIndicadoresSemFiltro2", GraficoRACDetalhesPDV, "GraficoRACDetalhesPDV", [" WHERE 1=1 AND [Origem]  IN ('ABUSO DE PRODUTO PDV') and (Tipo_Atendimento_rac NOT IN ('ALERTA',  'Crítica') OR Tipo_Atendimento_rac IS NULL)  and (Unidade NOT IN ('ITAJAI ÓLEO COMESTÍVEIS','ITAJAI AVES PESADAS', 'Massatake', 'Dan Vigor','Marba','Santa Cruz do Sul','Vigor','SAO BERNARDO DO CAMPO'	) )         "] , setGraficoRACDetalhesPDV, setresponseGraficoRACDetalhesPDV, 60)
-        chamarAPI("RACUnicoProblema", GraficoRACDetalhesAberturaPDV, "GraficoRACDetalhesAberturaPDV", [" WHERE 1=1 AND [Origem da RAC] IN ('ABUSO DE PRODUTO PDV') AND Unidade NOT IN ('ITAJAI ÓLEO COMESTÍVEIS','ITAJAI AVES PESADAS', 'Massatake', 'Dan Vigor','Marba','Santa Cruz do Sul','Vigor','SAO BERNARDO DO CAMPO'	)  AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') AND Mês = month((select * from v_maiorData)) AND Ano = year((select * from v_maiorData)) "] , setGraficoRACDetalhesAberturaPDV, setresponseGraficoRACDetalhesAberturaPDV, 61)
+        chamarAPI("RACIndicadoresSemFiltro2", GraficoRACDetalhesPDV, "GraficoRACDetalhesPDV", [" WHERE 1=1 AND [Origem]  IN ('ABUSO DE PRODUTO PDV') and (Tipo_Atendimento_rac NOT IN ('ALERTA',  'Crítica') OR Tipo_Atendimento_rac IS NULL)  and (Unidade NOT IN ('ITAJAI ÓLEO COMESTÍVEIS','ITAJAI AVES PESADAS', 'Massatake', 'Dan Vigor','GRANO ALIMENTOS S.A.','Marba','Santa Cruz do Sul','Vigor', 'VARZEA GRANDE - CD'	) )         "] , setGraficoRACDetalhesPDV, setresponseGraficoRACDetalhesPDV, 60)
+        chamarAPI("RACUnicoProblema", GraficoRACDetalhesAberturaPDV, "GraficoRACDetalhesAberturaPDV", [" WHERE 1=1 AND [Origem da RAC] IN ('ABUSO DE PRODUTO PDV') AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR')  AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') AND Mês = month((select * from v_maiorData)) AND Ano = year((select * from v_maiorData)) "] , setGraficoRACDetalhesAberturaPDV, setresponseGraficoRACDetalhesAberturaPDV, 61)
        
         //RAC Crítica RACIndicadoresSemFiltro
-        chamarAPI("RACIndicadoresSemFiltro2", GraficoRACDetalhesCritica, "GraficoRACDetalhesCritica", [" WHERE 1=1 AND [Origem] NOT IN ('ABUSO DE PRODUTO HOME') AND  (Unidade NOT IN ('ITAJAI ÓLEO COMESTÍVEIS', 'Massatake', 'Dan Vigor','Marba','Vigor', 'Serviços', 'Shipping', 'SAO BERNARDO DO CAMPO'	) )   AND [TIPO_ATENDIMENTO_RAC] IN ('CRÍTICA') "] , setGraficoRACDetalhesCritica, setresponseGraficoRACDetalhesCritica, 62)
+        chamarAPI("RACIndicadoresSemFiltro2", GraficoRACDetalhesCritica, "GraficoRACDetalhesCritica", [" WHERE 1=1 AND [Origem] NOT IN ('ABUSO DE PRODUTO HOME','LOGÍSTICA MI','SERVICO') AND  (Unidade NOT IN ('ITAJAI ÓLEO COMESTÍVEIS','ITAJAI PESCADOS', 'Massatake', 'Dan Vigor','Marba','Vigor', 'NORONHA', 'RIBEIRÃO PRETO - CD', 'Serviços', 'Shipping'	) )  AND [TIPO_ATENDIMENTO_RAC] IN ('CRÍTICA') "] , setGraficoRACDetalhesCritica, setresponseGraficoRACDetalhesCritica, 62)
 
         
         var whereLinhaEspecial = " where 1 = 1 "
@@ -985,42 +971,46 @@ function Home() {
         //RAC Linhas Especiais (Seara Nature, Gourmet, Incrível)
         chamarAPI("RACIndicadores", GraficoRACDetalhesEspeciais, "GraficoRACDetalhesEspeciais", [whereLinhaEspecial] , setGraficoRACDetalhesEspeciais, setresponseGraficoRACDetalhesEspeciais, 63)
 
+
+*/
+
         //RAC Corpo Estanho - [Totais]
-        chamarAPI("RACIndicadores", GraficoRACDetalhesCE, "GraficoRACDetalhesCE", [" WHERE 1=1 AND [Origem da RAC] IN ('EXPEDIÇÃO FÁBRICA','FABRICAÇÃO') AND  [TIPO CE] IN ('INERENTE','NÃO INERENTE') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR', 'RECLAMAÇÃO FFO', 'RAC CONSUMIDOR') "] , setGraficoRACDetalhesCE, setresponseGraficoRACDetalhesCE, 64)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesCE, "GraficoRACDetalhesCE", [" WHERE 1=1 AND [Origem da RAC] IN ('EXPEDIÇÃO FÁBRICA','FABRICAÇÃO') AND  [TIPO CE] IN ('INERENTE','NÃO INERENTE') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR', 'RECLAMAÇÃO FFO', 'RAC CONSUMIDOR') "] , setGraficoRACDetalhesCE, setresponseGraficoRACDetalhesCE, 1)
 
         //RAC Corpo Estanho - [Inerente]
-        chamarAPI("RACIndicadores", GraficoRACDetalhesCEInerente, "GraficoRACDetalhesCEInerente", [" WHERE 1=1 AND [Origem da RAC] IN ('EXPEDIÇÃO FÁBRICA','FABRICAÇÃO') AND [TIPO CE] IN ('INERENTE') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO','MORRO GRANDE') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR', 'RECLAMAÇÃO FFO', 'RAC CONSUMIDOR') "] , setGraficoRACDetalhesCEInerente, setresponseGraficoRACDetalhesCEInerente, 65)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesCEInerente, "GraficoRACDetalhesCEInerente", [" WHERE 1=1 AND [Origem da RAC] IN ('EXPEDIÇÃO FÁBRICA','FABRICAÇÃO') AND [TIPO CE] IN ('INERENTE') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO','MORRO GRANDE') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR', 'RECLAMAÇÃO FFO', 'RAC CONSUMIDOR') "] , setGraficoRACDetalhesCEInerente, setresponseGraficoRACDetalhesCEInerente, 2)
 
         //RAC Corpo Estanho - [Não Inerente]
-        chamarAPI("RACIndicadores", GraficoRACDetalhesCENaoInerente, "GraficoRACDetalhesCENaoInerente", [" WHERE 1=1 AND [Origem da RAC] IN ('EXPEDIÇÃO FÁBRICA','FABRICAÇÃO') AND [TIPO CE] IN ('NÃO INERENTE') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA','VERÍSSIMO','MORRO GRANDE') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR', 'RECLAMAÇÃO FFO', 'RAC CONSUMIDOR') "] , setGraficoRACDetalhesCENaoInerente, setresponseGraficoRACDetalhesCENaoInerente, 66)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesCENaoInerente, "GraficoRACDetalhesCENaoInerente", [" WHERE 1=1 AND [Origem da RAC] IN ('EXPEDIÇÃO FÁBRICA','FABRICAÇÃO') AND [TIPO CE] IN ('NÃO INERENTE') AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA','VERÍSSIMO','MORRO GRANDE') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR', 'RECLAMAÇÃO FFO', 'RAC CONSUMIDOR') "] , setGraficoRACDetalhesCENaoInerente, setresponseGraficoRACDetalhesCENaoInerente, 3)
 
         //RAC Corpo Estanho - [Plástico]
-        chamarAPI("RACIndicadores", GraficoRACDetalhesCEPlastico, "GraficoRACDetalhesCEPlastico", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND ([[Tipo_Problema_rac] IN ('LUVA','LUVA NITRÍLICA','PLÁSTICO','PLÁSTICO DURO','PLÁSTICO MOLE') ) AND ([Origem da RAC] IN ('FABRICAÇÃO')) "] , setGraficoRACDetalhesCEPlastico, setresponseGraficoRACDetalhesCEPlastico, 67)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesCEPlastico, "GraficoRACDetalhesCEPlastico", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA','SANTA CRUZ DO SUL') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR', 'RECLAMAÇÃO FFO', 'RAC CONSUMIDOR') AND [TIPO DO PROBLEMA] IN ('LUVA','LUVA NITRÍLICA','PLÁSTICO','PLÁSTICO DURO','PLÁSTICO MOLE') AND ([Origem da RAC] IN ('FABRICAÇÃO')) "] , setGraficoRACDetalhesCEPlastico, setresponseGraficoRACDetalhesCEPlastico, 4)
 
         //RAC Inseto
         // chamarAPI("RACIndicadores", GraficoRACDetalhesInseto, "GraficoRACDetalhesInseto", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('AMAI','DAN VIGOR','MARBA','GRANO','GRIFFOOD','JBS','MASSATAKE','SANTA CRIZ DO SUL','SERYA','VIGOR','ITAJAI AVES PESADAS') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR', 'RECLAMAÇÃO FFO', 'RAC CONSUMIDOR') AND [TIPO DO PROBLEMA] IN ('INSETO') AND [SUB TIPO PROBLEMA] NOT IN ('LARVA') AND ([Origem da RAC] IN ('FABRICAÇÃO')) "] , setGraficoRACDetalhesInseto, setresponseGraficoRACDetalhesInseto, 68)
-        chamarAPI("RACIndicadores", GraficoRACDetalhesInseto, "GraficoRACDetalhesInseto", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND  [[Tipo_Problema_rac] IN ('INSETO') AND [SUB TIPO PROBLEMA] NOT IN ('LARVA') AND ([Origem da RAC] IN ('FABRICAÇÃO')) "] , setGraficoRACDetalhesInseto, setresponseGraficoRACDetalhesInseto, 68)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesInseto, "GraficoRACDetalhesInseto", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO') AND [TIPO DO PROBLEMA] IN ('INSETO') AND [SUB TIPO PROBLEMA] NOT IN ('LARVA') AND ([Origem da RAC] IN ('FABRICAÇÃO')) "] , setGraficoRACDetalhesInseto, setresponseGraficoRACDetalhesInseto, 5)
 
         //RAC Cabelo
         //chamarAPI("RACIndicadores", GraficoRACDetalhesCabelo, "GraficoRACDetalhesCabelo", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('AMAI','DAN VIGOR','MARBA','GRANO','GRIFFOOD','JBS','MASSATAKE','SANTA CRIZ DO SUL','SERYA','VIGOR') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR', 'RECLAMAÇÃO FFO', 'RAC CONSUMIDOR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') AND [TIPO DO PROBLEMA] LIKE '%CABELO%' AND ([Origem da RAC] IN ('FABRICAÇÃO')) "] , setGraficoRACDetalhesCabelo, setresponseGraficoRACDetalhesCabelo, 69)
-        chamarAPI("RACIndicadores", GraficoRACDetalhesCabelo, "GraficoRACDetalhesCabelo", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND [[Tipo_Problema_rac] LIKE '%CABELO%' AND ([Origem da RAC] IN ('FABRICAÇÃO')) "] , setGraficoRACDetalhesCabelo, setresponseGraficoRACDetalhesCabelo, 69)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesCabelo, "GraficoRACDetalhesCabelo", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO') AND [TIPO DO PROBLEMA] LIKE '%CABELO%' AND ([Origem da RAC] IN ('FABRICAÇÃO')) "] , setGraficoRACDetalhesCabelo, setresponseGraficoRACDetalhesCabelo, 6)
 
         //RAC Plastico
         //chamarAPI("RACIndicadores", GraficoRACDetalhesPlastico, "GraficoRACDetalhesPlastico", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('MARBA','SANTA CRUZ DO SUL') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA', 'CRITICA','CRÍTICA','NEGOCIAÇÃO COMERCIAL','RAC COMPLEMENTAR', 'RECLAMAÇÃO FFO', 'RAC CONSUMIDOR') AND [TIPO DO PROBLEMA] IN ('LUVA','LUVA NITRÍLICA','PLÁSTICO','PLÁSTICO DURO','PLÁSTICO MOLE') AND ([Origem da RAC] IN ('FABRICAÇÃO')) "] , setGraficoRACDetalhesPlastico, setresponseGraficoRACDetalhesPlastico,70)
-        chamarAPI("RACIndicadores", GraficoRACDetalhesPlastico, "GraficoRACDetalhesPlastico", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND ([[Tipo_Problema_rac] IN ('LUVA','LUVA NITRÍLICA','PLÁSTICO','PLÁSTICO DURO','PLÁSTICO MOLE') ) AND ([Origem da RAC] IN ('FABRICAÇÃO')) "] , setGraficoRACDetalhesPlastico, setresponseGraficoRACDetalhesPlastico,70)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesPlastico, "GraficoRACDetalhesPlastico", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO') AND [TIPO DO PROBLEMA] IN ('LUVA','LUVA NITRÍLICA','PLÁSTICO','PLÁSTICO DURO','PLÁSTICO MOLE') AND ([Origem da RAC] IN ('FABRICAÇÃO')) "] , setGraficoRACDetalhesPlastico, setresponseGraficoRACDetalhesPlastico,7)
 
         //RAC Metal
         //chamarAPI("RACIndicadores", GraficoRACDetalhesMetal, "GraficoRACDetalhesMetal", [" WHERE 1=1 AND UNIDADE NOT IN ('AGRO ALFA','AMAI','ATI-GEL','CLAREBOUT','GRANO','GRIFFOOD','MASSATAKE','SANTA CRUZ DO SUL','VIGOR')  AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR', 'RECLAMAÇÃO FFO', 'RAC CONSUMIDOR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') AND [PROBLEMA] IN ('METAL','METÁLICO') AND ([Origem da RAC] IN ('FABRICAÇÃO')) "] , setGraficoRACDetalhesMetal, setresponseGraficoRACDetalhesMetal,71)
-        chamarAPI("RACIndicadores", GraficoRACDetalhesMetal, "GraficoRACDetalhesMetal", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND [PROBLEMA] IN ('METAL','METÁLICO')  AND ([Origem da RAC] IN ('FABRICAÇÃO'))  "] , setGraficoRACDetalhesMetal, setresponseGraficoRACDetalhesMetal,71)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesMetal, "GraficoRACDetalhesMetal", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO') AND [PROBLEMA] IN ('METAL','METÁLICO')  AND ([Origem da RAC] IN ('FABRICAÇÃO'))  "] , setGraficoRACDetalhesMetal, setresponseGraficoRACDetalhesMetal,8)
 
         //RAC Intoxicação
         //chamarAPI("RACIndicadores", GraficoRACDetalhesIntoxicacao, "GraficoRACDetalhesIntoxicacao", [" WHERE 1=1 AND UNIDADE NOT IN ('HORTUS','JBS','MASSATAKE','VIGOR') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR', 'RECLAMAÇÃO FFO', 'RAC CONSUMIDOR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') AND [PROBLEMA] IN ('INTOXICAÇÃO ALIMENTAR') AND ([Origem da RAC] IN ('FABRICAÇÃO')) "] , setGraficoRACDetalhesIntoxicacao, setresponseGraficoRACDetalhesIntoxicacao,72)
-        chamarAPI("RACIndicadores", GraficoRACDetalhesIntoxicacao, "GraficoRACDetalhesIntoxicacao", [" WHERE 1=1 AND [PROBLEMA] IN ('INTOXICAÇÃO ALIMENTAR')  AND ([Origem da RAC] IN ('FABRICAÇÃO','COMERCIALIZAÇÃO'))  "] , setGraficoRACDetalhesIntoxicacao, setresponseGraficoRACDetalhesIntoxicacao,72)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesIntoxicacao, "GraficoRACDetalhesIntoxicacao", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO') AND [PROBLEMA] IN ('INTOXICAÇÃO ALIMENTAR')  AND ([Origem da RAC] IN ('FABRICAÇÃO'))  "] , setGraficoRACDetalhesIntoxicacao, setresponseGraficoRACDetalhesIntoxicacao,9)
      
         //RAC Larva
-        //chamarAPI("RACIndicadores", GraficoRACDetalhesLarva, "GraficoRACDetalhesLarva", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND [REGIONAL (Qualidade)] NOT IN ('FATIADOS','PESCADOS','AVES PR','AVES Sul','AVES SP') AND UNIDADE NOT IN ('AGRO ALFA','AMAI','ATI-GEL','CLAREBOUT','GRANO','GRIFFOOD','MASSATAKE','SANTA CRUZ DO SUL','VIGOR','ARTES GRÁFICAS','CAMPINAS-CD','CAMPO VERDE','CD RIBEIRÃO DAS NEVES','CPO','DOC INDUSTRIA','EIRELI EPP','EIRELI ME','EXCELSIOR','GENESEAS AQUACULTURA','GERÊNCIA NACIONA FS','GRANO ALIMENTOS S.A.','GRIFFOOD','ICOFORT','ITAJAI','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','ITAJAI PESCADOS','LABREZZA','M P FOODS','MARBA','MASSAS SANTA ENERSTINA LTDA','NORONHA', 'OUTROS','PINHAIS - CD','QUALIDADE SUPPLY CHAIN','RIBEIRÃO PRETO – CD','SALVADOR – CD','SAO PAULO – CD','SEARA MEATS','SOMAVE','VARZEA GRANDE – CD') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR', 'RECLAMAÇÃO FFO', 'RAC CONSUMIDOR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO','NOTIFICAÇÃO') AND [PROBLEMA] IN ('INSETO','INSETO VIVO') AND [TIPO DO PROBLEMA] IN ('INSETO','LARVA', 'INSETO VIVO','LARVA VIVA')	 AND [SUB TIPO PROBLEMA] IN ('LARVA','LARVA VIVA') AND ([Origem da RAC] IN ('FABRICAÇÃO')) "] , setGraficoRACDetalhesLarva, setresponseGraficoRACDetalhesLarva,73)
-        chamarAPI("RACIndicadores", GraficoRACDetalhesLarva, "GraficoRACDetalhesLarva", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND [PROBLEMA] IN ('INSETO','INSETO VIVO') AND [TIPO DO PROBLEMA] IN ('INSETO','LARVA', 'INSETO VIVO','LARVA VIVA')	 AND [SUB TIPO PROBLEMA] IN ('LARVA','LARVA VIVA') AND ([Origem da RAC] IN ('FABRICAÇÃO')) AND Tipo_Atendimento_rac NOT IN ('NOTIFICAÇÃO')  "] , setGraficoRACDetalhesLarva, setresponseGraficoRACDetalhesLarva,73)
+        //chamarAPI("RACIndicadores", GraficoRACDetalhesLarva, "GraficoRACDetalhesLarva", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND [REGIONAL (Qualidade)] NOT IN ('FATIADOS','PESCADOS','AVES PR','AVES RS/SC/SP','AVES SP/CO/NE') AND UNIDADE NOT IN ('AGRO ALFA','AMAI','ATI-GEL','CLAREBOUT','GRANO','GRIFFOOD','MASSATAKE','SANTA CRUZ DO SUL','VIGOR','ARTES GRÁFICAS','CAMPINAS-CD','CAMPO VERDE','CD RIBEIRÃO DAS NEVES','CPO','DOC INDUSTRIA','EIRELI EPP','EIRELI ME','EXCELSIOR','GENESEAS AQUACULTURA','GERÊNCIA NACIONA FS','GRANO ALIMENTOS S.A.','GRIFFOOD','ICOFORT','ITAJAI','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','ITAJAI PESCADOS','LABREZZA','M P FOODS','MARBA','MASSAS SANTA ENERSTINA LTDA','NORONHA', 'OUTROS','PINHAIS - CD','QUALIDADE SUPPLY CHAIN','RIBEIRÃO PRETO – CD','SALVADOR – CD','SAO PAULO – CD','SEARA MEATS','SOMAVE','VARZEA GRANDE – CD') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR', 'RECLAMAÇÃO FFO', 'RAC CONSUMIDOR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO','NOTIFICAÇÃO') AND [PROBLEMA] IN ('INSETO','INSETO VIVO') AND [TIPO DO PROBLEMA] IN ('INSETO','LARVA', 'INSETO VIVO','LARVA VIVA')	 AND [SUB TIPO PROBLEMA] IN ('LARVA','LARVA VIVA') AND ([Origem da RAC] IN ('FABRICAÇÃO')) "] , setGraficoRACDetalhesLarva, setresponseGraficoRACDetalhesLarva,73)
+        chamarAPI("RACIndicadores", GraficoRACDetalhesLarva, "GraficoRACDetalhesLarva", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND UNIDADE NOT IN ('ITAJAI','MARBA','SANTA CRUZ DO SUL','VERÍSSIMO') AND [PROBLEMA] IN ('INSETO','INSETO VIVO') AND [TIPO DO PROBLEMA] IN ('INSETO','LARVA', 'INSETO VIVO','LARVA VIVA')	 AND [SUB TIPO PROBLEMA] IN ('LARVA','LARVA VIVA') AND ([Origem da RAC] IN ('FABRICAÇÃO'))  "] , setGraficoRACDetalhesLarva, setresponseGraficoRACDetalhesLarva,0)
 
+    /*
         //NNC Log
         chamarAPI("NCCLOG", GraficoNNCLogDetalhesTotal, "GraficoNNCLogDetalhesTotal", [" where 1=1 and [Regional (Qualidade)] not in ('Logística','Outros','Terceiro') and ([Área Responsável] not in ('RASTREABILIDADE HUB') OR [Área Responsável] IS NULL) "] , setGraficoNNCLogDetalhesTotal, setresponseGraficoNNCLogDetalhesTotal,74)
         chamarAPI("NCCLOG", GraficoNNCLogDetalhesAves, "GraficoNNCLogDetalhesAves", [" where [Regional (Qualidade)] not in ('Logística','Outros','Terceiro') and ([Área Responsável] not in ('RASTREABILIDADE HUB') OR [Área Responsável] IS NULL) AND FORNECEDOR IN ('AMPARO AVES',			'BRASILIA',	'CAARAPO AVES',	'CAMPO MOURAO AVES',	'CAXIAS DO SUL',			'FORQUILHINHA AVES',	'GARIBALDI AVES',	'GUAPIACU AVES',	'IPUMIRIM AVES',	'ITAIOPOLIS AVES',	'ITAPETININGA AVES',	'ITAPIRANGA AVES',		'JACAREZINHO AVES',	'JAGUAPITA AVES',				'LAPA AVES',	'MONTENEGRO',	'NOVA VENEZA AVES',	'NUPORANGA - SP ',	'NUPORANGA AVES',		'PASSO FUNDO',	'PASSOS AVES',			'ROLANDIA',		'SANTA FE AVES',	'SANTO INACIO AVES',	'SAO JOSE AVES',		'SEARA AVES',	'SEARA SUI/ IND',		'SIDROLANDIA AVES',	'TANGARA DA SERRA',		'TRINDADE DO SUL',	'UBERABA AVES', 'SAO GONCALO DOS CAMPOS AVES')"] , setGraficoNNCLogDetalhesAves, setresponseGraficoNNCLogDetalhesAves,75)
@@ -1032,13 +1022,13 @@ function Home() {
         chamarAPI("NCCMPUnidade", GraficoNNCAvesPesadasUnidades, "GraficoNNCAvesPesadasUnidades", [ " where [Reg. Qual] like '%Aves%Pe%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesPesadasUnidades, setresponseGraficoNNCAvesPesadasUnidades, 79)
         chamarAPI("NCCMPProblema", GraficoNNCAvesPesadasProblemas, "GraficoNNCAvesPesadasProblemas", [ " where [Reg. Qual] like '%Aves%Pe%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesPesadasProblemas, setresponseGraficoNNCAvesPesadasProblemas, 80)
 
-        chamarAPI("NCCMP", GraficoNNCAvesRS, "GraficoNNCAvesRS", [" where [Reg. Qual] like '%Aves Pesadas Sul%' "], setGraficoNNCAvesRS, setresponseGraficoNNCAvesRS, 81)
-        chamarAPI("NCCMPUnidade", GraficoNNCAvesRSUnidades, "GraficoNNCAvesRSUnidades", [" where [Reg. Qual] like '%Aves Pesadas Sul%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesRSUnidades, setresponseGraficoNNCAvesRSUnidades, 82)
-        chamarAPI("NCCMPProblema", GraficoNNCAvesRSProblemas, "GraficoNNCAvesRSProblemas", [" where [Reg. Qual] like '%Aves Pesadas Sul%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesRSProblemas, setresponseGraficoNNCAvesRSProblemas, 83)
+        chamarAPI("NCCMP", GraficoNNCAvesRS, "GraficoNNCAvesRS", [" where [Reg. Qual] like '%Aves Pesadas RS/SC/SP%' "], setGraficoNNCAvesRS, setresponseGraficoNNCAvesRS, 81)
+        chamarAPI("NCCMPUnidade", GraficoNNCAvesRSUnidades, "GraficoNNCAvesRSUnidades", [" where [Reg. Qual] like '%Aves Pesadas RS/SC/SP%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesRSUnidades, setresponseGraficoNNCAvesRSUnidades, 82)
+        chamarAPI("NCCMPProblema", GraficoNNCAvesRSProblemas, "GraficoNNCAvesRSProblemas", [" where [Reg. Qual] like '%Aves Pesadas RS/SC/SP%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesRSProblemas, setresponseGraficoNNCAvesRSProblemas, 83)
 
-        chamarAPI("NCCMP", GraficoNNCAvesSP, "GraficoNNCAvesSP", [" where [Reg. Qual] like '%Aves Pesadas SP%' "], setGraficoNNCAvesSP, setresponseGraficoNNCAvesSP, 84)
-        chamarAPI("NCCMPUnidade", GraficoNNCAvesSPUnidades, "GraficoNNCAvesSPUnidades", [" where [Reg. Qual] like '%Aves Pesadas SP%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesSPUnidades, setresponseGraficoNNCAvesSPUnidades, 85)
-        chamarAPI("NCCMPProblema", GraficoNNCAvesSPProblemas, "GraficoNNCAvesSPProblemas", [" where [Reg. Qual] like '%Aves Pesadas SP%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesSPProblemas, setresponseGraficoNNCAvesSPProblemas, 86)
+        chamarAPI("NCCMP", GraficoNNCAvesSP, "GraficoNNCAvesSP", [" where [Reg. Qual] like '%Aves Pesadas SP/CO/NE%' "], setGraficoNNCAvesSP, setresponseGraficoNNCAvesSP, 84)
+        chamarAPI("NCCMPUnidade", GraficoNNCAvesSPUnidades, "GraficoNNCAvesSPUnidades", [" where [Reg. Qual] like '%Aves Pesadas SP/CO/NE%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesSPUnidades, setresponseGraficoNNCAvesSPUnidades, 85)
+        chamarAPI("NCCMPProblema", GraficoNNCAvesSPProblemas, "GraficoNNCAvesSPProblemas", [" where [Reg. Qual] like '%Aves Pesadas SP/CO/NE%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesSPProblemas, setresponseGraficoNNCAvesSPProblemas, 86)
 
         chamarAPI("NCCMP", GraficoNNCAvesPR, "GraficoNNCAvesPR", [" where [Reg. Qual] like '%Aves Pesadas PR%' "], setGraficoNNCAvesPR, setresponseGraficoNNCAvesPR, 87)
         chamarAPI("NCCMPUnidade", GraficoNNCAvesPRUnidades, "GraficoNNCAvesPRUnidades", [" where [Reg. Qual] like '%Aves Pesadas PR%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesPRUnidades, setresponseGraficoNNCAvesPRUnidades, 88)
@@ -1060,7 +1050,7 @@ function Home() {
         chamarAPI("NCCMP", GraficoNNCCEInerente, "GraficoNNCCEInerente", ["  WHERE [Grupo Problema] = 'Corpo Estranho' and [Reg. Qual] NOT IN ('Itajaí','Outros') and [Entra para a Meta] = 'Sim' AND [Tipo CE] = 'Inerente' "], setGraficoNNCCEInerente, setresponseGraficoNNCCEInerente, 100)
         chamarAPI("NCCMP", GraficoNNCCENaoInerente, "GraficoNNCCENaoInerente", ["  WHERE [Grupo Problema] = 'Corpo Estranho' and [Reg. Qual] NOT IN ('Itajaí','Outros') and [Entra para a Meta] = 'Sim' AND [Tipo CE] = 'Não Inerente' "], setGraficoNNCCENaoInerente, setresponseGraficoNNCCENaoInerente, 101)
         chamarAPI("NCCMP", GraficoNNCCEOssos, "GraficoNNCCEOssos", ["  WHERE [Grupo Problema] = 'Corpo Estranho' and [Reg. Qual] NOT IN ('Itajaí','Outros') and [Entra para a Meta] = 'Sim' AND [Tipo Problema] = 'Ossos' "], setGraficoNNCCEOssos, setresponseGraficoNNCCEOssos, 102)
-        chamarAPI("NCCMP", GraficoNNCCEPlastico, "GraficoNNCCEPlastico", ["  WHERE [Grupo Problema] = 'Corpo Estranho' and [Reg. Qual] NOT IN ('Itajaí','Outros') and [Entra para a Meta] = 'Sim' AND [Tipo Problema] in ('Borracha',	'Lacre Plástico',	'Luva Latex',	'Luva Nitrilica',	'plástico de bala',	'Plástico duro',	'Plástico mole - Resíduo') "], setGraficoNNCCEPlastico, setresponseGraficoNNCCEPlastico, 103)
+        chamarAPI("NCCMP", GraficoNNCCEPlastico, "GraficoNNCCEPlastico", ["  WHERE [Grupo Problema] = 'Corpo Estranho' and [Reg. Qual] NOT IN ('Itajaí','Outros') and [Entra para a Meta] = 'Sim' AND [Tipo Problema] in ('Borracha','Luva Latex','Luva Nitrilica','Plástico duro','Plástico mole - Resíduo') "], setGraficoNNCCEPlastico, setresponseGraficoNNCCEPlastico, 103)
         chamarAPI("NCCMP", GraficoNNCCEMetal, "GraficoNNCCEMetal", ["  WHERE [Grupo Problema] = 'Corpo Estranho' and [Reg. Qual] NOT IN ('Itajaí','Outros') and [Entra para a Meta] = 'Sim' and ( [Grupo Problema.] = 'Corpo Estranho_ Metalico' or [Tipo Problema] in ('Luva anti corte') ) "], setGraficoNNCCEMetal, setresponseGraficoNNCCEMetal, 104)
         
             
@@ -1074,11 +1064,12 @@ function Home() {
 
         chamarAPI("ICBarras", GraficoICUnidadesPreparados, "GraficoICUnidadesPreparados", [" where ano = '2021' and mes = '08' AND REGIONALNOME IN ('REGIONAL SEARA - ALIMENTOS PREPARADOS 1','REGIONAL SEARA - ALIMENTOS PREPARADOS 2') ", "empresaNome as name ", "empresaNome"], setGraficoICUnidadesPreparados, setresponseGraficoICUnidadesPreparados, 109)     
         chamarAPI("ICBarras", GraficoICIndicadoresPreparados, "GraficoICIndicadoresPreparados", [" where ano = '2021' and mes = '08' AND REGIONALNOME IN ('REGIONAL SEARA - ALIMENTOS PREPARADOS 1','REGIONAL SEARA - ALIMENTOS PREPARADOS 2') ", "indicadorNome as name ", "indicadorNome"], setGraficoICIndicadoresPreparados, setresponseGraficoICIndicadoresPreparados, 110)   
-        
+     
+  */
         
         /////////////////////
 
-        buscarDadosTable([" and 1=1 "])
+         buscarDadosTable([" and 1=1 "])
 
         const bar_ctx = canvasRef.current.getContext('2d');
 
@@ -1294,7 +1285,7 @@ function Home() {
         if (estaRodandoAplicar == false) {
             console.log("aplicar")
             setEstaRodandoAplicar(true);
-            
+  /*          
             GerarGraficoHistoricoAnoAnterior(GraficoCETotal, setresponseGraficoCETotal, backgroundGradient, backgroundGradientCinza)
             GerarGraficoHistoricoAnoAnteriorSemMeta(GraficoNNCMPTotalCE, setresponseGraficoNNCMPTotalCE, backgroundGradient, backgroundGradientCinza)
             GerarGraficoHistoricoAnoAnteriorSemMeta(GraficoRACTotalCE, setresponseGraficoRACTotalCE, backgroundGradient, backgroundGradientCinza)
@@ -1380,7 +1371,7 @@ function Home() {
             GerarGraficoHistorico(GraficoRACDetalhesLogMI, setresponseGraficoRACDetalhesLogMI, backgroundGradient, backgroundGradientCinza)
 
             //Documentação
-            GerarGraficoHistoricoAnoAnterior(GraficoRACDetalhesDoc, setresponseGraficoRACDetalhesDoc, backgroundGradient, backgroundGradientCinza)
+            GerarGraficoHistorico(GraficoRACDetalhesDoc, setresponseGraficoRACDetalhesDoc, backgroundGradient, backgroundGradientCinza)
 
             //Transporte Terrestre
             GerarGraficoHistorico(GraficoRACDetalhesTT, setresponseGraficoRACDetalhesTT, backgroundGradient, backgroundGradientCinza)
@@ -1400,8 +1391,8 @@ function Home() {
             GerarGraficoHistoricoSemMeta(GraficoRACDetalhesCritica, setresponseGraficoRACDetalhesCritica, backgroundGradient, backgroundGradientCinza)
 
             //RAC Linhas Especiais (Seara Nature, Gourmet, Incrível)
-            GerarGraficoHistoricoSemMeta(GraficoRACDetalhesEspeciais, setresponseGraficoRACDetalhesEspeciais, backgroundGradient, backgroundGradientCinza)
-
+            GerarGraficoHistorico(GraficoRACDetalhesEspeciais, setresponseGraficoRACDetalhesEspeciais, backgroundGradient, backgroundGradientCinza)
+*/
             //RAC Corpo Estanho - [Totais]
             GerarGraficoHistoricoSemMeta(GraficoRACDetalhesCE, setresponseGraficoRACDetalhesCE, backgroundGradient, backgroundGradientCinza)
             
@@ -1431,7 +1422,7 @@ function Home() {
 
             //RAC Larva
             GerarGraficoHistoricoSemMeta(GraficoRACDetalhesLarva, setresponseGraficoRACDetalhesLarva, backgroundGradient, backgroundGradientCinza)
-
+/*
             // //NNC Log
             GerarGraficoHistorico(GraficoNNCLogDetalhesTotal, setresponseGraficoNNCLogDetalhesTotal, backgroundGradient, backgroundGradientCinza)
             GerarGraficoHistorico(GraficoNNCLogDetalhesAves, setresponseGraficoNNCLogDetalhesAves, backgroundGradient, backgroundGradientCinza)
@@ -1483,7 +1474,7 @@ function Home() {
             GerarGraficoBarras(GraficoICUnidadesPreparados, setresponseGraficoICUnidadesPreparados, backgroundGradientCinza)
             GerarGraficoBarras(GraficoICIndicadoresPreparados, setresponseGraficoICIndicadoresPreparados, backgroundGradientCinza)
             
-
+*/
 
             setEstaRodandoAplicar(false);
         }
@@ -3524,7 +3515,11 @@ function Home() {
 
     const DataTableRacCorposEstranhosInerentesNaoInerentes = () => {
 
+        
+
         if (!TableRacCorposEstranhosInerentesNaoInerentes) return;
+
+      
 
         //
 
@@ -3551,6 +3546,8 @@ function Home() {
     const DataTableRacCorposEstranhosNaoInerentes = () => {
 
         if (!TableRacCorposEstranhosNaoInerentes) return;
+
+        
 
         //
 
@@ -3628,32 +3625,6 @@ function Home() {
         
     }
 
-    const DataTableRACD3INNATURASuinos = () => {
-
-        if (!TableRacRACD3InNaturaSuinos) return;
-
-
-        let json = []
-
-        for (let i = 0; i < TableRacRACD3InNaturaSuinos.length; i++) {
-            json.push(TableRacRACD3InNaturaSuinos[i])
-        }
-
-        var retorno = percorrerJson(TableRacRACD3InNaturaSuinos[0])
-
-        return (
-            <div>
-                <div className="card">
-                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableRacRACD3InNaturaSuinos">
-                        <Column field="CAMPO1" header="RAC D-3 - In-Natura - Suínos" headerStyle={{ width: '70%' }}></Column>
-                        <Column field="NUM" header="Nº RAC"></Column>
-                    </DataTable>
-                </div>
-            </div>
-            );
-        
-    }
-
     const DataTableRACD0INNATURA = () => {
 
         if (!TableRacRACD0InNatura) return;
@@ -3672,32 +3643,6 @@ function Home() {
                 <div className="card">
                     <DataTable value={json} sortMode="multiple" className="p-datatable clTableRacRACD0InNatura">
                         <Column field="CAMPO1" header="RAC D-0 - In-Natura" headerStyle={{ width: '70%' }}></Column>
-                        <Column field="NUM" header="Nº RAC"></Column>
-                    </DataTable>
-                </div>
-            </div>
-            );
-        
-    }
-
-    const DataTableRACD0INNATURASuinos = () => {
-
-        if (!TableRacRACD0InNaturaSuinos) return;
-
-
-        let json = []
-
-        for (let i = 0; i < TableRacRACD0InNaturaSuinos.length; i++) {
-            json.push(TableRacRACD0InNaturaSuinos[i])
-        }
-
-        var retorno = percorrerJson(TableRacRACD0InNaturaSuinos[0])
-
-        return (
-            <div>
-                <div className="card">
-                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableRacRACD0InNaturaSuinos">
-                        <Column field="CAMPO1" header="RAC D-0 - In-Natura - Suínos" headerStyle={{ width: '70%' }}></Column>
                         <Column field="NUM" header="Nº RAC"></Column>
                     </DataTable>
                 </div>
@@ -4196,36 +4141,11 @@ function Home() {
         
     }
 
-    const DataTableNNCEvolucao = () => {
-
-        if (!TableNNCTotal) return;
-
-
-        let json = []
-
-        for (let i = 0; i < TableNNCTotal.length; i++) {
-            json.push(TableNNCTotal[i])
-        }
-
-        var retorno = percorrerJson(TableNNCTotal[0])
-
-        return (
-            <div>
-                <div className="card">
-                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableNNCTotal">
-                        {retorno}
-                    </DataTable>
-                </div>
-            </div>
-            );
-        
-    }
-
-    
-
     const DataTableHabilitadorCorposEstranhosNaoInerentes = () => {
 
         if (!TableHabilitadorCorposEstranhosNaoInerentes) return;
+
+        
 
 
         let json = []
@@ -4508,6 +4428,8 @@ function Home() {
     const buscarDadosTable = (parm) => {
 
         if (!flagTable) {
+
+/*
             api.getSearaBaseRacME(parm).then((response) => {
 
                 let json = JSON.parse(response.data)
@@ -5199,7 +5121,7 @@ function Home() {
             + "and month(data_rac) = (select month(data) as data from v_maiorData) "
             
             + "AND [Grupo_rac] IN ('CORPO ESTRANHO') "
-            + "AND [Regional Qual] NOT IN ('FATIADOS','PESCADOS','AVES PR','AVES Sul','AVES SP') "
+            + "AND [Regional Qual] NOT IN ('FATIADOS','PESCADOS','AVES PR','AVES RS/SC/SP','AVES SP/CO/NE') "
             + "AND UNIDADE NOT IN ('AGRO ALFA','AMAI','ATI-GEL','CLAREBOUT','GRANO','GRIFFOOD','MASSATAKE','SANTA CRUZ DO SUL','VIGOR','ARTES GRÁFICAS','CAMPINAS-CD','CAMPO VERDE','CD RIBEIRÃO DAS NEVES','CPO','DOC INDUSTRIA','EIRELI EPP','EIRELI ME','EXCELSIOR','GENESEAS AQUACULTURA','GERÊNCIA NACIONA FS','GRANO ALIMENTOS S.A.','GRIFFOOD','ICOFORT','ITAJAI','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','ITAJAI PESCADOS','LABREZZA','M P FOODS','MARBA','MASSAS SANTA ENERSTINA LTDA','NORONHA', 'OUTROS','PINHAIS - CD','QUALIDADE SUPPLY CHAIN','RIBEIRÃO PRETO – CD','SALVADOR – CD','SAO PAULO – CD','SEARA MEATS','SOMAVE','VARZEA GRANDE – CD') "
             + "AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR', 'RECLAMAÇÃO FFO', 'RAC CONSUMIDOR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO','NOTIFICAÇÃO') "
             + "AND [PROBLEMA] IN ('INSETO','INSETO VIVO') "
@@ -5447,7 +5369,7 @@ function Home() {
             + " WHERE 1=1 "
             + "and year([Dt Abertura]) = (select year(data) as data from v_maiorData) "
             + "and month([Dt Abertura]) = (select month(data) as data from v_maiorData) "
-            + " AND [Grupo Problema] = 'Corpo Estranho' and [Reg. Qual] NOT IN ('Itajaí','Outros') and [Entra para a Meta] = 'Sim' AND [Tipo Problema] in ('Borracha',	'Lacre Plástico',	'Luva Latex',	'Luva Nitrilica',	'plástico de bala',	'Plástico duro',	'Plástico mole - Resíduo') "
+            + " AND [Grupo Problema] = 'Corpo Estranho' and [Reg. Qual] NOT IN ('Itajaí','Outros') and [Entra para a Meta] = 'Sim' AND [Tipo Problema] in ('Borracha','Luva Latex','Luva Nitrilica','Plástico duro','Plástico mole - Resíduo') "
          
 
             api.getSearaBaseNNC1nivelPIVOTDIA([ whereTableNNCCEPlastico, " Filial  as Coluna1, null as Coluna2, null as Coluna3 ", "Filial", " [MES-DIA] " , " [MES-DIA] " ]).then((response) => {
@@ -5565,39 +5487,7 @@ function Home() {
                 setTimeout(arrumaTabela2niveis('clTableNNCCE'), 20000)
             })
 
-            var whereTableNNCTotal = ""
-            + " WHERE 1=1 "
-            + "and year([Dt Abertura]) = (select year(data) as data from v_maiorData) "
-            + "and month([Dt Abertura]) = (select month(data) as data from v_maiorData) "
-            + "and [Reg. Qual] NOT IN ('OUTROS', 'ITAJAÍ')  "
-
-            api.getSearaBaseNNC2niveisPIVOTDIA([ whereTableNNCTotal, "[Reg. Prod.] as Coluna1, fornecedor as Coluna2, null as Coluna3", "[Reg. Prod.], fornecedor", " [MES-DIA] ", " [MES-DIA] " ]).then((response) => {
-                
-                let json = JSON.parse(response.data)
-
-                for (var i=0; i<json.length; i++){
-                    delete json[i]['C1'];
-                    delete json[i]['C2'];
-                    delete json[i]['C3'];
-                    delete json[i]['Coluna1'];
-                    delete json[i]['Coluna2'];
-                    delete json[i]['Coluna3'];
-                    delete json[i]['Nº RAC'];
-                    delete json[i]['C1__'];
-                    delete json[i]['C2__'];
-                    delete json[i]['C3__'];
-                    delete json[i]['Coluna_'];
-                    delete json[i]['Total'];
-                    delete json[i]['Total2'];
-                }
-                
-                setTableNNCTotal(json)
-                setTimeout(arrumaTabela2niveis('clTableNNCTotal'), 20000)
-            })
-
-            
-
-
+*/
             var whereTableHabilitadorCorposEstranhosNaoInerentes = ""
             + " WHERE 1=1 "
             + "and ANO = (select year(data) as data from v_maiorData) "
@@ -5623,12 +5513,14 @@ function Home() {
                     delete json[i]['Total'];
                     delete json[i]['Total2'];
                 }
+
+                
                 
                 setTableHabilitadorCorposEstranhosNaoInerentes(json)
                 setTimeout(arrumaTabela2niveis('clTableHabilitadorCorposEstranhosNaoInerentes'), 20000)
             })
 
-
+/*
             var whereTableNNCCEInerenteNaoInerente = ""
             + " WHERE 1=1 "
             + " and year([Dt Abertura]) = (select year(data) as data from v_maiorData) "
@@ -5815,11 +5707,11 @@ function Home() {
             + " WHERE 1=1 "
             + "and year(data_rac) = (select year(data) as data from v_maiorData) "
             + "and month(data_rac) = (select month(data) as data from v_maiorData) "
-            + "AND Tipo_rac = 'Real'	AND  [Regional Qual] = 'PescadoS'  "
+            + "AND Tipo_rac = 'Real'	AND  [Regional Qual] LIKE '%Pescado%'  "
             + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
 			+ " OR Tipo_Atendimento_rac IS NULL) "
             + " and (Unidade NOT IN ('Fatiados','Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS') OR Unidade IS NULL) "
-            + " AND  [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO', 'Produção em Terceiro') "
+            
 
 
             api.getSearaBaseRAC3niveisPIVOTDIA([ wherePivotdataEvolucaoPescados, "[Regional Qual] as Coluna1, Unidade as Coluna2, null as Coluna3", "[Regional Qual], Unidade", " [MES-DIA] " ]).then((response) => {
@@ -5898,7 +5790,7 @@ function Home() {
             + " AND Tipo_rac = 'Real' "
             + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
 			+ " OR Tipo_Atendimento_rac IS NULL) "
-            + "  and (Unidade NOT IN ('Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS','AVANTI','Serviços','Shipping', 'SAO BERNARDO DO CAMPO') OR Unidade IS NULL) "
+            + "  and (Unidade NOT IN ('Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS','AVANTI','Serviços','Shipping') OR Unidade IS NULL) "
             + " AND (Origem NOT IN ('ABUSO DE PRODUTO HOME') OR Origem IS NULL) "
 
             api.getSearaBaseRAC2niveis([whereTableRACAberturaLinhaEspecialFamilia," Nm_Marca_rac CAMPO1, Nm_Classe_rac CAMPO2, NULL CAMPO3 "," Nm_Marca_rac, Nm_Classe_rac "]).then((response) => {
@@ -5989,22 +5881,13 @@ function Home() {
             })
 
             var whereTableRACAberturaLinhaEspecialAcumuladoGourmet = ""
-            // + " WHERE 1=1	AND month(Data_rac) = month((select * from v_maiorData)) "
-            // + " AND year(Data_rac) = year((select * from v_maiorData)) "
-            // + " AND [Origem_do_Problema_rac] NOT IN ('ABUSO DE PRODUTO HOME', 'Marketing') "																										
-            // + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR') "	
-            // + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "
-            // + " AND Nm_Marca_rac in ('SEARA GOURMET') "																											
-            // + " AND Tipo_rac = 'Real' "
-
             + " WHERE 1=1	AND month(Data_rac) = month((select * from v_maiorData)) "
             + " AND year(Data_rac) = year((select * from v_maiorData)) "
+            + " AND [Origem_do_Problema_rac] NOT IN ('ABUSO DE PRODUTO HOME', 'Marketing') "																										
+            + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR') "	
+            + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "
             + " AND Nm_Marca_rac in ('SEARA GOURMET') "																											
             + " AND Tipo_rac = 'Real' "
-            + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
-			+ " OR Tipo_Atendimento_rac IS NULL) "
-            + "  and (Unidade NOT IN ('Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS','AVANTI','Serviços','Shipping', 'SAO BERNARDO DO CAMPO') OR Unidade IS NULL) "
-            + " AND (Origem NOT IN ('ABUSO DE PRODUTO HOME') OR Origem IS NULL) "
 
             api.getSearaBaseRAC3niveis([whereTableRACAberturaLinhaEspecialAcumuladoGourmet," Tipo_Problema_rac CAMPO1, Unidade CAMPO2, Nm_item_rac CAMPO3 "," Tipo_Problema_rac, Unidade, Nm_item_rac "]).then((response) => {
 
@@ -6014,22 +5897,13 @@ function Home() {
             })
 
             var whereTableRACAberturaLinhaEspecialAcumuladoIncrivel = ""
-            // + " WHERE 1=1	AND month(Data_rac) = month((select * from v_maiorData)) "
-            // + " AND year(Data_rac) = year((select * from v_maiorData)) "
-            // + " AND [Origem_do_Problema_rac] NOT IN ('ABUSO DE PRODUTO HOME', 'Marketing') "																										
-            // + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR') "	
-            // + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "
-            // + " AND Nm_Marca_rac in ('SEARA INCRIVEL') "																											
-            // + " AND Tipo_rac = 'Real' "
-
             + " WHERE 1=1	AND month(Data_rac) = month((select * from v_maiorData)) "
             + " AND year(Data_rac) = year((select * from v_maiorData)) "
+            + " AND [Origem_do_Problema_rac] NOT IN ('ABUSO DE PRODUTO HOME', 'Marketing') "																										
+            + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR') "	
+            + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "
             + " AND Nm_Marca_rac in ('SEARA INCRIVEL') "																											
             + " AND Tipo_rac = 'Real' "
-            + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
-			+ " OR Tipo_Atendimento_rac IS NULL) "
-            + "  and (Unidade NOT IN ('Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS','AVANTI','Serviços','Shipping', 'SAO BERNARDO DO CAMPO') OR Unidade IS NULL) "
-            + " AND (Origem NOT IN ('ABUSO DE PRODUTO HOME') OR Origem IS NULL) "
 
             api.getSearaBaseRAC3niveis([whereTableRACAberturaLinhaEspecialAcumuladoIncrivel," Tipo_Problema_rac CAMPO1, Unidade CAMPO2, Nm_item_rac CAMPO3 "," Tipo_Problema_rac, Unidade, Nm_item_rac  "]).then((response) => {
 
@@ -6039,22 +5913,13 @@ function Home() {
             })
 
             var whereTableRACAberturaLinhaEspecialAcumuladoNature = ""
-            // + " WHERE 1=1	AND month(Data_rac) = month((select * from v_maiorData)) "
-            // + " AND year(Data_rac) = year((select * from v_maiorData)) "
-            // + " AND [Origem_do_Problema_rac] NOT IN ('ABUSO DE PRODUTO HOME', 'Marketing') "																										
-            // + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR') "	
-            // + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "
-            // + " AND Nm_Marca_rac in ('SEARA NATURE') "																											
-            // + " AND Tipo_rac = 'Real' "
-
             + " WHERE 1=1	AND month(Data_rac) = month((select * from v_maiorData)) "
             + " AND year(Data_rac) = year((select * from v_maiorData)) "
+            + " AND [Origem_do_Problema_rac] NOT IN ('ABUSO DE PRODUTO HOME', 'Marketing') "																										
+            + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR') "	
+            + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "
             + " AND Nm_Marca_rac in ('SEARA NATURE') "																											
             + " AND Tipo_rac = 'Real' "
-            + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
-			+ " OR Tipo_Atendimento_rac IS NULL) "
-            + "  and (Unidade NOT IN ('Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS','AVANTI','Serviços','Shipping', 'SAO BERNARDO DO CAMPO') OR Unidade IS NULL) "
-            + " AND (Origem NOT IN ('ABUSO DE PRODUTO HOME') OR Origem IS NULL) "
 
             api.getSearaBaseRAC3niveis([whereTableRACAberturaLinhaEspecialAcumuladoNature," Tipo_Problema_rac CAMPO1, Unidade CAMPO2, Nm_item_rac CAMPO3 "," Tipo_Problema_rac, Unidade, Nm_item_rac  "]).then((response) => {
 
@@ -6064,22 +5929,13 @@ function Home() {
             })
 
             var whereTableRACAberturaLinhaEspecialAcumuladoRotisserie = ""
-            // + " WHERE 1=1	AND month(Data_rac) = month((select * from v_maiorData)) "
-            // + " AND year(Data_rac) = year((select * from v_maiorData)) "
-            // + " AND [Origem_do_Problema_rac] NOT IN ('ABUSO DE PRODUTO HOME', 'Marketing') "																										
-            // + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR') "	
-            // + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "
-            // + " AND Nm_Marca_rac in ('SEARA ROTISSERIE') "																											
-            // + " AND Tipo_rac = 'Real' "
-
             + " WHERE 1=1	AND month(Data_rac) = month((select * from v_maiorData)) "
             + " AND year(Data_rac) = year((select * from v_maiorData)) "
+            + " AND [Origem_do_Problema_rac] NOT IN ('ABUSO DE PRODUTO HOME', 'Marketing') "																										
+            + " AND UNIDADE NOT IN ('DAN VIGOR','EIRELI ME','GERÊNCIA NACIONAL FS','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','MARBA','MASSATAKE','MARBA','SANTA CRUZ DO SUL','VIGOR') "	
+            + " AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CRÍTICA') "
             + " AND Nm_Marca_rac in ('SEARA ROTISSERIE') "																											
             + " AND Tipo_rac = 'Real' "
-            + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
-			+ " OR Tipo_Atendimento_rac IS NULL) "
-            + "  and (Unidade NOT IN ('Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS','AVANTI','Serviços','Shipping', 'SAO BERNARDO DO CAMPO') OR Unidade IS NULL) "
-            + " AND (Origem NOT IN ('ABUSO DE PRODUTO HOME') OR Origem IS NULL) "
 
             api.getSearaBaseRAC3niveis([whereTableRACAberturaLinhaEspecialAcumuladoRotisserie," Tipo_Problema_rac CAMPO1, Unidade CAMPO2, Nm_item_rac CAMPO3 "," Tipo_Problema_rac, Unidade, Nm_item_rac  "]).then((response) => {
 
@@ -6093,7 +5949,7 @@ function Home() {
             + " WHERE 1=1	AND Data_rac =  "  
             + " case when DATEPART(WEEKDAY,DATEADD(DD,-2,(select * from v_maiorData))) = 1 then DATEADD(DD,-4,(select * from v_maiorData)) when DATEPART(WEEKDAY,DATEADD(DD,-2,(select * from v_maiorData))) = 7 then DATEADD(DD,-3,(select * from v_maiorData)) else DATEADD(DD,-2,(select * from v_maiorData)) end " 																											
             + " AND Tipo_rac = 'Real'  "
-            + " AND ([Regional Qual] in( 'Aves Leves','Aves Pesadas', 'Aves Pesadas Sul', 'Aves Pesadas PR', 'Aves Pesadas SP') ) "
+            + " AND ([Regional Qual] like '%Ave%' or [Regional Qual] like '%suín%') "
             + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
 			+ " OR Tipo_Atendimento_rac IS NULL) "
             + " and (Unidade NOT IN ('Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS') OR Unidade IS NULL) "
@@ -6107,29 +5963,11 @@ function Home() {
                 setTimeout(arrumaTabela3niveis('clTableRacRACD3InNatura'), 20000)
             })
 
-            var whereTableRacRACD3InNaturaSuinos = ""
-            + " WHERE 1=1	AND Data_rac =  "  
-            + " case when DATEPART(WEEKDAY,DATEADD(DD,-2,(select * from v_maiorData))) = 1 then DATEADD(DD,-4,(select * from v_maiorData)) when DATEPART(WEEKDAY,DATEADD(DD,-2,(select * from v_maiorData))) = 7 then DATEADD(DD,-3,(select * from v_maiorData)) else DATEADD(DD,-2,(select * from v_maiorData)) end " 																											
-            + " AND Tipo_rac = 'Real'  "
-            + " AND ([Regional Qual] in( 'Suínos') ) "
-            + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
-			+ " OR Tipo_Atendimento_rac IS NULL) "
-            + " and (Unidade NOT IN ('Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS') OR Unidade IS NULL) "
-            + " AND (Origem NOT IN ('ABUSO DE PRODUTO HOME') OR Origem IS NULL) "
-
-
-            api.getSearaBaseRAC3niveis([whereTableRacRACD3InNaturaSuinos," Unidade CAMPO1, Nm_Item_RAC CAMPO2, Tipo_Problema_rac CAMPO3 "," Unidade, Nm_Item_RAC, Tipo_Problema_rac "]).then((response) => {
-
-                let json = JSON.parse(response.data)
-                setTableRacRACD3InNaturaSuinos(json)
-                setTimeout(arrumaTabela3niveis('clTableRacRACD3InNaturaSuinos'), 20000)
-            })
-
              var whereTableRacRACD0InNatura = ""
              + " WHERE 1=1	AND Data_rac =  "   	
              + " case when DATEPART(WEEKDAY,DATEADD(DD,-0,(select * from v_maiorData))) = 1 then DATEADD(DD,-2,(select * from v_maiorData)) when DATEPART(WEEKDAY,DATEADD(DD,-0,(select * from v_maiorData))) = 7 then DATEADD(DD,-1,(select * from v_maiorData)) else DATEADD(DD,-0,(select * from v_maiorData)) end "																										
             + " AND Tipo_rac = 'Real'   "
-            + " AND ([Regional Qual] in( 'Aves Leves','Aves Pesadas', 'Aves Pesadas Sul', 'Aves Pesadas PR', 'Aves Pesadas SP')) "
+            + " AND ([Regional Qual] like '%Ave%' or [Regional Qual] like '%suín%') "
             + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
 			+ " OR Tipo_Atendimento_rac IS NULL) "
             + " and (Unidade NOT IN ('Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS') OR Unidade IS NULL) "
@@ -6143,30 +5981,12 @@ function Home() {
                  setTimeout(arrumaTabela3niveis('clTableRacRACD0InNatura'), 20000)
              })
 
-             var whereTableRacRACD0InNaturaSuinos = ""
-             + " WHERE 1=1	AND Data_rac =  "   	
-             + " case when DATEPART(WEEKDAY,DATEADD(DD,-0,(select * from v_maiorData))) = 1 then DATEADD(DD,-2,(select * from v_maiorData)) when DATEPART(WEEKDAY,DATEADD(DD,-0,(select * from v_maiorData))) = 7 then DATEADD(DD,-1,(select * from v_maiorData)) else DATEADD(DD,-0,(select * from v_maiorData)) end "																										
-            + " AND Tipo_rac = 'Real'   "
-            + " AND ([Regional Qual] in('Suínos')) "
-            + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
-			+ " OR Tipo_Atendimento_rac IS NULL) "
-            + " and (Unidade NOT IN ('Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS') OR Unidade IS NULL) "
-            + " AND (Origem NOT IN ('ABUSO DE PRODUTO HOME') OR Origem IS NULL) "
-
- 
-             api.getSearaBaseRAC3niveis([whereTableRacRACD0InNaturaSuinos," Unidade CAMPO1, Nm_Item_RAC CAMPO2, Tipo_Problema_rac CAMPO3 "," Unidade, Nm_Item_RAC, Tipo_Problema_rac "]).then((response) => {
- 
-                 let json = JSON.parse(response.data)
-                 setTableRacRACD0InNaturaSuinos(json)
-                 setTimeout(arrumaTabela3niveis('clTableRacRACD0InNaturaSuinos'), 20000)
-             })
-
              //////
             var whereTableRacRACD3Preparados = ""
             + " WHERE 1=1	AND Data_rac =  "  
             + " case when DATEPART(WEEKDAY,DATEADD(DD,-2,(select * from v_maiorData))) = 1 then DATEADD(DD,-4,(select * from v_maiorData)) when DATEPART(WEEKDAY,DATEADD(DD,-2,(select * from v_maiorData))) = 7 then DATEADD(DD,-3,(select * from v_maiorData)) else DATEADD(DD,-2,(select * from v_maiorData)) end" 																											
             + " AND Tipo_rac = 'Real'   "
-            + " AND ([Regional Qual] in ( 'Preparados','Preparados 1','Preparados 2', 'Preparados 3')) "
+            + " AND Negocio = 'preparados'"
             + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
 			+ " OR Tipo_Atendimento_rac IS NULL) "
             + " and (Unidade NOT IN ('Fatiados','Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS') OR Unidade IS NULL) "
@@ -6183,7 +6003,7 @@ function Home() {
              + " WHERE 1=1	AND Data_rac = "   	
              + " case when DATEPART(WEEKDAY,DATEADD(DD,-0,(select * from v_maiorData))) = 1 then DATEADD(DD,-2,(select * from v_maiorData)) when DATEPART(WEEKDAY,DATEADD(DD,-0,(select * from v_maiorData))) = 7 then DATEADD(DD,-1,(select * from v_maiorData)) else DATEADD(DD,-0,(select * from v_maiorData)) end"																										
              + " AND Tipo_rac = 'Real'   "
-             + " AND ([Regional Qual] in ( 'Preparados','Preparados 1','Preparados 2', 'Preparados 3')) "
+             + " AND Negocio = 'preparados'"
              + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
              + " OR Tipo_Atendimento_rac IS NULL) "
              + " and (Unidade NOT IN ('Fatiados','Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS') OR Unidade IS NULL) "
@@ -6208,7 +6028,7 @@ function Home() {
  
                  let json = JSON.parse(response.data)
                  setTableNNCLogD3(json)
-                 setTimeout(arrumaTabela3niveis('clTableNNCLogD3'), 20000)
+                 setTimeout(arrumaTabela2niveis('clTableNNCLogD3'), 20000)
              })
 
              var whereTableNNCLogD0 = ""
@@ -6223,7 +6043,7 @@ function Home() {
  
                  let json = JSON.parse(response.data)
                  setTableNNCLogD0(json)
-                 setTimeout(arrumaTabela3niveis('clTableNNCLogD0'), 20000)
+                 setTimeout(arrumaTabela2niveis('clTableNNCLogD0'), 20000)
              })
 
              //////
@@ -6334,7 +6154,7 @@ function Home() {
              + " AND month([DT ABERTURA]) = month((select * from v_maiorData)) "
              + " AND year([DT ABERTURA]) = year((select * from v_maiorData)) "
  
-             api.getSearaBaseNNCMP2niveis([whereTableNNCMPCEOssosFornecedor," [Negócio] CAMPO1, Fornecedor CAMPO2, null CAMPO3 "," [Negócio], Fornecedor "]).then((response) => {
+             api.getSearaBaseNNCMP3niveis([whereTableNNCMPCEOssosFornecedor," [Negócio] CAMPO1, Fornecedor CAMPO2, null CAMPO3 "," [Negócio], Fornecedor "]).then((response) => {
  
                  let json = JSON.parse(response.data)
                  setTableNNCMPCEOssosFornecedor(json)
@@ -6425,7 +6245,7 @@ function Home() {
                  setTableRacCorposEstranhosInerentes(json)
                  setTimeout(arrumaTabela2niveis('clTableRacCorposEstranhosInerentes'), 20000)
              })
-
+*/
              var whereTableRacCorposEstranhosNaoInerente = ""
              + " WHERE 1=1 "
              + "and year(data_rac) = (select year(data) as data from v_maiorData) "
@@ -6438,6 +6258,8 @@ function Home() {
 
             api.getSearaBaseRAC3niveisPIVOTDIA([ whereTableRacCorposEstranhosNaoInerente, "[Negócio Qualidade]  as Coluna1, Unidade as Coluna2, null as Coluna3", "[Negócio Qualidade] , Unidade", " [Tipo_Problema_rac] " ]).then((response) => {
                 
+                 
+
                 let json = JSON.parse(response.data)
 
                 for (var i=0; i<json.length; i++){
@@ -6460,6 +6282,7 @@ function Home() {
                  setTableRacCorposEstranhosNaoInerentes(json)
                  setTimeout(arrumaTabela2niveis('clTableRacCorposEstranhosNaoInerentes'), 20000)
              })
+  
 
              var whereTableRacCorposEstranhosInerenteNaoInerente = ""
              + " WHERE 1=1 "
@@ -6471,9 +6294,11 @@ function Home() {
              + "AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR', 'RECLAMAÇÃO FFO', 'RAC CONSUMIDOR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO') "
              + "and [Tipo CE] in ('Inerente', 'Não Inerente') "
             
-            
+             
 
              api.getSearaBaseRAC3niveisPIVOTDIA([ whereTableRacCorposEstranhosInerenteNaoInerente, "[Negócio Qualidade]  as Coluna1, Unidade as Coluna2, null as Coluna3", " [Negócio Qualidade] , Unidade", " [Tipo CE] " ]).then((response) => {
+
+                
                 
                 let json = JSON.parse(response.data)
 
@@ -6548,30 +6373,6 @@ function Home() {
         )
     }
 
-    const GenerateFile = () => {
-        return (
-            <div>
-                <h1 className={'h2'}>
-                    Gerando Arquivo
-                    <br />
-                    <small>Gerando arquivo para download</small>
-                    <br />
-                </h1>
-                <ProgressBar mode="indeterminate" style={{ height: '16px' }}></ProgressBar>
-            </div>
-        )
-    }
-
-    function geraImagem() {
-        htmlToImage.toJpeg(document.getElementById('pad10'), { quality: 1 })
-        .then(function (dataUrl) {
-          var link = document.createElement('a');
-          link.download = 'KPI.jpeg';
-          link.href = dataUrl;
-          link.click();
-        });
-    }
-
     // Se esta logado exibe tela do dashboard:
     return (
         // <div style="width: 1220px !important;">
@@ -6592,11 +6393,9 @@ function Home() {
                                     <button className="btn btn-sm btn-outline-secondary" onClick={buscarDados}>Atualizar</button>
                                 </div>   */}
 
-                                <Pdf targetRef={ref} filename="KPI.pdf" options={options} x={0} scale={.8}>
-
+                                <Pdf targetRef={ref} filename="KPI.pdf" options={options} x={1} scale={1}>
                                     {({ toPdf }) => (
-                                        // <button className="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={toPdf} id="btnPDF">Gerar PDF</button>
-                                        <button className="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={geraImagem} id="btnPDF">Gerar Imagem</button>
+                                        <button className="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={toPdf} id="btnPDF">Gerar PDF</button>
                                     )}
                                 </Pdf>
 
@@ -6609,6 +6408,7 @@ function Home() {
             </Row>
 
             <hr></hr>
+
             {/* Botão aplicar */}
             {/* {isUpdatingData ? (<div> </div>) : ( */}
                 <Row style={{ paddingRight: '15px', paddingLeft: '15px', display: "none" }}>
@@ -6619,1438 +6419,13 @@ function Home() {
 
 
             {/* Graficos */}
-            <div className="pad10" id="pad10" ref={ref}  >
+            <div className="pad10" ref={ref}  >
                 <Row>
                     <Col className="mt-1 col-12 cssSeara2021">
                         <h1></h1>
                     </Col>
 
                 </Row>
-
-                <reg id="region RAC - Totais">
-
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            Totais
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoCETotal} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="RAC" subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoRACTotalCE} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="NNC MP" subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCE} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_subTitulo">
-                            Reclamações
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoRAC} options={lightOptions} className="divMedia" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col>
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoNCCMP} options={lightOptions} className="divMedia" />
-                                </Card>
-                            )}
-                        </Col>
-
-                    </Row>
-
-                </reg>
-
-                <reg id="region RAC - Aves Pesadas">
-
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Aves Pesadas
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoCETotalAvesPesadas} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="RAC" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                        <Chart type="bar" data={responseGraficoRACTotalCEAvesPesadas} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico divMenor">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCEAvesPesadas} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_subTitulo">
-                            Reclamações
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoRACAvesPesadas} options={lightOptions} className="divMedia" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col>
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoNCCMPAvesPesadas} options={lightOptions} className="divMedia" />
-                                </Card>
-                            )}
-                        </Col>
-
-                    </Row>
-
-                </reg>
-
-                <reg id="region RAC - Aves Pesadas Sul">
-
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Aves Pesadas Sul
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoCETotalAvesPesadasRS} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoRACTotalCEAvesPesadasRS} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCEAvesPesadasRS} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_subTitulo">
-                            Reclamações
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoRACAvesPesadasRS} options={lightOptions} className="divMedia" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col>
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoNCCMPAvesPesadasRS} options={lightOptions} className="divMedia" />
-                                </Card>
-                            )}
-                        </Col>
-
-                    </Row>
-
-                </reg>
-
-                
-
-                <reg id="region RAC - Aves Pesadas SP">
-
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Aves Pesadas SP
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoCETotalAvesPesadasSP} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoRACTotalCEAvesPesadasSP} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCEAvesPesadasSP} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_subTitulo">
-                            Reclamações
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoRACAvesPesadasSP} options={lightOptions} className="divMedia" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col>
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoNCCMPAvesPesadasSP} options={lightOptions} className="divMedia" />
-                                </Card>
-                            )}
-                        </Col>
-
-                    </Row>
-
-                </reg>
-
-                
-
-                <reg id="region RAC - Aves Pesadas PR">
-
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Aves Pesadas PR
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoCETotalAvesPesadasPR} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoRACTotalCEAvesPesadasPR} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCEAvesPesadasPR} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_subTitulo">
-                            Reclamações
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoRACAvesPesadasPR} options={lightOptions} className="divMedia" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col>
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoNCCMPAvesPesadasPR} options={lightOptions} className="divMedia" />
-                                </Card>
-                            )}
-                        </Col>
-
-                    </Row>
-
-                </reg>
-
-                <reg id="region RAC - Aves Leves">
-
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Aves Leves
-                            <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoCETotalAvesLeves} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoRACTotalCEAvesLeves} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCEAvesLeves} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_subTitulo">
-                            Reclamações
-                            <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoRACAvesLeves} options={lightOptions} className="divMedia" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col>
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoNCCMPAvesLeves} options={lightOptions} className="divMedia" />
-                                </Card>
-                            )}
-                        </Col>
-
-                    </Row>
-
-                </reg>
-
-                <reg id="region RAC - Suínos">
-
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Suínos
-                            <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoCETotalSuinos} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoRACTotalCESuinos} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCESuinos} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_subTitulo">
-                            Reclamações
-                            <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoRACSuinos} options={lightOptions} className="divMedia" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col>
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoNCCMPSuinos} options={lightOptions} className="divMedia" />
-                                </Card>
-                            )}
-                        </Col>
-
-                    </Row>
-
-                </reg>
-
-                <reg id="region RAC - Preparados">
-
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Preparados
-                            <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="Habilitador" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoCETotalPreparados} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoRACTotalCEPreparados} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoNNCMPTotalCEPreparados} options={lightOptions} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_subTitulo">
-                            Reclamações
-                            <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="RAC" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoRACPreparados} options={lightOptions} className="divMedia" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col>
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC MP" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                    <Chart type="bar" data={responseGraficoNCCMPPreparados} options={lightOptions} className="divMedia" />
-                                </Card>
-                            )}
-                        </Col>
-
-                    </Row>
-
-                </reg>
-
-                <reg id="region RAC - Reclamações - Aves Pesadas">
-
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Reclamações - Aves Pesadas
-                            <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoRACAvesPesadas} options={lightOptions} className="divMaior2" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoRACUnidadesAvesPesadas} options={optionsComparativo} className="divMenor2" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoRACProblemasAvesPesadas} options={optionsComparativo} className="divMenor2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-
-                </reg>
-
-                <reg id="region RAC - Reclamações - Aves Pesadas PR">
-
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Reclamações - Aves Pesadas PR
-                            <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoRACAvesPesadasPR} options={lightOptions} className="divMaior2" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoRACUnidadesAvesPesadasPR} options={optionsComparativo} className="divMenor2" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoRACProblemasAvesPesadasPR} options={optionsComparativo} className="divMenor2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-
-                </reg>
-
-                <reg id="region RAC - Reclamações - Aves Pesadas SP">
-
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Reclamações - Aves Pesadas SP
-                            <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoRACAvesPesadasSP} options={lightOptions} className="divMaior2" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoRACUnidadesAvesPesadasSP} options={optionsComparativo} className="divMenor2" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoRACProblemasAvesPesadasSP} options={optionsComparativo} className="divMenor2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-
-                </reg>
-
-                <reg id="region RAC - Reclamações - Aves Pesadas Sul">
-
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Reclamações - Aves Pesadas Sul
-                            <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoRACAvesPesadasRS} options={lightOptions} className="divMaior2" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoRACUnidadesAvesPesadasRS} options={optionsComparativo} className="divMenor2" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoRACProblemasAvesPesadasRS} options={optionsComparativo} className="divMenor2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-
-                </reg>
-
-                <reg id="region RAC - Reclamações - Aves Leves">
-
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Reclamações - Aves Leves
-                            <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoRACAvesLeves} options={lightOptions} className="divMaior2" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoRACUnidadesAvesLeves} options={optionsComparativo} className="divMenor2" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoRACProblemasAvesLeves} options={optionsComparativo} className="divMenor2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-
-                </reg>
-
-                <reg id="region RAC - Reclamações - Suínos">
-
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Reclamações - Suínos
-                            <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoRACSuinos} options={lightOptions} className="divMaior2" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoRACUnidadesSuinos} options={optionsComparativo} className="divMenor2" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoRACProblemasSuinos} options={optionsComparativo} className="divMenor2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-
-
-                </reg>
-
-                <reg id="region RAC - Reclamações - Preparados">
-
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Reclamações - Preparados
-                            <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoRACPreparados} options={lightOptions} className="divMaior2" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoRACUnidadesPreparados} options={optionsComparativo} className="divMenor2" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoRACProblemasPreparados} options={optionsComparativo} className="divMenor2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-
-
-                </reg>
-
-                <reg id="region RAC - Abertura ME e MI">
-
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Mercado Interno
-                            <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoRACMI} options={lightOptions} className="divMaior2" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-
-                        </Col>
-
-                    </Row>
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Mercado Externo
-                            <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoRACME} options={lightOptions} className="divMaior2" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-3 col-md-3 col-sm-12">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                DataTableRACAberturaME()
-
-                            )}
-                        </Col>
-
-                    </Row>
-
-                    <Row>
-                        <Col className="col-lg-2 col-md-2 col-sm-1">
-                            <Row>
-                                <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                    Oriente Médio
-                                    <hr></hr>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col className="col-lg-12 col-md-12 col-sm-1">
-                                    {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                        DataTableRACAberturaMEOrienteMedio()
-
-                                    )}
-                                </Col>
-                            </Row>
-                        </Col>
-                        <Col className="col-lg-2 col-md-2 col-sm-1">
-                            <Row>
-                                <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                    Europa
-                                    <hr></hr>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col className="col-lg-12 col-md-12 col-sm-1">
-                                    {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                        DataTableRACAberturaMEEuropa()
-
-                                    )}
-                                </Col>
-                            </Row>
-                        </Col>
-                        <Col className="col-lg-2 col-md-2 col-sm-1">
-                            <Row>
-                                <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                    Japão
-                                    <hr></hr>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col className="col-lg-12 col-md-12 col-sm-1">
-                                    {
-                                    isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                        DataTableRACAberturaMEJapao()
-                                    
-                                    )
-                                    }                                   
-                                    
-                                </Col>
-                            </Row>
-                        </Col>
-                        <Col className="col-lg-2 col-md-2 col-sm-1">
-                            <Row>
-                                <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                    Ásia
-                                    <hr></hr>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col className="col-lg-12 col-md-12 col-sm-1">
-                                    {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                        DataTableRACAberturaMEAsia()
-
-                                    )}
-                                </Col>
-                            </Row>
-                        </Col>
-                        <Col className="col-lg-2 col-md-2 col-sm-1">
-                            <Row>
-                                <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                    Américas / África
-                                    <hr></hr>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col className="col-lg-12 col-md-12 col-sm-1">
-                                    {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                        DataTableRACAberturaMEAmericasAfrica()
-
-                                    )}
-                                </Col>
-                            </Row>
-                        </Col>
-                        <Col className="col-lg-2 col-md-2 col-sm-1">
-                            <Row>
-                                <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                    Contas globais
-                                    <hr></hr>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col className="col-lg-12 col-md-12 col-sm-1">
-                                    {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                        DataTableRACAberturaMEContasGlobais()
-
-                                    )}
-                                </Col>
-                            </Row>
-                        </Col>
-
-
-                    </Row>
-
-                </reg>
-
-
-                <reg id="region RAC - +1">
-
-                    <Row>
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                FFO
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                        <Chart type="bar" data={responseGraficoRACDetalhesFFO} options={lightOptions} className="divMaior2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                Atendimento Comercial
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                        <Chart type="bar" data={responseGraficoRACDetalhesAC} options={lightOptions} className="divMaior2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-                    </Row>
-
-                </reg>
-
-                <reg id="region RAC - +2">
-
-                    <Row>
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                Logística Exportação
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                        <Chart type="bar" data={responseGraficoRACDetalhesLogME} options={lightOptions} className="divMaior2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                Logística Importação
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                        <Chart type="bar" data={responseGraficoRACDetalhesLogMI} options={lightOptions} className="divMaior2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-                    </Row>
-                    
-                </reg>
-
-                <reg id="region RAC - +3">
-
-                    <Row>
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                Documentação
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                        <Chart type="bar" data={responseGraficoRACDetalhesDoc} options={lightOptions} className="divMaior2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                Transporte Terrestre
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                        <Chart type="bar" data={responseGraficoRACDetalhesTT} options={lightOptions} className="divMaior2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-                    </Row>
-                    
-                </reg>
-
-                <reg id="region RAC - +3">
-
-                    <Row>
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                Produção em Terceiro (ex. Massatake)
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                        <Chart type="bar" data={responseGraficoRACDetalhesTerceiro} options={lightOptions} className="divMaior2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-                        <Col className="col-3">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                Abertura Terceiro
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRacRACDetalhesTerceiro()
-
-                                )}
-                            </Col>
-                        </Col>
-                    </Row>
-                    
-                </reg>
-
-                <reg id="region RAC - +4">
-
-                    <Row>
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                Massatake
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                        <Chart type="bar" data={responseGraficoRACDetalhesMassatake} options={lightOptions} className="divMaior2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                PDV
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                        <Chart type="bar" data={responseGraficoRACDetalhesPDV} options={lightOptions} className="divMaior2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-                    </Row>
-                    
-                </reg>
-
-                <reg id="region RAC - +5">
-
-                    <Row>
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                Abertura PDV
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                        <Chart type="bar" data={responseGraficoRACDetalhesAberturaPDV} options={optionsComparativo} className="divMaior2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-                        <Col className="col-3">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRacRACDetalhesPDV()
-
-                                )}
-                            </Col>
-                        </Col>
-                    </Row>
-                    
-                </reg>
-
-                <reg id="region RAC - +6">
-
-                    <Row>
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                RAC's Tipo Crítica
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                        <Chart type="bar" data={responseGraficoRACDetalhesCritica} options={lightOptions} className="divMaior2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-                        
-                    </Row>
-
-                    <Row>
-                        
-                        <Col className="col-12">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRacRACDetalhesCritica()
-
-                                )}
-                            </Col>
-                        </Col>
-                    </Row>
-                    
-                </reg>
-
-                <reg id="region RAC - +7">
-
-                    <Row>
-                        <Col className="col-12">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                RAC's Evolução - Totais
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRacRACDetalhesEvolucaoTotal()
-
-                                )}
-                            </Col>
-                        </Col>
-                        
-                    </Row>
-                    
-                </reg>
-
-                <reg id="region RAC - +8">
-
-                    <Row>
-                        <Col className="col-12">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                RAC's Evolução - Aves
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRacRACDetalhesEvolucaoAves()
-
-                                )}
-                            </Col>
-                        </Col>
-                        
-                    </Row>
-                    
-                </reg>
-
-                <reg id="region RAC - +9">
-
-                    <Row>
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                RAC's Meta x Real - Aves
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRacRACDetalhesMetaRealAves()
-
-                                )}
-                            </Col>
-                        </Col>
-                        
-                    </Row>
-                    
-                </reg>
-
-                <reg id="region RAC - +10">
-
-                    <Row>
-                        <Col className="col-12">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                RAC's Evolução - Preparados
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRacRACDetalhesEvolucaoPreparados()
-
-                                )}
-                            </Col>
-                        </Col>
-                        
-                    </Row>
-                    
-                </reg>
-
-                <reg id="region RAC - +11">
-                <Row>
-                <Col className="col-6">
-                    <Row>
-                        <Col className="col-12">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                RAC's Evolução - Fatiados
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRacRACDetalhesEvolucaoFatiados()
-
-                                )}
-                            </Col>
-                        </Col>
-                        
-                    </Row>
-                </Col>
-                    
-                <Col className="col-6">
-
-                    <Row>
-                        <Col className="col-12">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                RAC's Evolução - Pescados
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRacRACDetalhesEvolucaoPescados()
-
-                                )}
-                            </Col>
-                        </Col>
-                        
-                    </Row>
-                </Col> 
-                </Row>   
-                </reg>
-
-                <reg id="region RAC - +13">
-
-                    <Row>
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                RAC's Meta x Real - Preparados
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRacRACDetalhesMetaRealPreparados()
-
-                                )}
-                            </Col>
-                        </Col>
-                        
-                    </Row>
-                    
-                </reg>
-
-                <reg id="region RAC - +14">
-
-                    <Row>
-                        <Col className="col-12">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                RAC's Evolução - Suínos
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRacRACDetalhesEvolucaoSuinos()
-
-                                )}
-                            </Col>
-                        </Col>
-                        
-                    </Row>
-                    
-                </reg>
-
-                <reg id="region RAC - +15">
-
-                    <Row>
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                RAC's Meta x Real - Suínos
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRacRACDetalhesMetaRealSuinos()
-
-                                )}
-                            </Col>
-                        </Col>
-                        
-                    </Row>
-                    
-                </reg>
-
-                <reg id="region RAC - +16">
-
-                    <Row>
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                Linhas Especiais (Seara Nature, Gourmet, Incrível)
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                        <Chart type="bar" data={responseGraficoRACDetalhesEspeciais} options={lightOptions} className="divMaior2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-                        <Col className="col-3">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                Abertura Linhas Especiais - Família
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRACAberturaLinhaEspecialFamilia()
-
-                                )}
-                            </Col>
-                        </Col>
-                        
-                    </Row>
-                    
-                </reg>
-
-                <reg id="region RAC - +16">
-
-                    <Row>
-                        
-                        <Col className="col-3">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                Abertura Gourmet
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRACAberturaLinhaEspecialAcumuladoGourmet()
-
-                                )}
-                            </Col>
-                        </Col>
-                        <Col className="col-3">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                Abertura Incrível
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRACAberturaLinhaEspecialAcumuladoIncrivel()
-
-                                )}
-                            </Col>
-                        </Col>
-                        <Col className="col-3">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                Abertura Nature 
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRACAberturaLinhaEspecialAcumuladoNature()
-
-                                )}
-                            </Col>
-                        </Col>
-                        <Col className="col-3">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                Abertura Rotisserie
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRACAberturaLinhaEspecialAcumuladoRotisserie()
-
-                                )}
-                            </Col>
-                        </Col>
-
-                        
-                    </Row>
-                    
-                </reg>
 
                 
 
@@ -8135,6 +6510,7 @@ function Home() {
                                     </Card>
                                 )}
                             </Col>
+
                         </Col>
                         <Col className="col-6">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
@@ -8424,1026 +6800,15 @@ function Home() {
                     
                 </reg>
 
-                <reg id="region RAC - +31">
-
-                    <Row>
-                        <Col className="col-4">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                RAC D3 - In Natura - Aves
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRACD3INNATURA()
-
-                                )}
-                            </Col>
-                        </Col>
-
-                        <Col className="col-4">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                RAC D3 - In Natura - Suínos
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRACD3INNATURASuinos()
-
-                                )}
-                            </Col>
-                        </Col>
-
-                        <Col className="col-4">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                RAC D3 - Preparados
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRACD3Preparados()
-
-                                )}
-                            </Col>
-                        </Col>
-
-                        <Col className="col-4">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                RAC D0 - In Natura - Aves
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRACD0INNATURA()
-
-                                )}
-                            </Col>
-                        </Col>
-
-                        <Col className="col-4">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                RAC D0 - In Natura - Suínos
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRACD0INNATURASuinos()
-
-                                )}
-                            </Col>
-                        </Col>
-
-                        <Col className="col-4">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                RAC D0 - Preparados
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRACD0Preparados()
-
-                                )}
-                            </Col>
-                        </Col>
-                        
-                    </Row>
-                    
-                </reg>
-
-                
-
-
-
-                
-
-                <reg id="region RAC - +34">
-
-                    <Row>
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                NNC Log - Total
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                        <Chart type="bar" data={responseGraficoNNCLogDetalhesTotal} options={lightOptions} className="divMaior2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                NNC Log - Aves
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                        <Chart type="bar" data={responseGraficoNNCLogDetalhesAves} options={lightOptions} className="divMaior2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-                    </Row>
-
-                </reg>
-
-                <reg id="region RAC - +35">
-
-                    <Row>
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                NNC Log - Preparados
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                        <Chart type="bar" data={responseGraficoNNCLogDetalhesPreparados} options={lightOptions} className="divMaior2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-                        <Col className="col-6">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                NNC Log - Suínos
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                        <Chart type="bar" data={responseGraficoNNCLogDetalhesSuinos} options={lightOptions} className="divMaior2" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-                    </Row>
-
-                </reg>
-
-                <reg id="region RAC - +36">
-
-                    <Row>
-                        <Col className="col-12">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                Evolução Mês - NNC Log
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableNNCEvolucaoMes()
-
-                                )}
-                            </Col>
-                        </Col>
-                    </Row>
-                    
-                </reg>
-
-                <reg id="region RAC - +37">
-
-                    <Row>
-                        <Col className="col-3">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                NNC Log D3
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableNNCLogD3()
-
-                                )}
-                            </Col>
-                        </Col>
-
-                        <Col className="col-3">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                NNC Log D0
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableNNCLogD0()
-
-                                )}
-                            </Col>
-                        </Col>
-                        
-                    </Row>
-
-                
-                    
-                </reg>
-
-                <reg id="region RAC - +38">
-
-                    <Row>
-                        <Col className="col-12">
-                            <Row>
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                NNC Totais
-                                <hr></hr>
-                            </Col>
-                            </Row>
-                            <Row>
-                            <Col className="col-lg-3 col-md-3 col-sm-12">&nbsp;</Col>
-                            <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                        <Chart type="bar" data={responseGraficoNCCMP} options={lightOptions} className="divMaior2" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-3 col-md-3 col-sm-12 ">&nbsp;</Col>
-                            </Row>
-                        </Col>
-
-                        
-                    </Row>
-
-                
-                    
-                </reg>
-
-                <reg id="region NNC +49">    
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC MP Evolução
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-
-                        <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                 DataTableNNCEvolucao()
-                                
-                            )}
-                        </Col>
-
-                    </Row>
-                </reg>
-
-                <reg id="region NNC +39">
-
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC - Aves Pesadas
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Aves Pesadas" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNCCMPAvesPesadas} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesPesadasUnidades} options={optionsComparativo} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesPesadasProblemas} options={optionsComparativo} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-                </reg>
-
-                <reg id="region NNC +40">
-
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC - Aves Sul
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Aves Sul" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNCCMPAvesPesadasRS} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesRSUnidades} options={optionsComparativo} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesRSProblemas} options={optionsComparativo} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-                </reg>
-
-                <reg id="region NNC +41">
-
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC - Aves SP
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Aves SP" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNCCMPAvesPesadasSP} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesSPUnidades} options={optionsComparativo} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesSPProblemas} options={optionsComparativo} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-                </reg>
-
-                <reg id="region NNC +42">
-
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC - Aves PR
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Aves PR" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNCCMPAvesPesadasPR} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesPRUnidades} options={optionsComparativo} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesPRProblemas} options={optionsComparativo} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-                </reg>
-
-                <reg id="region NNC +42">
-
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC - Aves Leves
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Aves Leves" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNCCMPAvesLeves} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesLevesUnidades} options={optionsComparativo} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCAvesLevesProblemas} options={optionsComparativo} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-                </reg>
-
-                <reg id="region NNC +43">
-
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC - Suínos
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Suínos" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNCCMPSuinos} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCSuinosUnidades} options={optionsComparativo} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCSuinosProblemas} options={optionsComparativo} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-
-                </reg>
-
-                <reg id="region NNC +44">
-
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC - Preparados
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Preparados" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNCCMPPreparados} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCPreparadosUnidades} options={optionsComparativo} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title=" " subTitle="" className="cssSeara2021_tituloGrafico ">
-                                        <Chart type="bar" data={responseGraficoNNCPreparadosProblemas} options={optionsComparativo} className="divMenor" />
-                                    </Card>
-                                )}
-                            </Col>
-                        </Col>
-
-                    </Row>
-
-                </reg>
-
-                <reg id="region NNC +45">
+               
 
                     
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Corpos Estranhos Totais" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNNCCETotal} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Corpos Estranhos Inerente" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNNCCEInerente} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-
-                    </Row>
-
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Corpos Estranhos Não Inerente" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNNCCENaoInerente} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Corpos Estranhos Ossos" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNNCCEOssos} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-
-                    </Row>
-
-                    
-
-                </reg>
-
-                <reg id="region NNC +46">                
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Corpos Estranhos Plástico" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNNCCEPlastico} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                 DataTableNNCCEPlastico()
-                                
-                            )}
-                        </Col>
-
-                    </Row>
-                </reg>
-
-                <reg id="region NNC +47">                
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Corpos Estranhos Metal" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNNCCEMetal} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                 DataTableNNCCEMetal()
-                                
-                            )}
-                        </Col>
-
-                    </Row>
-                </reg>
-
-                <reg id="region NNC +48">                
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Corpos Estranhos Ossos" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
-                                    <Chart type="bar" data={responseGraficoNNCCEOssos} options={lightOptions} className="divMaior" />
-                                </Card>
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                 DataTableNNCCEOssos()
-                                
-                            )}
-                        </Col>
-
-                    </Row>
-                </reg>
-
-                <reg id="region NNC +49">    
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC MP Corpos Estranhos
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-
-                        <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                 DataTableNNCCE()
-                                
-                            )}
-                        </Col>
-
-                    </Row>
-                </reg>
-
-                <reg id="region NNC +50">
-                <Row>   
-                    <Col className="col-6"> 
-                        <Row>
-                            <Col className=" col-12 cssSeara2021_titulo">
-                                NNC MP Corpos Estranhos Inerentes e Não Inerentes
-                            <hr></hr>
-                            </Col>
-                        </Row>
-                        <Row>
-
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    DataTableNNCCEInerenteNaoInerente()
-                                    
-                                )}
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col className="col-12">   
-                        <Row>
-                            <Col className=" col-12 cssSeara2021_titulo">
-                                NNC MP Corpos Estranhos - Ossos - Unidade Reclamante / Fornecedor / Produto
-                            <hr></hr>
-                            </Col>
-                        </Row>
-                        <Row>
-
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    DataTableNNCMPCEOssos()
-                                    
-                                )}
-                            </Col>
-
-                        </Row>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col className="col-3">    
-                        <Row>
-                            <Col className=" col-12 cssSeara2021_titulo">
-                                NNC MP Corpos Estranhos - Ossos - Fornecedor
-                            <hr></hr>
-                            </Col>
-                        </Row>
-                        <Row>
-
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    DataTableNNCMPCEOssosFornecedor()
-                                    
-                                )}
-                            </Col>
-
-                        </Row>
-                    </Col>
-                    <Col className="col-3">    
-                        <Row>
-                            <Col className=" col-12 cssSeara2021_titulo">
-                                NNC MP Corpos Estranhos - Unidades reclamantes
-                            <hr></hr>
-                            </Col>
-                        </Row>
-                        <Row>
-
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    DataTableNNCMPCEOssosUnidadesReclamantes()
-                                    
-                                )}
-                            </Col>
-
-                        </Row>
-                    </Col>
-                </Row>
-                </reg>
-
-                <reg id="region NNC +48"> 
-                <Row>
-                <Col className="col-6"> 
-                    <Row>
-                        <Col className=" col-6 cssSeara2021_titulo">
-                            NNC MP D-3 - In natura
-                        <hr></hr>
-                        </Col>
-                        <Col className=" col-6 cssSeara2021_titulo">
-                            NNC MP D-3 - Preparados
-                        <hr></hr>
-                        </Col>
-                    </Row>             
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                 DataTableNNCMPD3INNATURA()
-                                
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                 DataTableNNCMPD3Preparados()
-                                
-                            )}
-                        </Col>
-
-                    </Row>
-                </Col>
-                <Col className="col-6">   
-                    <Row>
-                        <Col className=" col-6 cssSeara2021_titulo">
-                            NNC MP D-0 - In natura
-                        <hr></hr>
-                        </Col>
-                        <Col className=" col-6 cssSeara2021_titulo">
-                            NNC MP D-0 - Preparados
-                        <hr></hr>
-                        </Col>
-                    </Row>              
-                    <Row>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                 DataTableNNCMPD0INNATURA()
-                                
-                            )}
-                        </Col>
-                        <Col className="col-lg-6 col-md-6 col-sm-12">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                 DataTableNNCMPD0Preparados()
-                                
-                            )}
-                        </Col>
-
-                    </Row>
-                </Col>
-                </Row>
-                </reg>
-
-                {/* ///////////////////////////////////////////////////////// */}
-
-                <reg id="region RAC - Total +33">
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            RACs Abertura ME
-                            <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="mb-5">
-
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                DataTableRACFinalME()
-
-                            )}
-
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            RACs Abertura MI
-                            <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-
-                        <Col className="mb-5">
-
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                DataTableRACFinalMI()
-
-                            )}
-
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            RACs Abertura MI Especiais
-                            <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-
-                        <Col className="mb-5">
-
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                DataTableRACFinalRECL()
-
-                            )}
-
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            RACs PDV Abertura
-                            <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-
-                        <Col className="mb-5">
-
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                DataTableRACFinalPDV()
-
-                            )}
-
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            RACs terceiros Abertura
-                            <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-
-                        <Col className="mb-5">
-
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                DataTableRACFinalTE()
-
-                            )}
-
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            RACs Crítica Abertura
-                            <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-
-                        <Col className="mb-5">
-
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                DataTableRACFinalCRIT()
-
-                            )}
-
-                        </Col>
-                    </Row>
-                </reg>
-
-
-                <reg id="region IC">
-
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Índice de Conformidade - AVES
-                            <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        
-                        <Col className="col-lg-12 col-md-12 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoICUnidadesAves} options={optionsComparativo} className="divMenor2" />
-                                    </Card>
-                                )}
-                            </Col>
-                            
-                        </Col>
-
-                    </Row>
-                    <Row>
-                        
-                        <Col className="col-lg-12 col-md-12 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoICIndicadoresAves} options={optionsComparativo} className="divMenor2" />
-                                    </Card>
-                                )}
-                            </Col>
-                            
-                        </Col>
-
-                    </Row>
-
-
-                </reg>
-
-                <reg id="region IC">
-
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Índice de Conformidade - SUÍNOS
-                            <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        
-                        <Col className="col-lg-12 col-md-12 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoICUnidadesSuinos} options={optionsComparativo} className="divMenor2" />
-                                    </Card>
-                                )}
-                            </Col>
-                            
-                        </Col>
-
-                    </Row>
-                    <Row>
-                        
-                        <Col className="col-lg-12 col-md-12 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoICIndicadoresSuinos} options={optionsComparativo} className="divMenor2" />
-                                    </Card>
-                                )}
-                            </Col>
-                            
-                        </Col>
-
-                    </Row>
-
-
-                    </reg>
-
-                    <reg id="region IC">
-
-                    <Row>
-                        <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Índice de Conformidade - PREPARADOS
-                            <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-                        
-                        <Col className="col-lg-12 col-md-12 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoICUnidadesPreparados} options={optionsComparativo} className="divMenor2" />
-                                    </Card>
-                                )}
-                            </Col>
-                            
-                        </Col>
-
-                    </Row>
-                    <Row>
-                        
-                        <Col className="col-lg-12 col-md-12 col-sm-12">
-                            <Col className="col-lg-12 col-md-12 col-sm-12">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                    <Card title="" subTitle="" className="mt-1 cssSeara2021_tituloGrafico">
-                                        <Chart type="bar" data={responseGraficoICIndicadoresPreparados} options={optionsComparativo} className="divMenor2" />
-                                    </Card>
-                                )}
-                            </Col>
-                            
-                        </Col>
-
-                    </Row>
-
-
-                    </reg>
                 
                
 
             </div>
+
         </div>
-        
     )
 }
 

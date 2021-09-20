@@ -55,16 +55,11 @@ import { LineWeight } from '@material-ui/icons';
 
 import Funcao from "./funcoes"
 
-import * as htmlToImage from 'html-to-image';
-import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
-
 const ref = React.createRef();
 const options = {
     orientation: 'retrait',
     unit: 'px',
-
-    format: [1200, 58000]
-
+    format: [1200, 56000]
 };
 
 var cors = require('cors'); // Already done “npm i cors --save-dev”
@@ -157,7 +152,7 @@ function Home() {
     let [responseGraficoNCCMPAvesPesadasPR, setresponseGraficoNCCMPAvesPesadasPR] = React.useState({})
     let [GraficoNCCMPAvesPesadasPR, setGraficoNCCMPAvesPesadasPR] = React.useState()
 
-    //Aves Pesadas SP RAC
+    //Aves pesadas SP/CO/NE RAC
     let [responseGraficoCETotalAvesPesadasSP, setresponseGraficoCETotalAvesPesadasSP] = React.useState({})
     let [GraficoCETotalAvesPesadasSP, setGraficoCETotalAvesPesadasSP] = React.useState()
 
@@ -173,7 +168,7 @@ function Home() {
     let [responseGraficoNCCMPAvesPesadasSP, setresponseGraficoNCCMPAvesPesadasSP] = React.useState({})
     let [GraficoNCCMPAvesPesadasSP, setGraficoNCCMPAvesPesadasSP] = React.useState()
 
-    //Aves Pesadas Sul RAC
+    //Aves pesadas RS/SC/SP RAC
     let [responseGraficoCETotalAvesPesadasRS, setresponseGraficoCETotalAvesPesadasRS] = React.useState({})
     let [GraficoCETotalAvesPesadasRS, setGraficoCETotalAvesPesadasRS] = React.useState()
 
@@ -464,14 +459,12 @@ function Home() {
 
     //tabela RAC D-3 In Natura
     let [TableRacRACD3InNatura, setTableRacRACD3InNatura] = React.useState() //ABERTURA D-3 InNatura
-    let [TableRacRACD3InNaturaSuinos, setTableRacRACD3InNaturaSuinos] = React.useState() //ABERTURA D-3 InNatura
 
     //tabela RAC D-3 Preparados
     let [TableRacRACD3Preparados, setTableRacRACD3Preparados] = React.useState() //ABERTURA D-3 Preparados
 
     //tabela RAC D-0 In Natura
     let [TableRacRACD0InNatura, setTableRacRACD0InNatura] = React.useState() //ABERTURA D-0 InNatura
-    let [TableRacRACD0InNaturaSuinos, setTableRacRACD0InNaturaSuinos] = React.useState() //ABERTURA D-0 InNatura
 
     //tabela RAC D-0 Preparados
     let [TableRacRACD0Preparados, setTableRacRACD0Preparados] = React.useState() //ABERTURA D-0 Preparados
@@ -501,7 +494,7 @@ function Home() {
     let [TableNNCLogD0, setTableNNCLogD0] = React.useState()
 
     //tabela NNC Totais 
-    let [TableNNCTotal, setTableNNCTotal] = React.useState()
+    let [TableNNCTotais, setTableNNCTotais] = React.useState()
 
     //tabela NNC Evolução dia 
     let [TableNNCEvolucaoDia, setTableNNCEvolucaoDia] = React.useState()
@@ -876,11 +869,11 @@ function Home() {
         chamarAPI("NCCMP", GraficoNCCMP, "GraficoNCCMP", [whereNNCMP], setGraficoNCCMP, setresponseGraficoNCCMP, 4)    // 5 
         
 
-        chamarAPI("CETotal", GraficoCETotalAvesPesadas, "GraficoCETotalAvesPesadas", [" where [Regional Qualidade] in ('Aves Pesadas SP','Aves Pesadas Sul', 'Aves Pesadas PR', 'Aves Pesadas')  "], setGraficoCETotalAvesPesadas, setresponseGraficoCETotalAvesPesadas, 5)     // 6
-        chamarAPI("CETotal", GraficoNNCMPTotalCEAvesPesadas, "GraficoNNCMPTotalCEAvesPesadas", [" where tipo = 'NNC MP' AND [Regional Qualidade] in ('Aves Pesadas SP','Aves Pesadas Sul', 'Aves Pesadas PR', 'Aves Pesadas') "], setGraficoNNCMPTotalCEAvesPesadas, setresponseGraficoNNCMPTotalCEAvesPesadas, 6)       // 7
-        chamarAPI("CETotal", GraficoRACTotalCEAvesPesadas, "GraficoRACTotalCEAvesPesadas", [" where TIPO = 'RAC' AND [Regional Qualidade] in ('Aves Pesadas SP','Aves Pesadas Sul', 'Aves Pesadas PR', 'Aves Pesadas')  "], setGraficoRACTotalCEAvesPesadas, setresponseGraficoRACTotalCEAvesPesadas, 7)     // 8
-        chamarAPI("RACIndicadores", GraficoRACAvesPesadas, "GraficoRACAvesPesadas", [" where [Regional (Qualidade)] in ('Aves Pesadas SP','Aves Pesadas Sul', 'Aves Pesadas PR', 'Aves Pesadas')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO'))"], setGraficoRACAvesPesadas, setresponseGraficoRACAvesPesadas, 8)    // 9
-        chamarAPI("NCCMP", GraficoNCCMPAvesPesadas, "GraficoNCCMPAvesPesadas", [whereNNCMP + " and [Reg. Qual] in ('Aves Pesadas SP','Aves Pesadas Sul', 'Aves Pesadas PR')  "], setGraficoNCCMPAvesPesadas, setresponseGraficoNCCMPAvesPesadas, 9)    // 10
+        chamarAPI("CETotal", GraficoCETotalAvesPesadas, "GraficoCETotalAvesPesadas", [" where [Regional Qualidade] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR', 'Aves Pesadas')  "], setGraficoCETotalAvesPesadas, setresponseGraficoCETotalAvesPesadas, 5)     // 6
+        chamarAPI("CETotal", GraficoNNCMPTotalCEAvesPesadas, "GraficoNNCMPTotalCEAvesPesadas", [" where tipo = 'NNC MP' AND [Regional Qualidade] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR', 'Aves Pesadas') "], setGraficoNNCMPTotalCEAvesPesadas, setresponseGraficoNNCMPTotalCEAvesPesadas, 6)       // 7
+        chamarAPI("CETotal", GraficoRACTotalCEAvesPesadas, "GraficoRACTotalCEAvesPesadas", [" where TIPO = 'RAC' AND [Regional Qualidade] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR', 'Aves Pesadas')  "], setGraficoRACTotalCEAvesPesadas, setresponseGraficoRACTotalCEAvesPesadas, 7)     // 8
+        chamarAPI("RACIndicadores", GraficoRACAvesPesadas, "GraficoRACAvesPesadas", [" where [Regional (Qualidade)] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR', 'Aves Pesadas')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO'))"], setGraficoRACAvesPesadas, setresponseGraficoRACAvesPesadas, 8)    // 9
+        chamarAPI("NCCMP", GraficoNCCMPAvesPesadas, "GraficoNCCMPAvesPesadas", [whereNNCMP + " and [Reg. Qual] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR')  "], setGraficoNCCMPAvesPesadas, setresponseGraficoNCCMPAvesPesadas, 9)    // 10
 
         chamarAPI("CETotal", GraficoCETotalAvesPesadasPR, "GraficoCETotalAvesPesadasPR", [' where [Regional Qualidade] = \'Aves Pesadas PR\' '], setGraficoCETotalAvesPesadasPR, setresponseGraficoCETotalAvesPesadasPR, 10)     // 11
         chamarAPI("CETotal", GraficoNNCMPTotalCEAvesPesadasPR, "GraficoNNCMPTotalCEAvesPesadasPR", ["  where tipo = 'NNC MP' AND [Regional Qualidade] = 'Aves Pesadas PR'  "], setGraficoNNCMPTotalCEAvesPesadasPR, setresponseGraficoNNCMPTotalCEAvesPesadasPR, 11)       // 12
@@ -888,17 +881,17 @@ function Home() {
         chamarAPI("RACIndicadores", GraficoRACAvesPesadasPR, "GraficoRACAvesPesadasPR", [" WHERE [Regional (Qualidade)] in ('Aves Pesadas PR') AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO'))            "], setGraficoRACAvesPesadasPR, setresponseGraficoRACAvesPesadasPR, 13)    // 14
         chamarAPI("NCCMP", GraficoNCCMPAvesPesadasPR, "GraficoNCCMPAvesPesadasPR", [whereNNCMP + ' and [Reg. Qual] = \'Aves Pesadas PR\'  '], setGraficoNCCMPAvesPesadasPR, setresponseGraficoNCCMPAvesPesadasPR, 14)    // 15
 
-        chamarAPI("CETotal", GraficoCETotalAvesPesadasSP, "GraficoCETotalAvesPesadasSP", [" where [Regional Qualidade] = 'Aves Pesadas SP' "], setGraficoCETotalAvesPesadasSP, setresponseGraficoCETotalAvesPesadasSP, 42)     // 11
-        chamarAPI("CETotal", GraficoNNCMPTotalCEAvesPesadasSP, "GraficoNNCMPTotalCEAvesPesadasSP", ["  where tipo = 'NNC MP' AND [Regional Qualidade] = 'Aves Pesadas SP'  "], setGraficoNNCMPTotalCEAvesPesadasSP, setresponseGraficoNNCMPTotalCEAvesPesadasSP, 43)       // 12
-        chamarAPI("CETotal", GraficoRACTotalCEAvesPesadasSP, "GraficoRACTotalCEAvesPesadasSP", ["  WHERE tipo = 'RAC' AND [Regional Qualidade] in ('Aves Pesadas SP')   "], setGraficoRACTotalCEAvesPesadasSP, setresponseGraficoRACTotalCEAvesPesadasSP, 44)     // 13
-        chamarAPI("RACIndicadores", GraficoRACAvesPesadasSP, "GraficoRACAvesPesadasSP", [" WHERE [Regional (Qualidade)] in ('Aves Pesadas SP') AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACAvesPesadasSP, setresponseGraficoRACAvesPesadasSP, 45)    // 14
-        chamarAPI("NCCMP", GraficoNCCMPAvesPesadasSP, "GraficoNCCMPAvesPesadasSP", [whereNNCMP + ' and [Reg. Qual] = \'Aves Pesadas SP\'  '], setGraficoNCCMPAvesPesadasSP, setresponseGraficoNCCMPAvesPesadasSP, 46)    // 15
+        chamarAPI("CETotal", GraficoCETotalAvesPesadasSP, "GraficoCETotalAvesPesadasSP", [" where [Regional Qualidade] = 'Aves Pesadas SP/CO/NE' "], setGraficoCETotalAvesPesadasSP, setresponseGraficoCETotalAvesPesadasSP, 42)     // 11
+        chamarAPI("CETotal", GraficoNNCMPTotalCEAvesPesadasSP, "GraficoNNCMPTotalCEAvesPesadasSP", ["  where tipo = 'NNC MP' AND [Regional Qualidade] = 'Aves Pesadas SP/CO/NE'  "], setGraficoNNCMPTotalCEAvesPesadasSP, setresponseGraficoNNCMPTotalCEAvesPesadasSP, 43)       // 12
+        chamarAPI("CETotal", GraficoRACTotalCEAvesPesadasSP, "GraficoRACTotalCEAvesPesadasSP", ["  WHERE tipo = 'RAC' AND [Regional Qualidade] in ('Aves Pesadas SP/CO/NE')   "], setGraficoRACTotalCEAvesPesadasSP, setresponseGraficoRACTotalCEAvesPesadasSP, 44)     // 13
+        chamarAPI("RACIndicadores", GraficoRACAvesPesadasSP, "GraficoRACAvesPesadasSP", [" WHERE [Regional (Qualidade)] in ('Aves Pesadas SP/CO/NE') AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACAvesPesadasSP, setresponseGraficoRACAvesPesadasSP, 45)    // 14
+        chamarAPI("NCCMP", GraficoNCCMPAvesPesadasSP, "GraficoNCCMPAvesPesadasSP", [whereNNCMP + ' and [Reg. Qual] = \'Aves Pesadas SP/CO/NE\'  '], setGraficoNCCMPAvesPesadasSP, setresponseGraficoNCCMPAvesPesadasSP, 46)    // 15
 
-        chamarAPI("CETotal", GraficoCETotalAvesPesadasRS, "GraficoCETotalAvesPesadasRS", [" where [Regional Qualidade] = 'Aves Pesadas Sul' "], setGraficoCETotalAvesPesadasRS, setresponseGraficoCETotalAvesPesadasRS, 47)     // 11
-        chamarAPI("CETotal", GraficoNNCMPTotalCEAvesPesadasRS, "GraficoNNCMPTotalCEAvesPesadasRS", ["  where tipo = 'NNC MP' AND [Regional Qualidade] = 'Aves Pesadas Sul'  "], setGraficoNNCMPTotalCEAvesPesadasRS, setresponseGraficoNNCMPTotalCEAvesPesadasRS, 48)       // 12
-        chamarAPI("CETotal", GraficoRACTotalCEAvesPesadasRS, "GraficoRACTotalCEAvesPesadasRS", ["  WHERE tipo = 'RAC' AND [Regional Qualidade] in ('Aves Pesadas Sul')   "], setGraficoRACTotalCEAvesPesadasRS, setresponseGraficoRACTotalCEAvesPesadasRS, 49)     // 13
-        chamarAPI("RACIndicadores", GraficoRACAvesPesadasRS, "GraficoRACAvesPesadasRS", [" WHERE [Regional (Qualidade)] in ('Aves Pesadas Sul' )  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACAvesPesadasRS, setresponseGraficoRACAvesPesadasRS, 50)    // 14
-        chamarAPI("NCCMP", GraficoNCCMPAvesPesadasRS, "GraficoNCCMPAvesPesadasRS", [whereNNCMP + ' and [Reg. Qual] = \'Aves Pesadas Sul\'  '], setGraficoNCCMPAvesPesadasRS, setresponseGraficoNCCMPAvesPesadasRS, 51)    // 15
+        chamarAPI("CETotal", GraficoCETotalAvesPesadasRS, "GraficoCETotalAvesPesadasRS", [" where [Regional Qualidade] = 'Aves Pesadas RS/SC/SP' "], setGraficoCETotalAvesPesadasRS, setresponseGraficoCETotalAvesPesadasRS, 47)     // 11
+        chamarAPI("CETotal", GraficoNNCMPTotalCEAvesPesadasRS, "GraficoNNCMPTotalCEAvesPesadasRS", ["  where tipo = 'NNC MP' AND [Regional Qualidade] = 'Aves Pesadas RS/SC/SP'  "], setGraficoNNCMPTotalCEAvesPesadasRS, setresponseGraficoNNCMPTotalCEAvesPesadasRS, 48)       // 12
+        chamarAPI("CETotal", GraficoRACTotalCEAvesPesadasRS, "GraficoRACTotalCEAvesPesadasRS", ["  WHERE tipo = 'RAC' AND [Regional Qualidade] in ('Aves Pesadas RS/SC/SP')   "], setGraficoRACTotalCEAvesPesadasRS, setresponseGraficoRACTotalCEAvesPesadasRS, 49)     // 13
+        chamarAPI("RACIndicadores", GraficoRACAvesPesadasRS, "GraficoRACAvesPesadasRS", [" WHERE [Regional (Qualidade)] in ('Aves Pesadas RS/SC/SP' )  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACAvesPesadasRS, setresponseGraficoRACAvesPesadasRS, 50)    // 14
+        chamarAPI("NCCMP", GraficoNCCMPAvesPesadasRS, "GraficoNCCMPAvesPesadasRS", [whereNNCMP + ' and [Reg. Qual] = \'Aves Pesadas RS/SC/SP\'  '], setGraficoNCCMPAvesPesadasRS, setresponseGraficoNCCMPAvesPesadasRS, 51)    // 15
 
         chamarAPI("CETotal", GraficoCETotalAvesLeves, "GraficoCETotalAvesLeves", [' where [Regional Qualidade]  = \'Aves Leves\' '], setGraficoCETotalAvesLeves, setresponseGraficoCETotalAvesLeves, 15)     // 11
         chamarAPI("CETotal", GraficoNNCMPTotalCEAvesLeves, "GraficoNNCMPTotalCEAvesLeves", [" where tipo = 'NNC MP' AND [Regional Qualidade] = \'Aves Leves\' "], setGraficoNNCMPTotalCEAvesLeves, setresponseGraficoNNCMPTotalCEAvesLeves, 16)       // 12
@@ -920,17 +913,17 @@ function Home() {
         chamarAPI("RACIndicadores", GraficoRACPreparados, "GraficoRACPreparados", [whereRACPreparados] , setGraficoRACPreparados, setresponseGraficoRACPreparados, 28)    // 14
         chamarAPI("NCCMP", GraficoNCCMPPreparados, "GraficoNCCMPPreparados", [whereNNCMP + ' and [Reg. Qual] in (\'Preparados 1\',\'Preparados 2\')  '], setGraficoNCCMPPreparados, setresponseGraficoNCCMPPreparados, 29)    // 15
 
-        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesPesadas, "GraficoRACUnidadesAvesPesadas", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas SP','Aves Pesadas Sul', 'Aves Pesadas PR', 'Aves Pesadas')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO'))  "], setGraficoRACUnidadesAvesPesadas, setresponseGraficoRACUnidadesAvesPesadas, 30)                                                                    // 6
-        chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesPesadas, "GraficoRACProblemasAvesPesadas", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas SP','Aves Pesadas Sul', 'Aves Pesadas PR', 'Aves Pesadas')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACProblemasAvesPesadas, setresponseGraficoRACProblemasAvesPesadas, 31)
+        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesPesadas, "GraficoRACUnidadesAvesPesadas", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR', 'Aves Pesadas')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO'))  "], setGraficoRACUnidadesAvesPesadas, setresponseGraficoRACUnidadesAvesPesadas, 30)                                                                    // 6
+        chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesPesadas, "GraficoRACProblemasAvesPesadas", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas SP/CO/NE','Aves Pesadas RS/SC/SP', 'Aves Pesadas PR', 'Aves Pesadas')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACProblemasAvesPesadas, setresponseGraficoRACProblemasAvesPesadas, 31)
 
         chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesPesadasPR, "GraficoRACUnidadesAvesPesadasPR", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas PR')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACUnidadesAvesPesadasPR, setresponseGraficoRACUnidadesAvesPesadasPR, 32)                                                                    // 6
         chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesPesadasPR, "GraficoRACProblemasAvesPesadasPR", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas PR')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACProblemasAvesPesadasPR, setresponseGraficoRACProblemasAvesPesadasPR, 33)
 
-        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesPesadasSP, "GraficoRACUnidadesAvesPesadasSP", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas SP')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACUnidadesAvesPesadasSP, setresponseGraficoRACUnidadesAvesPesadasSP, 52)                                                                    // 6
-        chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesPesadasSP, "GraficoRACProblemasAvesPesadasSP", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas SP')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACProblemasAvesPesadasSP, setresponseGraficoRACProblemasAvesPesadasSP, 53)
+        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesPesadasSP, "GraficoRACUnidadesAvesPesadasSP", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas SP/CO/NE')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACUnidadesAvesPesadasSP, setresponseGraficoRACUnidadesAvesPesadasSP, 52)                                                                    // 6
+        chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesPesadasSP, "GraficoRACProblemasAvesPesadasSP", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas SP/CO/NE')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACProblemasAvesPesadasSP, setresponseGraficoRACProblemasAvesPesadasSP, 53)
 
-        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesPesadasRS, "GraficoRACUnidadesAvesPesadasRS", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas Sul')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACUnidadesAvesPesadasRS, setresponseGraficoRACUnidadesAvesPesadasRS, 54)                                                                    // 6
-        chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesPesadasRS, "GraficoRACProblemasAvesPesadasRS", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas Sul')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACProblemasAvesPesadasRS, setresponseGraficoRACProblemasAvesPesadasRS, 55)
+        chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesPesadasRS, "GraficoRACUnidadesAvesPesadasRS", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas RS/SC/SP')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACUnidadesAvesPesadasRS, setresponseGraficoRACUnidadesAvesPesadasRS, 54)                                                                    // 6
+        chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesPesadasRS, "GraficoRACProblemasAvesPesadasRS", [" where Tipo = 'REAL' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData))  and [Regional (Qualidade)] in ('Aves Pesadas RS/SC/SP')  AND ( [Origem_do_Problema_rac] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO') or [Origem da RAC] IN ('Documentação Unidade','EXPEDIÇÃO FÁBRICA','EXPEDIÇÃO FÁBRICA FFO','FÁBRICA PRODUÇÃO FFO','FABRICAÇÃO','FABRICAÇÃO/ PRODUÇÃO')) "], setGraficoRACProblemasAvesPesadasRS, setresponseGraficoRACProblemasAvesPesadasRS, 55)
 
         chamarAPI("RACUnicoUnidade", GraficoRACUnidadesAvesLeves, "GraficoRACUnidadesAvesLeves", [' where Tipo = \'REAL\' and [Regional (Qualidade)] like \'%Aves Leves%\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACUnidadesAvesLeves, setresponseGraficoRACUnidadesAvesLeves, 34)                                                                    // 6
         chamarAPI("RACUnicoProblema", GraficoRACProblemasAvesLeves, "GraficoRACProblemasAvesLeves", [' where Tipo = \'REAL\' and [Regional (Qualidade)] like \'%Aves Leves%\' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Origem_do_Problema_rac] in (\'DOCUMENTAÇÃO UNIDADE\', \'EXPEDIÇÃO FÁBRICA\', \'FÁBRICA PRODUÇÃO\', \'Fabricação/ Produção\', \'FABRICACAO/FABRICA\', \'FÁBRICA PRODUÇÃO FFO\', \'EXPEDIÇÃO FÁBRICA FFO\') '], setGraficoRACProblemasAvesLeves, setresponseGraficoRACProblemasAvesLeves, 35)
@@ -1018,7 +1011,7 @@ function Home() {
         chamarAPI("RACIndicadores", GraficoRACDetalhesIntoxicacao, "GraficoRACDetalhesIntoxicacao", [" WHERE 1=1 AND [PROBLEMA] IN ('INTOXICAÇÃO ALIMENTAR')  AND ([Origem da RAC] IN ('FABRICAÇÃO','COMERCIALIZAÇÃO'))  "] , setGraficoRACDetalhesIntoxicacao, setresponseGraficoRACDetalhesIntoxicacao,72)
      
         //RAC Larva
-        //chamarAPI("RACIndicadores", GraficoRACDetalhesLarva, "GraficoRACDetalhesLarva", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND [REGIONAL (Qualidade)] NOT IN ('FATIADOS','PESCADOS','AVES PR','AVES Sul','AVES SP') AND UNIDADE NOT IN ('AGRO ALFA','AMAI','ATI-GEL','CLAREBOUT','GRANO','GRIFFOOD','MASSATAKE','SANTA CRUZ DO SUL','VIGOR','ARTES GRÁFICAS','CAMPINAS-CD','CAMPO VERDE','CD RIBEIRÃO DAS NEVES','CPO','DOC INDUSTRIA','EIRELI EPP','EIRELI ME','EXCELSIOR','GENESEAS AQUACULTURA','GERÊNCIA NACIONA FS','GRANO ALIMENTOS S.A.','GRIFFOOD','ICOFORT','ITAJAI','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','ITAJAI PESCADOS','LABREZZA','M P FOODS','MARBA','MASSAS SANTA ENERSTINA LTDA','NORONHA', 'OUTROS','PINHAIS - CD','QUALIDADE SUPPLY CHAIN','RIBEIRÃO PRETO – CD','SALVADOR – CD','SAO PAULO – CD','SEARA MEATS','SOMAVE','VARZEA GRANDE – CD') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR', 'RECLAMAÇÃO FFO', 'RAC CONSUMIDOR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO','NOTIFICAÇÃO') AND [PROBLEMA] IN ('INSETO','INSETO VIVO') AND [TIPO DO PROBLEMA] IN ('INSETO','LARVA', 'INSETO VIVO','LARVA VIVA')	 AND [SUB TIPO PROBLEMA] IN ('LARVA','LARVA VIVA') AND ([Origem da RAC] IN ('FABRICAÇÃO')) "] , setGraficoRACDetalhesLarva, setresponseGraficoRACDetalhesLarva,73)
+        //chamarAPI("RACIndicadores", GraficoRACDetalhesLarva, "GraficoRACDetalhesLarva", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND [REGIONAL (Qualidade)] NOT IN ('FATIADOS','PESCADOS','AVES PR','AVES RS/SC/SP','AVES SP/CO/NE') AND UNIDADE NOT IN ('AGRO ALFA','AMAI','ATI-GEL','CLAREBOUT','GRANO','GRIFFOOD','MASSATAKE','SANTA CRUZ DO SUL','VIGOR','ARTES GRÁFICAS','CAMPINAS-CD','CAMPO VERDE','CD RIBEIRÃO DAS NEVES','CPO','DOC INDUSTRIA','EIRELI EPP','EIRELI ME','EXCELSIOR','GENESEAS AQUACULTURA','GERÊNCIA NACIONA FS','GRANO ALIMENTOS S.A.','GRIFFOOD','ICOFORT','ITAJAI','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','ITAJAI PESCADOS','LABREZZA','M P FOODS','MARBA','MASSAS SANTA ENERSTINA LTDA','NORONHA', 'OUTROS','PINHAIS - CD','QUALIDADE SUPPLY CHAIN','RIBEIRÃO PRETO – CD','SALVADOR – CD','SAO PAULO – CD','SEARA MEATS','SOMAVE','VARZEA GRANDE – CD') AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR', 'RECLAMAÇÃO FFO', 'RAC CONSUMIDOR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO','NOTIFICAÇÃO') AND [PROBLEMA] IN ('INSETO','INSETO VIVO') AND [TIPO DO PROBLEMA] IN ('INSETO','LARVA', 'INSETO VIVO','LARVA VIVA')	 AND [SUB TIPO PROBLEMA] IN ('LARVA','LARVA VIVA') AND ([Origem da RAC] IN ('FABRICAÇÃO')) "] , setGraficoRACDetalhesLarva, setresponseGraficoRACDetalhesLarva,73)
         chamarAPI("RACIndicadores", GraficoRACDetalhesLarva, "GraficoRACDetalhesLarva", [" WHERE 1=1 AND [GRUPO] IN ('CORPO ESTRANHO') AND [PROBLEMA] IN ('INSETO','INSETO VIVO') AND [TIPO DO PROBLEMA] IN ('INSETO','LARVA', 'INSETO VIVO','LARVA VIVA')	 AND [SUB TIPO PROBLEMA] IN ('LARVA','LARVA VIVA') AND ([Origem da RAC] IN ('FABRICAÇÃO')) AND Tipo_Atendimento_rac NOT IN ('NOTIFICAÇÃO')  "] , setGraficoRACDetalhesLarva, setresponseGraficoRACDetalhesLarva,73)
 
         //NNC Log
@@ -1032,13 +1025,13 @@ function Home() {
         chamarAPI("NCCMPUnidade", GraficoNNCAvesPesadasUnidades, "GraficoNNCAvesPesadasUnidades", [ " where [Reg. Qual] like '%Aves%Pe%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesPesadasUnidades, setresponseGraficoNNCAvesPesadasUnidades, 79)
         chamarAPI("NCCMPProblema", GraficoNNCAvesPesadasProblemas, "GraficoNNCAvesPesadasProblemas", [ " where [Reg. Qual] like '%Aves%Pe%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesPesadasProblemas, setresponseGraficoNNCAvesPesadasProblemas, 80)
 
-        chamarAPI("NCCMP", GraficoNNCAvesRS, "GraficoNNCAvesRS", [" where [Reg. Qual] like '%Aves Pesadas Sul%' "], setGraficoNNCAvesRS, setresponseGraficoNNCAvesRS, 81)
-        chamarAPI("NCCMPUnidade", GraficoNNCAvesRSUnidades, "GraficoNNCAvesRSUnidades", [" where [Reg. Qual] like '%Aves Pesadas Sul%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesRSUnidades, setresponseGraficoNNCAvesRSUnidades, 82)
-        chamarAPI("NCCMPProblema", GraficoNNCAvesRSProblemas, "GraficoNNCAvesRSProblemas", [" where [Reg. Qual] like '%Aves Pesadas Sul%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesRSProblemas, setresponseGraficoNNCAvesRSProblemas, 83)
+        chamarAPI("NCCMP", GraficoNNCAvesRS, "GraficoNNCAvesRS", [" where [Reg. Qual] like '%Aves Pesadas RS/SC/SP%' "], setGraficoNNCAvesRS, setresponseGraficoNNCAvesRS, 81)
+        chamarAPI("NCCMPUnidade", GraficoNNCAvesRSUnidades, "GraficoNNCAvesRSUnidades", [" where [Reg. Qual] like '%Aves Pesadas RS/SC/SP%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesRSUnidades, setresponseGraficoNNCAvesRSUnidades, 82)
+        chamarAPI("NCCMPProblema", GraficoNNCAvesRSProblemas, "GraficoNNCAvesRSProblemas", [" where [Reg. Qual] like '%Aves Pesadas RS/SC/SP%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesRSProblemas, setresponseGraficoNNCAvesRSProblemas, 83)
 
-        chamarAPI("NCCMP", GraficoNNCAvesSP, "GraficoNNCAvesSP", [" where [Reg. Qual] like '%Aves Pesadas SP%' "], setGraficoNNCAvesSP, setresponseGraficoNNCAvesSP, 84)
-        chamarAPI("NCCMPUnidade", GraficoNNCAvesSPUnidades, "GraficoNNCAvesSPUnidades", [" where [Reg. Qual] like '%Aves Pesadas SP%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesSPUnidades, setresponseGraficoNNCAvesSPUnidades, 85)
-        chamarAPI("NCCMPProblema", GraficoNNCAvesSPProblemas, "GraficoNNCAvesSPProblemas", [" where [Reg. Qual] like '%Aves Pesadas SP%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesSPProblemas, setresponseGraficoNNCAvesSPProblemas, 86)
+        chamarAPI("NCCMP", GraficoNNCAvesSP, "GraficoNNCAvesSP", [" where [Reg. Qual] like '%Aves Pesadas SP/CO/NE%' "], setGraficoNNCAvesSP, setresponseGraficoNNCAvesSP, 84)
+        chamarAPI("NCCMPUnidade", GraficoNNCAvesSPUnidades, "GraficoNNCAvesSPUnidades", [" where [Reg. Qual] like '%Aves Pesadas SP/CO/NE%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesSPUnidades, setresponseGraficoNNCAvesSPUnidades, 85)
+        chamarAPI("NCCMPProblema", GraficoNNCAvesSPProblemas, "GraficoNNCAvesSPProblemas", [" where [Reg. Qual] like '%Aves Pesadas SP/CO/NE%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesSPProblemas, setresponseGraficoNNCAvesSPProblemas, 86)
 
         chamarAPI("NCCMP", GraficoNNCAvesPR, "GraficoNNCAvesPR", [" where [Reg. Qual] like '%Aves Pesadas PR%' "], setGraficoNNCAvesPR, setresponseGraficoNNCAvesPR, 87)
         chamarAPI("NCCMPUnidade", GraficoNNCAvesPRUnidades, "GraficoNNCAvesPRUnidades", [" where [Reg. Qual] like '%Aves Pesadas PR%' and Ano = year((select * from v_maiorData)) and Mês = month((select * from v_maiorData)) and [Entra para a Meta] = 'Sim' And  [Grupo Problema.] NOT IN ('Distrib/ Logística_Serviços','Embalagem Secundária') "], setGraficoNNCAvesPRUnidades, setresponseGraficoNNCAvesPRUnidades, 88)
@@ -3628,32 +3621,6 @@ function Home() {
         
     }
 
-    const DataTableRACD3INNATURASuinos = () => {
-
-        if (!TableRacRACD3InNaturaSuinos) return;
-
-
-        let json = []
-
-        for (let i = 0; i < TableRacRACD3InNaturaSuinos.length; i++) {
-            json.push(TableRacRACD3InNaturaSuinos[i])
-        }
-
-        var retorno = percorrerJson(TableRacRACD3InNaturaSuinos[0])
-
-        return (
-            <div>
-                <div className="card">
-                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableRacRACD3InNaturaSuinos">
-                        <Column field="CAMPO1" header="RAC D-3 - In-Natura - Suínos" headerStyle={{ width: '70%' }}></Column>
-                        <Column field="NUM" header="Nº RAC"></Column>
-                    </DataTable>
-                </div>
-            </div>
-            );
-        
-    }
-
     const DataTableRACD0INNATURA = () => {
 
         if (!TableRacRACD0InNatura) return;
@@ -3672,32 +3639,6 @@ function Home() {
                 <div className="card">
                     <DataTable value={json} sortMode="multiple" className="p-datatable clTableRacRACD0InNatura">
                         <Column field="CAMPO1" header="RAC D-0 - In-Natura" headerStyle={{ width: '70%' }}></Column>
-                        <Column field="NUM" header="Nº RAC"></Column>
-                    </DataTable>
-                </div>
-            </div>
-            );
-        
-    }
-
-    const DataTableRACD0INNATURASuinos = () => {
-
-        if (!TableRacRACD0InNaturaSuinos) return;
-
-
-        let json = []
-
-        for (let i = 0; i < TableRacRACD0InNaturaSuinos.length; i++) {
-            json.push(TableRacRACD0InNaturaSuinos[i])
-        }
-
-        var retorno = percorrerJson(TableRacRACD0InNaturaSuinos[0])
-
-        return (
-            <div>
-                <div className="card">
-                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableRacRACD0InNaturaSuinos">
-                        <Column field="CAMPO1" header="RAC D-0 - In-Natura - Suínos" headerStyle={{ width: '70%' }}></Column>
                         <Column field="NUM" header="Nº RAC"></Column>
                     </DataTable>
                 </div>
@@ -4195,33 +4136,6 @@ function Home() {
             );
         
     }
-
-    const DataTableNNCEvolucao = () => {
-
-        if (!TableNNCTotal) return;
-
-
-        let json = []
-
-        for (let i = 0; i < TableNNCTotal.length; i++) {
-            json.push(TableNNCTotal[i])
-        }
-
-        var retorno = percorrerJson(TableNNCTotal[0])
-
-        return (
-            <div>
-                <div className="card">
-                    <DataTable value={json} sortMode="multiple" className="p-datatable clTableNNCTotal">
-                        {retorno}
-                    </DataTable>
-                </div>
-            </div>
-            );
-        
-    }
-
-    
 
     const DataTableHabilitadorCorposEstranhosNaoInerentes = () => {
 
@@ -5199,7 +5113,7 @@ function Home() {
             + "and month(data_rac) = (select month(data) as data from v_maiorData) "
             
             + "AND [Grupo_rac] IN ('CORPO ESTRANHO') "
-            + "AND [Regional Qual] NOT IN ('FATIADOS','PESCADOS','AVES PR','AVES Sul','AVES SP') "
+            + "AND [Regional Qual] NOT IN ('FATIADOS','PESCADOS','AVES PR','AVES RS/SC/SP','AVES SP/CO/NE') "
             + "AND UNIDADE NOT IN ('AGRO ALFA','AMAI','ATI-GEL','CLAREBOUT','GRANO','GRIFFOOD','MASSATAKE','SANTA CRUZ DO SUL','VIGOR','ARTES GRÁFICAS','CAMPINAS-CD','CAMPO VERDE','CD RIBEIRÃO DAS NEVES','CPO','DOC INDUSTRIA','EIRELI EPP','EIRELI ME','EXCELSIOR','GENESEAS AQUACULTURA','GERÊNCIA NACIONA FS','GRANO ALIMENTOS S.A.','GRIFFOOD','ICOFORT','ITAJAI','ITAJAÍ','ITAJAI ÓLEO COMESTÍVEIS','ITAJAI PESCADOS','LABREZZA','M P FOODS','MARBA','MASSAS SANTA ENERSTINA LTDA','NORONHA', 'OUTROS','PINHAIS - CD','QUALIDADE SUPPLY CHAIN','RIBEIRÃO PRETO – CD','SALVADOR – CD','SAO PAULO – CD','SEARA MEATS','SOMAVE','VARZEA GRANDE – CD') "
             + "AND [TIPO_ATENDIMENTO_RAC] NOT IN ('ALERTA','CONCESSÃO', 'CRITICA','CRÍTICA','ELOGIO','NEGOCIAÇÃO COMERCIAL','OBRIGAÇÃO','RAC CAIXA','RAC COMPLEMENTAR', 'RECLAMAÇÃO FFO', 'RAC CONSUMIDOR','RECOLHIMENTO','RECOLHIMENTO VOLUNTÁRIO','NOTIFICAÇÃO') "
             + "AND [PROBLEMA] IN ('INSETO','INSETO VIVO') "
@@ -5564,38 +5478,6 @@ function Home() {
                 setTableNNCCE(json)
                 setTimeout(arrumaTabela2niveis('clTableNNCCE'), 20000)
             })
-
-            var whereTableNNCTotal = ""
-            + " WHERE 1=1 "
-            + "and year([Dt Abertura]) = (select year(data) as data from v_maiorData) "
-            + "and month([Dt Abertura]) = (select month(data) as data from v_maiorData) "
-            + "and [Reg. Qual] NOT IN ('OUTROS', 'ITAJAÍ')  "
-
-            api.getSearaBaseNNC2niveisPIVOTDIA([ whereTableNNCTotal, "[Reg. Prod.] as Coluna1, fornecedor as Coluna2, null as Coluna3", "[Reg. Prod.], fornecedor", " [MES-DIA] ", " [MES-DIA] " ]).then((response) => {
-                
-                let json = JSON.parse(response.data)
-
-                for (var i=0; i<json.length; i++){
-                    delete json[i]['C1'];
-                    delete json[i]['C2'];
-                    delete json[i]['C3'];
-                    delete json[i]['Coluna1'];
-                    delete json[i]['Coluna2'];
-                    delete json[i]['Coluna3'];
-                    delete json[i]['Nº RAC'];
-                    delete json[i]['C1__'];
-                    delete json[i]['C2__'];
-                    delete json[i]['C3__'];
-                    delete json[i]['Coluna_'];
-                    delete json[i]['Total'];
-                    delete json[i]['Total2'];
-                }
-                
-                setTableNNCTotal(json)
-                setTimeout(arrumaTabela2niveis('clTableNNCTotal'), 20000)
-            })
-
-            
 
 
             var whereTableHabilitadorCorposEstranhosNaoInerentes = ""
@@ -6093,7 +5975,7 @@ function Home() {
             + " WHERE 1=1	AND Data_rac =  "  
             + " case when DATEPART(WEEKDAY,DATEADD(DD,-2,(select * from v_maiorData))) = 1 then DATEADD(DD,-4,(select * from v_maiorData)) when DATEPART(WEEKDAY,DATEADD(DD,-2,(select * from v_maiorData))) = 7 then DATEADD(DD,-3,(select * from v_maiorData)) else DATEADD(DD,-2,(select * from v_maiorData)) end " 																											
             + " AND Tipo_rac = 'Real'  "
-            + " AND ([Regional Qual] in( 'Aves Leves','Aves Pesadas', 'Aves Pesadas Sul', 'Aves Pesadas PR', 'Aves Pesadas SP') ) "
+            + " AND ([Regional Qual] in( 'Aves Leves','Suínos','Aves Pesadas', 'Aves Pesadas RS/SC/SP', 'Aves Pesadas PR', 'Aves Pesadas SP/CO/NE') ) "
             + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
 			+ " OR Tipo_Atendimento_rac IS NULL) "
             + " and (Unidade NOT IN ('Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS') OR Unidade IS NULL) "
@@ -6107,29 +5989,11 @@ function Home() {
                 setTimeout(arrumaTabela3niveis('clTableRacRACD3InNatura'), 20000)
             })
 
-            var whereTableRacRACD3InNaturaSuinos = ""
-            + " WHERE 1=1	AND Data_rac =  "  
-            + " case when DATEPART(WEEKDAY,DATEADD(DD,-2,(select * from v_maiorData))) = 1 then DATEADD(DD,-4,(select * from v_maiorData)) when DATEPART(WEEKDAY,DATEADD(DD,-2,(select * from v_maiorData))) = 7 then DATEADD(DD,-3,(select * from v_maiorData)) else DATEADD(DD,-2,(select * from v_maiorData)) end " 																											
-            + " AND Tipo_rac = 'Real'  "
-            + " AND ([Regional Qual] in( 'Suínos') ) "
-            + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
-			+ " OR Tipo_Atendimento_rac IS NULL) "
-            + " and (Unidade NOT IN ('Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS') OR Unidade IS NULL) "
-            + " AND (Origem NOT IN ('ABUSO DE PRODUTO HOME') OR Origem IS NULL) "
-
-
-            api.getSearaBaseRAC3niveis([whereTableRacRACD3InNaturaSuinos," Unidade CAMPO1, Nm_Item_RAC CAMPO2, Tipo_Problema_rac CAMPO3 "," Unidade, Nm_Item_RAC, Tipo_Problema_rac "]).then((response) => {
-
-                let json = JSON.parse(response.data)
-                setTableRacRACD3InNaturaSuinos(json)
-                setTimeout(arrumaTabela3niveis('clTableRacRACD3InNaturaSuinos'), 20000)
-            })
-
              var whereTableRacRACD0InNatura = ""
              + " WHERE 1=1	AND Data_rac =  "   	
              + " case when DATEPART(WEEKDAY,DATEADD(DD,-0,(select * from v_maiorData))) = 1 then DATEADD(DD,-2,(select * from v_maiorData)) when DATEPART(WEEKDAY,DATEADD(DD,-0,(select * from v_maiorData))) = 7 then DATEADD(DD,-1,(select * from v_maiorData)) else DATEADD(DD,-0,(select * from v_maiorData)) end "																										
             + " AND Tipo_rac = 'Real'   "
-            + " AND ([Regional Qual] in( 'Aves Leves','Aves Pesadas', 'Aves Pesadas Sul', 'Aves Pesadas PR', 'Aves Pesadas SP')) "
+            + " AND ([Regional Qual] in( 'Aves Leves','Suínos','Aves Pesadas', 'Aves Pesadas RS/SC/SP', 'Aves Pesadas PR', 'Aves Pesadas SP/CO/NE')) "
             + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
 			+ " OR Tipo_Atendimento_rac IS NULL) "
             + " and (Unidade NOT IN ('Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS') OR Unidade IS NULL) "
@@ -6141,24 +6005,6 @@ function Home() {
                  let json = JSON.parse(response.data)
                  setTableRacRACD0InNatura(json)
                  setTimeout(arrumaTabela3niveis('clTableRacRACD0InNatura'), 20000)
-             })
-
-             var whereTableRacRACD0InNaturaSuinos = ""
-             + " WHERE 1=1	AND Data_rac =  "   	
-             + " case when DATEPART(WEEKDAY,DATEADD(DD,-0,(select * from v_maiorData))) = 1 then DATEADD(DD,-2,(select * from v_maiorData)) when DATEPART(WEEKDAY,DATEADD(DD,-0,(select * from v_maiorData))) = 7 then DATEADD(DD,-1,(select * from v_maiorData)) else DATEADD(DD,-0,(select * from v_maiorData)) end "																										
-            + " AND Tipo_rac = 'Real'   "
-            + " AND ([Regional Qual] in('Suínos')) "
-            + " and (Tipo_Atendimento_rac NOT IN ('ALERTA', 'Concessão', 'Crítica','Elogio','Negociação Comercial','Obrigação', 'RAC CAIXA', 'RAC Complementar','Recolhimento','Recolhimento Voluntário') "
-			+ " OR Tipo_Atendimento_rac IS NULL) "
-            + " and (Unidade NOT IN ('Dan Vigor','Marba','Massatake','Santa Cruz do Sul','Vigor','ITAJAI ÓLEO COMESTÍVEIS') OR Unidade IS NULL) "
-            + " AND (Origem NOT IN ('ABUSO DE PRODUTO HOME') OR Origem IS NULL) "
-
- 
-             api.getSearaBaseRAC3niveis([whereTableRacRACD0InNaturaSuinos," Unidade CAMPO1, Nm_Item_RAC CAMPO2, Tipo_Problema_rac CAMPO3 "," Unidade, Nm_Item_RAC, Tipo_Problema_rac "]).then((response) => {
- 
-                 let json = JSON.parse(response.data)
-                 setTableRacRACD0InNaturaSuinos(json)
-                 setTimeout(arrumaTabela3niveis('clTableRacRACD0InNaturaSuinos'), 20000)
              })
 
              //////
@@ -6548,30 +6394,6 @@ function Home() {
         )
     }
 
-    const GenerateFile = () => {
-        return (
-            <div>
-                <h1 className={'h2'}>
-                    Gerando Arquivo
-                    <br />
-                    <small>Gerando arquivo para download</small>
-                    <br />
-                </h1>
-                <ProgressBar mode="indeterminate" style={{ height: '16px' }}></ProgressBar>
-            </div>
-        )
-    }
-
-    function geraImagem() {
-        htmlToImage.toJpeg(document.getElementById('pad10'), { quality: 1 })
-        .then(function (dataUrl) {
-          var link = document.createElement('a');
-          link.download = 'KPI.jpeg';
-          link.href = dataUrl;
-          link.click();
-        });
-    }
-
     // Se esta logado exibe tela do dashboard:
     return (
         // <div style="width: 1220px !important;">
@@ -6592,11 +6414,9 @@ function Home() {
                                     <button className="btn btn-sm btn-outline-secondary" onClick={buscarDados}>Atualizar</button>
                                 </div>   */}
 
-                                <Pdf targetRef={ref} filename="KPI.pdf" options={options} x={0} scale={.8}>
-
+                                <Pdf targetRef={ref} filename="KPI.pdf" options={options} x={1} scale={1}>
                                     {({ toPdf }) => (
-                                        // <button className="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={toPdf} id="btnPDF">Gerar PDF</button>
-                                        <button className="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={geraImagem} id="btnPDF">Gerar Imagem</button>
+                                        <button className="btn btn-sm btn-secondary" style={{ width: '100%' }} onClick={toPdf} id="btnPDF">Gerar PDF</button>
                                     )}
                                 </Pdf>
 
@@ -6609,6 +6429,7 @@ function Home() {
             </Row>
 
             <hr></hr>
+
             {/* Botão aplicar */}
             {/* {isUpdatingData ? (<div> </div>) : ( */}
                 <Row style={{ paddingRight: '15px', paddingLeft: '15px', display: "none" }}>
@@ -6619,7 +6440,7 @@ function Home() {
 
 
             {/* Graficos */}
-            <div className="pad10" id="pad10" ref={ref}  >
+            <div className="pad10" ref={ref}  >
                 <Row>
                     <Col className="mt-1 col-12 cssSeara2021">
                         <h1></h1>
@@ -6747,11 +6568,11 @@ function Home() {
 
                 </reg>
 
-                <reg id="region RAC - Aves Pesadas Sul">
+                <reg id="region RAC - Aves Pesadas RS/SC/SP">
 
                     <Row>
                         <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Aves Pesadas Sul
+                            Aves Pesadas RS/SC/SP
                         <hr></hr>
                         </Col>
                     </Row>
@@ -6809,11 +6630,11 @@ function Home() {
 
                 
 
-                <reg id="region RAC - Aves Pesadas SP">
+                <reg id="region RAC - Aves Pesadas SP/CO/NE">
 
                     <Row>
                         <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Aves Pesadas SP
+                            Aves Pesadas SP/CO/NE
                         <hr></hr>
                         </Col>
                     </Row>
@@ -7185,11 +7006,11 @@ function Home() {
 
                 </reg>
 
-                <reg id="region RAC - Reclamações - Aves Pesadas SP">
+                <reg id="region RAC - Reclamações - Aves Pesadas SP/CO/NE">
 
                     <Row>
                         <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Reclamações - Aves Pesadas SP
+                            Reclamações - Aves Pesadas SP/CO/NE
                             <hr></hr>
                         </Col>
                     </Row>
@@ -7222,11 +7043,11 @@ function Home() {
 
                 </reg>
 
-                <reg id="region RAC - Reclamações - Aves Pesadas Sul">
+                <reg id="region RAC - Reclamações - Aves Pesadas RS/SC/SP">
 
                     <Row>
                         <Col className="mt-1 col-12 cssSeara2021_titulo">
-                            Reclamações - Aves Pesadas Sul
+                            Reclamações - Aves Pesadas RS/SC/SP
                             <hr></hr>
                         </Col>
                     </Row>
@@ -8427,9 +8248,9 @@ function Home() {
                 <reg id="region RAC - +31">
 
                     <Row>
-                        <Col className="col-4">
+                        <Col className="col-3">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                RAC D3 - In Natura - Aves
+                                RAC D3 - In Natura
                                 <hr></hr>
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
@@ -8441,21 +8262,7 @@ function Home() {
                             </Col>
                         </Col>
 
-                        <Col className="col-4">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                RAC D3 - In Natura - Suínos
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRACD3INNATURASuinos()
-
-                                )}
-                            </Col>
-                        </Col>
-
-                        <Col className="col-4">
+                        <Col className="col-3">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
                                 RAC D3 - Preparados
                                 <hr></hr>
@@ -8469,9 +8276,9 @@ function Home() {
                             </Col>
                         </Col>
 
-                        <Col className="col-4">
+                        <Col className="col-3">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                RAC D0 - In Natura - Aves
+                                RAC D0 - In Natura
                                 <hr></hr>
                             </Col>
                             <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
@@ -8483,21 +8290,7 @@ function Home() {
                             </Col>
                         </Col>
 
-                        <Col className="col-4">
-                            <Col className="mt-1 col-12 cssSeara2021_titulo">
-                                RAC D0 - In Natura - Suínos
-                                <hr></hr>
-                            </Col>
-                            <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                                {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                    DataTableRACD0INNATURASuinos()
-
-                                )}
-                            </Col>
-                        </Col>
-
-                        <Col className="col-4">
+                        <Col className="col-3">
                             <Col className="mt-1 col-12 cssSeara2021_titulo">
                                 RAC D0 - Preparados
                                 <hr></hr>
@@ -8674,26 +8467,6 @@ function Home() {
                     
                 </reg>
 
-                <reg id="region NNC +49">    
-                    <Row>
-                        <Col className=" col-12 cssSeara2021_titulo">
-                            NNC MP Evolução
-                        <hr></hr>
-                        </Col>
-                    </Row>
-                    <Row>
-
-                        <Col className="col-lg-12 col-md-12 col-sm-12 align-self-center">
-                            {isUpdatingData ? (<LoadingSkeletonCard />) : (
-
-                                 DataTableNNCEvolucao()
-                                
-                            )}
-                        </Col>
-
-                    </Row>
-                </reg>
-
                 <reg id="region NNC +39">
 
                     <Row>
@@ -8734,14 +8507,14 @@ function Home() {
 
                     <Row>
                         <Col className=" col-12 cssSeara2021_titulo">
-                            NNC - Aves Sul
+                            NNC - Aves RS/SC/SP
                         <hr></hr>
                         </Col>
                     </Row>
                     <Row>
                         <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Aves Sul" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                <Card title="NNC - Aves RS/SC/SP" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
                                     <Chart type="bar" data={responseGraficoNCCMPAvesPesadasRS} options={lightOptions} className="divMaior" />
                                 </Card>
                             )}
@@ -8770,14 +8543,14 @@ function Home() {
 
                     <Row>
                         <Col className=" col-12 cssSeara2021_titulo">
-                            NNC - Aves SP
+                            NNC - Aves SP/CO/NE
                         <hr></hr>
                         </Col>
                     </Row>
                     <Row>
                         <Col className="col-lg-6 col-md-6 col-sm-12 align-self-center">
                             {isUpdatingData ? (<LoadingSkeletonCard />) : (
-                                <Card title="NNC - Aves SP" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
+                                <Card title="NNC - Aves SP/CO/NE" subTitle="" className="cssSeara2021_tituloGrafico  align-self-center">
                                     <Chart type="bar" data={responseGraficoNCCMPAvesPesadasSP} options={lightOptions} className="divMaior" />
                                 </Card>
                             )}
@@ -9442,8 +9215,8 @@ function Home() {
                
 
             </div>
+
         </div>
-        
     )
 }
 
